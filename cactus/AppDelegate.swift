@@ -30,6 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let menu = NSMenu()
             
             menu.addItem(NSMenuItem(title: "翻译总结", action: #selector(openMain), keyEquivalent: "o"))
+            menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "偏好设置", action: #selector(openSettings), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "关于", action: #selector(openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem.separator())
