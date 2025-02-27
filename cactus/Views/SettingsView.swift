@@ -47,19 +47,9 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("通用设置").font(.headline)) {
-                // 这里添加通用设置项
-            }
-            
-            Section(header: Text("快捷键设置").font(.headline)) {
-                HStack {
-                    Text("选中文字翻译快捷键:")
-                    Spacer()
-                    TextField("快捷键", text: $shortcutKey)
-                        .frame(width: 100)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .multilineTextAlignment(.trailing)
-                }
+            Section {
+                TextField("划线翻译快捷键", text: $shortcutKey)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
         }
         .padding()
@@ -74,13 +64,11 @@ struct AIServiceSettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("AI 服务设置").font(.headline)) {
+            Section {
                 TextField("Base URL", text: $baseURL)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                
                 SecureField("API Key", text: $apiKey)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                
                 TextField("Model", text: $model)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             }
