@@ -43,11 +43,23 @@ struct SettingsView: View {
 }
 
 struct GeneralSettingsView: View {
+    @State private var shortcutKey: String = "⌘o"  // 默认快捷键
+
     var body: some View {
         Form {
-            Section {
-                Text("通用设置")
+            Section(header: Text("通用设置").font(.headline)) {
                 // 这里添加通用设置项
+            }
+            
+            Section(header: Text("快捷键设置").font(.headline)) {
+                HStack {
+                    Text("选中文字翻译快捷键:")
+                    Spacer()
+                    TextField("快捷键", text: $shortcutKey)
+                        .frame(width: 100)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .multilineTextAlignment(.trailing)
+                }
             }
         }
         .padding()
@@ -56,11 +68,21 @@ struct GeneralSettingsView: View {
 }
 
 struct AIServiceSettingsView: View {
+    @State private var baseURL: String = "https://api.openai.com"  // 默认 Base URL
+    @State private var apiKey: String = ""  // API Key
+    @State private var model: String = "gpt-3.5-turbo"  // 默认模型
+
     var body: some View {
         Form {
-            Section {
-                Text("AI 服务设置")
-                // 这里添加 AI 服务设置项
+            Section(header: Text("AI 服务设置").font(.headline)) {
+                TextField("Base URL", text: $baseURL)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                SecureField("API Key", text: $apiKey)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                TextField("Model", text: $model)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
         }
         .padding()
