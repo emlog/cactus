@@ -6,11 +6,11 @@ struct SettingsView: View {
         case aiService = "AI 服务"
     }
     
-    @State private var selectedTab: Tab? = .general  // Change to optional
+    @State private var selectedTab: Tab? = .general
     
     var body: some View {
-        NavigationStack {
-            List {
+        NavigationSplitView {
+            List(selection: $selectedTab) {
                 NavigationLink(value: Tab.general) {
                     Label("通用", systemImage: "gear")
                 }
@@ -20,17 +20,25 @@ struct SettingsView: View {
                 }
             }
             .listStyle(SidebarListStyle())
-            .frame(minWidth: 150, maxWidth: 200)
-            
-            .navigationDestination(for: Tab.self) { tab in
+            .toolbar {  // 隐藏侧边栏按钮
+                ToolbarItem(placement: .navigation) {
+                    EmptyView()
+                }
+            }
+        } detail: {
+            if let tab = selectedTab {
                 switch tab {
                 case .general:
                     GeneralSettingsView()
                 case .aiService:
                     AIServiceSettingsView()
                 }
+            } else {
+                Text("请选择一个选项")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .frame(minWidth: 600, minHeight: 400)  // 确保整个视图有足够的空间
     }
 }
 

@@ -42,13 +42,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func openSettings() {
         if settingsWindow == nil {
             settingsWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
-                styleMask: [.titled, .closable],
+                contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+                styleMask: [.titled, .closable, .miniaturizable, .resizable],  // Add more window controls
                 backing: .buffered,
                 defer: false
             )
 
-            // Correctly instantiate SettingsView
             let settingsView = SettingsView()
             let hostingController = NSHostingController(rootView: settingsView)
             
@@ -56,6 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             settingsWindow?.title = "偏好设置"
             settingsWindow?.center()
             settingsWindow?.isReleasedWhenClosed = false
+            settingsWindow?.minSize = NSSize(width: 600, height: 400)  // Set minimum size
         }
         
         settingsWindow?.makeKeyAndOrderFront(nil)
