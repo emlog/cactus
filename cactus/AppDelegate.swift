@@ -9,13 +9,11 @@ import AppKit
 import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    // 添加主窗口属性
-    var mainWindow: NSWindow?
-    
     var statusItem: NSStatusItem?
-    var popover: NSPopover?
+    // 添加窗口属性
     var settingsWindow: NSWindow?
-    var aboutWindow: NSWindow?  // 添加关于窗口属性
+    var aboutWindow: NSWindow?
+    var mainWindow: NSWindow?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 创建状态栏图标
@@ -39,35 +37,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             statusItem?.menu = menu
         }
-        
-        // 创建设置窗口
-        setupSettingsWindow()
-    }
-    
-    private func setupSettingsWindow() {
-        let settingsView = SettingsView()
-        let hostingController = NSHostingController(rootView: settingsView)
-        
-        settingsWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),  // 调整窗口大小
-            styleMask: [.titled, .closable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        
-        settingsWindow?.center()
-        settingsWindow?.title = "偏好设置"  // 改为"偏好设置"更符合 macOS 规范
-        settingsWindow?.contentViewController = hostingController
-        settingsWindow?.isReleasedWhenClosed = false  // 关闭时不释放窗口
     }
     
     @objc func openSettings() {
-        if let window = settingsWindow {
-            if !window.isVisible {
-                window.makeKeyAndOrderFront(nil)
-            }
-            NSApp.activate(ignoringOtherApps: true)
+        if settingsWindow == nil {
+            settingsWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
+                styleMask: [.titled, .closable],
+                backing: .buffered,
+                defer: false
+            )
+
+            // Correctly instantiate SettingsView
+            let settingsView = SettingsView()
+            let hostingController = NSHostingController(rootView: settingsView)
+            
+            settingsWindow?.contentViewController = hostingController
+            settingsWindow?.title = "偏好设置"
+            settingsWindow?.center()
+            settingsWindow?.isReleasedWhenClosed = false
         }
+        
+        settingsWindow?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     @objc func openAbout() {
@@ -83,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let hostingController = NSHostingController(rootView: aboutView)
             
             aboutWindow?.contentViewController = hostingController
-            aboutWindow?.title = "关于 Cactus"
+            aboutWindow?.title = "关于"
             aboutWindow?.center()
             aboutWindow?.isReleasedWhenClosed = false
         }
@@ -101,6 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 defer: false
             )
             
+            // 确保使用 Views 目录下的 MainView
             let mainView = MainView()
             let hostingController = NSHostingController(rootView: mainView)
             

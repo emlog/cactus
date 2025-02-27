@@ -9,28 +9,27 @@ struct SettingsView: View {
     @State private var selectedTab: Tab? = .general  // Change to optional
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
-                NavigationLink(
-                    destination: GeneralSettingsView(),
-                    tag: Tab.general,
-                    selection: $selectedTab
-                ) {
+                NavigationLink(value: Tab.general) {
                     Label("通用", systemImage: "gear")
                 }
                 
-                NavigationLink(
-                    destination: AIServiceSettingsView(),
-                    tag: Tab.aiService,
-                    selection: $selectedTab
-                ) {
+                NavigationLink(value: Tab.aiService) {
                     Label("AI 服务", systemImage: "brain")
                 }
             }
             .listStyle(SidebarListStyle())
             .frame(minWidth: 150, maxWidth: 200)
             
-            GeneralSettingsView()
+            .navigationDestination(for: Tab.self) { tab in
+                switch tab {
+                case .general:
+                    GeneralSettingsView()
+                case .aiService:
+                    AIServiceSettingsView()
+                }
+            }
         }
     }
 }
