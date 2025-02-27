@@ -20,11 +20,6 @@ struct SettingsView: View {
                 }
             }
             .listStyle(SidebarListStyle())
-            .toolbar {  // 隐藏侧边栏按钮
-                ToolbarItem(placement: .navigation) {
-                    EmptyView()
-                }
-            }
         } detail: {
             if let tab = selectedTab {
                 switch tab {
@@ -46,14 +41,17 @@ struct GeneralSettingsView: View {
     @State private var shortcutKey: String = "⌘o"  // 默认快捷键
 
     var body: some View {
-        Form {
-            Section {
-                TextField("划线翻译快捷键", text: $shortcutKey)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+        VStack {
+            Form {
+                Section {
+                    TextField("划线翻译快捷键", text: $shortcutKey)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
             }
+            .padding()
+            .frame(maxWidth: .infinity)
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)  // 确保内容靠上排列
     }
 }
 
@@ -63,17 +61,20 @@ struct AIServiceSettingsView: View {
     @State private var model: String = "gpt-3.5-turbo"  // 默认模型
 
     var body: some View {
-        Form {
-            Section {
-                TextField("Base URL", text: $baseURL)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                SecureField("API Key", text: $apiKey)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Model", text: $model)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+        VStack {
+            Form {
+                Section {
+                    TextField("Base URL", text: $baseURL)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    SecureField("API Key", text: $apiKey)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Model", text: $model)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
             }
+            .padding()
+            .frame(maxWidth: .infinity)
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)  // 确保内容靠上排列
     }
 }
