@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // 创建菜单
             let menu = NSMenu()
             
-            menu.addItem(NSMenuItem(title: "翻译总结", action: #selector(openMain), keyEquivalent: "o"))
+            menu.addItem(NSMenuItem(title: "翻译总结", action: #selector(openMain), keyEquivalent: "j"))
             menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "偏好设置", action: #selector(openSettings), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "关于", action: #selector(openAbout), keyEquivalent: ""))
@@ -54,12 +54,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             settingsWindow?.contentViewController = hostingController
             settingsWindow?.title = "偏好设置"
-            settingsWindow?.center()
             settingsWindow?.isReleasedWhenClosed = false
             settingsWindow?.minSize = NSSize(width: 600, height: 400)  // Set minimum size
         }
         
+        settingsWindow?.center()
         settingsWindow?.makeKeyAndOrderFront(nil)
+        settingsWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
     
@@ -77,11 +78,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             aboutWindow?.contentViewController = hostingController
             aboutWindow?.title = "关于"
-            aboutWindow?.center()
             aboutWindow?.isReleasedWhenClosed = false
         }
         
+        // 调整窗口位置到当前屏幕的中心
+        aboutWindow?.center()
         aboutWindow?.makeKeyAndOrderFront(nil)
+        aboutWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
     
@@ -100,11 +103,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             mainWindow?.contentViewController = hostingController
             mainWindow?.title = "翻译总结"
-            mainWindow?.center()
             mainWindow?.isReleasedWhenClosed = false
         }
         
+        // 确保窗口在最上层
+        mainWindow?.center()
         mainWindow?.makeKeyAndOrderFront(nil)
+        mainWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
 }
