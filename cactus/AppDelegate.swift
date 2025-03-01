@@ -7,6 +7,7 @@
 
 import AppKit
 import SwiftUI
+import HotKey
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
@@ -14,6 +15,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var settingsWindow: NSWindow?
     var aboutWindow: NSWindow?
     var mainWindow: NSWindow?
+    
+    // 使用 HotKey 库来处理全局快捷键
+    private var hotKey: HotKey?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 创建状态栏图标
@@ -38,7 +42,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             statusItem?.menu = menu
         }
+        
+        // 设置全局快捷键
+        setupGlobalShortcut()
     }
+    
+    // 使用 HotKey 库设置全局快捷键
+    private func setupGlobalShortcut() {
+        // 创建 Command+J 快捷键
+        hotKey = HotKey(key: .j, modifiers: [.command])
+        
+        // 设置快捷键触发时的回调
+        hotKey?.keyDownHandler = { [weak self] in
+            DispatchQueue.main.async {
+                self?.openMain()
+            }
+        }
+    }
+    
+    // 不再需要 deinit 中的清理代码，HotKey 会自动处理
     
     @objc func openSettings() {
         if settingsWindow == nil {
