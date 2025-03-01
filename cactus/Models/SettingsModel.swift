@@ -26,9 +26,9 @@ class SettingsModel: ObservableObject {
     }
     
     init() {
-        self.shortcutKey = UserDefaults.standard.string(forKey: "shortcutKey") ?? "⌘o"
-        self.baseURL = UserDefaults.standard.string(forKey: "baseURL") ?? "https://api.openai.com"
+        self.shortcutKey = UserDefaults.standard.string(forKey: "shortcutKey") ?? "⌘j"
+        self.baseURL = UserDefaults.standard.string(forKey: "baseURL") ?? ""
         self.apiKey = UserDefaults.standard.string(forKey: "apiKey") ?? ""
-        self.model = UserDefaults.standard.string(forKey: "model") ?? "gpt-3.5-turbo"
+        self.model = UserDefaults.standard.string(forKey: "model") ?? ""
     }
 }

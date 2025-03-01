@@ -1,12 +1,13 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var inputText: String = ""
-    
+    @State private var text: String = ""
+    @ObservedObject var settings = SettingsModel() // 添加 SettingsModel 作为 ObservedObject
+
     var body: some View {
         VStack(spacing: 16) {
             // 多行文本输入框
-            TextEditor(text: $inputText)
+            TextEditor(text: $text)
                 .font(.system(.body))
                 .frame(maxWidth: .infinity, minHeight: 200)
                 .overlay(
@@ -17,7 +18,17 @@ struct MainView: View {
             // 操作按钮
             HStack(spacing: 12) {
                 Button(action: {
-                    // 翻译操作
+                    // 使用 SettingsModel 中的配置信息进行翻译操作
+                    let translationService = TranslationService(
+                        baseURL: settings.baseURL,
+                        apiKey: settings.apiKey,
+                        model: settings.model
+                    )
+                    if let translatedText = translationService.translate(text: text) {
+                        text = translatedText
+                    } else {
+                        text = "Translation failed"
+                    }
                 }) {
                     Text("翻译")
                         .frame(width: 80)
@@ -34,5 +45,9 @@ struct MainView: View {
         }
         .padding(20)
         .frame(minWidth: 400, minHeight: 300)
+    }
+
+    func fillText(_ newText: String) {
+        text = newText
     }
 }

@@ -1,0 +1,73 @@
+import Foundation
+
+struct TranslationService {
+    let baseURL: String
+    let apiKey: String
+    let model: String
+
+    func translate(text: String) -> String? {
+        guard let url = URL(string: baseURL) else {
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        print("Request URL: \(url)")
+        print("Request Headers: \(request.allHTTPHeaderFields ?? [:])")
+        
+        // Update the body to include the 'messages' parameter
+        let body: [String: Any] = [
+            "model": model,
+            "messages": [
+                ["role": "user", "content": "请把===后面的文字做中英文互译，注意不要输出任何提示内容 === " + text]
+            ],
+            "max_tokens": 1000
+        ]
+        
+        if let httpBody = try? JSONSerialization.data(withJSONObject: body) {
+            request.httpBody = httpBody
+            print("Request Body: \(String(data: httpBody, encoding: .utf8) ?? "")")
+        }
+        
+        var resultText: String? = nil
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            defer { semaphore.signal() }
+            
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Response Status Code: \(httpResponse.statusCode)")
+                print("Response Headers: \(httpResponse.allHeaderFields)")
+            }
+            
+            if let data = data {
+                print("Response Data: \(String(data: data, encoding: .utf8) ?? "")")
+                if let result = try? JSONDecoder().decode(OpenAIResponse.self, from: data) {
+                    resultText = result.choices.first?.message.content
+                }
+            }
+        }.resume()
+        
+        semaphore.wait()
+        return resultText
+    }
+}
+
+struct OpenAIResponse: Codable {
+    struct Choice: Codable {
+        let message: Message
+    }
+    struct Message: Codable {
+        let role: String
+        let content: String
+    }
+    let choices: [Choice]
+}

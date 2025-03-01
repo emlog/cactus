@@ -8,6 +8,8 @@
 import AppKit
 import SwiftUI
 import HotKey
+import Cocoa
+import ApplicationServices
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
@@ -128,10 +130,51 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             mainWindow?.isReleasedWhenClosed = false
         }
         
+        // 使用辅助功能 API 获取选中文本
+        if let selectedText = getSelectedText() {
+            print("Selected Text: \(selectedText)")
+            
+            // 将选中的文本填充到 MainView 的文本区域
+            if let mainView = mainWindow?.contentViewController as? MainView {
+                mainView.fillText(selectedText)
+            }
+        }
+        print("main window is created")
         // 确保窗口在最上层
         mainWindow?.center()
         mainWindow?.makeKeyAndOrderFront(nil)
         mainWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    // 获取当前选中文本的函数
+    func getSelectedText() -> String? {
+        print("Fetching selected text...")
+        
+        // 检查辅助功能权限
+        if !AXIsProcessTrusted() {
+            print("Accessibility permissions are not granted. Please enable them in System Settings > Security & Privacy > Accessibility.")
+            return nil
+        }
+        
+        let systemWideElement = AXUIElementCreateSystemWide()
+        var focusedElement: AnyObject?
+        let focusResult = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
+        
+        guard focusResult == .success, let element = focusedElement else {
+            print("Failed to get focused element, error: \(focusResult)")
+            return nil
+        }
+        
+        var selectedText: AnyObject?
+        let textResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXSelectedTextAttribute as CFString, &selectedText)
+        
+        guard textResult == .success, let text = selectedText as? String else {
+            print("Failed to get selected text, error: \(textResult)")
+            return nil
+        }
+        
+        print("Selected Text: \(text)")
+        return text
     }
 }

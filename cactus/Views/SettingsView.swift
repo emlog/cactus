@@ -17,7 +17,7 @@ struct SettingsView: View {
                 }
                 
                 NavigationLink(value: Tab.aiService) {
-                    Label("AI 服务", systemImage: "brain")
+                    Label("AI服务", systemImage: "brain")
                 }
             }
             .listStyle(SidebarListStyle())
