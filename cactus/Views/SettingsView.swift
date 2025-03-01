@@ -7,6 +7,7 @@ struct SettingsView: View {
     }
     
     @State private var selectedTab: Tab? = .general
+    @StateObject private var settingsModel = SettingsModel()  // Create an instance of SettingsModel
     
     var body: some View {
         NavigationSplitView {
@@ -24,9 +25,9 @@ struct SettingsView: View {
             if let tab = selectedTab {
                 switch tab {
                 case .general:
-                    GeneralSettingsView()
+                    GeneralSettingsView(settingsModel: settingsModel)  // Pass the settingsModel instance
                 case .aiService:
-                    AIServiceSettingsView()
+                    AIServiceSettingsView(settingsModel: settingsModel)  // Pass the settingsModel instance
                 }
             } else {
                 Text("请选择一个选项")
@@ -38,43 +39,41 @@ struct SettingsView: View {
 }
 
 struct GeneralSettingsView: View {
-    @State private var shortcutKey: String = "⌘o"  // 默认快捷键
+    @ObservedObject var settingsModel: SettingsModel  // 使用 ObservedObject 引用 SettingsModel
 
     var body: some View {
         VStack {
             Form {
                 Section {
-                    TextField("划线翻译快捷键", text: $shortcutKey)
+                    TextField("划线翻译快捷键", text: $settingsModel.shortcutKey)  // 绑定到 SettingsModel 的属性
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
             }
             .padding()
             .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)  // 确保内容靠上排列
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
 struct AIServiceSettingsView: View {
-    @State private var baseURL: String = "https://api.openai.com"  // 默认 Base URL
-    @State private var apiKey: String = ""  // API Key
-    @State private var model: String = "gpt-3.5-turbo"  // 默认模型
+    @ObservedObject var settingsModel: SettingsModel  // 使用 ObservedObject 引用 SettingsModel
 
     var body: some View {
         VStack {
             Form {
                 Section {
-                    TextField("Base URL", text: $baseURL)
+                    TextField("Base URL", text: $settingsModel.baseURL)  // 绑定到 SettingsModel 的属性
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    SecureField("API Key", text: $apiKey)
+                    SecureField("API Key", text: $settingsModel.apiKey)  // 绑定到 SettingsModel 的属性
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    TextField("Model", text: $model)
+                    TextField("Model", text: $settingsModel.model)  // 绑定到 SettingsModel 的属性
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
             }
             .padding()
             .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)  // 确保内容靠上排列
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
