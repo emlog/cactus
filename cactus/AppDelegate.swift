@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let menu = NSMenu()
             
             let translateMenuItem = NSMenuItem(title: "选中翻译", action: #selector(openMain), keyEquivalent: "j")
-            translateMenuItem.image = NSImage(systemSymbolName: "globe", accessibilityDescription: nil) // 添加地球图标
+            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil) // 添加地球图标
             menu.addItem(translateMenuItem)
             
             menu.addItem(NSMenuItem.separator())

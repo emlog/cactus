@@ -29,7 +29,7 @@ struct MainView: View {
                     )
                     translatedText = translationService.translate(text: text) // 更新翻译结果
                 }) {
-                    Image(systemName: "globe") // 翻译
+                    Image(systemName: "translate") // 翻译
                         .frame(width: 80)
                 }
                 
