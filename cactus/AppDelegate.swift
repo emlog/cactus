@@ -64,13 +64,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-    
-    // 不再需要 deinit 中的清理代码，HotKey 会自动处理
-    
+        
     @objc func openSettings() {
         if settingsWindow == nil {
             settingsWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+                contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
                 styleMask: [.titled, .closable, .miniaturizable, .resizable],  // Add more window controls
                 backing: .buffered,
                 defer: false
@@ -82,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             settingsWindow?.contentViewController = hostingController
             settingsWindow?.title = "偏好设置"
             settingsWindow?.isReleasedWhenClosed = false
-            settingsWindow?.minSize = NSSize(width: 600, height: 400)  // Set minimum size
+            settingsWindow?.minSize = NSSize(width: 800, height: 600)  // Set minimum size
         }
         
         settingsWindow?.center()

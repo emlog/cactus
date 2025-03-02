@@ -61,7 +61,7 @@ struct MainView: View {
             }
         }
         .padding(20)
-        .frame(minWidth: 400, minHeight: translatedText == nil ? 300 : 400) // 动态调整高度
+        .frame(minWidth: 500, minHeight: 300) // 动态调整高度
         .toast(isPresenting: $showCopyToast) {
             AlertToast(type: .regular, title: toastMessage)
         }

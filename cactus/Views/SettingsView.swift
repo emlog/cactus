@@ -34,7 +34,7 @@ struct SettingsView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .frame(minWidth: 600, minHeight: 400)  // 确保整个视图有足够的空间
+        .frame(minWidth: 800, minHeight: 600)  // 确保整个视图有足够的空间
     }
 }
 
