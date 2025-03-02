@@ -35,7 +35,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // 创建菜单
             let menu = NSMenu()
             
-            menu.addItem(NSMenuItem(title: "翻译总结", action: #selector(openMain), keyEquivalent: "j"))
+            let translateMenuItem = NSMenuItem(title: "选中翻译", action: #selector(openMain), keyEquivalent: "j")
+            translateMenuItem.image = NSImage(systemSymbolName: "globe", accessibilityDescription: nil) // 添加地球图标
+            menu.addItem(translateMenuItem)
+            
             menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "偏好设置", action: #selector(openSettings), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "关于", action: #selector(openAbout), keyEquivalent: ""))
@@ -126,7 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let hostingController = NSHostingController(rootView: mainView)
             
             mainWindow?.contentViewController = hostingController
-            mainWindow?.title = "翻译总结"
+            mainWindow?.title = "选中翻译"
             mainWindow?.isReleasedWhenClosed = false
         }
         
