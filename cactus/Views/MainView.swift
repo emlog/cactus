@@ -6,6 +6,7 @@ struct MainView: View {
     @State private var translatedText: String? = nil // 用于存储翻译结果
     @ObservedObject var settings = SettingsModel() // 添加 SettingsModel 作为 ObservedObject
     @State private var showCopyToast = false // 用于控制气泡提示显示
+    @State private var toastMessage = "" // 用于存储提示信息
 
     var body: some View {
         VStack(spacing: 16) {
@@ -21,13 +22,18 @@ struct MainView: View {
             // 操作按钮
             HStack(spacing: 12) {
                 Button(action: {
-                    // 使用 SettingsModel 中的配置信息进行翻译操作
-                    let translationService = TranslationService(
-                        baseURL: settings.baseURL,
-                        apiKey: settings.apiKey,
-                        model: settings.model
-                    )
-                    translatedText = translationService.translate(text: text) // 更新翻译结果
+                    if text.isEmpty {
+                        toastMessage = "没有可被翻译的内容"
+                        showCopyToast = true
+                    } else {
+                        // 使用 SettingsModel 中的配置信息进行翻译操作
+                        let translationService = TranslationService(
+                            baseURL: settings.baseURL,
+                            apiKey: settings.apiKey,
+                            model: settings.model
+                        )
+                        translatedText = translationService.translate(text: text) // 更新翻译结果
+                    }
                 }) {
                     Image(systemName: "translate") // 翻译
                         .frame(width: 80)
@@ -57,7 +63,7 @@ struct MainView: View {
         .padding(20)
         .frame(minWidth: 400, minHeight: translatedText == nil ? 300 : 400) // 动态调整高度
         .toast(isPresenting: $showCopyToast) {
-            AlertToast(type: .regular, title: "复制成功")
+            AlertToast(type: .regular, title: toastMessage)
         }
     }
 
@@ -66,9 +72,14 @@ struct MainView: View {
     }
 
     func copyWriting() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.setString(text, forType: .string)
-        showCopyToast = true // 显示复制成功气泡提示
+        if text.isEmpty {
+            toastMessage = "没有可复制的内容"
+        } else {
+            let pasteboard = NSPasteboard.general
+            pasteboard.clearContents()
+            pasteboard.setString(text, forType: .string)
+            toastMessage = "复制成功"
+        }
+        showCopyToast = true // 显示气泡提示
     }
 }
