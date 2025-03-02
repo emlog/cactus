@@ -1,9 +1,11 @@
+import AlertToast
 import SwiftUI
 
 struct MainView: View {
     @State private var text: String = ""
     @State private var translatedText: String? = nil // 用于存储翻译结果
     @ObservedObject var settings = SettingsModel() // 添加 SettingsModel 作为 ObservedObject
+    @State private var showCopyToast = false // 用于控制气泡提示显示
 
     var body: some View {
         VStack(spacing: 16) {
@@ -27,14 +29,14 @@ struct MainView: View {
                     )
                     translatedText = translationService.translate(text: text) // 更新翻译结果
                 }) {
-                    Image(systemName: "globe") // 使用地球图标表示翻译
+                    Image(systemName: "globe") // 翻译
                         .frame(width: 80)
                 }
                 
                 Button(action: {
-                    // 复制文本操作
+                    copyWriting()
                 }) {
-                    Image(systemName: "doc.on.doc") // 使用复制图标
+                    Image(systemName: "doc.on.doc") // 复制
                         .frame(width: 80)
                 }
             }
@@ -54,9 +56,19 @@ struct MainView: View {
         }
         .padding(20)
         .frame(minWidth: 400, minHeight: translatedText == nil ? 300 : 400) // 动态调整高度
+        .toast(isPresenting: $showCopyToast) {
+            AlertToast(type: .regular, title: "复制成功")
+        }
     }
 
     func fillText(_ newText: String) {
         text = newText
+    }
+
+    func copyWriting() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+        showCopyToast = true // 显示复制成功气泡提示
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
 		F25DC7762D7290A2004A43DC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = F25DC7752D7290A2004A43DC /* HotKey */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F25DC7762D7290A2004A43DC /* HotKey in Frameworks */,
+				F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +73,7 @@
 			name = cactus;
 			packageProductDependencies = (
 				F25DC7752D7290A2004A43DC /* HotKey */,
+				F21B8B942D74320E00A2B3DF /* AlertToast */,
 			);
 			productName = cactus;
 			productReference = F292ABA82D6575070089583E /* cactus.app */;
@@ -102,6 +105,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */,
+				F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F292ABA92D6575070089583E /* Products */;
@@ -340,6 +344,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 		F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/soffes/HotKey";
@@ -351,6 +363,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F21B8B942D74320E00A2B3DF /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
 		F25DC7752D7290A2004A43DC /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */;
