@@ -12,9 +12,10 @@ struct GeneralSettingsPane: View {
             Settings.Section(title: "", bottomDivider: true) {
                 VStack {
                     Form {
-                        Section {
-                            TextField("划线翻译快捷键", text: $settingsModel.shortcutKey)  // 绑定到 SettingsModel 的属性
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        Settings.Section(label: { Text("AI助手快捷键") }) {
+                            // Use the defined KeyboardShortcuts.Name
+                            KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcut)
+                            .help(Text("打开AI助手的快捷键"))
                         }
                     }
                     .padding()

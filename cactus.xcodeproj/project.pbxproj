@@ -10,6 +10,7 @@
 		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
 		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
 		F25DC7762D7290A2004A43DC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = F25DC7752D7290A2004A43DC /* HotKey */; };
+		F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F21844C52D75DD6D0060A838 /* Settings in Frameworks */,
+				F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */,
 				F25DC7762D7290A2004A43DC /* HotKey in Frameworks */,
 				F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */,
 			);
@@ -77,6 +79,7 @@
 				F25DC7752D7290A2004A43DC /* HotKey */,
 				F21B8B942D74320E00A2B3DF /* AlertToast */,
 				F21844C42D75DD6D0060A838 /* Settings */,
+				F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */,
 			);
 			productName = cactus;
 			productReference = F292ABA82D6575070089583E /* cactus.app */;
@@ -110,6 +113,7 @@
 				F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */,
 				F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */,
 				F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */,
+				F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F292ABA92D6575070089583E /* Products */;
@@ -372,6 +376,14 @@
 				kind = branch;
 			};
 		};
+		F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -389,6 +401,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */;
 			productName = HotKey;
+		};
+		F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -45,7 +45,7 @@ struct GeneralSettingsView: View {
         VStack {
             Form {
                 Section {
-                    TextField("划线翻译快捷键", text: $settingsModel.shortcutKey)  // 绑定到 SettingsModel 的属性
+                    TextField("AI助手快捷键", text: $settingsModel.shortcutKey)  // 绑定到 SettingsModel 的属性
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
             }

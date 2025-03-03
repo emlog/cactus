@@ -1,4 +1,5 @@
 import Foundation
+import KeyboardShortcuts
 
 class SettingsModel: ObservableObject {
     @Published var shortcutKey: String {
@@ -7,6 +8,9 @@ class SettingsModel: ObservableObject {
         }
     }
     
+    // Define a KeyboardShortcuts.Name for the AI assistant shortcut
+    static let aiShortcut = KeyboardShortcuts.Name("aiShortcut")
+
     @Published var baseURL: String {
         didSet {
             UserDefaults.standard.set(baseURL, forKey: "baseURL")
