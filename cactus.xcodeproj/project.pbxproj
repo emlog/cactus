@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
 		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
 		F25DC7762D7290A2004A43DC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = F25DC7752D7290A2004A43DC /* HotKey */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F21844C52D75DD6D0060A838 /* Settings in Frameworks */,
 				F25DC7762D7290A2004A43DC /* HotKey in Frameworks */,
 				F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */,
 			);
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				F25DC7752D7290A2004A43DC /* HotKey */,
 				F21B8B942D74320E00A2B3DF /* AlertToast */,
+				F21844C42D75DD6D0060A838 /* Settings */,
 			);
 			productName = cactus;
 			productReference = F292ABA82D6575070089583E /* cactus.app */;
@@ -106,6 +109,7 @@
 			packageReferences = (
 				F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */,
 				F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */,
+				F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F292ABA92D6575070089583E /* Products */;
@@ -344,6 +348,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Settings.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
 		F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast";
@@ -363,6 +375,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F21844C42D75DD6D0060A838 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */;
+			productName = Settings;
+		};
 		F21B8B942D74320E00A2B3DF /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */;

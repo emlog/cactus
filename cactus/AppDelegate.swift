@@ -10,6 +10,8 @@ import SwiftUI
 import HotKey
 import Cocoa
 import ApplicationServices
+import Settings
+import Foundation
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
@@ -20,6 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // 使用 HotKey 库来处理全局快捷键
     private var hotKey: HotKey?
+    
+    private var settingsWindowController: SettingsWindowController?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 设置应用程序的激活策略为 .accessory，以隐藏程序坞图标
@@ -43,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(translateMenuItem)
             
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "偏好设置", action: #selector(openSettings), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "偏好设置", action: #selector(openPreferences), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "关于", action: #selector(openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "退出", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
@@ -90,6 +94,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow?.makeKeyAndOrderFront(nil)
         settingsWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+        
+    }
+
+    @objc func openPreferences() {
+        if settingsWindowController == nil {
+            // Use system symbols for toolbar icons with fallback
+            let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
+            let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
+            
+            settingsWindowController = SettingsWindowController(
+                panes: [
+                    Settings.Pane(
+                        identifier: Settings.PaneIdentifier.general,
+                        title: "通用",
+                        toolbarIcon: generalIcon
+                    ) {
+                        GeneralSettingsPane()
+                    },
+                    Settings.Pane(
+                        identifier: Settings.PaneIdentifier.ai,
+                        title: "AI服务",
+                        toolbarIcon: aiIcon
+                    ) {
+                        GeneralAiPane() // Assuming we have a proper view for storage settings
+                    }
+                ]
+            )
+        }
+        
+        settingsWindowController?.show()
+        settingsWindowController?.window?.orderFrontRegardless()
     }
     
     @objc func openAbout() {
