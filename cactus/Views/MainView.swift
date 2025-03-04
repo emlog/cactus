@@ -14,10 +14,13 @@ struct MainView: View {
                 // 多行文本输入框
                 TextEditor(text: $text)
                     .font(.system(.body))
-                    .frame(maxWidth: .infinity, minHeight: 200)
+                    .frame(maxWidth: .infinity, minHeight: 50)
+                    .padding(10) // Add padding between text and border
+                    .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                            .stroke(Color(.separatorColor), lineWidth: 1) // Use system color for border
                     )
             }
             
@@ -65,7 +68,7 @@ struct MainView: View {
                 }
             }
         }
-        .padding(20)
+        .padding(10) // 减少 padding 的值
         .frame(minWidth: 500, minHeight: 300) // 动态调整高度
         .toast(isPresenting: $showCopyToast) {
             AlertToast(type: .regular, title: toastMessage)
