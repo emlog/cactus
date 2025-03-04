@@ -10,7 +10,7 @@ struct MainView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("输入文本")) {
+            Section() {
                 // 多行文本输入框
                 TextEditor(text: $text)
                     .font(.system(.body))
@@ -21,7 +21,7 @@ struct MainView: View {
                     )
             }
             
-            Section(header: Text("操作")) {
+            Section() {
                 // 操作按钮
                 HStack(spacing: 12) {
                     Button(action: {
@@ -39,15 +39,17 @@ struct MainView: View {
                         }
                     }) {
                         Image(systemName: "translate") // 翻译
-                            .frame(width: 80)
+                            .frame(width: 30, height: 30) // 统一按钮尺寸
                     }
+                    .buttonStyle(HoverButtonStyle()) // 应用自定义按钮样式
                     
                     Button(action: {
                         copyWriting()
                     }) {
                         Image(systemName: "doc.on.doc") // 复制
-                            .frame(width: 80)
+                            .frame(width: 30, height: 30) // 统一按钮尺寸
                     }
+                    .buttonStyle(HoverButtonStyle()) // 应用自定义按钮样式
                 }
             }
             
@@ -85,4 +87,24 @@ struct MainView: View {
         }
         showCopyToast = true // 显示气泡提示
     }
+}
+
+struct HoverButtonStyle: ButtonStyle {
+    @State private var isHovered = false
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.gray.opacity(isHovered ? 0.5 : 0), lineWidth: 1)
+            )
+            .onHover { hovering in
+                isHovered = hovering
+            }
+    }
+}
+
+#Preview {
+    MainView()
+        .environment(\.locale, .init(identifier: "en"))
 }
