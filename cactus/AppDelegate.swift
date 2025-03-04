@@ -50,8 +50,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem?.menu = menu
         }
         
+        // 初始化窗口
+        initializeWindows()
+        
         // 设置全局快捷键
         setupGlobalShortcut()
+    }
+    
+    private func initializeWindows() {
+        // 初始化主窗口
+        mainWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 400),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        let mainView = MainView()
+        let hostingController = NSHostingController(rootView: mainView)
+        mainWindow?.contentViewController = hostingController
+        mainWindow?.title = "选中翻译"
+        mainWindow?.isReleasedWhenClosed = false
+        
+        // 初始化关于窗口
+        aboutWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        let aboutView = AboutView()
+        let aboutHostingController = NSHostingController(rootView: aboutView)
+        aboutWindow?.contentViewController = aboutHostingController
+        aboutWindow?.title = "关于"
+        aboutWindow?.isReleasedWhenClosed = false
     }
     
     // Setup global keyboard shortcut using KeyboardShortcuts
@@ -95,50 +126,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func openAbout() {
-        if aboutWindow == nil {
-            aboutWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
-                styleMask: [.titled, .closable],
-                backing: .buffered,
-                defer: false
-            )
-            
-            let aboutView = AboutView()
-            let hostingController = NSHostingController(rootView: aboutView)
-            
-            aboutWindow?.contentViewController = hostingController
-            aboutWindow?.title = "关于"
-            aboutWindow?.isReleasedWhenClosed = false
-            
-            // 初次打开时将窗口置于屏幕中心
-            aboutWindow?.center()
-        }
-        
         // 调整窗口位置到当前屏幕的中心
+        aboutWindow?.center()
         aboutWindow?.makeKeyAndOrderFront(nil)
         aboutWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
     
     @objc func openMain() {
-        if mainWindow == nil {
-            mainWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 500, height: 400),
-                styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                backing: .buffered,
-                defer: false
-            )
-            mainWindow?.center()
-            
-            // 确保使用 Views 目录下的 MainView
-            let mainView = MainView()
-            let hostingController = NSHostingController(rootView: mainView)
-            
-            mainWindow?.contentViewController = hostingController
-            mainWindow?.title = "选中翻译"
-            mainWindow?.isReleasedWhenClosed = false
-        }
-        
         // 使用辅助功能 API 获取选中文本
         if let selectedText = getSelectedText() {
             print("Selected Text: \(selectedText)")

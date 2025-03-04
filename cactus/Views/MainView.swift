@@ -9,55 +9,58 @@ struct MainView: View {
     @State private var toastMessage = "" // 用于存储提示信息
     
     var body: some View {
-        VStack(spacing: 16) {
-            // 多行文本输入框
-            TextEditor(text: $text)
-                .font(.system(.body))
-                .frame(maxWidth: .infinity, minHeight: 200)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                )
-            
-            // 操作按钮
-            HStack(spacing: 12) {
-                Button(action: {
-                    if text.isEmpty {
-                        toastMessage = "没有可被翻译的内容"
-                        showCopyToast = true
-                    } else {
-                        // 使用 SettingsModel 中的配置信息进行翻译操作
-                        let translationService = TranslationService(
-                            baseURL: settings.baseURL,
-                            apiKey: settings.apiKey,
-                            model: settings.model
-                        )
-                        translatedText = translationService.translate(text: text) // 更新翻译结果
-                    }
-                }) {
-                    Image(systemName: "translate") // 翻译
-                        .frame(width: 80)
-                }
-                
-                Button(action: {
-                    copyWriting()
-                }) {
-                    Image(systemName: "doc.on.doc") // 复制
-                        .frame(width: 80)
-                }
-            }
-            .padding(.top, 8)
-            
-            // 动态生成的文本框，用于展示翻译结果
-            if let translatedText = translatedText {
-                TextEditor(text: .constant(translatedText))
+        Form {
+            Section(header: Text("输入文本")) {
+                // 多行文本输入框
+                TextEditor(text: $text)
                     .font(.system(.body))
-                    .frame(maxWidth: .infinity, minHeight: 100)
+                    .frame(maxWidth: .infinity, minHeight: 200)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.blue.opacity(0.2), lineWidth: 1)
+                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                     )
-                    .padding(.top, 8)
+            }
+            
+            Section(header: Text("操作")) {
+                // 操作按钮
+                HStack(spacing: 12) {
+                    Button(action: {
+                        if text.isEmpty {
+                            toastMessage = "没有可被翻译的内容"
+                            showCopyToast = true
+                        } else {
+                            // 使用 SettingsModel 中的配置信息进行翻译操作
+                            let translationService = TranslationService(
+                                baseURL: settings.baseURL,
+                                apiKey: settings.apiKey,
+                                model: settings.model
+                            )
+                            translatedText = translationService.translate(text: text) // 更新翻译结果
+                        }
+                    }) {
+                        Image(systemName: "translate") // 翻译
+                            .frame(width: 80)
+                    }
+                    
+                    Button(action: {
+                        copyWriting()
+                    }) {
+                        Image(systemName: "doc.on.doc") // 复制
+                            .frame(width: 80)
+                    }
+                }
+            }
+            
+            if let translatedText = translatedText {
+                Section(header: Text("翻译结果")) {
+                    TextEditor(text: .constant(translatedText))
+                        .font(.system(.body))
+                        .frame(maxWidth: .infinity, minHeight: 100)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.blue.opacity(0.2), lineWidth: 1)
+                        )
+                }
             }
         }
         .padding(20)
