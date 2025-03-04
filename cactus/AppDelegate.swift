@@ -7,9 +7,7 @@
 
 import AppKit
 import SwiftUI
-import HotKey
-import Cocoa
-import ApplicationServices
+import KeyboardShortcuts
 import Settings
 import Foundation
 
@@ -19,9 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var settingsWindow: NSWindow?
     var aboutWindow: NSWindow?
     var mainWindow: NSWindow?
-    
-    // 使用 HotKey 库来处理全局快捷键
-    private var hotKey: HotKey?
     
     private var settingsWindowController: SettingsWindowController?
     
@@ -59,13 +54,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupGlobalShortcut()
     }
     
-    // 使用 HotKey 库设置全局快捷键
+    // Setup global keyboard shortcut using KeyboardShortcuts
     private func setupGlobalShortcut() {
-        // 创建 Command+J 快捷键
-        hotKey = HotKey(key: .j, modifiers: [.command])
-        
-        // 设置快捷键触发时的回调
-        hotKey?.keyDownHandler = { [weak self] in
+        // Register the keyboard shortcut
+        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcut) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain()
             }
