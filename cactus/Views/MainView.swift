@@ -7,7 +7,7 @@ struct MainView: View {
     @ObservedObject var settings = SettingsModel() // 添加 SettingsModel 作为 ObservedObject
     @State private var showCopyToast = false // 用于控制气泡提示显示
     @State private var toastMessage = "" // 用于存储提示信息
-
+    
     var body: some View {
         VStack(spacing: 16) {
             // 多行文本输入框
@@ -66,11 +66,11 @@ struct MainView: View {
             AlertToast(type: .regular, title: toastMessage)
         }
     }
-
+    
     func fillText(_ newText: String) {
         text = newText
     }
-
+    
     func copyWriting() {
         if text.isEmpty {
             toastMessage = "没有可复制的内容"

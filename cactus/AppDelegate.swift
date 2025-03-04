@@ -63,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-
+    
     @objc func openPreferences() {
         if settingsWindowController == nil {
             // Use system symbols for toolbar icons with fallback
@@ -152,7 +152,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
-
+    
     // 获取当前选中文本的函数
     func getSelectedText() -> String? {
         print("Fetching selected text...")

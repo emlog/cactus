@@ -4,7 +4,7 @@ struct TranslationService {
     let baseURL: String
     let apiKey: String
     let model: String
-
+    
     func translate(text: String) -> String? {
         guard let url = URL(string: baseURL) else {
             return nil

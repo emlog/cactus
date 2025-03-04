@@ -1,4 +1,4 @@
-    //
+//
 //  ClipboardManager.swift
 //  cactus
 //
