@@ -63,31 +63,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-        
-    @objc func openSettings() {
-        if settingsWindow == nil {
-            settingsWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
-                styleMask: [.titled, .closable, .miniaturizable, .resizable],  // Add more window controls
-                backing: .buffered,
-                defer: false
-            )
-
-            let settingsView = SettingsView()
-            let hostingController = NSHostingController(rootView: settingsView)
-            
-            settingsWindow?.contentViewController = hostingController
-            settingsWindow?.title = "偏好设置"
-            settingsWindow?.isReleasedWhenClosed = false
-            settingsWindow?.minSize = NSSize(width: 800, height: 600)  // Set minimum size
-        }
-        
-        settingsWindow?.center()
-        settingsWindow?.makeKeyAndOrderFront(nil)
-        settingsWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
-        
-    }
 
     @objc func openPreferences() {
         if settingsWindowController == nil {
@@ -109,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         title: "AI服务",
                         toolbarIcon: aiIcon
                     ) {
-                        GeneralAiPane() // Assuming we have a proper view for storage settings
+                        GeneralAiPane()
                     }
                 ]
             )
@@ -177,7 +152,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
-    
+
     // 获取当前选中文本的函数
     func getSelectedText() -> String? {
         print("Fetching selected text...")
