@@ -109,10 +109,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             aboutWindow?.contentViewController = hostingController
             aboutWindow?.title = "关于"
             aboutWindow?.isReleasedWhenClosed = false
+            
+            // 初次打开时将窗口置于屏幕中心
+            aboutWindow?.center()
         }
         
         // 调整窗口位置到当前屏幕的中心
-        aboutWindow?.center()
         aboutWindow?.makeKeyAndOrderFront(nil)
         aboutWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
@@ -126,6 +128,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 backing: .buffered,
                 defer: false
             )
+            mainWindow?.center()
             
             // 确保使用 Views 目录下的 MainView
             let mainView = MainView()
