@@ -3,21 +3,22 @@
 仙人掌
 Cactus
 
-仙人掌 - AI快速翻译
-Quick translation, AI interpretation
+仙人掌 - AI阅读辅助工具
+AI text translation, summarization, interpretation
 
-仙人掌 - AI快速翻译 是一款对选中文字快速进行翻译、AI解读总结的小工具。
+仙人掌 - 是一款对选中文字快速进行翻译、总结、解释的阅读辅助工具
 
-Cactus - Quick Translation and Interpretation
-
-Cactus - Quick Translation and Interpretation is a small tool that quickly translates and summarizes selected text using AI.
-
+Cactus- is a reading aid tool that quickly translates, summarizes and explains selected text
 
 【主要功能】
 
-选中翻译：选中任意文本，按下快捷键，快速完成翻译
+文本翻译：选中任意文本，按下快捷键，快速完成翻译
+文本总结：对选中的文本进行精炼的总结
+文本解释：用更易于理解的语言解释选中文本中的概念
 
 
 【Main Features】
 
-Select translation: Select any text and press the shortcut key to quickly complete the translation
+Text translation: Select any text and press the shortcut key to quickly complete the translation
+Text summary: a concise summary of the selected text
+Text explanation: Explain the concepts in the selected text in more understandable language

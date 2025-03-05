@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
 		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
-		F25DC7762D7290A2004A43DC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = F25DC7752D7290A2004A43DC /* HotKey */; };
 		F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */; };
 		F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99DEF2D76F31E00BF5BA3 /* LaunchAtLogin */; };
 /* End PBXBuildFile section */
@@ -33,7 +32,6 @@
 			files = (
 				F21844C52D75DD6D0060A838 /* Settings in Frameworks */,
 				F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */,
-				F25DC7762D7290A2004A43DC /* HotKey in Frameworks */,
 				F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */,
 				F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */,
 			);
@@ -78,7 +76,6 @@
 			);
 			name = cactus;
 			packageProductDependencies = (
-				F25DC7752D7290A2004A43DC /* HotKey */,
 				F21B8B942D74320E00A2B3DF /* AlertToast */,
 				F21844C42D75DD6D0060A838 /* Settings */,
 				F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */,
@@ -113,7 +110,6 @@
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */,
 				F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */,
 				F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */,
 				F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
@@ -287,7 +283,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌 - 快速翻译、AI解读";
+				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌 - AI阅读辅助工具";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +316,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌 - 快速翻译、AI解读";
+				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌 - AI阅读辅助工具";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -376,14 +372,6 @@
 				minimumVersion = 1.3.9;
 			};
 		};
-		F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/soffes/HotKey";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -412,11 +400,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
-		};
-		F25DC7752D7290A2004A43DC /* HotKey */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F25DC7742D7290A2004A43DC /* XCRemoteSwiftPackageReference "HotKey" */;
-			productName = HotKey;
 		};
 		F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;

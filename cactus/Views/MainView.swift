@@ -61,14 +61,26 @@ struct MainView: View {
                     TextEditor(text: .constant(translatedText))
                         .font(.system(.body))
                         .frame(maxWidth: .infinity, minHeight: 100)
-                        .padding(10) // Add padding between text and border
-                        .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
+                        .padding(10)
+                        .background(Color(.textBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                .stroke(Color(.separatorColor), lineWidth: 1) // Use system color for border
+                                .stroke(Color(.separatorColor), lineWidth: 1)
                         )
+                }
+                Section() {
+                    // 操作按钮
+                    HStack(spacing: 12) {
+                        Button(action: {
+                            copyResp()
+                        }) {
+                            Image(systemName: "doc.on.doc") // 复制
+                                .frame(width: 30, height: 30)
+                        }
+                        .buttonStyle(HoverButtonStyle()) // 应用自定义按钮样式
+                    }
                 }
             }
         }
@@ -91,6 +103,18 @@ struct MainView: View {
             pasteboard.clearContents()
             pasteboard.setString(text, forType: .string)
             toastMessage = "复制成功"
+        }
+        showCopyToast = true // 显示气泡提示
+    }
+    
+    func copyResp() {
+        if let translatedText = translatedText, !translatedText.isEmpty {
+            let pasteboard = NSPasteboard.general
+            pasteboard.clearContents()
+            pasteboard.setString(translatedText, forType: .string)
+            toastMessage = "翻译结果复制成功"
+        } else {
+            toastMessage = "没有可复制的翻译结果"
         }
         showCopyToast = true // 显示气泡提示
     }

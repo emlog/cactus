@@ -37,8 +37,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // 创建菜单
             let menu = NSMenu()
             
-            let translateMenuItem = NSMenuItem(title: "选中翻译", action: #selector(openMain), keyEquivalent: "j")
-            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil) // 添加地球图标
+            let translateMenuItem = NSMenuItem(title: "阅读辅助", action: #selector(openMain), keyEquivalent: "j")
+            translateMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil) // 添加地球图标
             menu.addItem(translateMenuItem)
             
             menu.addItem(NSMenuItem.separator())
@@ -68,8 +68,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
-        mainWindow?.title = "选中翻译"
+        mainWindow?.title = ""
         mainWindow?.isReleasedWhenClosed = false
+        
+        // 动态调整窗口高度
+        let contentSize = hostingController.view.intrinsicContentSize
+        mainWindow?.setContentSize(contentSize)
         
         // 初始化关于窗口
         aboutWindow = NSWindow(
@@ -143,7 +147,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 mainView.fillText(selectedText)
             }
         }
-        print("main window is created")
         // 确保窗口在最上层
         mainWindow?.center()
         mainWindow?.makeKeyAndOrderFront(nil)
