@@ -57,13 +57,17 @@ struct MainView: View {
             }
             
             if let translatedText = translatedText {
-                Section(header: Text("翻译结果")) {
+                Section() {
                     TextEditor(text: .constant(translatedText))
                         .font(.system(.body))
                         .frame(maxWidth: .infinity, minHeight: 100)
+                        .padding(10) // Add padding between text and border
+                        .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.blue.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                .stroke(Color(.separatorColor), lineWidth: 1) // Use system color for border
                         )
                 }
             }
