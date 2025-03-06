@@ -2,20 +2,19 @@ import AlertToast
 import SwiftUI
 
 struct MainView: View {
-    @State private var text: String = ""
-    @State private var translatedText: String? = nil // 用于存储翻译结果
-    @ObservedObject var settings = SettingsModel() // 添加 SettingsModel 作为 ObservedObject
-    @State private var showCopyToast = false // 用于控制气泡提示显示
-    @State private var toastMessage = "" // 用于存储提示信息
+    @StateObject private var contentModel = TextContentModel.shared
+    @ObservedObject var settings = SettingsModel()
+    @State private var showCopyToast = false
+    @State private var toastMessage = ""
     
     var body: some View {
         Form {
             Section() {
-                // 多行文本输入框
-                TextEditor(text: $text)
+                // 多行文本输入框，绑定到 contentModel.text
+                TextEditor(text: $contentModel.text)
                     .font(.system(.body))
                     .frame(maxWidth: .infinity, minHeight: 50)
-                    .padding(10) // Add padding between text and border
+                    .padding(10)
                     .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
@@ -28,7 +27,7 @@ struct MainView: View {
                 // 操作按钮
                 HStack(spacing: 12) {
                     Button(action: {
-                        if text.isEmpty {
+                        if contentModel.text.isEmpty {
                             toastMessage = "没有可被翻译的内容"
                             showCopyToast = true
                         } else {
@@ -38,7 +37,7 @@ struct MainView: View {
                                 apiKey: settings.apiKey,
                                 model: settings.model
                             )
-                            translatedText = translationService.translate(text: text) // 更新翻译结果
+                            contentModel.translatedText = translationService.translate(text: contentModel.text)
                         }
                     }) {
                         Image(systemName: "translate") // 翻译
@@ -56,7 +55,7 @@ struct MainView: View {
                 }
             }
             
-            if let translatedText = translatedText {
+            if let translatedText = contentModel.translatedText {
                 Section() {
                     TextEditor(text: .constant(translatedText))
                         .font(.system(.body))
@@ -94,25 +93,25 @@ struct MainView: View {
     func fillText(_ newText: String) {
         DispatchQueue.main.async {
             print("new text: \(newText)")
-            self.text = newText
-            print("updated text: \(self.text)")
+            self.contentModel.text = newText
+            print("updated text: \(self.contentModel.text)")
         }
     }
     
     func copyWriting() {
-        if text.isEmpty {
+        if contentModel.text.isEmpty {
             toastMessage = "没有可复制的内容"
         } else {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
-            pasteboard.setString(text, forType: .string)
+            pasteboard.setString(contentModel.text, forType: .string)
             toastMessage = "复制成功"
         }
-        showCopyToast = true // 显示气泡提示
+        showCopyToast = true
     }
     
     func copyResp() {
-        if let translatedText = translatedText, !translatedText.isEmpty {
+        if let translatedText = contentModel.translatedText, !translatedText.isEmpty {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(translatedText, forType: .string)
