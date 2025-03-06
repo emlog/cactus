@@ -6,9 +6,9 @@ Cactus
 仙人掌 - AI阅读辅助工具
 AI text translation, summarization, interpretation
 
-仙人掌 - 是一款对选中文字快速进行翻译、总结、解释的阅读辅助工具
+仙人掌 - 是一款基于AI大模型对文字快速进行翻译、总结、解释的阅读辅助工具
 
-Cactus- is a reading aid tool that quickly translates, summarizes and explains selected text
+Cactus - is a reading assistant tool based on an AI large model that quickly translates, summarizes, and explains text.
 
 【主要功能】
 
