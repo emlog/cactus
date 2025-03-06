@@ -24,30 +24,29 @@ struct MainView: View {
             }
             
             Section() {
-                // 操作按钮
                 HStack(spacing: 12) {
+                     // 翻译
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "没有可被翻译的内容"
                             showCopyToast = true
                         } else {
-                            // 使用 SettingsModel 中的配置信息进行翻译操作
                             let translationService = TranslationService()
                             contentModel.translatedText = translationService.translate(text: contentModel.text)
                         }
                     }) {
-                        Image(systemName: "translate") // 翻译
-                            .frame(width: 30, height: 30) // 统一按钮尺寸
+                        Image(systemName: "translate")
+                            .frame(width: 30, height: 30)
                     }
-                    .buttonStyle(HoverButtonStyle()) // 应用自定义按钮样式
-                    
+                    .buttonStyle(HoverButtonStyle())
+                     // 复制
                     Button(action: {
                         copyWriting()
                     }) {
-                        Image(systemName: "doc.on.doc") // 复制
-                            .frame(width: 30, height: 30) // 统一按钮尺寸
+                        Image(systemName: "doc.on.doc")
+                            .frame(width: 30, height: 30)
                     }
-                    .buttonStyle(HoverButtonStyle()) // 应用自定义按钮样式
+                    .buttonStyle(HoverButtonStyle())
                 }
             }
             
@@ -66,7 +65,6 @@ struct MainView: View {
                         )
                 }
                 Section() {
-                    // 操作按钮
                     HStack(spacing: 12) {
                         Button(action: {
                             copyResp()
@@ -74,13 +72,13 @@ struct MainView: View {
                             Image(systemName: "doc.on.doc") // 复制
                                 .frame(width: 30, height: 30)
                         }
-                        .buttonStyle(HoverButtonStyle()) // 应用自定义按钮样式
+                        .buttonStyle(HoverButtonStyle())
                     }
                 }
             }
         }
-        .padding(10) // 减少 padding 的值
-        .frame(minWidth: 500, minHeight: 300) // 动态调整高度
+        .padding(10)
+        .frame(minWidth: 500, minHeight: 300)
         .toast(isPresenting: $showCopyToast) {
             AlertToast(type: .regular, title: toastMessage)
         }
@@ -111,9 +109,9 @@ struct MainView: View {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(translatedText, forType: .string)
-            toastMessage = "翻译结果复制成功"
+            toastMessage = "复制成功"
         } else {
-            toastMessage = "没有可复制的翻译结果"
+            toastMessage = "没有可复制的内容"
         }
         showCopyToast = true // 显示气泡提示
     }
