@@ -153,6 +153,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 print("Selected Text3: \(selectedText)")
                 DispatchQueue.main.async {
                     hostingController.rootView.fillText(selectedText)
+                    // 自动翻译逻辑
+                    //let translationService = TranslationService()
+                    //TextContentModel.shared.translatedText = translationService.translate(text: TextContentModel.shared.text)
                 }
             }
             print("Selected Text4: \(selectedText)")
