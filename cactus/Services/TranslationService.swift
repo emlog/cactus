@@ -1,18 +1,16 @@
 import Foundation
 
 struct TranslationService {
-    let baseURL: String
-    let apiKey: String
-    let model: String
     
     func translate(text: String) -> String? {
-        guard let url = URL(string: baseURL) else {
+        let settings = SettingsModel.shared
+        guard let url = URL(string: settings.baseURL) else {
             return nil
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(settings.apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         print("Request URL: \(url)")
@@ -20,7 +18,7 @@ struct TranslationService {
         
         // Update the body to include the 'messages' parameter
         let body: [String: Any] = [
-            "model": model,
+            "model": settings.model,
             "messages": [
                 ["role": "user", "content": "请把 === 后面的中文翻译为英文，其他语言则翻译为中文，注意不要输出任何提示内容 === " + text]
             ],

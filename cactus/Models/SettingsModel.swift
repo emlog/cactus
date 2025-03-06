@@ -2,6 +2,9 @@ import Foundation
 import KeyboardShortcuts
 
 class SettingsModel: ObservableObject {
+    
+    static let shared = SettingsModel()
+    
     @Published var shortcutKey: String {
         didSet {
             UserDefaults.standard.set(shortcutKey, forKey: "shortcutKey")

@@ -3,7 +3,7 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared // 将 @StateObject 替换为 @ObservedObject
-    @ObservedObject var settings = SettingsModel()
+    @ObservedObject var settings = SettingsModel.shared
     @State private var showCopyToast = false
     @State private var toastMessage = ""
     
@@ -32,11 +32,7 @@ struct MainView: View {
                             showCopyToast = true
                         } else {
                             // 使用 SettingsModel 中的配置信息进行翻译操作
-                            let translationService = TranslationService(
-                                baseURL: settings.baseURL,
-                                apiKey: settings.apiKey,
-                                model: settings.model
-                            )
+                            let translationService = TranslationService()
                             contentModel.translatedText = translationService.translate(text: contentModel.text)
                         }
                     }) {
