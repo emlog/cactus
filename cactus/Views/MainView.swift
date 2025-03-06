@@ -2,7 +2,7 @@ import AlertToast
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var contentModel = TextContentModel.shared
+    @ObservedObject private var contentModel = TextContentModel.shared // 将 @StateObject 替换为 @ObservedObject
     @ObservedObject var settings = SettingsModel()
     @State private var showCopyToast = false
     @State private var toastMessage = ""
