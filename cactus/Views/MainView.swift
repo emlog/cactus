@@ -92,7 +92,11 @@ struct MainView: View {
     }
     
     func fillText(_ newText: String) {
-        text = newText
+        DispatchQueue.main.async {
+            print("new text: \(newText)")
+            self.text = newText
+            print("updated text: \(self.text)")
+        }
     }
     
     func copyWriting() {

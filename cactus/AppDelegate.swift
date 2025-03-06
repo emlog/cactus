@@ -138,20 +138,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func openMain() {
-        // 使用辅助功能 API 获取选中文本
-        if let selectedText = getSelectedText() {
-            print("Selected Text: \(selectedText)")
-            
-            // 将选中的文本填充到 MainView 的文本区域
-            if let mainView = mainWindow?.contentViewController as? MainView {
-                mainView.fillText(selectedText)
-            }
-        }
         // 确保窗口在最上层
         mainWindow?.center()
         mainWindow?.makeKeyAndOrderFront(nil)
         mainWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+        
+        // 使用辅助功能 API 获取选中文本
+        if let selectedText = getSelectedText() {
+            print("Selected Text2: \(selectedText)")
+            
+            // 将选中的文本填充到 MainView 的文本区域
+            if let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> {
+                print("Selected Text3: \(selectedText)")
+                DispatchQueue.main.async {
+                    hostingController.rootView.fillText(selectedText)
+                }
+            }
+            print("Selected Text4: \(selectedText)")
+        }
     }
     
     // 获取当前选中文本的函数
