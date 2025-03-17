@@ -2,10 +2,10 @@ import Foundation
 
 struct TranslationService {
     
-    func translate(text: String) -> String? {
+    func translate(text: String) {
         let settings = SettingsModel.shared
         guard let url = URL(string: settings.baseURL) else {
-            return nil
+            return
         }
         
         var request = URLRequest(url: url)
@@ -30,7 +30,6 @@ struct TranslationService {
             print("Request Body: \(String(data: httpBody, encoding: .utf8) ?? "")")
         }
         
-        var resultText: String? = nil
         let semaphore = DispatchSemaphore(value: 0)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -49,13 +48,15 @@ struct TranslationService {
             if let data = data {
                 print("Response Data: \(String(data: data, encoding: .utf8) ?? "")")
                 if let result = try? JSONDecoder().decode(OpenAIResponse.self, from: data) {
-                    resultText = result.choices.first?.message.content
+                    // 使用 DispatchQueue.main.async 确保在主线程上更新 translatedText
+                    DispatchQueue.main.async {
+                        TextContentModel.shared.translatedText = result.choices.first?.message.content
+                    }
                 }
             }
         }.resume()
         
         semaphore.wait()
-        return resultText
     }
 }
 

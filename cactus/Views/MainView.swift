@@ -32,7 +32,7 @@ struct MainView: View {
                             showCopyToast = true
                         } else {
                             let translationService = TranslationService()
-                            contentModel.translatedText = translationService.translate(text: contentModel.text)
+                            translationService.translate(text: contentModel.text)
                         }
                     }) {
                         Image(systemName: "translate")
@@ -132,7 +132,7 @@ struct HoverButtonStyle: ButtonStyle {
     }
 }
 
-#Preview {
-    MainView()
-        .environment(\.locale, .init(identifier: "en"))
-}
+//#Preview {
+//    MainView()
+//        .environment(\.locale, .init(identifier: "en"))
+//}
