@@ -48,6 +48,8 @@ struct TranslationService {
             if let data = data {
                 print("Response Data: \(String(data: data, encoding: .utf8) ?? "")")
                 if let result = try? JSONDecoder().decode(OpenAIResponse.self, from: data) {
+                    // 在 SwiftUI 中，通常我们会在后台线程中执行耗时操作，然后在完成后更新 UI。
+                    // 因为 SwiftUI UI 更新要求在主线程执行，所以需要通过 DispatchQueue.main.async 来确保在主线程更新视图。
                     // 使用 DispatchQueue.main.async 确保在主线程上更新 translatedText
                     DispatchQueue.main.async {
                         TextContentModel.shared.translatedText = result.choices.first?.message.content
