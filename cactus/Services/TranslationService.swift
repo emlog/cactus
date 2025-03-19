@@ -20,7 +20,7 @@ struct TranslationService {
         let body: [String: Any] = [
             "model": settings.model,
             "messages": [
-                ["role": "user", "content": "请把 === 后面的中文翻译为英文，其他语言则翻译为中文，注意不要输出任何提示内容 === " + text]
+                ["role": "user", "content":  text + "\n\n 尽可能快的将上面的中文翻译为英文，非中文则翻译为中文，注意不要输出任何提示内容"]
             ],
             "max_tokens": 1000
         ]
