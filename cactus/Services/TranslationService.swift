@@ -51,51 +51,62 @@ class TranslationService: NSObject, URLSessionDataDelegate {
         buffer.append(data)
         
         // 尝试从buffer中提取完整的SSE消息
-        if let bufferString = String(data: buffer, encoding: .utf8) {
-            let lines = bufferString.components(separatedBy: "\n")
-            var processedUpTo = 0
+        guard let bufferString = String(data: buffer, encoding: .utf8) else {
+            return // 如果无法解码数据，直接返回
+        }
+        
+        let lines = bufferString.components(separatedBy: "\n")
+        var processedUpTo = 0
+        // 移除未使用的变量
+        
+        for (index, line) in lines.enumerated() {
+            // 跳过空行
+            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmedLine.isEmpty {
+                processedUpTo = index + 1
+                continue
+            }
             
-            for (index, line) in lines.enumerated() {
-                // 跳过空行
-                let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-                if trimmedLine.isEmpty {
+            // 检查是否是数据行
+            if trimmedLine.hasPrefix("data: ") {
+                let dataContent = trimmedLine.dropFirst(6) // 移除 "data: " 前缀
+                
+                // 检查是否是结束标记
+                if dataContent == "[DONE]" {
+                    print("流式输出完成")
                     processedUpTo = index + 1
                     continue
                 }
                 
-                // 检查是否是数据行
-                if trimmedLine.hasPrefix("data: ") {
-                    let dataContent = trimmedLine.dropFirst(6) // 移除 "data: " 前缀
-                    
-                    // 检查是否是结束标记
-                    if dataContent == "[DONE]" {
-                        print("流式输出完成")
-                        processedUpTo = index + 1
-                        continue
-                    }
-                    
-                    // 尝试解析 JSON
-                    if let jsonData = String(dataContent).data(using: .utf8),
-                       let streamResponse = try? JSONDecoder().decode(StreamResponse.self, from: jsonData),
-                       let content = streamResponse.choices.first?.delta.content {
-                        
-                        // 累积内容
-                        fullContent += content
-                        
-                        // 更新 UI
-                        DispatchQueue.main.async {
-                            TextContentModel.shared.translatedText = self.fullContent
+                // 尝试解析 JSON
+                if let jsonData = String(dataContent).data(using: .utf8) {
+                    do {
+                        let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
+                        if let content = streamResponse.choices.first?.delta.content {
+                            // 累积内容
+                            fullContent += content
+                            
+                            // 更新 UI
+                            DispatchQueue.main.async {
+                                TextContentModel.shared.translatedText = self.fullContent
+                            }
                         }
+                    } catch {
+                        print("JSON解析错误: \(error.localizedDescription)")
                     }
-                    
-                    processedUpTo = index + 1
                 }
+                
+                processedUpTo = index + 1
             }
-            
-            // 移除已处理的部分
-            if processedUpTo > 0 {
-                let processedData = lines[..<processedUpTo].joined(separator: "\n").data(using: .utf8) ?? Data()
-                buffer.removeFirst(min(processedData.count, buffer.count))
+        }
+        
+        // 移除已处理的部分
+        if processedUpTo > 0 {
+            if let processedString = lines[..<processedUpTo].joined(separator: "\n").data(using: .utf8) {
+                let bytesToRemove = min(processedString.count, buffer.count)
+                if bytesToRemove > 0 {
+                    buffer.removeFirst(bytesToRemove)
+                }
             }
         }
     }
