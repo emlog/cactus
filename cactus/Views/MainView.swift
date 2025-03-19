@@ -37,12 +37,12 @@ struct MainView: View {
                             
                             // 在后台线程执行翻译
                             DispatchQueue.global(qos: .userInitiated).async {
-                                translationService.translate(text: contentModel.text)
-                                
-                                // 翻译完成后，在主线程更新UI
-                                DispatchQueue.main.async {
-                                    isTranslating = false // 翻译完成，重置状态
-                                }
+                                translationService.translate(text: contentModel.text, completion: {
+                                    // 翻译完成后，在主线程更新UI
+                                    DispatchQueue.main.async {
+                                        isTranslating = false // 翻译完成，重置状态
+                                    }
+                                })
                             }
                         }
                     }) {

@@ -4,9 +4,11 @@ class TranslationService: NSObject, URLSessionDataDelegate {
     private var fullContent = ""
     private var buffer = Data()
     
-    func translate(text: String) {
+    // 添加一个完成回调参数
+    func translate(text: String, completion: (() -> Void)? = nil) {
         let settings = SettingsModel.shared
         guard let url = URL(string: settings.baseURL) else {
+            completion?()  // 如果URL无效，立即调用完成回调
             return
         }
         
@@ -43,8 +45,15 @@ class TranslationService: NSObject, URLSessionDataDelegate {
         // 创建自定义的URLSession，使用self作为delegate
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         let task = session.dataTask(with: request)
+        
+        // 保存完成回调
+        self.completionHandler = completion
+        
         task.resume()
     }
+    
+    // 添加一个属性来存储完成回调
+    private var completionHandler: (() -> Void)?
     
     // URLSessionDataDelegate方法，处理接收到的数据片段
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
@@ -116,6 +125,12 @@ class TranslationService: NSObject, URLSessionDataDelegate {
             print("请求错误: \(error.localizedDescription)")
         } else {
             print("请求完成")
+        }
+        
+        // 调用完成回调
+        DispatchQueue.main.async {
+            self.completionHandler?()
+            self.completionHandler = nil  // 清除回调引用
         }
     }
 }
