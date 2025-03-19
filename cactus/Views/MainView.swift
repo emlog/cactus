@@ -6,6 +6,7 @@ struct MainView: View {
     @ObservedObject var settings = SettingsModel.shared
     @State private var showCopyToast = false
     @State private var toastMessage = ""
+    @State private var isTranslating = false // 添加翻译状态标志
     
     var body: some View {
         Form {
@@ -31,14 +32,35 @@ struct MainView: View {
                             toastMessage = "没有可被翻译的内容"
                             showCopyToast = true
                         } else {
+                            isTranslating = true // 开始翻译，设置状态为正在翻译
                             let translationService = TranslationService()
-                            translationService.translate(text: contentModel.text)
+                            
+                            // 在后台线程执行翻译
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                translationService.translate(text: contentModel.text)
+                                
+                                // 翻译完成后，在主线程更新UI
+                                DispatchQueue.main.async {
+                                    isTranslating = false // 翻译完成，重置状态
+                                }
+                            }
                         }
                     }) {
-                        Image(systemName: "translate")
-                            .frame(width: 30, height: 30)
+                        HStack {
+                            Image(systemName: "translate")
+                                .frame(width: 30, height: 30)
+                            
+                            // 添加加载指示器
+                            if isTranslating {
+                                ProgressView()
+                                    .scaleEffect(0.7)
+                                    .padding(.leading, 5)
+                            }
+                        }
                     }
                     .buttonStyle(HoverButtonStyle())
+                    .disabled(isTranslating) // 翻译过程中禁用按钮
+                    
                      // 复制
                     Button(action: {
                         copyWriting()
