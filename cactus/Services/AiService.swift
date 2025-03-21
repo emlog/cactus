@@ -1,6 +1,6 @@
 import Foundation
 
-class TranslationService: NSObject, URLSessionDataDelegate {
+class AiService: NSObject, URLSessionDataDelegate {
     private var fullContent = ""
     private var buffer = Data()
     
@@ -24,7 +24,7 @@ class TranslationService: NSObject, URLSessionDataDelegate {
         let body: [String: Any] = [
             "model": settings.model,
             "messages": [
-                ["role": "user", "content":  text + "\n\n 尽可能快的将上面的中文翻译为英文，非中文则翻译为中文，注意不要输出任何提示内容"]
+                ["role": "user", "content":  text]
             ],
             "max_tokens": 1000,
             "stream": true // 启用流式输出
