@@ -146,7 +146,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
         
         // 使用辅助功能 API 获取选中文本
-        if let selectedText = getSelectedText() {
+        // 使用逗号 , 是 Swift 中处理可选绑定和多个条件的惯用方式。它允许在一个 if 语句中同时进行可选绑定和条件检查，而 && 不能用于可选绑定的场景。
+        // 当你需要同时检查多个条件时，使用逗号可以使代码更清晰，并且可以避免嵌套的 if 语句。
+        if let selectedText = getSelectedText(), !selectedText.isEmpty {
             print("Selected Text2: \(selectedText)")
             
             // 将选中的文本填充到 MainView 的文本区域
