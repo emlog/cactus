@@ -33,7 +33,7 @@ Text explanation: Explain the concepts in the selected text in more understandab
 1. 在 Xcode 中打开您的项目
 2. 选择 Product > Archive
 3. 等待构建完成后，会打开 Organizer 窗口
-4. 在 Organizer 中，选择您刚刚创建的归档文件，然后点击 "Distribute App"，选择 Custom 选项
+4. 在 Organizer 中，选择您刚刚创建的归档文件，然后点击 "Distribute App"，选·择 Custom 选项
 5. 选择 "Copy App"，然后按照向导完成导出应用程序
 
 ### 使用 create-dmg 工具

@@ -61,10 +61,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 初始化主窗口
         mainWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 400),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+            styleMask: [.titled, .closable, .resizable],  // Allow window resizing but disable zoom button
             backing: .buffered,
             defer: false
         )
+        mainWindow?.collectionBehavior = .fullScreenNone  // Disable zoom button
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
