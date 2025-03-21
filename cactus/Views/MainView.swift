@@ -6,7 +6,7 @@ struct MainView: View {
     @ObservedObject var settings = SettingsModel.shared
     @State private var showCopyToast = false
     @State private var toastMessage = ""
-    @State private var isTranslating = false // 添加翻译状态标志
+    @State private var isProcessing = false // 更通用的处理中状态标志
     
     var body: some View {
         Form {
@@ -26,21 +26,22 @@ struct MainView: View {
             
             Section() {
                 HStack(spacing: 12) {
-                     // 翻译
+                    // 翻译
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "没有可被翻译的内容"
                             showCopyToast = true
                         } else {
-                            isTranslating = true // 开始翻译，设置状态为正在翻译
-                            let translationService = TranslationService()
+                            isProcessing = true // 开始处理，设置状态为处理中
+                            let AiService = AiService()
                             
                             // 在后台线程执行翻译
                             DispatchQueue.global(qos: .userInitiated).async {
-                                translationService.translate(text: contentModel.text, completion: {
-                                    // 翻译完成后，在主线程更新UI
+                                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，注意不要输出任何提示内容：\n\n" + contentModel.text
+                                AiService.chat(text: text, completion: {
+                                    // 处理完成后，在主线程更新UI
                                     DispatchQueue.main.async {
-                                        isTranslating = false // 翻译完成，重置状态
+                                        isProcessing = false // 处理完成，重置状态
                                     }
                                 })
                             }
@@ -51,7 +52,7 @@ struct MainView: View {
                                 .frame(width: 30, height: 30)
                             
                             // 添加加载指示器
-                            if isTranslating {
+                            if isProcessing {
                                 ProgressView()
                                     .scaleEffect(0.7)
                                     .padding(.leading, 5)
@@ -59,9 +60,9 @@ struct MainView: View {
                         }
                     }
                     .buttonStyle(HoverButtonStyle())
-                    .disabled(isTranslating) // 翻译过程中禁用按钮
+                    .disabled(isProcessing) // 处理过程中禁用按钮
                     
-                     // 复制
+                    // 复制
                     Button(action: {
                         copyWriting()
                     }) {
@@ -72,9 +73,9 @@ struct MainView: View {
                 }
             }
             
-            if let translatedText = contentModel.translatedText {
+            if let promptText = contentModel.promptText {
                 Section() {
-                    TextEditor(text: .constant(translatedText))
+                    TextEditor(text: .constant(promptText))
                         .font(.system(.body))
                         .frame(maxWidth: .infinity, minHeight: 100)
                         .padding(10)
@@ -127,10 +128,10 @@ struct MainView: View {
     }
     
     func copyResp() {
-        if let translatedText = contentModel.translatedText, !translatedText.isEmpty {
+        if let promptText = contentModel.promptText, !promptText.isEmpty {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
-            pasteboard.setString(translatedText, forType: .string)
+            pasteboard.setString(promptText, forType: .string)
             toastMessage = "复制成功"
         } else {
             toastMessage = "没有可复制的内容"

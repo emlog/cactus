@@ -5,5 +5,5 @@ class TextContentModel: ObservableObject {
     static let shared = TextContentModel()
     
     @Published var text: String = ""
-    @Published var translatedText: String? = nil
+    @Published var promptText: String? = nil
 }

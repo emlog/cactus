@@ -155,8 +155,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DispatchQueue.main.async {
                     hostingController.rootView.fillText(selectedText)
                     // 自动翻译逻辑
-                    //let translationService = TranslationService()
-                    //TextContentModel.shared.translatedText = translationService.translate(text: TextContentModel.shared.text)
+                    //let AiService = AiService()
+                    //TextContentModel.shared.promptText = AiService.chat(text: TextContentModel.shared.text)
                 }
             }
             print("Selected Text4: \(selectedText)")

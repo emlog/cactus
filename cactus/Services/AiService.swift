@@ -5,7 +5,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var buffer = Data()
     
     // 添加一个完成回调参数
-    func translate(text: String, completion: (() -> Void)? = nil) {
+    func chat(text: String, completion: (() -> Void)? = nil) {
         let settings = SettingsModel.shared
         guard let url = URL(string: settings.baseURL) else {
             completion?()  // 如果URL无效，立即调用完成回调
@@ -32,12 +32,15 @@ class AiService: NSObject, URLSessionDataDelegate {
         
         if let httpBody = try? JSONSerialization.data(withJSONObject: body) {
             request.httpBody = httpBody
-            print("Request Body: \(String(data: httpBody, encoding: .utf8) ?? "")")
+            // 打印完整的请求体内容
+            if let bodyString = String(data: httpBody, encoding: .utf8) {
+                print("Request Body: \(bodyString)")
+            }
         }
         
         // 清空之前的翻译结果和缓存
         DispatchQueue.main.async {
-            TextContentModel.shared.translatedText = ""
+            TextContentModel.shared.promptText = ""
         }
         fullContent = ""
         buffer = Data()
@@ -97,7 +100,7 @@ class AiService: NSObject, URLSessionDataDelegate {
                             
                             // 更新 UI
                             DispatchQueue.main.async {
-                                TextContentModel.shared.translatedText = self.fullContent
+                                TextContentModel.shared.promptText = self.fullContent
                             }
                         }
                     } catch {
