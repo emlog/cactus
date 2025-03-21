@@ -146,35 +146,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
         
         // 使用辅助功能 API 获取选中文本
-        // 使用逗号 , 是 Swift 中处理可选绑定和多个条件的惯用方式。它允许在一个 if 语句中同时进行可选绑定和条件检查，而 && 不能用于可选绑定的场景。
-        // 当你需要同时检查多个条件时，使用逗号可以使代码更清晰，并且可以避免嵌套的 if 语句。
-        if let selectedText = getSelectedText(), !selectedText.isEmpty {
-            print("Selected Text2: \(selectedText)")
-            
-            // 将选中的文本填充到 MainView 的文本区域
-            if let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> {
-                print("Selected Text3: \(selectedText)")
-                DispatchQueue.main.async {
-                    hostingController.rootView.fillText(selectedText)
-                    
-                    // 自动翻译逻辑
-                    hostingController.rootView.isProcessing = true // 设置处理中状态
-                    let AiService = AiService()
-                    
-                    // 在后台线程执行翻译
-                    DispatchQueue.global(qos: .userInitiated).async {
-                        let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，注意不要输出任何提示内容：\n\n" + selectedText
-                        AiService.chat(text: text, completion: {
-                            // 处理完成后，在主线程更新UI
-                            DispatchQueue.main.async {
-                                hostingController.rootView.isProcessing = false // 处理完成，重置状态
-                            }
-                        })
-                    }
-                }
-            }
-            print("Selected Text4: \(selectedText)")
+        guard let selectedText = getSelectedText(), !selectedText.isEmpty else {
+            print("No text selected or text is empty.")
+            return
         }
+                
+        // 将选中的文本填充到 MainView 的文本区域
+        guard let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
+            print("Failed to get hosting controller.")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            hostingController.rootView.fillText(selectedText)
+            
+            // 自动翻译逻辑
+            hostingController.rootView.isProcessing = true // 设置处理中状态
+            let AiService = AiService()
+            
+            // 在后台线程执行翻译
+            DispatchQueue.global(qos: .userInitiated).async {
+                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，注意不要输出任何提示内容：\n\n" + selectedText
+                AiService.chat(text: text, completion: {
+                    // 处理完成后，在主线程更新UI
+                    DispatchQueue.main.async {
+                        hostingController.rootView.isProcessing = false // 处理完成，重置状态
+                    }
+                })
+            }
+        }
+        
+        print("Selected Text: \(selectedText)")
     }
     
     // 获取当前选中文本的函数
