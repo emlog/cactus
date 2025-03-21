@@ -154,9 +154,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 print("Selected Text3: \(selectedText)")
                 DispatchQueue.main.async {
                     hostingController.rootView.fillText(selectedText)
+                    
                     // 自动翻译逻辑
-                    //let AiService = AiService()
-                    //TextContentModel.shared.promptText = AiService.chat(text: TextContentModel.shared.text)
+                    hostingController.rootView.isProcessing = true // 设置处理中状态
+                    let AiService = AiService()
+                    
+                    // 在后台线程执行翻译
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，注意不要输出任何提示内容：\n\n" + selectedText
+                        AiService.chat(text: text, completion: {
+                            // 处理完成后，在主线程更新UI
+                            DispatchQueue.main.async {
+                                hostingController.rootView.isProcessing = false // 处理完成，重置状态
+                            }
+                        })
+                    }
                 }
             }
             print("Selected Text4: \(selectedText)")

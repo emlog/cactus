@@ -6,7 +6,7 @@ struct MainView: View {
     @ObservedObject var settings = SettingsModel.shared
     @State private var showCopyToast = false
     @State private var toastMessage = ""
-    @State private var isProcessing = false // 更通用的处理中状态标志
+    @State var isProcessing = false // 更通用的处理中状态标志，移除 private 以便外部访问
     
     var body: some View {
         Form {
