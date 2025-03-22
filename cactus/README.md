@@ -24,6 +24,15 @@ Text summary: a concise summary of the selected text
 Text explanation: Explain the concepts in the selected text in more understandable language
 
 
+
+## 测试内容
+
+London's Heathrow Airport resumed operations late Friday after an electrical fire at a nearby substation forced a full-day closure, causing global travel chaos with hundreds of canceled flights and thousands of stranded passengers. The explosion at a Hayes substation 1.5 miles from the airport knocked out power early Thursday, requiring 70 firefighters to battle a blaze in a transformer containing 25,000 liters of cooling oil.
+
+Despite backup generators, Europe's busiest airport couldn't maintain normal operations, forcing flights to divert to airports across Europe and as far as Bangor, Maine. "Contingencies of certain sizes we cannot guard ourselves against 100%," Heathrow CEO Thomas Woldbye told the BBC. "This is as big as it gets for our airport." British Airways, which planned to carry 100,000 passengers Friday, prioritized long-haul flights to Australia, Brazil and South Africa when operations resumed after 4 p.m.
+
+
+
 # 将 macOS App 项目发布为 DMG 安装包
 要将您的 macOS 应用程序打包成 DMG 安装包，需要经过以下几个步骤：
 

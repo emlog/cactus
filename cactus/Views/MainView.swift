@@ -14,7 +14,7 @@ struct MainView: View {
                 // 多行文本输入框，绑定到 contentModel.text
                 TextEditor(text: $contentModel.text)
                     .font(.system(.body))
-                    .frame(maxWidth: .infinity, minHeight: 50)
+                    .frame(maxWidth: .infinity, minHeight: 80)
                     .padding(10)
                     .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -26,7 +26,7 @@ struct MainView: View {
             
             Section() {
                 HStack(spacing: 12) {
-                    // 翻译
+                    // 1.文本翻译
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "请先输入内容"
@@ -53,7 +53,7 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
                     
-                    // 摘要总结
+                    // 2.摘要总结
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "请先输入内容"
@@ -80,7 +80,7 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
                     
-                    // 解释说明
+                    // 3.解释说明
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "请先输入内容"
@@ -107,7 +107,7 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
                     
-                    // 复制
+                    // 复制原文
                     Button(action: {
                         copyWriting()
                     }) {
@@ -118,7 +118,7 @@ struct MainView: View {
                     
                     Spacer() // 将 ProgressView 推到最右边
 
-                    // 添加加载指示器
+                    // 显示loading动画
                     if isProcessing {
                         ProgressView()
                             .scaleEffect(0.5) // 调整尺寸
