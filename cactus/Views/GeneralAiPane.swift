@@ -11,6 +11,10 @@ struct GeneralAiPane: View {
         if let providerSettings = settingsModel.providers[settingsModel.selectedProvider] {
             settingsModel.providers[settingsModel.selectedProvider]?.apiKey = providerSettings.apiKey
             settingsModel.providers[settingsModel.selectedProvider]?.model = providerSettings.model
+            
+            // 确保更新传播到共享实例
+            SettingsModel.shared.providers = settingsModel.providers
+            SettingsModel.shared.selectedProvider = settingsModel.selectedProvider
         }
     }
 
