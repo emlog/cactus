@@ -113,9 +113,10 @@ class AiService: NSObject, URLSessionDataDelegate {
         }
         
         // 移除已处理的部分
-        if processedUpTo > 0 {
-            if let processedString = lines[..<processedUpTo].joined(separator: "\n").data(using: .utf8) {
-                let bytesToRemove = min(processedString.count, buffer.count)
+        if processedUpTo > 0 && processedUpTo <= lines.count {
+            let processedLines = lines[..<processedUpTo].joined(separator: "\n")
+            if let processedData = processedLines.data(using: .utf8) {
+                let bytesToRemove = min(processedData.count, buffer.count)
                 if bytesToRemove > 0 {
                     buffer.removeFirst(bytesToRemove)
                 }

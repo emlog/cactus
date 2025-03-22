@@ -47,17 +47,8 @@ struct MainView: View {
                             }
                         }
                     }) {
-                        HStack {
-                            Image(systemName: "translate")
-                                .frame(width: 30, height: 30)
-                            
-                            // 添加加载指示器
-                            if isProcessing {
-                                ProgressView()
-                                    .scaleEffect(0.7)
-                                    .padding(.leading, 5)
-                            }
-                        }
+                        Image(systemName: "translate")
+                            .frame(width: 30, height: 30)
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
@@ -83,17 +74,8 @@ struct MainView: View {
                             }
                         }
                     }) {
-                        HStack {
-                            Image(systemName: "rectangle.dashed.and.paperclip")
-                                .frame(width: 30, height: 30)
-                            
-                            // 添加加载指示器
-                            if isProcessing {
-                                ProgressView()
-                                    .scaleEffect(0.7)
-                                    .padding(.leading, 5)
-                            }
-                        }
+                        Image(systemName: "rectangle.dashed.and.paperclip")
+                            .frame(width: 30, height: 30)
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
@@ -119,17 +101,8 @@ struct MainView: View {
                             }
                         }
                     }) {
-                        HStack {
-                            Image(systemName: "graduationcap")
-                                .frame(width: 30, height: 30)
-                            
-                            // 添加加载指示器
-                            if isProcessing {
-                                ProgressView()
-                                    .scaleEffect(0.7)
-                                    .padding(.leading, 5)
-                            }
-                        }
+                        Image(systemName: "graduationcap")
+                            .frame(width: 30, height: 30)
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
@@ -142,6 +115,15 @@ struct MainView: View {
                             .frame(width: 30, height: 30)
                     }
                     .buttonStyle(HoverButtonStyle())
+                    
+                    Spacer() // 将 ProgressView 推到最右边
+
+                    // 添加加载指示器
+                    if isProcessing {
+                        ProgressView()
+                            .scaleEffect(0.3) // 调整尺寸
+                            .padding(0)
+                    }
                 }
             }
             
