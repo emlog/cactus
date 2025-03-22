@@ -13,7 +13,8 @@ struct MainView: View {
             Section() {
                 // 多行文本输入框，绑定到 contentModel.text
                 TextEditor(text: $contentModel.text)
-                    .font(.system(.body))
+                    .font(.system(size: 15))
+                    .lineSpacing(8) // 增加行间距
                     .frame(maxWidth: .infinity, minHeight: 80)
                     .padding(10)
                     .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
@@ -131,14 +132,14 @@ struct MainView: View {
             if let promptText = contentModel.promptText {
                 Section() {
                     TextEditor(text: .constant(promptText))
-                        .font(.system(.body))
+                        .font(.system(size: 15))
+                        .lineSpacing(8) // 增加行间距
                         .frame(maxWidth: .infinity, minHeight: 100)
                         .padding(10)
                         .background(Color(.textBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                 .stroke(Color(.separatorColor), lineWidth: 1)
                         )
                 }
