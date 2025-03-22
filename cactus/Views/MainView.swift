@@ -29,7 +29,7 @@ struct MainView: View {
                     // 翻译
                     Button(action: {
                         if contentModel.text.isEmpty {
-                            toastMessage = "没有可被翻译的内容"
+                            toastMessage = "请先输入内容"
                             showCopyToast = true
                         } else {
                             isProcessing = true // 开始处理，设置状态为处理中
@@ -49,6 +49,78 @@ struct MainView: View {
                     }) {
                         HStack {
                             Image(systemName: "translate")
+                                .frame(width: 30, height: 30)
+                            
+                            // 添加加载指示器
+                            if isProcessing {
+                                ProgressView()
+                                    .scaleEffect(0.7)
+                                    .padding(.leading, 5)
+                            }
+                        }
+                    }
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(isProcessing) // 处理过程中禁用按钮
+                    
+                    // 摘要总结
+                    Button(action: {
+                        if contentModel.text.isEmpty {
+                            toastMessage = "请先输入内容"
+                            showCopyToast = true
+                        } else {
+                            isProcessing = true // 开始处理，设置状态为处理中
+                            let AiService = AiService()
+                            
+                            // 在后台线程执行翻译
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                let text = "摘要总结，请将下面的内容的主要信息总结摘要：\n\n" + contentModel.text
+                                AiService.chat(text: text, completion: {
+                                    // 处理完成后，在主线程更新UI
+                                    DispatchQueue.main.async {
+                                        isProcessing = false // 处理完成，重置状态
+                                    }
+                                })
+                            }
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "rectangle.dashed.and.paperclip")
+                                .frame(width: 30, height: 30)
+                            
+                            // 添加加载指示器
+                            if isProcessing {
+                                ProgressView()
+                                    .scaleEffect(0.7)
+                                    .padding(.leading, 5)
+                            }
+                        }
+                    }
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(isProcessing) // 处理过程中禁用按钮
+                    
+                    // 解释说明
+                    Button(action: {
+                        if contentModel.text.isEmpty {
+                            toastMessage = "请先输入内容"
+                            showCopyToast = true
+                        } else {
+                            isProcessing = true // 开始处理，设置状态为处理中
+                            let AiService = AiService()
+                            
+                            // 在后台线程执行翻译
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                let text = "解释说明，请用更通俗易懂简洁的语言解释说下面的内容中主要的概念：\n\n" + contentModel.text
+                                AiService.chat(text: text, completion: {
+                                    // 处理完成后，在主线程更新UI
+                                    DispatchQueue.main.async {
+                                        isProcessing = false // 处理完成，重置状态
+                                    }
+                                })
+                            }
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "graduationcap")
                                 .frame(width: 30, height: 30)
                             
                             // 添加加载指示器

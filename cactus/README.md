@@ -13,8 +13,8 @@ Cactus - is a reading assistant tool based on an AI large model that quickly tra
 【主要功能】
 
 文本翻译：选中任意文本，按下快捷键，快速完成翻译
-文本总结：对选中的文本进行精炼的总结
-文本解释：用更易于理解的语言解释选中文本中的概念
+摘要总结：对选中的文本进行精炼的总结
+解释说明：用更易于理解的语言解释选中文本中的概念
 
 
 【Main Features】
