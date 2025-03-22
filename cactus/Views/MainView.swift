@@ -121,7 +121,8 @@ struct MainView: View {
                     // 添加加载指示器
                     if isProcessing {
                         ProgressView()
-                            .scaleEffect(0.3) // 调整尺寸
+                            .scaleEffect(0.5) // 调整尺寸
+                            .frame(height: 30) // 固定高度，避免撑开容器
                             .padding(0)
                     }
                 }
