@@ -151,6 +151,13 @@ struct MainView: View {
                                 .frame(width: 30, height: 30)
                         }
                         .buttonStyle(HoverButtonStyle())
+                        
+                        Spacer()
+                        
+                        // 显示当前使用的AI提供商及其模型
+                        Text("\(settings.selectedProvider) - \(settings.providers[settings.selectedProvider]?.model ?? "")")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
                 }
             }
