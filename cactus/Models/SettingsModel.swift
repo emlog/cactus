@@ -2,6 +2,7 @@ import Foundation
 import KeyboardShortcuts
 
 struct ProviderSettings: Codable { // Conform to Codable
+    var name: String
     var baseURL: String
     var apiKey: String
     var model: String
@@ -11,11 +12,11 @@ class SettingsModel: ObservableObject {
     static let presetProviders: [String] = ["ppinfra","OpenRouter"]
     
     static let defaultProviders: [String: ProviderSettings] = [
-        "OpenAI": ProviderSettings(baseURL: "https://api.openai.com/v1/chat/completions", apiKey: "", model: "GPT-4o"),
-        "DeepSeek": ProviderSettings(baseURL: "https://api.deepseek.com/v1/chat/completions", apiKey: "", model: "deepseek-chat"),
-        "zhipu": ProviderSettings(baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions", apiKey: "", model: "glm-4-plus"),
-        "ppinfra": ProviderSettings(baseURL: "https://api.ppinfra.com/v3/openai/v1/chat/completions", apiKey: "sk_JMYoUFzDZ258ZTDNItfKINu35r__rx8pM_j0Zqab7CQ", model: "deepseek/deepseek-v3/community"),
-        "OpenRouter": ProviderSettings(baseURL: "https://openrouter.ai/api/v1/chat/completions", apiKey: "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", model: "deepseek/deepseek-chat:free")
+        "OpenAI": ProviderSettings(name: "OpenAI", baseURL: "https://api.openai.com/v1/chat/completions", apiKey: "", model: "GPT-4o"),
+        "DeepSeek": ProviderSettings(name: "DeepSeek", baseURL: "https://api.deepseek.com/v1/chat/completions", apiKey: "", model: "deepseek-chat"),
+        "zhipu": ProviderSettings(name: "智谱", baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions", apiKey: "", model: "glm-4-plus"),
+        "ppinfra": ProviderSettings(name: "派欧内置", baseURL: "https://api.ppinfra.com/v3/openai/v1/chat/completions", apiKey: "sk_JMYoUFzDZ258ZTDNItfKINu35r__rx8pM_j0Zqab7CQ", model: "deepseek/deepseek-v3/community"),
+        "OpenRouter": ProviderSettings(name: "OpenRouter内置", baseURL: "https://openrouter.ai/api/v1/chat/completions", apiKey: "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", model: "deepseek/deepseek-chat:free")
     ]
     
     static let shared = SettingsModel()

@@ -27,8 +27,8 @@ struct GeneralAiPane: View {
                             Picker(selection: $settingsModel.selectedProvider, label: HStack {
                                 Text("选择提供商")
                             }) {
-                                ForEach(settingsModel.providers.keys.sorted(), id: \.self) { provider in
-                                    Text(provider).tag(provider)
+                                ForEach(Array(settingsModel.providers.keys), id: \.self) { key in
+                                    Text(settingsModel.providers[key]?.name ?? "").tag(key)
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())
