@@ -185,7 +185,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // 检查辅助功能权限
         if !AXIsProcessTrusted() {
-            print("Accessibility permissions are not granted. Please enable them in System Settings > Security & Privacy > Accessibility.")
+            print("Accessibility permissions are not granted.")
+            
+            // 弹出提示窗口
+            let alert = NSAlert()
+            alert.messageText = "辅助功能权限未开启"
+            alert.informativeText = "请在系统设置 > 安全性与隐私 > 辅助功能中启用权限。"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "确定")
+            alert.runModal()
+            
             return nil
         }
         
@@ -193,16 +202,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var focusedElement: AnyObject?
         let focusResult = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
         
-        guard focusResult == .success, let element = focusedElement else {
+        if focusResult != .success {
             print("Failed to get focused element, error: \(focusResult)")
             return nil
         }
         
+        guard let element = focusedElement else {
+            print("Focused element is nil.")
+            return nil
+        }
+        
+        print("Focused element obtained successfully.")
+        
         var selectedText: AnyObject?
         let textResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXSelectedTextAttribute as CFString, &selectedText)
         
-        guard textResult == .success, let text = selectedText as? String else {
+        if textResult != .success {
             print("Failed to get selected text, error: \(textResult)")
+            return nil
+        }
+        
+        guard let text = selectedText as? String else {
+            print("Selected text is nil or not a string.")
             return nil
         }
         

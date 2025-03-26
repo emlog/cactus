@@ -97,6 +97,7 @@ class AiService: NSObject, URLSessionDataDelegate {
             }
         }
         
+        // 移除已处理的数据以避免内存溢出
         if processedUpTo > 0 && processedUpTo <= lines.count {
             let processedLines = lines[..<processedUpTo].joined(separator: "\n")
             if let processedData = processedLines.data(using: .utf8) {
