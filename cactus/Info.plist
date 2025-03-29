@@ -1,7 +1,7 @@
 {
     LSUIElement = YES;
     // 启用沙盒
-    com.apple.security.app-sandbox = YES;
+    com.apple.security.app-sandbox = NO;
     // 请求辅助功能权限
     NSAppleEventsUsageDescription = "此应用需要访问辅助功能以获取选中文本，以便帮助用户对文本进行翻译、总结、解释。";
 }
