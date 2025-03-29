@@ -184,50 +184,130 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("Fetching selected text...")
         
         // 检查辅助功能权限
-        if !AXIsProcessTrusted() {
-            print("Accessibility permissions are not granted.")
+        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
+        if !AXIsProcessTrustedWithOptions(options) {
+            print("Accessibility permissions are not granted or prompt was dismissed.")
             
-            // 弹出提示窗口
-            let alert = NSAlert()
-            alert.messageText = "辅助功能权限未开启"
-            alert.informativeText = "请在系统设置 > 安全性与隐私 > 辅助功能中启用权限。"
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: "确定")
-            alert.runModal()
-            
-            return nil
+            // 如果没有辅助功能权限，尝试使用 AppleScript
+            return getSelectedTextWithAppleScript()
         }
         
-        let systemWideElement = AXUIElementCreateSystemWide()
+        // 尝试多次获取选中文本（最多5次，增加尝试次数）
+        for attempt in 0..<5 {
+            print("Attempt \(attempt+1) to get selected text")
+            
+            // 创建系统级辅助功能元素
+            let systemWideElement = AXUIElementCreateSystemWide()
+            
+            // 获取当前焦点元素
+            var focusedElement: AnyObject?
+            let focusResult = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
+            
+            guard focusResult == .success, let element = focusedElement else {
+                print("Failed to get focused element, error: \(focusResult)")
+                // 尝试获取前台应用
+                if let frontmostApp = getFrontmostApplication() {
+                    print("Trying to get selected text from frontmost app: \(frontmostApp)")
+                    if let text = getSelectedTextFromApp(frontmostApp) {
+                        return text
+                    }
+                }
+                
+                // 尝试使用 AppleScript
+                if let text = getSelectedTextWithAppleScript() {
+                    return text
+                }
+                
+                Thread.sleep(forTimeInterval: 0.2) // 增加等待时间
+                continue
+            }
+            
+            // 尝试从焦点元素获取选中文本
+            var selectedText: AnyObject?
+            let textResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXSelectedTextAttribute as CFString, &selectedText)
+            
+            if textResult == .success, let text = selectedText as? String, !text.isEmpty {
+                print("Successfully got selected text from focused element")
+                return text
+            } else {
+                print("Failed to get selected text from focused element, error: \(textResult)")
+                
+                // 尝试获取父元素
+                var parentElement: AnyObject?
+                let parentResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXParentAttribute as CFString, &parentElement)
+                
+                if parentResult == .success, let parent = parentElement {
+                    var parentSelectedText: AnyObject?
+                    let parentTextResult = AXUIElementCopyAttributeValue(parent as! AXUIElement, kAXSelectedTextAttribute as CFString, &parentSelectedText)
+                    
+                    if parentTextResult == .success, let text = parentSelectedText as? String, !text.isEmpty {
+                        print("Successfully got selected text from parent element")
+                        return text
+                    }
+                }
+                
+                // 尝试获取前台应用
+                if let frontmostApp = getFrontmostApplication() {
+                    print("Trying to get selected text from frontmost app: \(frontmostApp)")
+                    if let text = getSelectedTextFromApp(frontmostApp) {
+                        return text
+                    }
+                }
+                
+                // 尝试使用 AppleScript
+                if let text = getSelectedTextWithAppleScript() {
+                    return text
+                }
+            }
+            
+            // 如果失败，等待更长时间后重试
+            Thread.sleep(forTimeInterval: 0.2)
+        }
+        
+        print("Failed to get selected text after multiple attempts")
+        return nil
+    }
+    
+    // 获取前台应用
+    private func getFrontmostApplication() -> NSRunningApplication? {
+        return NSWorkspace.shared.frontmostApplication
+    }
+    
+    // 从特定应用获取选中文本
+    private func getSelectedTextFromApp(_ app: NSRunningApplication) -> String? {
+        // Remove the redundant cast - processIdentifier is already pid_t
+        let appPID = app.processIdentifier
+        
+        let appElement = AXUIElementCreateApplication(appPID)
+        
+        // 尝试获取应用中的焦点元素
         var focusedElement: AnyObject?
-        let focusResult = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
+        let focusResult = AXUIElementCopyAttributeValue(appElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
         
-        if focusResult != .success {
-            print("Failed to get focused element, error: \(focusResult)")
+        guard focusResult == .success, let element = focusedElement else {
+            print("Failed to get focused element from app \(app.localizedName ?? "unknown")")
             return nil
         }
         
-        guard let element = focusedElement else {
-            print("Focused element is nil.")
-            return nil
-        }
-        
-        print("Focused element obtained successfully.")
-        
+        // 尝试获取选中文本
         var selectedText: AnyObject?
         let textResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXSelectedTextAttribute as CFString, &selectedText)
         
-        if textResult != .success {
-            print("Failed to get selected text, error: \(textResult)")
-            return nil
+        if textResult == .success, let text = selectedText as? String, !text.isEmpty {
+            print("Successfully got selected text from app \(app.localizedName ?? "unknown")")
+            return text
         }
         
-        guard let text = selectedText as? String else {
-            print("Selected text is nil or not a string.")
-            return nil
+        // 尝试获取值（某些应用可能使用值而不是选中文本）
+        var value: AnyObject?
+        let valueResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXValueAttribute as CFString, &value)
+        
+        if valueResult == .success, let text = value as? String, !text.isEmpty {
+            print("Successfully got value text from app \(app.localizedName ?? "unknown")")
+            return text
         }
         
-        print("Selected Text: \(text)")
-        return text
+        print("Failed to get text from app \(app.localizedName ?? "unknown")")
+        return nil
     }
 }

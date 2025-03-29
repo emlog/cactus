@@ -1,7 +1,5 @@
-{
-    LSUIElement = YES;
-    // 启用沙盒
-    com.apple.security.app-sandbox = NO;
-    // 请求辅助功能权限
-    NSAppleEventsUsageDescription = "此应用需要访问辅助功能以获取选中文本，以便帮助用户对文本进行翻译、总结、解释。";
-}
+<!-- 在Info.plist的dict标签内添加以下内容 -->
+<key>NSAppleEventsUsageDescription</key>
+<string>$(PRODUCT_NAME)需要访问其他应用以获取选中的文本进行翻译、总结和解释</string>
+<key>NSAccessibilityUsageDescription</key>
+<string>$(PRODUCT_NAME)需要读取其他应用中的选中文本以提供翻译、总结和解释功能</string>
