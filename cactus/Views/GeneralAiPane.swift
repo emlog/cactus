@@ -39,19 +39,19 @@ struct GeneralAiPane: View {
                                 updateSettingsForProvider()
                             }
                             
-                            SecureField("API Key", text: Binding(
-                                get: { settingsModel.providers[settingsModel.selectedProvider]?.apiKey ?? "" },
-                                set: { settingsModel.providers[settingsModel.selectedProvider]?.apiKey = $0 }
-                            ))
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .disabled(SettingsModel.presetProviders.contains(settingsModel.selectedProvider))
-                            
-                            TextField("Model", text: Binding(
-                                get: { settingsModel.providers[settingsModel.selectedProvider]?.model ?? "" },
-                                set: { settingsModel.providers[settingsModel.selectedProvider]?.model = $0 }
-                            ))
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .disabled(true)
+                            if !SettingsModel.presetProviders.contains(settingsModel.selectedProvider) {
+                                SecureField("API Key", text: Binding(
+                                    get: { settingsModel.providers[settingsModel.selectedProvider]?.apiKey ?? "" },
+                                    set: { settingsModel.providers[settingsModel.selectedProvider]?.apiKey = $0 }
+                                ))
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                
+                                TextField("Model", text: Binding(
+                                    get: { settingsModel.providers[settingsModel.selectedProvider]?.model ?? "" },
+                                    set: { settingsModel.providers[settingsModel.selectedProvider]?.model = $0 }
+                                ))
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                            }
                         }
                     }
                     .padding()

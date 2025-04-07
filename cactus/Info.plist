@@ -1,4 +1,0 @@
-<key>NSAppleEventsUsageDescription</key>
-<string>$(PRODUCT_NAME)需要访问其他应用以获取选中的文本进行翻译、总结和解释</string>
-<key>NSAccessibilityUsageDescription</key>
-<string>$(PRODUCT_NAME)需要读取其他应用中的选中文本以提供翻译、总结和解释功能</string>

@@ -2,44 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- 开发者标识 -->
-    <key>com.apple.application-identifier</key>
-    <string>$(TeamIdentifierPrefix)dawei-snow.cactus</string>
-    <key>com.apple.developer.team-identifier</key>
-    <string>MYB38L5YW9</string>
-    
-    <!-- 沙盒与安全设置 -->
-    <key>com.apple.security.app-sandbox</key>
-    <false/>
-    <key>com.apple.security.network.client</key>
-    <true/>
-    
-    <!-- Keychain访问权限 -->
-    <key>keychain-access-groups</key>
-    <array>
-        <string>$(AppIdentifierPrefix)dawei-snow.cactus</string>
-    </array>
-    
-    <!-- 辅助功能权限 - 用于读取其他应用中的文本 -->
-    <key>com.apple.security.temporary-exception.accessibility</key>
-    <true/>
-    
-    <!-- Apple Events 权限 - 允许与其他应用通信 -->
-    <key>com.apple.security.automation.apple-events</key>
-    <true/>
-    <key>com.apple.security.temporary-exception.apple-events</key>
-    <array>
-        <string>com.apple.systemevents</string>
-        <string>com.apple.finder</string>
-        <string>com.apple.Safari</string>
-        <string>com.google.Chrome</string>
-        <string>com.microsoft.edgemac</string>
-        <string>com.operasoftware.Opera</string>
-        <string>*</string>
-    </array>
-    
-    <!-- 允许执行不签名的可执行内存 -->
-    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
-    <true/>
+	<key>com.apple.application-identifier</key>
+	<string>$(TeamIdentifierPrefix)dawei-snow.cactus</string>
+	<key>com.apple.developer.team-identifier</key>
+	<string>MYB38L5YW9</string>
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<key>com.apple.security.network.client</key>
+	<true/>
 </dict>
 </plist>
