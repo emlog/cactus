@@ -1,4 +1,3 @@
-<!-- 在Info.plist的dict标签内添加以下内容 -->
 <key>NSAppleEventsUsageDescription</key>
 <string>$(PRODUCT_NAME)需要访问其他应用以获取选中的文本进行翻译、总结和解释</string>
 <key>NSAccessibilityUsageDescription</key>

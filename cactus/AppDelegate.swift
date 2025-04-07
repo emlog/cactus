@@ -181,133 +181,214 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // 获取当前选中文本的函数
     func getSelectedText() -> String? {
-        print("Fetching selected text...")
-        
         // 检查辅助功能权限
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
-        if !AXIsProcessTrustedWithOptions(options) {
-            print("Accessibility permissions are not granted or prompt was dismissed.")
-            
-            // 如果没有辅助功能权限，尝试使用 AppleScript
-            return getSelectedTextWithAppleScript()
-        }
-        
-        // 尝试多次获取选中文本（最多5次，增加尝试次数）
-        for attempt in 0..<5 {
-            print("Attempt \(attempt+1) to get selected text")
-            
-            // 创建系统级辅助功能元素
-            let systemWideElement = AXUIElementCreateSystemWide()
-            
-            // 获取当前焦点元素
-            var focusedElement: AnyObject?
-            let focusResult = AXUIElementCopyAttributeValue(systemWideElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
-            
-            guard focusResult == .success, let element = focusedElement else {
-                print("Failed to get focused element, error: \(focusResult)")
-                // 尝试获取前台应用
-                if let frontmostApp = getFrontmostApplication() {
-                    print("Trying to get selected text from frontmost app: \(frontmostApp)")
-                    if let text = getSelectedTextFromApp(frontmostApp) {
-                        return text
-                    }
-                }
-                
-                // 尝试使用 AppleScript
-                if let text = getSelectedTextWithAppleScript() {
-                    return text
-                }
-                
-                Thread.sleep(forTimeInterval: 0.2) // 增加等待时间
-                continue
-            }
-            
-            // 尝试从焦点元素获取选中文本
-            var selectedText: AnyObject?
-            let textResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXSelectedTextAttribute as CFString, &selectedText)
-            
-            if textResult == .success, let text = selectedText as? String, !text.isEmpty {
-                print("Successfully got selected text from focused element")
-                return text
-            } else {
-                print("Failed to get selected text from focused element, error: \(textResult)")
-                
-                // 尝试获取父元素
-                var parentElement: AnyObject?
-                let parentResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXParentAttribute as CFString, &parentElement)
-                
-                if parentResult == .success, let parent = parentElement {
-                    var parentSelectedText: AnyObject?
-                    let parentTextResult = AXUIElementCopyAttributeValue(parent as! AXUIElement, kAXSelectedTextAttribute as CFString, &parentSelectedText)
-                    
-                    if parentTextResult == .success, let text = parentSelectedText as? String, !text.isEmpty {
-                        print("Successfully got selected text from parent element")
-                        return text
-                    }
-                }
-                
-                // 尝试获取前台应用
-                if let frontmostApp = getFrontmostApplication() {
-                    print("Trying to get selected text from frontmost app: \(frontmostApp)")
-                    if let text = getSelectedTextFromApp(frontmostApp) {
-                        return text
-                    }
-                }
-                
-                // 尝试使用 AppleScript
-                if let text = getSelectedTextWithAppleScript() {
-                    return text
-                }
-            }
-            
-            // 如果失败，等待更长时间后重试
-            Thread.sleep(forTimeInterval: 0.2)
-        }
-        
-        print("Failed to get selected text after multiple attempts")
-        return nil
-    }
-    
-    // 获取前台应用
-    private func getFrontmostApplication() -> NSRunningApplication? {
-        return NSWorkspace.shared.frontmostApplication
-    }
-    
-    // 从特定应用获取选中文本
-    private func getSelectedTextFromApp(_ app: NSRunningApplication) -> String? {
-        // Remove the redundant cast - processIdentifier is already pid_t
-        let appPID = app.processIdentifier
-        
-        let appElement = AXUIElementCreateApplication(appPID)
-        
-        // 尝试获取应用中的焦点元素
-        var focusedElement: AnyObject?
-        let focusResult = AXUIElementCopyAttributeValue(appElement, kAXFocusedUIElementAttribute as CFString, &focusedElement)
-        
-        guard focusResult == .success, let element = focusedElement else {
-            print("Failed to get focused element from app \(app.localizedName ?? "unknown")")
+        guard AXIsProcessTrusted() else {
+            showAccessibilityPermissionAlert()
             return nil
         }
         
-        // 尝试获取选中文本
-        var selectedText: AnyObject?
-        let textResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXSelectedTextAttribute as CFString, &selectedText)
-        
-        if textResult == .success, let text = selectedText as? String, !text.isEmpty {
-            print("Successfully got selected text from app \(app.localizedName ?? "unknown")")
-            return text
+        // 检查 Apple Events 权限
+        if !hasAppleEventsPermission() {
+            showAppleEventsPermissionAlert()
+            return nil
         }
         
-        // 尝试获取值（某些应用可能使用值而不是选中文本）
-        var value: AnyObject?
-        let valueResult = AXUIElementCopyAttributeValue(element as! AXUIElement, kAXValueAttribute as CFString, &value)
+        // 保存当前剪贴板内容
+        let pasteboard = NSPasteboard.general
+        let oldPasteboardItems = pasteboard.pasteboardItems
         
-        if valueResult == .success, let text = value as? String, !text.isEmpty {
-            print("Successfully got value text from app \(app.localizedName ?? "unknown")")
-            return text
+        var selectedText: String?
+        
+        // 使用 AppleScript 模拟复制操作
+        var error: NSDictionary?
+        let script = """
+        tell application "System Events"
+            keystroke "c" using {command down}
+            delay 0.1
+        end tell
+        """
+        
+        if let appleScript = NSAppleScript(source: script) {
+            appleScript.executeAndReturnError(&error)
+            
+            if error != nil {
+                print("Error executing AppleScript: \(String(describing: error))")
+                // 如果是权限错误，显示权限提示
+                if let errorNumber = error?["NSAppleScriptErrorNumber"] as? Int, 
+                   errorNumber == -1743 {
+                    showAppleEventsPermissionAlert()
+                }
+                
+                // 尝试备用方法获取文本
+                selectedText = getSelectedTextFallback()
+            } else {
+                // 从剪贴板获取文本
+                if let clipboardString = pasteboard.string(forType: .string) {
+                    selectedText = clipboardString
+                }
+            }
         }
         
-        print("Failed to get text from app \(app.localizedName ?? "unknown")")
+        // 恢复原始剪贴板内容
+        if let oldItems = oldPasteboardItems, !oldItems.isEmpty {
+            pasteboard.clearContents()
+            for item in oldItems {
+                for type in item.types {
+                    if let data = item.data(forType: type) {
+                        pasteboard.setData(data, forType: type)
+                    }
+                }
+            }
+        }
+        
+        return selectedText
+    }
+    
+    // 备用方法：尝试通过其他方式获取选中文本
+    private func getSelectedTextFallback() -> String? {
+        var error: NSDictionary?
+        let script = """
+        set selectedText to ""
+        
+        tell application "System Events"
+            set frontApp to first application process whose frontmost is true
+            set frontAppName to name of frontApp
+        end tell
+        
+        if frontAppName is "Safari" then
+            tell application "Safari"
+                set selectedText to (do JavaScript "window.getSelection().toString();" in document 1)
+            end tell
+        else if frontAppName is "Google Chrome" then
+            tell application "Google Chrome"
+                set selectedText to (execute front window's active tab javascript "window.getSelection().toString();")
+            end tell
+        else
+            -- 尝试通过剪贴板获取
+            set the clipboard to ""
+            tell application "System Events" to keystroke "c" using command down
+            delay 0.1
+            set selectedText to the clipboard
+        end if
+        
+        return selectedText
+        """
+        
+        if let appleScript = NSAppleScript(source: script) {
+            let output = appleScript.executeAndReturnError(&error)
+            if error == nil {
+                return output.stringValue
+            } else {
+                print("Error executing fallback AppleScript: \(String(describing: error))")
+            }
+        }
         return nil
+    }
+
+    private func showAccessibilityPermissionAlert() {
+        let alert = NSAlert()
+        alert.messageText = "需要辅助功能权限"
+        alert.informativeText = "请在系统偏好设置中启用辅助功能权限，以便应用程序能够访问选中文本。"
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "打开系统偏好设置")
+        alert.addButton(withTitle: "取消")
+        
+        if alert.runModal() == .alertFirstButtonReturn {
+            // 打开系统偏好设置中的辅助功能设置
+            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    }
+    
+    private func showAppleEventsPermissionAlert() {
+        let alert = NSAlert()
+        alert.messageText = "需要自动化权限"
+        alert.informativeText = "请在系统偏好设置中允许此应用控制系统事件，以便能够获取选中的文本。"
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "打开系统偏好设置")
+        alert.addButton(withTitle: "取消")
+        
+        if alert.runModal() == .alertFirstButtonReturn {
+            // 打开系统偏好设置中的自动化设置
+            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    }
+
+    func hasAppleEventsPermission() -> Bool {
+        _ = "com.apple.systemevents"
+        
+        // 使用 AppleScript 来检查权限
+        let script = """
+        tell application "System Events"
+            return name of first application process
+        end tell
+        """
+        
+        var errorDict: NSDictionary?
+        let appleScript = NSAppleScript(source: script)
+        let _ = appleScript?.executeAndReturnError(&errorDict)
+        
+        // 如果有错误，并且错误代码是 -1743，则表示没有权限
+        if let error = errorDict, 
+           let errorNumber = error["NSAppleScriptErrorNumber"] as? Int,
+           errorNumber == -1743 {
+            return false
+        }
+        
+        return errorDict == nil
+    }
+    
+    // 显示自动化授权引导弹窗
+    func showAutomationPermissionAlert() -> Bool {
+        // 先尝试触发一次自动化权限请求，这样应用会出现在系统偏好设置的列表中
+        triggerAutomationRequest()
+        
+        let alert = NSAlert()
+        alert.messageText = "需要自动化权限"
+        alert.informativeText = "Cactus 需要控制系统事件的权限才能获取选中的文本。\n\n请按照以下步骤操作：\n1. 点击打开系统设置\n2. 在隐私与安全性中找到自动化\n3. 勾选 Cactus 旁边的系统事件选项"
+        alert.alertStyle = .warning
+        
+        // 添加自定义图标
+        if let appIcon = NSImage(named: "AppIcon") {
+            alert.icon = appIcon
+        }
+        
+        // 添加按钮
+        alert.addButton(withTitle: "打开系统设置")
+        alert.addButton(withTitle: "取消")
+        
+        // 显示弹窗并处理结果
+        let response = alert.runModal()
+        
+        if response == .alertFirstButtonReturn {
+            // macOS 14 及以上版本的系统设置路径
+            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation") {
+                NSWorkspace.shared.open(url)
+            }
+            return true
+        }
+        
+        return false
+    }
+    
+    // 主动触发自动化权限请求，使应用出现在系统偏好设置的列表中
+    private func triggerAutomationRequest() {
+        let script = """
+        tell application "System Events"
+            try
+                get name of first application process
+            end try
+        end tell
+        """
+        
+        let appleScript = NSAppleScript(source: script)
+        var errorDict: NSDictionary?
+        appleScript?.executeAndReturnError(&errorDict)
+        
+        // 如果是第一次运行，这里会触发系统的权限请求对话框
+        // 即使用户拒绝，应用也会被添加到系统偏好设置的自动化列表中
     }
 }

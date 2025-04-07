@@ -23,10 +23,10 @@
     <!-- 辅助功能权限 - 用于读取其他应用中的文本 -->
     <key>com.apple.security.temporary-exception.accessibility</key>
     <true/>
-    <key>com.apple.security.automation.apple-events</key>
-    <true/>
     
     <!-- Apple Events 权限 - 允许与其他应用通信 -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
     <key>com.apple.security.temporary-exception.apple-events</key>
     <array>
         <string>com.apple.systemevents</string>

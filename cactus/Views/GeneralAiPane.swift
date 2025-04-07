@@ -28,7 +28,9 @@ struct GeneralAiPane: View {
                                 Text("选择提供商")
                             }) {
                                 ForEach(Array(settingsModel.providers.keys), id: \.self) { key in
-                                    Text(SettingsModel.providersName[key] ?? "").tag(key)
+                                    if let providerName = SettingsModel.providersName[key], !providerName.isEmpty {
+                                        Text(providerName).tag(key)
+                                    }
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())

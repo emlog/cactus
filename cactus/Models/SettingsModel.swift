@@ -10,17 +10,11 @@ struct ProviderSettings: Codable { // Conform to Codable
 class SettingsModel: ObservableObject {
     static let presetProviders: [String] = ["ppinfra","OpenRouter"]
     static let providersName: [String: String] = [
-        "OpenAI": "OpenAI",
-        "DeepSeek": "DeepSeek",
-        "zhipu": "智谱",
-        "ppinfra": "派欧算力云 - 内置", 
-        "OpenRouter": "OpenRouter - 内置"
+        "ppinfra": "派欧算力云 - 内置免费",
+        "OpenRouter": "OpenRouter - 内置免费"
     ]
     
     static let defaultProviders: [String: ProviderSettings] = [
-        "OpenAI": ProviderSettings(baseURL: "https://api.openai.com/v1/chat/completions", apiKey: "", model: "GPT-4o"),
-        "DeepSeek": ProviderSettings(baseURL: "https://api.deepseek.com/v1/chat/completions", apiKey: "", model: "deepseek-chat"),
-        "zhipu": ProviderSettings(baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions", apiKey: "", model: "glm-4-plus"),
         "ppinfra": ProviderSettings(baseURL: "https://api.ppinfra.com/v3/openai/v1/chat/completions", apiKey: "sk_JMYoUFzDZ258ZTDNItfKINu35r__rx8pM_j0Zqab7CQ", model: "deepseek/deepseek-v3/community"),
         "OpenRouter": ProviderSettings(baseURL: "https://openrouter.ai/api/v1/chat/completions", apiKey: "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", model: "deepseek/deepseek-chat:free")
     ]
