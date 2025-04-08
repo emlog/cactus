@@ -1,0 +1,25 @@
+/*
+ Localizable.strings
+ cactus
+
+ */
+
+// Status Bar Menu
+"main" = "AI助手";
+"setting" = "偏好设置";
+"about" = "关于";
+"quit" = "退出";
+
+// setting
+"general" = "通用";
+"service" = "服务";
+"startup" = "开机自动启动";
+"shortcut" = "AI助手快捷键";
+"select_service" = "选择AI服务";
+"free" = "免费";
+"ppinfra" = "派欧算力云 - 免费";
+"openRouter" = "OpenRouter - 免费";
+
+// main
+"pop_text_empty" = "请先输入内容";
+"pop_copy_success" = "复制成功";

@@ -1,0 +1,25 @@
+/*
+ Localizable.strings
+ cactus
+
+ */
+
+// Status Bar Menu
+"main" = "AI Assistant";
+"setting" = "Preferences";
+"about" = "About";
+"quit" = "Quit";
+
+// setting
+"general" = "General";
+"service" = "Service";
+"startup" = "Start at Startup";
+"shortcut" = "AI Assistant Shortcut";
+"select_service" = "Select AI Service";
+"free" = "Free";
+"ppinfra" = "Paiou Cloud Computing - Free";
+"openRouter" = "OpenRouter - Free";
+
+// main
+"pop_text_empty" = "Please enter content first";
+"pop_copy_success" = "Copy successful";

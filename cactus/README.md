@@ -28,6 +28,7 @@ Text explanation: Explain the concepts in the selected text in more understandab
 Certificate Name：dawei xu
 bundle-id：dawei-snow.cactus
 app 专有密码：qbsl-pjfd-ugam-qtsq
+备案号：京ICP备09000973号-6A
 
 ## Membership Details
 
