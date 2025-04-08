@@ -37,15 +37,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // 创建菜单
             let menu = NSMenu()
             
-            let translateMenuItem = NSMenuItem(title: "阅读辅助", action: #selector(openMain), keyEquivalent: "j")
+            let translateMenuItem = NSMenuItem(
+                title: NSLocalizedString("main", comment: "AI助手"),
+                action: #selector(openMain),
+                keyEquivalent: "j"
+            )
             translateMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil) // 添加地球图标
             menu.addItem(translateMenuItem)
             
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "偏好设置", action: #selector(openPreferences), keyEquivalent: ""))
-            menu.addItem(NSMenuItem(title: "关于", action: #selector(openAbout), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(
+                title: NSLocalizedString("setting", comment: "偏好设置"),
+                action: #selector(openPreferences),
+                keyEquivalent: ""
+            ))
+            menu.addItem(NSMenuItem(
+                title: NSLocalizedString("about", comment: "关于"),
+                action: #selector(openAbout),
+                keyEquivalent: ""
+            ))
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "退出", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+            menu.addItem(NSMenuItem(
+                title: NSLocalizedString("quit", comment: "退出"),
+                action: #selector(NSApplication.terminate(_:)),
+                keyEquivalent: "q"
+            ))
             
             statusItem?.menu = menu
         }

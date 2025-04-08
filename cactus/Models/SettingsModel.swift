@@ -10,8 +10,8 @@ struct ProviderSettings: Codable { // Conform to Codable
 class SettingsModel: ObservableObject {
     static let presetProviders: [String] = ["ppinfra","OpenRouter"]
     static let providersName: [String: String] = [
-        "ppinfra": "派欧算力云 - 内置免费",
-        "OpenRouter": "OpenRouter - 内置免费"
+        "ppinfra": NSLocalizedString("ppinfra", comment: "派欧算力云 - 免费"),
+        "OpenRouter": NSLocalizedString("openRouter", comment: "OpenRouter - 免费")
     ]
     
     static let defaultProviders: [String: ProviderSettings] = [

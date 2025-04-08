@@ -11,14 +11,14 @@ struct GeneralSettingsPane: View {
         Settings.Container(contentWidth: 450) {
             Settings.Section(title: "", bottomDivider: true) {
                 LaunchAtLogin.Toggle {
-                    Text("开机自启动")
+                    Text(NSLocalizedString("startup", comment: "开机自启动"))
                 }
             }
             
-            Settings.Section(label: { Text("AI助手快捷键") }) {
+            Settings.Section(label: { Text(NSLocalizedString("shortcut", comment: "AI助手快捷键")) }) {
                 // Use the defined KeyboardShortcuts.Name
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcut)
-                    .help(Text("打开AI助手的快捷键"))
+                    .help(Text(NSLocalizedString("shortcut", comment: "打开AI助手的快捷键")))
             }
         }
     }

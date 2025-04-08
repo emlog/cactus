@@ -2,47 +2,43 @@ import AlertToast
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject private var contentModel = TextContentModel.shared // 将 @StateObject 替换为 @ObservedObject
+    @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var settings = SettingsModel.shared
     @State private var showCopyToast = false
     @State private var toastMessage = ""
-    @State var isProcessing = false // 更通用的处理中状态标志，移除 private 以便外部访问
+    @State var isProcessing = false
     
     var body: some View {
         Form {
             Section() {
-                // 多行文本输入框，绑定到 contentModel.text
                 TextEditor(text: $contentModel.text)
                     .font(.system(size: 15))
-                    .lineSpacing(8) // 增加行间距
+                    .lineSpacing(8)
                     .frame(maxWidth: .infinity, minHeight: 80)
                     .padding(10)
-                    .background(Color(.textBackgroundColor)) // Use system color that adapts to dark mode
+                    .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color(.separatorColor), lineWidth: 1) // Use system color for border
+                            .stroke(Color(.separatorColor), lineWidth: 1)
                     )
             }
             
             Section() {
                 HStack(spacing: 12) {
-                    // 1.文本翻译
                     Button(action: {
                         if contentModel.text.isEmpty {
-                            toastMessage = "请先输入内容"
+                            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
                             showCopyToast = true
                         } else {
-                            isProcessing = true // 开始处理，设置状态为处理中
+                            isProcessing = true
                             let AiService = AiService()
                             
-                            // 在后台线程执行翻译
                             DispatchQueue.global(qos: .userInitiated).async {
                                 let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，注意不要输出任何提示内容：\n\n" + contentModel.text
                                 AiService.chat(text: text, completion: {
-                                    // 处理完成后，在主线程更新UI
                                     DispatchQueue.main.async {
-                                        isProcessing = false // 处理完成，重置状态
+                                        isProcessing = false
                                     }
                                 })
                             }
@@ -52,9 +48,8 @@ struct MainView: View {
                             .frame(width: 30, height: 30)
                     }
                     .buttonStyle(HoverButtonStyle())
-                    .disabled(isProcessing) // 处理过程中禁用按钮
+                    .disabled(isProcessing)
                     
-                    // 2.摘要总结
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "请先输入内容"
@@ -81,7 +76,6 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing) // 处理过程中禁用按钮
                     
-                    // 3.解释说明
                     Button(action: {
                         if contentModel.text.isEmpty {
                             toastMessage = "请先输入内容"
@@ -117,13 +111,12 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     
-                    Spacer() // 将 ProgressView 推到最右边
+                    Spacer()
 
-                    // 显示loading动画
                     if isProcessing {
                         ProgressView()
-                            .scaleEffect(0.5) // 调整尺寸
-                            .frame(height: 30) // 固定高度，避免撑开容器
+                            .scaleEffect(0.5)
+                            .frame(height: 30)
                             .padding(0)
                     }
                 }
@@ -133,7 +126,7 @@ struct MainView: View {
                 Section() {
                     TextEditor(text: .constant(promptText))
                         .font(.system(size: 15))
-                        .lineSpacing(8) // 增加行间距
+                        .lineSpacing(8)
                         .frame(maxWidth: .infinity, minHeight: 100)
                         .padding(10)
                         .background(Color(.textBackgroundColor))
@@ -148,14 +141,13 @@ struct MainView: View {
                         Button(action: {
                             copyResp()
                         }) {
-                            Image(systemName: "doc.on.doc") // 复制
+                            Image(systemName: "doc.on.doc")
                                 .frame(width: 30, height: 30)
                         }
                         .buttonStyle(HoverButtonStyle())
                         
                         Spacer()
                         
-                        // 显示当前使用的AI提供商及其模型
                         Text("\(settings.selectedProvider) - \(settings.providers[settings.selectedProvider]?.model ?? "")")
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -180,12 +172,12 @@ struct MainView: View {
     
     func copyWriting() {
         if contentModel.text.isEmpty {
-            toastMessage = "没有可复制的内容"
+            toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
         } else {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(contentModel.text, forType: .string)
-            toastMessage = "复制成功"
+            toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
         }
         showCopyToast = true
     }
@@ -195,11 +187,11 @@ struct MainView: View {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(promptText, forType: .string)
-            toastMessage = "复制成功"
+            toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
         } else {
-            toastMessage = "没有可复制的内容"
+            toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
         }
-        showCopyToast = true // 显示气泡提示
+        showCopyToast = true
     }
 }
 
