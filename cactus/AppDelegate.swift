@@ -102,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let aboutView = AboutView()
         let aboutHostingController = NSHostingController(rootView: aboutView)
         aboutWindow?.contentViewController = aboutHostingController
-        aboutWindow?.title = NSLocalizedString("about", comment: "关于"),
+        aboutWindow?.title = NSLocalizedString("about", comment: "关于")
         aboutWindow?.isReleasedWhenClosed = false
     }
     
