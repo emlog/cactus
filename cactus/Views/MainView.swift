@@ -35,7 +35,7 @@ struct MainView: View {
                             let AiService = AiService()
                             
                             DispatchQueue.global(qos: .userInitiated).async {
-                                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，注意不要输出任何提示内容：\n\n" + contentModel.text
+                                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：\n\n" + contentModel.text
                                 AiService.chat(text: text, completion: {
                                     DispatchQueue.main.async {
                                         isProcessing = false

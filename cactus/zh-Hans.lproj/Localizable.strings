@@ -5,25 +5,26 @@
  */
 
 // Status Bar Menu
-"main" = "AI Assistant";
-"setting" = "Preferences";
-"about" = "About";
-"quit" = "Quit";
+"main" = "AI助手";
+"setting" = "偏好设置";
+"about" = "关于";
+"quit" = "退出";
 
 // setting
-"general" = "General";
-"service" = "Service";
-"startup" = "Start at Startup";
-"shortcut" = "AI Assistant Shortcut";
-"select_service" = "Select AI Service";
-"free" = "Free";
-"ppinfra" = "Paiou Cloud Computing - Free";
-"openRouter" = "OpenRouter - Free";
+"general" = "通用";
+"service" = "服务";
+"startup" = "开机自动启动";
+"shortcut" = "AI助手快捷键";
+"select_service" = "选择AI服务";
+"free" = "免费";
+"ppinfra" = "派欧算力云 - 免费";
+"openRouter" = "OpenRouter - 免费";
+"siliconflow" = "硅基流动 - 免费";
 
 // main
-"pop_text_empty" = "Please enter content first";
-"pop_copy_success" = "Copy successful";
-"help_translate" = "Translate";
-"help_summary" = "Summary";
-"help_explain" = "Explain";
-"help_copy" = "Copy";
+"pop_text_empty" = "请先输入内容";
+"pop_copy_success" = "复制成功";
+"help_translate" = "翻译文本";
+"help_summary" = "总结摘要";
+"help_explain" = "解释说明";
+"help_copy" = "复制";

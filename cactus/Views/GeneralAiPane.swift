@@ -25,7 +25,7 @@ struct GeneralAiPane: View {
                     Form {
                         Section {
                             Picker(selection: $settingsModel.selectedProvider, label: HStack {
-                                Text(NSLocalizedString("service", comment: "选择提供商"))
+                                Text(NSLocalizedString("select_service", comment: "选择提供商"))
                             }) {
                                 ForEach(Array(settingsModel.providers.keys), id: \.self) { key in
                                     if let providerName = SettingsModel.providersName[key], !providerName.isEmpty {
