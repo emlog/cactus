@@ -47,12 +47,13 @@ struct MainView: View {
                         Image(systemName: "translate")
                             .frame(width: 30, height: 30)
                     }
+                    .help(NSLocalizedString("help_translate", comment: "翻译文本"))
                     .buttonStyle(HoverButtonStyle())
                     .disabled(isProcessing)
                     
                     Button(action: {
                         if contentModel.text.isEmpty {
-                            toastMessage = "请先输入内容"
+                            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
                             showCopyToast = true
                         } else {
                             isProcessing = true // 开始处理，设置状态为处理中
@@ -73,15 +74,16 @@ struct MainView: View {
                         Image(systemName: "rectangle.dashed.and.paperclip")
                             .frame(width: 30, height: 30)
                     }
+                    .help(NSLocalizedString("help_summary", comment: "总结摘要"))
                     .buttonStyle(HoverButtonStyle())
-                    .disabled(isProcessing) // 处理过程中禁用按钮
+                    .disabled(isProcessing)
                     
                     Button(action: {
                         if contentModel.text.isEmpty {
-                            toastMessage = "请先输入内容"
+                            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
                             showCopyToast = true
                         } else {
-                            isProcessing = true // 开始处理，设置状态为处理中
+                            isProcessing = true
                             let AiService = AiService()
                             
                             // 在后台线程执行翻译
@@ -90,7 +92,7 @@ struct MainView: View {
                                 AiService.chat(text: text, completion: {
                                     // 处理完成后，在主线程更新UI
                                     DispatchQueue.main.async {
-                                        isProcessing = false // 处理完成，重置状态
+                                        isProcessing = false
                                     }
                                 })
                             }
@@ -99,8 +101,9 @@ struct MainView: View {
                         Image(systemName: "graduationcap")
                             .frame(width: 30, height: 30)
                     }
+                    .help(NSLocalizedString("help_explain", comment: "解释说明"))
                     .buttonStyle(HoverButtonStyle())
-                    .disabled(isProcessing) // 处理过程中禁用按钮
+                    .disabled(isProcessing)
                     
                     // 复制原文
                     Button(action: {
@@ -110,6 +113,7 @@ struct MainView: View {
                             .frame(width: 30, height: 30)
                     }
                     .buttonStyle(HoverButtonStyle())
+                    .help(NSLocalizedString("help_copy", comment: "复制"))
                     
                     Spacer()
 
@@ -145,9 +149,10 @@ struct MainView: View {
                                 .frame(width: 30, height: 30)
                         }
                         .buttonStyle(HoverButtonStyle())
-                        
+                        .help(NSLocalizedString("help_copy", comment: "复制"))
+
                         Spacer()
-                        
+
                         Text("\(settings.selectedProvider) - \(settings.providers[settings.selectedProvider]?.model ?? "")")
                             .font(.caption)
                             .foregroundColor(.secondary)

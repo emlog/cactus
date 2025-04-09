@@ -23,3 +23,7 @@
 // main
 "pop_text_empty" = "请先输入内容";
 "pop_copy_success" = "复制成功";
+"help_translate" = "翻译文本";
+"help_summary" = "总结摘要";
+"help_explain" = "解释说明";
+"help_copy" = "复制";

@@ -23,3 +23,7 @@
 // main
 "pop_text_empty" = "Please enter content first";
 "pop_copy_success" = "Copy successful";
+"help_translate" = "Translate";
+"help_summary" = "Summary";
+"help_explain" = "Explain";
+"help_copy" = "Copy";
