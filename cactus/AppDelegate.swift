@@ -102,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let aboutView = AboutView()
         let aboutHostingController = NSHostingController(rootView: aboutView)
         aboutWindow?.contentViewController = aboutHostingController
-        aboutWindow?.title = "关于"
+        aboutWindow?.title = NSLocalizedString("about", comment: "关于"),
         aboutWindow?.isReleasedWhenClosed = false
     }
     
@@ -126,14 +126,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 panes: [
                     Settings.Pane(
                         identifier: Settings.PaneIdentifier.general,
-                        title: "通用",
+                        title: NSLocalizedString("general", comment: "通用"),
                         toolbarIcon: generalIcon
                     ) {
                         GeneralSettingsPane()
                     },
                     Settings.Pane(
                         identifier: Settings.PaneIdentifier.ai,
-                        title: "AI服务",
+                        title: NSLocalizedString("service", comment: "服务"),
                         toolbarIcon: aiIcon
                     ) {
                         GeneralAiPane()
