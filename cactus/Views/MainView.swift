@@ -153,7 +153,7 @@ struct MainView: View {
 
                         Spacer()
 
-                        Text("\(settings.selectedProvider) - \(settings.providers[settings.selectedProvider]?.model ?? "")")
+                        Text("\(settings.selectedProvider) - \(settings.defaultProviders[settings.selectedProvider]?.model ?? "")")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

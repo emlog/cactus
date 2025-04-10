@@ -6,7 +6,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     func chat(text: String, completion: (() -> Void)? = nil) {
         let settings = SettingsModel.shared
-        guard let providerSettings = settings.providers[settings.selectedProvider],
+        guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
               let url = URL(string: providerSettings.baseURL) else {
             completion?()  // 如果URL无效，立即调用完成回调
             return
