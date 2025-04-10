@@ -7,10 +7,6 @@ struct GeneralAiPane: View {
     
     @StateObject private var settingsModel = SettingsModel()
 
-    private func updateSettingsForProvider() {
-        SettingsModel.shared.selectedProvider = settingsModel.selectedProvider
-    }
-
     var body: some View {
         Settings.Container(contentWidth: 450) {
             Settings.Section(title: "", bottomDivider: true) {
@@ -25,7 +21,6 @@ struct GeneralAiPane: View {
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())
-                            .padding(.bottom, 10)
                             .onChange(of: settingsModel.selectedProvider) { oldValue, newValue in
                                 updateSettingsForProvider()
                             }
@@ -37,5 +32,9 @@ struct GeneralAiPane: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
         }
+    }
+
+    private func updateSettingsForProvider() {
+        SettingsModel.shared.selectedProvider = settingsModel.selectedProvider
     }
 }
