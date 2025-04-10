@@ -92,6 +92,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let contentSize = hostingController.view.intrinsicContentSize
         mainWindow?.setContentSize(contentSize)
         
+        // 添加通知监听器来响应文本高度变化
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(adjustWindowSize),
+            name: NSNotification.Name("AdjustWindowSize"),
+            object: nil
+        )
+        
         // 初始化关于窗口
         aboutWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
@@ -113,6 +121,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             DispatchQueue.main.async {
                 self?.openMain()
             }
+        }
+    }
+    
+    // 添加调整窗口大小的方法
+    @objc private func adjustWindowSize() {
+        guard let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
+            return
+        }
+        
+        // 方法1: 使用 sizeThatFits 获取合适的大小
+        let contentSize = hostingController.sizeThatFits(in: NSSize(width: mainWindow?.frame.width ?? 500, height: CGFloat.greatestFiniteMagnitude))
+        
+        // 如果窗口已经可见，使用动画平滑过渡
+        if let window = mainWindow, window.isVisible {
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.2
+                window.animator().setContentSize(contentSize)
+            }
+        } else {
+            // 否则直接设置大小
+            mainWindow?.setContentSize(contentSize)
         }
     }
     

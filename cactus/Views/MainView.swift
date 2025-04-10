@@ -9,13 +9,17 @@ struct MainView: View {
     @State var isProcessing = false
     @State private var isResultSectionExpanded = true  // 新增状态变量
     
+    // 添加状态变量来跟踪文本高度
+    @State private var inputTextHeight: CGFloat = 100
+    @State private var resultTextHeight: CGFloat = 100
+    
     var body: some View {
         Form {
             Section() {
                 TextEditor(text: $contentModel.text)
                     .font(.system(size: 15))
                     .lineSpacing(8)
-                    .frame(maxWidth: .infinity, minHeight: 100)
+                    .frame(maxWidth: .infinity, maxHeight: min(200, inputTextHeight))
                     .padding(10)
                     .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -23,6 +27,12 @@ struct MainView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color(.separatorColor), lineWidth: 1)
                     )
+                    .onChange(of: contentModel.text) {
+                        // 当文本变化时，计算新的高度
+                        inputTextHeight = calculateTextHeight(text: contentModel.text, width: 480)
+                        // 通知窗口调整大小
+                        NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                    }
             }
             
             Section() {
@@ -46,7 +56,7 @@ struct MainView: View {
                         }
                     }) {
                         Image(systemName: "translate")
-                            .frame(width: 30, height: 30)
+                            .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_translate", comment: "翻译文本"))
                     .buttonStyle(HoverButtonStyle())
@@ -73,7 +83,7 @@ struct MainView: View {
                         }
                     }) {
                         Image(systemName: "rectangle.dashed.and.paperclip")
-                            .frame(width: 30, height: 30)
+                            .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_summary", comment: "总结摘要"))
                     .buttonStyle(HoverButtonStyle())
@@ -100,7 +110,7 @@ struct MainView: View {
                         }
                     }) {
                         Image(systemName: "graduationcap")
-                            .frame(width: 30, height: 30)
+                            .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
                     .buttonStyle(HoverButtonStyle())
@@ -111,7 +121,7 @@ struct MainView: View {
                         copyWriting()
                     }) {
                         Image(systemName: "doc.on.doc")
-                            .frame(width: 30, height: 30)
+                            .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle())
                     .help(NSLocalizedString("help_copy", comment: "复制"))
@@ -121,32 +131,34 @@ struct MainView: View {
                     if isProcessing {
                         ProgressView()
                             .scaleEffect(0.5)
-                            .frame(height: 30)
+                            .frame(height: 20)
                             .padding(0)
                     }
                 }
-                // 修改 selectedProvider 显示部分
-                Button(action: {
-                    isResultSectionExpanded.toggle()
-                }) {
-                    Text("\(settings.selectedProvider) - \(settings.defaultProviders[settings.selectedProvider]?.title ?? "")")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color(.controlBackgroundColor))
-                        )
-                }
-                .buttonStyle(PlainButtonStyle())
+                .padding(2)
+                .frame(maxWidth: .infinity, alignment: .leading)  // 添加这行使宽度自适应
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color(.controlBackgroundColor))
+                )
+                // 显示当前AI服务
+                Text("\(settings.defaultProviders[settings.selectedProvider]?.title ?? "")")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)  // 添加这行使宽度自适应
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(Color(.controlBackgroundColor))
+                    )
             }
             
             Section() {
                 TextEditor(text: .constant(contentModel.resultText ?? ""))
                     .font(.system(size: 15))
                     .lineSpacing(8)
-                    .frame(maxWidth: .infinity, minHeight: 100)
+                    .frame(maxWidth: .infinity, maxHeight: min(500, inputTextHeight))
                     .padding(10)
                     .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -154,6 +166,14 @@ struct MainView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color(.separatorColor), lineWidth: 1)
                     )
+                    .onChange(of: contentModel.resultText) {
+                        // 当结果文本变化时，计算新的高度
+                        if let text = contentModel.resultText {
+                            resultTextHeight = calculateTextHeight(text: text, width: 480)
+                            // 通知窗口调整大小
+                            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                        }
+                    }
             }
             Section() {
                 HStack(spacing: 12) {
@@ -161,7 +181,7 @@ struct MainView: View {
                         copyResp()
                     }) {
                         Image(systemName: "doc.on.doc")
-                            .frame(width: 30, height: 30)
+                            .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle())
                     .help(NSLocalizedString("help_copy", comment: "复制"))
@@ -175,6 +195,26 @@ struct MainView: View {
         .toast(isPresenting: $showCopyToast) {
             AlertToast(type: .regular, title: toastMessage)
         }
+    }
+    
+    // 添加计算文本高度的方法
+    private func calculateTextHeight(text: String, width: CGFloat) -> CGFloat {
+        let font = NSFont.systemFont(ofSize: 15)
+        let attributes = [NSAttributedString.Key.font: font]
+        let textStorage = NSTextStorage(string: text, attributes: attributes)
+        
+        let textContainer = NSTextContainer(containerSize: NSSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        textContainer.lineFragmentPadding = 0
+        
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        layoutManager.glyphRange(for: textContainer)
+        let height = layoutManager.usedRect(for: textContainer).height
+        
+        // 添加一些额外空间，并设置最小高度
+        return min(max(height + 40, 100), 500) // 最小100，最大500
     }
     
     func fillText(_ newText: String) {
@@ -225,7 +265,7 @@ struct HoverButtonStyle: ButtonStyle {
     }
 }
 
-#Preview {
-    MainView()
-        .environment(\.locale, .init(identifier: "en"))
-}
+//#Preview {
+//    MainView()
+//        .environment(\.locale, .init(identifier: "en"))
+//}
