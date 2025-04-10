@@ -124,6 +124,9 @@ struct MainView: View {
                             .padding(0)
                     }
                 }
+                Text("\(settings.selectedProvider) - \(settings.defaultProviders[settings.selectedProvider]?.title ?? "")")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
             
             if let promptText = contentModel.promptText {
@@ -152,10 +155,6 @@ struct MainView: View {
                         .help(NSLocalizedString("help_copy", comment: "复制"))
 
                         Spacer()
-
-                        Text("\(settings.selectedProvider) - \(settings.defaultProviders[settings.selectedProvider]?.model ?? "")")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
             }
@@ -215,7 +214,7 @@ struct HoverButtonStyle: ButtonStyle {
     }
 }
 
-//#Preview {
-//    MainView()
-//        .environment(\.locale, .init(identifier: "en"))
-//}
+#Preview {
+    MainView()
+        .environment(\.locale, .init(identifier: "en"))
+}

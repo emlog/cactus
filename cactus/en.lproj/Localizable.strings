@@ -17,9 +17,9 @@
 "shortcut" = "AI Assistant Shortcut";
 "select_service" = "Select AI Service";
 "free" = "Free";
-"ppinfra" = "Ppinfra - Free";
-"openRouter" = "OpenRouter - Free";
-"siliconflow" = "Siliconflow - Free";
+"ppinfra" = "Ppinfra";
+"openRouter" = "OpenRouter";
+"siliconflow" = "Siliconflow";
 
 // main
 "pop_text_empty" = "Please enter content first";
