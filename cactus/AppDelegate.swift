@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 action: #selector(openMain),
                 keyEquivalent: "j"
             )
-            translateMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil) // 添加地球图标
+            translateMenuItem.image = NSImage(systemSymbolName: "shareplay", accessibilityDescription: nil) // 添加地球图标
             menu.addItem(translateMenuItem)
             
             menu.addItem(NSMenuItem.separator())
