@@ -51,6 +51,6 @@ class SettingsModel: ObservableObject {
     
     init() {
         self.shortcutKey = UserDefaults.standard.string(forKey: "shortcutKey") ?? "⌘j"
-        self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "OpenAI"
+        self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "siliconflow"
     }
 }

@@ -7,6 +7,7 @@ struct MainView: View {
     @State private var showCopyToast = false
     @State private var toastMessage = ""
     @State var isProcessing = false
+    @State private var isResultSectionExpanded = true  // 新增状态变量
     
     var body: some View {
         Form {
@@ -14,7 +15,7 @@ struct MainView: View {
                 TextEditor(text: $contentModel.text)
                     .font(.system(size: 15))
                     .lineSpacing(8)
-                    .frame(maxWidth: .infinity, minHeight: 80)
+                    .frame(maxWidth: .infinity, minHeight: 100)
                     .padding(10)
                     .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -124,38 +125,48 @@ struct MainView: View {
                             .padding(0)
                     }
                 }
-                Text("\(settings.selectedProvider) - \(settings.defaultProviders[settings.selectedProvider]?.title ?? "")")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            
-            if let resultText = contentModel.resultText {
-                Section() {
-                    TextEditor(text: .constant(resultText))
-                        .font(.system(size: 15))
-                        .lineSpacing(8)
-                        .frame(maxWidth: .infinity, minHeight: 100)
-                        .padding(10)
-                        .background(Color(.textBackgroundColor))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(.separatorColor), lineWidth: 1)
+                // 修改 selectedProvider 显示部分
+                Button(action: {
+                    isResultSectionExpanded.toggle()
+                }) {
+                    Text("\(settings.selectedProvider) - \(settings.defaultProviders[settings.selectedProvider]?.title ?? "")")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color(.controlBackgroundColor))
                         )
                 }
-                Section() {
-                    HStack(spacing: 12) {
-                        Button(action: {
-                            copyResp()
-                        }) {
-                            Image(systemName: "doc.on.doc")
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(HoverButtonStyle())
-                        .help(NSLocalizedString("help_copy", comment: "复制"))
-
-                        Spacer()
+                .buttonStyle(PlainButtonStyle())
+            }
+            
+            Section() {
+                TextEditor(text: .constant(contentModel.resultText ?? ""))
+                    .font(.system(size: 15))
+                    .lineSpacing(8)
+                    .frame(maxWidth: .infinity, minHeight: 100)
+                    .padding(10)
+                    .background(Color(.textBackgroundColor))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(.separatorColor), lineWidth: 1)
+                    )
+            }
+            Section() {
+                HStack(spacing: 12) {
+                    Button(action: {
+                        copyResp()
+                    }) {
+                        Image(systemName: "doc.on.doc")
+                            .frame(width: 30, height: 30)
                     }
+                    .buttonStyle(HoverButtonStyle())
+                    .help(NSLocalizedString("help_copy", comment: "复制"))
+
+                    Spacer()
                 }
             }
         }
