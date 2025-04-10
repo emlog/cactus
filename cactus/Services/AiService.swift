@@ -37,7 +37,7 @@ class AiService: NSObject, URLSessionDataDelegate {
         }
         
         DispatchQueue.main.async {
-            TextContentModel.shared.promptText = ""
+            TextContentModel.shared.resultText = ""
         }
         fullContent = ""
         buffer = Data()
@@ -85,7 +85,7 @@ class AiService: NSObject, URLSessionDataDelegate {
                             fullContent += content
                             
                             DispatchQueue.main.async {
-                                TextContentModel.shared.promptText = self.fullContent
+                                TextContentModel.shared.resultText = self.fullContent
                             }
                         }
                     } catch {

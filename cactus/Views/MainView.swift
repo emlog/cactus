@@ -129,9 +129,9 @@ struct MainView: View {
                     .foregroundColor(.secondary)
             }
             
-            if let promptText = contentModel.promptText {
+            if let resultText = contentModel.resultText {
                 Section() {
-                    TextEditor(text: .constant(promptText))
+                    TextEditor(text: .constant(resultText))
                         .font(.system(size: 15))
                         .lineSpacing(8)
                         .frame(maxWidth: .infinity, minHeight: 100)
@@ -187,7 +187,7 @@ struct MainView: View {
     }
     
     func copyResp() {
-        if let promptText = contentModel.promptText, !promptText.isEmpty {
+        if let promptText = contentModel.resultText, !promptText.isEmpty {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(promptText, forType: .string)
