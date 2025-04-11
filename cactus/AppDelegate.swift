@@ -10,6 +10,7 @@ import SwiftUI
 import KeyboardShortcuts
 import Settings
 import Foundation
+import ApplicationServices  // 添加这一行
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
@@ -189,5 +190,77 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainWindow?.makeKeyAndOrderFront(nil)
         mainWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+        
+        // 检查辅助功能权限并获取剪贴板内容
+        checkAccessibilityPermissionAndGetClipboard()
+    }
+    
+    private func checkAccessibilityPermissionAndGetClipboard() {
+        // 检查辅助功能权限
+        let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
+        let options = [checkOptPrompt: true]
+        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
+        
+        if accessEnabled {
+            // 如果有权限，获取剪贴板内容
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.getClipboardContent()
+            }
+        } else {
+            // 显示权限提示
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("accessibility_permission_title", comment: "需要辅助功能权限")
+            alert.informativeText = NSLocalizedString("accessibility_permission_message", comment: "请在系统偏好设置中启用辅助功能权限，以便自动获取剪贴板内容。")
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
+            alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
+            
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                // 打开辅助功能设置
+                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+            }
+        }
+    }
+    
+    private func getClipboardContent() {
+        guard let mainViewController = mainWindow?.contentViewController as? NSHostingController<MainView>,
+              let mainView = mainViewController.rootView as? MainView else {
+            return
+        }
+        
+        // 保存当前剪贴板内容
+        let pasteboard = NSPasteboard.general
+        let originalContent = pasteboard.string(forType: .string)
+        
+        // 模拟 Command+C 复制操作
+        let source = CGEventSource(stateID: .hidSystemState)
+        
+        // 按下 Command+C
+        let keyDownC = CGEvent(keyboardEventSource: source, virtualKey: 0x08, keyDown: true)
+        keyDownC?.flags = .maskCommand
+        keyDownC?.post(tap: .cghidEventTap)
+        
+        // 释放 Command+C
+        let keyUpC = CGEvent(keyboardEventSource: source, virtualKey: 0x08, keyDown: false)
+        keyUpC?.flags = .maskCommand
+        keyUpC?.post(tap: .cghidEventTap)
+        
+        // 等待一小段时间让剪贴板更新
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            // 获取新的剪贴板内容
+            let newContent = pasteboard.string(forType: .string)
+            
+            // 如果有新内容，填充到文本框
+            if let newContent = newContent, !newContent.isEmpty {
+                mainView.fillText(newContent)
+            }
+            
+            // 恢复原始剪贴板内容
+            if let originalContent = originalContent {
+                pasteboard.clearContents()
+                pasteboard.setString(originalContent, forType: .string)
+            }
+        }
     }
 }

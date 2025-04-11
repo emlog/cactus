@@ -219,9 +219,11 @@ struct MainView: View {
     
     func fillText(_ newText: String) {
         DispatchQueue.main.async {
-            print("new text: \(newText)")
             self.contentModel.text = newText
-            print("updated text: \(self.contentModel.text)")
+            // 计算新文本的高度
+            self.inputTextHeight = self.calculateTextHeight(text: newText, width: 480)
+            // 通知窗口调整大小
+            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
         }
     }
     
