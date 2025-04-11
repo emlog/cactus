@@ -1,29 +1,54 @@
-## 仙人掌
+## 仙人掌AI助手
 
-仙人掌
-Cactus
+仙人掌AI助手
+Cactus AI Assistant
 
-仙人掌 - AI阅读助手
-AI text translation, summarization, interpretation
+副标题：基于大语言模型的智能文字助手，快速翻译、总结、解释选中文本
 
-仙人掌 - 是一款基于AI大模型对文字快速进行翻译、总结、解释的阅读辅助工具
+### 中文介绍
 
-Cactus - is a reading assistant tool based on an AI large model that quickly translates, summarizes, and explains text.
+仙人掌AI助手是一款基于大语言模型的智能文字助手，快速翻译、总结、解释选中文本。
 
-【主要功能】
+核心功能：
 
-文本翻译：选中任意文本，按下快捷键，快速完成翻译
-摘要总结：对选中的文本进行精炼的总结
-解释说明：用更易于理解的语言解释选中文本中的概念
+· 快捷翻译：选中文本，按快捷键，立即翻译
+· 智能总结：提炼内容要点，一目了然
+· 通俗解释：用简单语言讲清复杂内容
 
+提升阅读理解效率，适用于学习、写作、资料整理等多种场景。
+------
 
-【Main Features】
-
-Text translation: Select any text and press the shortcut key to quickly complete the translation
-Text summary: a concise summary of the selected text
-Text explanation: Explain the concepts in the selected text in more understandable language
+使用条款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+隐私策略：https://cacai.emlog.cn/orangeai-privacy-policy.html
 
 
+### 英文介绍
+
+Cactus AI Assistant is an AI-powered text assistant for fast translation, summarization, and explanation of selected content.
+
+Key Features
+
+· Instant Translation: Select text and press a shortcut to translate instantly
+· Smart Summarization: Extract key points at a glance
+· Clear Explanation: Simplify complex ideas in plain language
+
+Boost your reading and understanding efficiency — perfect for studying, writing, and content review.
+
+------
+
+Terms of Use：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy Policy：https://cacai.emlog.cn/orangeai-privacy-policy.html
+
+
+## 关键词
+
+翻译助手,AI总结,智能解释,文本处理,学习工具
+
+AI Assistant,Text Tool,Translate,Summarize,Productivity
+
+
+
+## 开发者信息
 
 Certificate Name：dawei xu
 bundle-id：dawei-snow.cactus
