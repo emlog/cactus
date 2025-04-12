@@ -224,36 +224,58 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func getClipboardContent() {
-        guard let mainViewController = mainWindow?.contentViewController as? NSHostingController<MainView>,
-              let mainView = mainViewController.rootView as? MainView else {
+        guard let mainViewController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
             return
         }
+        
+        // Access mainView directly without conditional casting
+        let mainView = mainViewController.rootView
         
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
         
         // 模拟 Command+C 复制操作
-        let source = CGEventSource(stateID: .hidSystemState)
+        let source = CGEventSource(stateID: .combinedSessionState)  // 使用组合会话状态
+        
+        // 确保事件源创建成功
+        guard let eventSource = source else {
+            print("无法创建事件源")
+            return
+        }
         
         // 按下 Command+C
-        let keyDownC = CGEvent(keyboardEventSource: source, virtualKey: 0x08, keyDown: true)
-        keyDownC?.flags = .maskCommand
-        keyDownC?.post(tap: .cghidEventTap)
+        guard let keyDownC = CGEvent(keyboardEventSource: eventSource, virtualKey: 0x08, keyDown: true) else {
+            print("无法创建按键事件")
+            return
+        }
+        keyDownC.flags = .maskCommand
         
         // 释放 Command+C
-        let keyUpC = CGEvent(keyboardEventSource: source, virtualKey: 0x08, keyDown: false)
-        keyUpC?.flags = .maskCommand
-        keyUpC?.post(tap: .cghidEventTap)
+        guard let keyUpC = CGEvent(keyboardEventSource: eventSource, virtualKey: 0x08, keyDown: false) else {
+            print("无法创建释放事件")
+            return
+        }
+        keyUpC.flags = .maskCommand
         
-        // 等待一小段时间让剪贴板更新
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        // 发送事件
+        keyDownC.post(tap: .cgAnnotatedSessionEventTap)  // 使用更可靠的事件分发点
+        
+        // 添加短暂延迟确保按键被识别
+        usleep(10000)  // 10毫秒
+        
+        keyUpC.post(tap: .cgAnnotatedSessionEventTap)
+        
+        // 给系统足够的时间来处理复制操作
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {  // 增加延迟时间
             // 获取新的剪贴板内容
             let newContent = pasteboard.string(forType: .string)
             
             // 如果有新内容，填充到文本框
             if let newContent = newContent, !newContent.isEmpty {
                 mainView.fillText(newContent)
+            } else {
+                print("未能获取到剪贴板内容")
             }
             
             // 恢复原始剪贴板内容
