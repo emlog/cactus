@@ -142,7 +142,7 @@ struct MainView: View {
                         .fill(Color(.controlBackgroundColor))
                 )
                 // 显示当前AI服务
-                Text("\(settings.defaultProviders[settings.selectedProvider]?.title ?? "")")
+                Text("\(settings.defaultProviders[settings.selectedProvider]?.title ?? "") - \(settings.defaultProviders[settings.selectedProvider]?.model ?? "")")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .padding(.vertical, 6)
