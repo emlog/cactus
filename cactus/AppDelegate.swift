@@ -235,8 +235,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
         
+        // 使用模拟复制功能获取选中文本
+        simulateCopy()
+        
+        // 给系统足够的时间来处理复制操作
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            // 获取新的剪贴板内容
+            let newContent = pasteboard.string(forType: .string)
+            
+            // 如果有新内容，填充到文本框
+            if let newContent = newContent, !newContent.isEmpty {
+                mainView.fillText(newContent)
+            } else {
+                print("未能获取到剪贴板内容")
+            }
+            
+            // 恢复原始剪贴板内容
+            if let originalContent = originalContent {
+                self.copyToClipBoard(textToCopy: originalContent)
+            }
+        }
+    }
+    
+    // 添加模拟复制功能
+    private func simulateCopy() {
         // 模拟 Command+C 复制操作
-        let source = CGEventSource(stateID: .combinedSessionState)  // 使用组合会话状态
+        let source = CGEventSource(stateID: .combinedSessionState)
         
         // 确保事件源创建成功
         guard let eventSource = source else {
@@ -259,30 +283,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         keyUpC.flags = .maskCommand
         
         // 发送事件
-        keyDownC.post(tap: .cgAnnotatedSessionEventTap)  // 使用更可靠的事件分发点
-        
-        // 添加短暂延迟确保按键被识别
-        usleep(10000)  // 10毫秒
-        
+        keyDownC.post(tap: .cgAnnotatedSessionEventTap)
+        usleep(10000)  // 10毫秒延迟
         keyUpC.post(tap: .cgAnnotatedSessionEventTap)
-        
-        // 给系统足够的时间来处理复制操作
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {  // 增加延迟时间
-            // 获取新的剪贴板内容
-            let newContent = pasteboard.string(forType: .string)
-            
-            // 如果有新内容，填充到文本框
-            if let newContent = newContent, !newContent.isEmpty {
-                mainView.fillText(newContent)
-            } else {
-                print("未能获取到剪贴板内容")
-            }
-            
-            // 恢复原始剪贴板内容
-            if let originalContent = originalContent {
-                pasteboard.clearContents()
-                pasteboard.setString(originalContent, forType: .string)
-            }
-        }
     }
+    
+    // 添加复制到剪贴板的辅助函数
+    private func copyToClipBoard(textToCopy: String) {
+        let pasteBoard = NSPasteboard.general
+        pasteBoard.clearContents()
+        pasteBoard.setString(textToCopy, forType: .string)
+    }
+    
+    // ... existing code ...
 }
