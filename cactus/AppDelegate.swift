@@ -243,9 +243,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // 获取新的剪贴板内容
             let newContent = pasteboard.string(forType: .string)
             
-            // 如果有新内容，填充到文本框
+            // 如果有新内容，填充到文本框并开始翻译
             if let newContent = newContent, !newContent.isEmpty {
                 mainView.fillText(newContent)
+                
+                // 添加延迟以确保文本已填充
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    // 调用翻译功能
+                    mainView.translateText()
+                }
             } else {
                 print("未能获取到剪贴板内容")
             }

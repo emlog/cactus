@@ -127,7 +127,7 @@ struct MainView: View {
                     .help(NSLocalizedString("help_copy", comment: "复制"))
                     
                     Spacer()
-
+                    
                     if isProcessing {
                         ProgressView()
                             .scaleEffect(0.5)
@@ -185,7 +185,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-
+                    
                     Spacer()
                 }
             }
@@ -250,6 +250,26 @@ struct MainView: View {
         }
         showCopyToast = true
     }
+    
+    // 添加一个可以从外部调用的翻译方法
+    func translateText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
+            showCopyToast = true
+        } else {
+            isProcessing = true
+            let AiService = AiService()
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：\n\n" + contentModel.text
+                AiService.chat(text: text, completion: {
+                    DispatchQueue.main.async {
+                        isProcessing = false
+                    }
+                })
+            }
+        }
+    }
 }
 
 struct HoverButtonStyle: ButtonStyle {
@@ -266,8 +286,3 @@ struct HoverButtonStyle: ButtonStyle {
             }
     }
 }
-
-//#Preview {
-//    MainView()
-//        .environment(\.locale, .init(identifier: "en"))
-//}
