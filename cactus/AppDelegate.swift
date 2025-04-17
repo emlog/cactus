@@ -185,27 +185,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func openMain() {
-        // 确保窗口在最上层
-        mainWindow?.center()
-        mainWindow?.makeKeyAndOrderFront(nil)
-        mainWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
-        
-        // 检查辅助功能权限并获取剪贴板内容
-        checkAccessibilityPermissionAndGetClipboard()
+        // 1. 先尝试获取剪贴板内容（这会触发模拟复制）
+        checkAccessibilityPermissionAndGetClipboard { [weak self] success in
+            // 2. 无论成功与否，都激活并显示窗口
+            //    使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                // 确保窗口在最上层
+                self.mainWindow?.center()
+                self.mainWindow?.makeKeyAndOrderFront(nil)
+                self.mainWindow?.orderFrontRegardless()
+                NSApp.activate(ignoringOtherApps: true)
+
+                // 可以在这里根据 success 的结果决定是否显示提示信息等
+                if !success {
+                    print("未能成功获取选中文本。")
+                    // 可以考虑清空输入框或显示提示
+                    // 例如，如果需要清空，可以这样做：
+                    // if let mainVC = self.mainWindow?.contentViewController as? NSHostingController<MainView> {
+                    //     mainVC.rootView.fillText("") // 假设 fillText 可以接受空字符串来清空
+                    // }
+                }
+            }
+        }
     }
     
-    private func checkAccessibilityPermissionAndGetClipboard() {
+    // 修改 checkAccessibilityPermissionAndGetClipboard 以接受一个完成回调
+    private func checkAccessibilityPermissionAndGetClipboard(completion: @escaping (Bool) -> Void) {
         // 检查辅助功能权限
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: true]
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-        
+    
         if accessEnabled {
-            // 如果有权限，获取剪贴板内容
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.getClipboardContent()
-            }
+            // 如果有权限，立即尝试获取剪贴板内容
+            getClipboardContent(completion: completion)
         } else {
             // 显示权限提示
             let alert = NSAlert()
@@ -214,52 +228,68 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
             alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
-            
-            let response = alert.runModal()
-            if response == .alertFirstButtonReturn {
-                // 打开辅助功能设置
-                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+    
+            // 在主线程显示 Alert
+            DispatchQueue.main.async {
+                let response = alert.runModal()
+                if response == .alertFirstButtonReturn {
+                    // 打开辅助功能设置
+                    NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+                }
+                // 无论用户是否去设置，本次操作都视为未成功获取
+                completion(false)
             }
         }
     }
     
-    private func getClipboardContent() {
-        guard let mainViewController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
-            return
-        }
-        
-        // Access mainView directly without conditional casting
-        let mainView = mainViewController.rootView
-        
+    // 修改 getClipboardContent 以接受一个完成回调
+    private func getClipboardContent(completion: @escaping (Bool) -> Void) {
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
-        
+    
         // 使用模拟复制功能获取选中文本
-        simulateCopy()
-        
-        // 给系统足够的时间来处理复制操作
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            // 获取新的剪贴板内容
+        simulateCopy() // 模拟复制发生在这里，此时焦点理论上还在原应用
+    
+        // 给系统一点时间处理复制操作，然后读取剪贴板
+        // 这个延迟仍然是必要的，但要确保它在窗口激活之前完成
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // 使用 0.2 秒延迟
+            guard let mainViewController = self.mainWindow?.contentViewController as? NSHostingController<MainView> else {
+                // 如果无法获取 mainViewController，也恢复剪贴板
+                if let originalContent = originalContent {
+                    self.copyToClipBoard(textToCopy: originalContent)
+                }
+                completion(false)
+                return
+            }
+            let mainView = mainViewController.rootView
             let newContent = pasteboard.string(forType: .string)
-            
-            // 如果有新内容，填充到文本框并开始翻译
-            if let newContent = newContent, !newContent.isEmpty {
+            var success = false
+    
+            // 如果有新内容，且与原内容不同（避免误触发）
+            if let newContent = newContent, !newContent.isEmpty, newContent != originalContent {
                 mainView.fillText(newContent)
-                
-                // 添加延迟以确保文本已填充
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+    
+                // 添加延迟以确保文本已填充 (如果 translateText 依赖于 fillText 完成后的状态)
+                // 如果 fillText 内部已经是 async 更新，这个延迟可能不需要或者需要调整
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // 调用翻译功能
                     mainView.translateText()
                 }
+                success = true
             } else {
-                print("未能获取到剪贴板内容")
+                print("未能获取到新的剪贴板内容或内容未改变。")
+                // 如果没有获取到新内容，可以选择不清空输入框，保留上次的内容
+                // mainView.fillText("") // 如果需要清空的话
             }
-            
+    
             // 恢复原始剪贴板内容
             if let originalContent = originalContent {
                 self.copyToClipBoard(textToCopy: originalContent)
             }
+    
+            // 调用完成回调
+            completion(success)
         }
     }
     
