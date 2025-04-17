@@ -146,6 +146,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    // 偏好设置窗口
     @objc func openPreferences() {
         if settingsWindowController == nil {
             // Use system symbols for toolbar icons with fallback
@@ -176,6 +177,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindowController?.window?.orderFrontRegardless()
     }
     
+    // 关于窗口
     @objc func openAbout() {
         // 调整窗口位置到当前屏幕的中心
         aboutWindow?.center()
@@ -184,6 +186,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
     
+    // 主窗口
     @objc func openMain() {
         // 1. 先尝试获取剪贴板内容（这会触发模拟复制）
         checkAccessibilityPermissionAndGetClipboard { [weak self] success in
