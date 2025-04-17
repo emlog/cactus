@@ -10,7 +10,7 @@ import SwiftUI
 import KeyboardShortcuts
 import Settings
 import Foundation
-import ApplicationServices  // 添加这一行
+import ApplicationServices
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
@@ -188,7 +188,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 1. 先尝试获取剪贴板内容（这会触发模拟复制）
         checkAccessibilityPermissionAndGetClipboard { [weak self] success in
             // 2. 无论成功与否，都激活并显示窗口
-            //    使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
+            // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 // 确保窗口在最上层
@@ -210,7 +210,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // 修改 checkAccessibilityPermissionAndGetClipboard 以接受一个完成回调
+    // 检查并提醒用户开启：辅助功能权限
     private func checkAccessibilityPermissionAndGetClipboard(completion: @escaping (Bool) -> Void) {
         // 检查辅助功能权限
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
@@ -242,14 +242,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // 修改 getClipboardContent 以接受一个完成回调
+    // 按下快捷键复制选中内容到剪贴板、并调用翻译功能
     private func getClipboardContent(completion: @escaping (Bool) -> Void) {
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
     
-        // 使用模拟复制功能获取选中文本
-        simulateCopy() // 模拟复制发生在这里，此时焦点理论上还在原应用
+        // 使用模拟复制功能获取选中文本，模拟复制发生在这里，此时焦点理论上还在原应用
+        simulateCopy()
     
         // 给系统一点时间处理复制操作，然后读取剪贴板
         // 这个延迟仍然是必要的，但要确保它在窗口激活之前完成
@@ -279,8 +279,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 success = true
             } else {
                 print("未能获取到新的剪贴板内容或内容未改变。")
-                // 如果没有获取到新内容，可以选择不清空输入框，保留上次的内容
-                // mainView.fillText("") // 如果需要清空的话
             }
     
             // 恢复原始剪贴板内容
@@ -330,6 +328,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         pasteBoard.clearContents()
         pasteBoard.setString(textToCopy, forType: .string)
     }
-    
-    // ... existing code ...
 }
