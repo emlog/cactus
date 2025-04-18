@@ -12,7 +12,8 @@ import Settings
 import Foundation
 import ApplicationServices
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+// 修改 AppDelegate 类声明，添加 NSWindowDelegate
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusItem: NSStatusItem?
     // 添加窗口属性
     var settingsWindow: NSWindow?
@@ -82,14 +83,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             backing: .buffered,
             defer: false
         )
-        // 修改 collectionBehavior 和 level
         mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary] // 允许窗口出现在所有 Space，包括全屏应用的空间
-        mainWindow?.level = .floating // 设置窗口层级为浮动，使其能显示在全屏应用之上
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
         mainWindow?.title = ""
         mainWindow?.isReleasedWhenClosed = false
+        mainWindow?.delegate = self // 设置 mainWindow 的代理为 AppDelegate 实例
         
         // 动态调整窗口高度
         let contentSize = hostingController.view.intrinsicContentSize
@@ -345,6 +345,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let pasteBoard = NSPasteboard.general
         pasteBoard.clearContents()
         pasteBoard.setString(textToCopy, forType: .string)
+    }
+    
+    // 实现 NSWindowDelegate 方法，当窗口失去焦点时调用
+    func windowDidResignKey(_ notification: Notification) {
+        // 检查失去焦点的窗口是否是 mainWindow
+        if let window = notification.object as? NSWindow, window == mainWindow {
+            // 关闭窗口
+            window.close()
+        }
     }
     
     func clearUserDefaults() {
