@@ -46,84 +46,38 @@ struct MainView: View {
             Section() {
                 HStack(spacing: 12) {
                     Button(action: {
-                        if contentModel.text.isEmpty {
-                            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
-                            showCopyToast = true
-                        } else {
-                            isProcessing = true
-                            let AiService = AiService()
-                            
-                            DispatchQueue.global(qos: .userInitiated).async {
-                                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：\n\n" + contentModel.text
-                                AiService.chat(text: text, completion: {
-                                    DispatchQueue.main.async {
-                                        isProcessing = false
-                                    }
-                                })
-                            }
-                        }
+                        // 翻译助手
+                        performAIAction(promptPrefix: "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：")
                     }) {
                         Image(systemName: "translate")
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_translate", comment: "翻译文本"))
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(isProcessing)
-                    
+
                     Button(action: {
-                        if contentModel.text.isEmpty {
-                            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
-                            showCopyToast = true
-                        } else {
-                            isProcessing = true // 开始处理，设置状态为处理中
-                            let AiService = AiService()
-                            
-                            // 在后台线程执行翻译
-                            DispatchQueue.global(qos: .userInitiated).async {
-                                let text = "摘要总结，请将下面的内容的主要信息总结摘要：\n\n" + contentModel.text
-                                AiService.chat(text: text, completion: {
-                                    // 处理完成后，在主线程更新UI
-                                    DispatchQueue.main.async {
-                                        isProcessing = false // 处理完成，重置状态
-                                    }
-                                })
-                            }
-                        }
+                        // 摘要总结
+                        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
                     }) {
                         Image(systemName: "rectangle.dashed.and.paperclip")
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_summary", comment: "总结摘要"))
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(isProcessing)
-                    
+
                     Button(action: {
-                        if contentModel.text.isEmpty {
-                            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
-                            showCopyToast = true
-                        } else {
-                            isProcessing = true
-                            let AiService = AiService()
-                            
-                            // 在后台线程执行翻译
-                            DispatchQueue.global(qos: .userInitiated).async {
-                                let text = "解释说明，请用更通俗易懂简洁的语言解释说下面的内容中主要的概念：\n\n" + contentModel.text
-                                AiService.chat(text: text, completion: {
-                                    // 处理完成后，在主线程更新UI
-                                    DispatchQueue.main.async {
-                                        isProcessing = false
-                                    }
-                                })
-                            }
-                        }
+                        // 解释说明
+                        performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
                     }) {
                         Image(systemName: "graduationcap")
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(isProcessing)
-                    
+
                     // 复制原文
                     Button(action: {
                         copyWriting()
@@ -131,11 +85,11 @@ struct MainView: View {
                         Image(systemName: "doc.on.doc")
                             .frame(width: 20, height: 20)
                     }
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-                    
+
                     Spacer()
-                    
+
                     if isProcessing {
                         ProgressView()
                             .scaleEffect(0.5)
@@ -143,8 +97,9 @@ struct MainView: View {
                             .padding(0)
                     }
                 }
-                .padding(2)
-                .frame(maxWidth: .infinity, alignment: .leading)  // 添加这行使宽度自适应
+                .padding(.horizontal, 8) // 为HStack添加水平内边距
+                .padding(.vertical, 5)   // 为HStack添加垂直内边距
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
                         .fill(Color(.controlBackgroundColor))
@@ -191,11 +146,18 @@ struct MainView: View {
                         Image(systemName: "doc.on.doc")
                             .frame(width: 20, height: 20)
                     }
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-                    
+
                     Spacer()
                 }
+                .padding(.horizontal, 8) // 为HStack添加水平内边距
+                .padding(.vertical, 5)   // 为HStack添加垂直内边距
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color(.controlBackgroundColor)) // 保持背景一致性
+                )
             }
         }
         .padding(10)
@@ -261,36 +223,47 @@ struct MainView: View {
     
     // 添加一个可以从外部调用的翻译方法
     func translateText() {
+        // 使用重构后的方法
+        performAIAction(promptPrefix: "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：")
+    }
+
+    // 新增：重构 AI 操作的私有方法
+    private func performAIAction(promptPrefix: String) {
         if contentModel.text.isEmpty {
             toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
             showCopyToast = true
         } else {
             isProcessing = true
-            let AiService = AiService()
-            
+            let aiService = AiService() // 统一变量命名规范
+            let fullPrompt = promptPrefix + "\n\n" + contentModel.text
+
             DispatchQueue.global(qos: .userInitiated).async {
-                let text = "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：\n\n" + contentModel.text
-                AiService.chat(text: text, completion: {
+                aiService.chat(text: fullPrompt) { // 使用正确的变量名
                     DispatchQueue.main.async {
                         isProcessing = false
                     }
-                })
+                }
             }
         }
     }
 }
 
+// 优化 HoverButtonStyle
 struct HoverButtonStyle: ButtonStyle {
     @State private var isHovered = false
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .padding(5) // 给图标周围增加一些空间，让背景更明显
             .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray.opacity(isHovered ? 0.5 : 0), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 6)
+                    // 悬停时改变背景色，增加透明度使其不突兀
+                    .fill(isHovered ? Color.gray.opacity(0.2) : Color.clear)
             )
+            .contentShape(Rectangle()) // 确保整个区域都能响应悬停和点击
             .onHover { hovering in
                 isHovered = hovering
             }
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0) // 添加按压效果
     }
 }
