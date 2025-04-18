@@ -11,7 +11,7 @@ Cactus AI Assistant
 
 核心功能：
 
-· 快捷翻译：选中文本，按快捷键，立即翻译
+· 快捷翻译：选中文本，按快捷键（默认 ⌥ + X），立即翻译
 · 智能总结：提炼内容要点，一目了然
 · 通俗解释：用简单语言讲清复杂内容
 
@@ -28,7 +28,7 @@ Cactus AI Assistant is an AI-powered text assistant for fast translation, summar
 
 Key Features
 
-· Instant Translation: Select text and press a shortcut to translate instantly
+· Instant Translation: Select text and press a shortcut (Default ⌥ + X) to translate instantly
 · Smart Summarization: Extract key points at a glance
 · Clear Explanation: Simplify complex ideas in plain language
 
