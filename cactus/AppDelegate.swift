@@ -179,6 +179,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // 关于窗口
     @objc func openAbout() {
+#if DEBUG
+        // 仅在调试环境中执行的代码
+        clearUserDefaults()
+#endif
+        
         // 调整窗口位置到当前屏幕的中心
         aboutWindow?.center()
         aboutWindow?.makeKeyAndOrderFront(nil)
@@ -199,7 +204,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.mainWindow?.makeKeyAndOrderFront(nil)
                 self.mainWindow?.orderFrontRegardless()
                 NSApp.activate(ignoringOtherApps: true)
-
+                
                 // 可以在这里根据 success 的结果决定是否显示提示信息等
                 if !success {
                     print("未能成功获取选中文本。")
@@ -219,7 +224,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: true]
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-    
+        
         if accessEnabled {
             // 如果有权限，立即尝试获取剪贴板内容
             getClipboardContent(completion: completion)
@@ -231,7 +236,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
             alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
-    
+            
             // 在主线程显示 Alert
             DispatchQueue.main.async {
                 let response = alert.runModal()
@@ -247,21 +252,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // 按下快捷键复制选中内容到剪贴板、并调用翻译功能
     /*
-    你遇到的问题——即使开启了辅助功能权限， CGEvent 模拟复制依然无效——通常 不是 因为缺少苹果的特殊沙盒例外授权（Temporary Exception Entitlement）。
-    CGEvent 模拟键盘事件（如 Command+C）的核心依赖是 辅助功能权限 ，而不是沙盒例外授权。沙盒例外授权主要用于突破沙盒对特定资源（如跨应用通信、访问特定文件区域等）的访问限制。只要用户授予了辅助功能权限，你的应用原则上就应该能够通过 CGEvent 发送系统级的键盘事件。
-    那么为什么它可能不起作用呢？最常见的原因是 焦点问题 和 时序问题 ：
-    1. 焦点丢失 ：这是最可能的原因。在你的 `openMain` 方法中，你首先调用了 NSApp.activate(ignoringOtherApps: true) 来激活你的应用窗口。这会导致你的应用（Cactus）成为当前活动的应用，获得键盘焦点。紧接着，在 `checkAccessibilityPermissionAndGetClipboard` -> `getClipboardContent` 中调用的 `simulateCopy` 发送的 Command+C 事件，实际上是发送给了 你自己的应用 （Cactus），而不是用户之前正在使用的、选中文本的那个应用。自然，如果你的应用当前没有可选中的文本，剪贴板内容就不会改变。
-    2. 时序问题 ：虽然你加入了一些延迟 ( DispatchQueue.main.asyncAfter , usleep )，但系统处理焦点切换和事件响应的时间可能不确定。即使焦点理论上应该在其他应用，过早或过晚地发送事件或读取剪贴板都可能导致失败。
-    解决方案建议：调整执行顺序：先模拟复制操作， 然后 再激活你的应用窗口并读取剪贴板。
-    */
+     你遇到的问题——即使开启了辅助功能权限， CGEvent 模拟复制依然无效——通常 不是 因为缺少苹果的特殊沙盒例外授权（Temporary Exception Entitlement）。
+     CGEvent 模拟键盘事件（如 Command+C）的核心依赖是 辅助功能权限 ，而不是沙盒例外授权。沙盒例外授权主要用于突破沙盒对特定资源（如跨应用通信、访问特定文件区域等）的访问限制。只要用户授予了辅助功能权限，你的应用原则上就应该能够通过 CGEvent 发送系统级的键盘事件。
+     那么为什么它可能不起作用呢？最常见的原因是 焦点问题 和 时序问题 ：
+     1. 焦点丢失 ：这是最可能的原因。在你的 `openMain` 方法中，你首先调用了 NSApp.activate(ignoringOtherApps: true) 来激活你的应用窗口。这会导致你的应用（Cactus）成为当前活动的应用，获得键盘焦点。紧接着，在 `checkAccessibilityPermissionAndGetClipboard` -> `getClipboardContent` 中调用的 `simulateCopy` 发送的 Command+C 事件，实际上是发送给了 你自己的应用 （Cactus），而不是用户之前正在使用的、选中文本的那个应用。自然，如果你的应用当前没有可选中的文本，剪贴板内容就不会改变。
+     2. 时序问题 ：虽然你加入了一些延迟 ( DispatchQueue.main.asyncAfter , usleep )，但系统处理焦点切换和事件响应的时间可能不确定。即使焦点理论上应该在其他应用，过早或过晚地发送事件或读取剪贴板都可能导致失败。
+     解决方案建议：调整执行顺序：先模拟复制操作， 然后 再激活你的应用窗口并读取剪贴板。
+     */
     private func getClipboardContent(completion: @escaping (Bool) -> Void) {
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
-    
+        
         // 使用模拟复制功能获取选中文本，模拟复制发生在这里，此时焦点理论上还在原应用
         simulateCopy()
-    
+        
         // 给系统一点时间处理复制操作，然后读取剪贴板
         // 这个延迟仍然是必要的，但要确保它在窗口激活之前完成
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // 使用 0.2 秒延迟
@@ -276,11 +281,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let mainView = mainViewController.rootView
             let newContent = pasteboard.string(forType: .string)
             var success = false
-    
+            
             // 如果有新内容，且与原内容不同（避免误触发）
             if let newContent = newContent, !newContent.isEmpty, newContent != originalContent {
                 mainView.fillText(newContent)
-    
+                
                 // 添加延迟以确保文本已填充 (如果 translateText 依赖于 fillText 完成后的状态)
                 // 如果 fillText 内部已经是 async 更新，这个延迟可能不需要或者需要调整
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -291,12 +296,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             } else {
                 print("未能获取到新的剪贴板内容或内容未改变。")
             }
-    
+            
             // 恢复原始剪贴板内容
             if let originalContent = originalContent {
                 self.copyToClipBoard(textToCopy: originalContent)
             }
-    
+            
             // 调用完成回调
             completion(success)
         }
@@ -338,5 +343,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let pasteBoard = NSPasteboard.general
         pasteBoard.clearContents()
         pasteBoard.setString(textToCopy, forType: .string)
+    }
+    
+    func clearUserDefaults() {
+        if let appDomain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        }
     }
 }

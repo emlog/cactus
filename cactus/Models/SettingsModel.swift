@@ -14,7 +14,7 @@ class SettingsModel: ObservableObject {
 
     // 快捷键
     // {{ Set default shortcut to Option + J }}
-    static let aiShortcut = KeyboardShortcuts.Name("aiShortcut", default: .init(.j, modifiers: [.option]))
+    static let aiShortcut = KeyboardShortcuts.Name("aiShortcut", default: .init(.x, modifiers: [.option]))
 
     // 内置的AI服务
     public var defaultProviders: [String: ProviderSettings] = [
