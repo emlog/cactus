@@ -246,6 +246,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     // 按下快捷键复制选中内容到剪贴板、并调用翻译功能
+    /*
+    你遇到的问题——即使开启了辅助功能权限， CGEvent 模拟复制依然无效——通常 不是 因为缺少苹果的特殊沙盒例外授权（Temporary Exception Entitlement）。
+    CGEvent 模拟键盘事件（如 Command+C）的核心依赖是 辅助功能权限 ，而不是沙盒例外授权。沙盒例外授权主要用于突破沙盒对特定资源（如跨应用通信、访问特定文件区域等）的访问限制。只要用户授予了辅助功能权限，你的应用原则上就应该能够通过 CGEvent 发送系统级的键盘事件。
+    那么为什么它可能不起作用呢？最常见的原因是 焦点问题 和 时序问题 ：
+    1. 焦点丢失 ：这是最可能的原因。在你的 `openMain` 方法中，你首先调用了 NSApp.activate(ignoringOtherApps: true) 来激活你的应用窗口。这会导致你的应用（Cactus）成为当前活动的应用，获得键盘焦点。紧接着，在 `checkAccessibilityPermissionAndGetClipboard` -> `getClipboardContent` 中调用的 `simulateCopy` 发送的 Command+C 事件，实际上是发送给了 你自己的应用 （Cactus），而不是用户之前正在使用的、选中文本的那个应用。自然，如果你的应用当前没有可选中的文本，剪贴板内容就不会改变。
+    2. 时序问题 ：虽然你加入了一些延迟 ( DispatchQueue.main.asyncAfter , usleep )，但系统处理焦点切换和事件响应的时间可能不确定。即使焦点理论上应该在其他应用，过早或过晚地发送事件或读取剪贴板都可能导致失败。
+    解决方案建议：调整执行顺序：先模拟复制操作， 然后 再激活你的应用窗口并读取剪贴板。
+    */
     private func getClipboardContent(completion: @escaping (Bool) -> Void) {
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
