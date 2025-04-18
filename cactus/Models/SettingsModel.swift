@@ -13,12 +13,8 @@ class SettingsModel: ObservableObject {
     static let shared = SettingsModel()
 
     // 快捷键
-    static let aiShortcut = KeyboardShortcuts.Name("aiShortcut")
-    @Published var shortcutKey: String {
-        didSet {
-            UserDefaults.standard.set(shortcutKey, forKey: "shortcutKey")
-        }
-    }
+    // {{ Set default shortcut to Option + J }}
+    static let aiShortcut = KeyboardShortcuts.Name("aiShortcut", default: .init(.j, modifiers: [.option]))
 
     // 内置的AI服务
     public var defaultProviders: [String: ProviderSettings] = [
@@ -50,7 +46,6 @@ class SettingsModel: ObservableObject {
     }
     
     init() {
-        self.shortcutKey = UserDefaults.standard.string(forKey: "shortcutKey") ?? "⌘j"
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "siliconflow"
     }
 }
