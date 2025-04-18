@@ -17,7 +17,7 @@ struct GeneralAiPane: View {
                                 Text(NSLocalizedString("select_service", comment: "选择提供商"))
                             }) {
                                 ForEach(Array(settingsModel.defaultProviders.keys.sorted()), id: \.self) { key in
-                                    Text(settingsModel.defaultProviders[key]!.title).tag(key)
+                                    Text(settingsModel.defaultProviders[key]!.title + " - " + settingsModel.defaultProviders[key]!.model).tag(key)
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())
