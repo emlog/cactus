@@ -15,6 +15,14 @@ struct MainView: View {
     
     var body: some View {
         Form {
+            // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
+            Button("") {
+                NSApplication.shared.keyWindow?.close()
+            }
+            .keyboardShortcut(.escape, modifiers: [])
+            .frame(width: 0, height: 0) // 使按钮不可见
+            .hidden() // 进一步隐藏
+
             Section() {
                 TextEditor(text: $contentModel.text)
                     .font(.system(size: 15))
