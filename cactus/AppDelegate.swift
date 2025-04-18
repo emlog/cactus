@@ -82,7 +82,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             backing: .buffered,
             defer: false
         )
-        mainWindow?.collectionBehavior = .fullScreenNone  // Disable zoom button
+        // 修改 collectionBehavior 和 level
+        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary] // 允许窗口出现在所有 Space，包括全屏应用的空间
+        mainWindow?.level = .floating // 设置窗口层级为浮动，使其能显示在全屏应用之上
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
