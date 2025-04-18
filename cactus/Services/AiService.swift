@@ -55,58 +55,53 @@ class AiService: NSObject, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         buffer.append(data)
         
-        guard let bufferString = String(data: buffer, encoding: .utf8) else {
-            return // 如果无法解码数据，直接返回
-        }
-        
-        let lines = bufferString.components(separatedBy: "\n")
-        var processedUpTo = 0
-        
-        for (index, line) in lines.enumerated() {
-            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            if trimmedLine.isEmpty {
-                processedUpTo = index + 1
-                continue
-            }
+        // 持续处理缓冲区中的完整行
+        while let range = buffer.firstRange(of: Data("\n".utf8)) {
+            let lineData = buffer.subdata(in: 0..<range.lowerBound) // 获取一行的数据 (不包含 \n)
+            buffer.removeSubrange(0..<range.upperBound) // 从缓冲区移除这一行和 \n
             
-            if trimmedLine.hasPrefix("data: ") {
-                let dataContent = trimmedLine.dropFirst(6) // 移除 "data: " 前缀
-                
-                if dataContent == "[DONE]" {
-                    print("流式输出完成")
-                    processedUpTo = index + 1
-                    continue
+            // 将行数据转换为字符串进行处理
+            if let line = String(data: lineData, encoding: .utf8) {
+                let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
+                if trimmedLine.isEmpty {
+                    continue // 跳过空行
                 }
                 
-                if let jsonData = String(dataContent).data(using: .utf8) {
-                    do {
-                        let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
-                        if let content = streamResponse.choices.first?.delta.content {
-                            fullContent += content
-                            
-                            DispatchQueue.main.async {
-                                TextContentModel.shared.resultText = self.fullContent
-                            }
-                        }
-                    } catch {
-                        print("JSON解析错误: \(error.localizedDescription)")
+                if trimmedLine.hasPrefix("data: ") {
+                    let dataContent = trimmedLine.dropFirst(6) // 移除 "data: " 前缀
+                    
+                    if dataContent == "[DONE]" {
+                        print("流式输出完成")
+                        continue // 继续处理缓冲区中的下一行
                     }
+                    
+                    if let jsonData = String(dataContent).data(using: .utf8) {
+                        do {
+                            let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
+                            if let content = streamResponse.choices.first?.delta.content {
+                                fullContent += content
+                                
+                                DispatchQueue.main.async {
+                                    // 确保 TextContentModel.shared 实例存在且属性可访问
+                                    // 在更新 UI 前，修剪 fullContent 的首尾空白
+                                    TextContentModel.shared.resultText = self.fullContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                                }
+                            }
+                        } catch {
+                            // 打印原始 JSON 字符串以便调试
+                            print("JSON解析错误: \(error.localizedDescription), Raw JSON: \(String(dataContent))")
+                        }
+                    }
+                } else {
+                    // 可以选择打印非 data: 前缀的行，以供调试
+                    print("Skipping non-data line: \(trimmedLine)")
                 }
-                
-                processedUpTo = index + 1
+            } else {
+                print("无法将行数据解码为 UTF-8 字符串")
+                // 这里可以选择如何处理解码失败，例如跳过或记录错误
             }
         }
-        
-        // 移除已处理的数据以避免内存溢出
-        if processedUpTo > 0 && processedUpTo <= lines.count {
-            let processedLines = lines[..<processedUpTo].joined(separator: "\n")
-            if let processedData = processedLines.data(using: .utf8) {
-                let bytesToRemove = min(processedData.count, buffer.count)
-                if bytesToRemove > 0 {
-                    buffer.removeFirst(bytesToRemove)
-                }
-            }
-        }
+        // 循环结束后，buffer 中可能剩下不完整的最后一行数据，等待下一次 didReceive data
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -119,6 +114,11 @@ class AiService: NSObject, URLSessionDataDelegate {
         DispatchQueue.main.async {
             self.completionHandler?()
             self.completionHandler = nil  // 清除回调引用
+        }
+        // 可以在这里处理 buffer 中可能残留的最后一部分数据，虽然对于 SSE [DONE] 标记来说通常不需要
+        if !buffer.isEmpty {
+            print("Warning: Buffer not empty after task completion. Remaining data: \(String(data: buffer, encoding: .utf8) ?? "Non-UTF8 data")")
+            buffer.removeAll() // 清空残留数据
         }
     }
 }

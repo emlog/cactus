@@ -6,7 +6,7 @@ import Settings
 struct GeneralAiPane: View {
     
     @StateObject private var settingsModel = SettingsModel()
-
+    
     var body: some View {
         Settings.Container(contentWidth: 450) {
             Settings.Section(title: "", bottomDivider: true) {
@@ -33,7 +33,7 @@ struct GeneralAiPane: View {
             }
         }
     }
-
+    
     private func updateSettingsForProvider() {
         SettingsModel.shared.selectedProvider = settingsModel.selectedProvider
     }
