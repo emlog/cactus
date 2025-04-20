@@ -6,14 +6,13 @@ struct MainView: View {
     @ObservedObject var settings = SettingsModel.shared
     @State private var showCopyToast = false
     @State private var toastMessage = ""
-    @State var isProcessing = false
     @State private var isResultSectionExpanded = true
-    @State private var isPinned = false // 新增：跟踪置顶状态
-    
+    @State private var isPinned = false // 跟踪置顶状态
+
     // 添加状态变量来跟踪文本高度
     @State private var inputTextHeight: CGFloat = 100
     @State private var resultTextHeight: CGFloat = 100
-    
+
     var body: some View {
         Form {
             // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
@@ -55,8 +54,8 @@ struct MainView: View {
                     }
                     .help(NSLocalizedString("help_translate", comment: "翻译文本"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(isProcessing)
-                    
+                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+
                     Button(action: {
                         // 摘要总结
                         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
@@ -66,8 +65,8 @@ struct MainView: View {
                     }
                     .help(NSLocalizedString("help_summary", comment: "总结摘要"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(isProcessing)
-                    
+                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+
                     Button(action: {
                         // 解释说明
                         performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
@@ -77,7 +76,7 @@ struct MainView: View {
                     }
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(isProcessing)
+                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
                     Spacer()
                     Button(action: {
                         copyWriting() // 复制原文
@@ -146,7 +145,7 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    if isProcessing {
+                    if contentModel.isProcessing { // 修改：使用 contentModel.isProcessing
                         ProgressView()
                             .scaleEffect(0.5)
                             .frame(height: 20)
@@ -240,20 +239,20 @@ struct MainView: View {
         performAIAction(promptPrefix: "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：")
     }
     
-    // 新增：重构 AI 操作的私有方法
+    // 调用AI服务
     private func performAIAction(promptPrefix: String) {
         if contentModel.text.isEmpty {
             toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
             showCopyToast = true
         } else {
-            isProcessing = true
+            contentModel.isProcessing = true // 修改：使用 contentModel.isProcessing
             let aiService = AiService() // 统一变量命名规范
             let fullPrompt = promptPrefix + "\n\n" + contentModel.text
-            
+
             DispatchQueue.global(qos: .userInitiated).async {
                 aiService.chat(text: fullPrompt) { // 使用正确的变量名
                     DispatchQueue.main.async {
-                        isProcessing = false
+                        contentModel.isProcessing = false // 修改：使用 contentModel.isProcessing
                     }
                 }
             }
