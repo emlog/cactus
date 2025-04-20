@@ -46,8 +46,8 @@ struct MainView: View {
             Section() {
                 HStack(spacing: 12) {
                     Button(action: {
-                        // 翻译助手
-                        performAIAction(promptPrefix: "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：")
+                        // 文本翻译
+                        translateText()
                     }) {
                         Image(systemName: "translate")
                             .frame(width: 20, height: 20)
@@ -58,7 +58,7 @@ struct MainView: View {
 
                     Button(action: {
                         // 摘要总结
-                        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
+                        summaryText()
                     }) {
                         Image(systemName: "rectangle.dashed.and.paperclip")
                             .frame(width: 20, height: 20)
@@ -69,7 +69,7 @@ struct MainView: View {
 
                     Button(action: {
                         // 解释说明
-                        performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
+                        explainText()
                     }) {
                         Image(systemName: "graduationcap")
                             .frame(width: 20, height: 20)
@@ -236,7 +236,17 @@ struct MainView: View {
     // 添加一个可以从外部调用的翻译方法
     func translateText() {
         // 使用重构后的方法
-        performAIAction(promptPrefix: "翻译助手，请将下面的内容在简体中文和英文之间进行翻译，直接输出翻译结果，不要输出任何提示内容和原文：")
+        performAIAction(promptPrefix: "请将下面的内容翻译为简体中文（如果已经是中文，则翻译为英文），直接输出翻译结果，不要输出任何提示内容和原文：")
+    }
+
+    func summaryText() {
+        // 使用重构后的方法
+        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
+    }
+
+    func explainText() {
+        // 使用重构后的方法
+        performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
     }
     
     // 调用AI服务
