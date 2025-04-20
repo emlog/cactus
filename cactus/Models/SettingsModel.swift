@@ -28,7 +28,7 @@ class SettingsModel: ObservableObject {
             title: NSLocalizedString("openRouter", comment: "OpenRouter"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
             apiKey: "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",
-            model: "deepseek/deepseek-chat:free"
+            model: "google/gemini-2.0-flash-exp:free"
         ),
         "siliconflow": ProviderSettings(
             title: NSLocalizedString("siliconflow", comment: "硅基流动"),
