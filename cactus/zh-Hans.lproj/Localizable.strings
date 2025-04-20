@@ -32,3 +32,5 @@
 "accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便自动获取剪贴板内容。";
 "open_settings" = "打开设置";
 "cancel" = "取消";
+"help_pin" = "钉住窗口";
+"help_unpin" = "取消钉住";

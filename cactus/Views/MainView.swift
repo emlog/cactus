@@ -78,7 +78,13 @@ struct MainView: View {
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(isProcessing)
-
+                    Spacer()
+                    if isProcessing {
+                        ProgressView()
+                            .scaleEffect(0.5)
+                            .frame(height: 20)
+                            .padding(0)
+                    }
                     Button(action: {
                         copyWriting() // 复制原文
                     }) {
@@ -87,13 +93,6 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-                    Spacer()
-                    if isProcessing {
-                        ProgressView()
-                            .scaleEffect(0.5)
-                            .frame(height: 20)
-                            .padding(0)
-                    }
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
                 .padding(.vertical, 5)   // 为HStack添加垂直内边距
@@ -138,15 +137,6 @@ struct MainView: View {
             }
             Section() {
                 HStack(spacing: 12) {
-                    Button(action: {
-                        copyResp()
-                    }) {
-                        Image(systemName: "doc.on.doc")
-                            .frame(width: 20, height: 20)
-                    }
-                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .help(NSLocalizedString("help_copy", comment: "复制"))
-                    Spacer()
                     // pin按钮
                     Button(action: {
                         isPinned.toggle()
@@ -159,6 +149,17 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
+                    
+                    Spacer()
+
+                    Button(action: {
+                        copyResp()
+                    }) {
+                        Image(systemName: "doc.on.doc")
+                            .frame(width: 20, height: 20)
+                    }
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
+                    .help(NSLocalizedString("help_copy", comment: "复制"))
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
                 .padding(.vertical, 5)   // 为HStack添加垂直内边距

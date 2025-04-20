@@ -28,7 +28,9 @@
 "help_summary" = "Summary";
 "help_explain" = "Explain";
 "help_copy" = "Copy";
-"accessibility_permission_title" = "需要辅助功能权限";
-"accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便自动获取剪贴板内容。";
-"open_settings" = "打开设置";
-"cancel" = "取消";
+"accessibility_permission_title" = "Accessibility permissions required";
+"accessibility_permission_message" = "Please enable Accessibility permissions in System Preferences to automatically retrieve clipboard contents.。";
+"open_settings" = "open settings";
+"cancel" = "cancel";
+"help_pin" = "pin";
+"help_unpin" = "unpin";
