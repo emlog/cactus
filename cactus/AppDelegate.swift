@@ -12,16 +12,16 @@ import Settings
 import Foundation
 import ApplicationServices
 
-// 修改 AppDelegate 类声明，添加 NSWindowDelegate
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusItem: NSStatusItem?
-    // 添加窗口属性
     var settingsWindow: NSWindow?
     var aboutWindow: NSWindow?
     var mainWindow: NSWindow?
-    
+    private var isMainWindowPinned = false // 跟踪主窗口置顶状态
+    private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
+
     private var settingsWindowController: SettingsWindowController?
-    
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 设置应用程序的激活策略为 .accessory，以隐藏程序坞图标
         NSApp.setActivationPolicy(.accessory)
@@ -73,8 +73,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         // 设置全局快捷键
         setupGlobalShortcut()
+
+        // 监听置顶状态切换通知
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(togglePinState(_:)),
+            name: NSNotification.Name("TogglePinState"),
+            object: nil
+        )
     }
-    
+
     private func initializeWindows() {
         // 初始化主窗口
         mainWindow = NSWindow(
@@ -83,8 +91,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             backing: .buffered,
             defer: false
         )
-        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary] // 允许窗口出现在所有 Space，包括全屏应用的空间
-        mainWindow?.level = .floating // 设置窗口层级为浮动，使其能显示在全屏应用之上
+        // 初始状态不置顶，使用 normal level
+        mainWindow?.level = .normal
+        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        // mainWindow?.level = .floating // 移除此处的默认浮动设置
         
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
@@ -203,20 +213,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
             DispatchQueue.main.async {
                 guard let self = self else { return }
+                // 确保窗口存在
+                guard let window = self.mainWindow else { return }
+
+                // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
+                if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
+                    window.setFrameOrigin(pinnedOrigin)
+                } else {
+                    window.center() // 只有在非置顶或首次置顶时才居中
+                }
+
                 // 确保窗口在最上层
-                self.mainWindow?.center()
-                self.mainWindow?.makeKeyAndOrderFront(nil)
-                self.mainWindow?.orderFrontRegardless()
+                window.makeKeyAndOrderFront(nil)
+                window.orderFrontRegardless()
                 NSApp.activate(ignoringOtherApps: true)
                 
                 // 可以在这里根据 success 的结果决定是否显示提示信息等
                 if !success {
                     print("未能成功获取选中文本。")
-                    // 可以考虑清空输入框或显示提示
-                    // 例如，如果需要清空，可以这样做：
-                    // if let mainVC = self.mainWindow?.contentViewController as? NSHostingController<MainView> {
-                    //     mainVC.rootView.fillText("") // 假设 fillText 可以接受空字符串来清空
-                    // }
                 }
             }
         }
@@ -349,12 +363,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         pasteBoard.setString(textToCopy, forType: .string)
     }
     
-    // 实现 NSWindowDelegate 方法，当窗口失去焦点时调用
+    // 处理置顶状态切换的方法
+    @objc private func togglePinState(_ notification: Notification) {
+        guard let shouldPin = notification.object as? Bool else { return }
+        self.isMainWindowPinned = shouldPin
+        DispatchQueue.main.async { // 确保在主线程更新 UI 相关属性
+            if self.isMainWindowPinned {
+                self.mainWindow?.level = .floating // 置顶
+                // 首次置顶时，记录当前位置
+                if self.pinnedWindowOrigin == nil {
+                    self.pinnedWindowOrigin = self.mainWindow?.frame.origin
+                }
+            } else {
+                self.mainWindow?.level = .normal // 取消置顶
+                self.pinnedWindowOrigin = nil // 取消置顶时清除位置记录
+            }
+        }
+    }
+
+    // 当窗口被pin在一个固定位置的时候，按下快捷键 窗口位置保持不变。
+    // 实现 NSWindowDelegate 的 windowDidMove 方法
+    func windowDidMove(_ notification: Notification) {
+        // 检查移动的窗口是否是 mainWindow 并且当前处于置顶状态
+        if let window = notification.object as? NSWindow, window == mainWindow, isMainWindowPinned {
+            // 更新存储的置顶位置
+            self.pinnedWindowOrigin = window.frame.origin
+        }
+    }
+
+    // 修改：实现 NSWindowDelegate 方法，当窗口失去焦点时调用
     func windowDidResignKey(_ notification: Notification) {
         // 检查失去焦点的窗口是否是 mainWindow
         if let window = notification.object as? NSWindow, window == mainWindow {
-            // 关闭窗口
-            window.close()
+            // 只有在未置顶的情况下才关闭窗口
+            if !isMainWindowPinned {
+                window.close()
+            }
         }
     }
     

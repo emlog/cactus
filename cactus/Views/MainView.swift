@@ -7,12 +7,13 @@ struct MainView: View {
     @State private var showCopyToast = false
     @State private var toastMessage = ""
     @State var isProcessing = false
-    @State private var isResultSectionExpanded = true  // 新增状态变量
-    
+    @State private var isResultSectionExpanded = true
+    @State private var isPinned = false // 新增：跟踪置顶状态
+
     // 添加状态变量来跟踪文本高度
     @State private var inputTextHeight: CGFloat = 100
     @State private var resultTextHeight: CGFloat = 100
-    
+
     var body: some View {
         Form {
             // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
@@ -78,18 +79,15 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(isProcessing)
 
-                    // 复制原文
                     Button(action: {
-                        copyWriting()
+                        copyWriting() // 复制原文
                     }) {
                         Image(systemName: "doc.on.doc")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-
                     Spacer()
-
                     if isProcessing {
                         ProgressView()
                             .scaleEffect(0.5)
@@ -148,8 +146,19 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-
                     Spacer()
+                    // pin按钮
+                    Button(action: {
+                        isPinned.toggle()
+                        // 发送通知，告知 AppDelegate 切换置顶状态
+                        NotificationCenter.default.post(name: NSNotification.Name("TogglePinState"), object: isPinned)
+                    }) {
+                        Image(systemName: isPinned ? "pin.fill" : "pin")
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(isPinned ? .red : .primary) // 置顶时为红色，否则为默认颜色
+                    }
+                    .buttonStyle(HoverButtonStyle())
+                    .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
                 .padding(.vertical, 5)   // 为HStack添加垂直内边距
