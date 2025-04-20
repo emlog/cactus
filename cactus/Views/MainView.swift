@@ -189,9 +189,11 @@ struct MainView: View {
     
     func fillText(_ newText: String) {
         DispatchQueue.main.async {
-            self.contentModel.text = newText
+            // 过滤开头和结尾的空行及空白
+            let trimmedText = newText.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.contentModel.text = trimmedText
             // 计算新文本的高度
-            self.inputTextHeight = self.calculateTextHeight(text: newText, width: 480)
+            self.inputTextHeight = self.calculateTextHeight(text: trimmedText, width: 480)
             // 通知窗口调整大小
             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
         }
