@@ -37,7 +37,6 @@ struct MainView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color(.separatorColor), lineWidth: 1)
                 )
-                // 移除 onChange，因为高度计算和窗口调整已在 CustomTextEditor 内部处理
             }
             
             Section() {
@@ -109,7 +108,7 @@ struct MainView: View {
                 TextEditor(text: .constant(contentModel.resultText ?? ""))
                     .font(.system(size: 15))
                     .lineSpacing(8)
-                // 修改：使用 resultTextHeight 状态变量
+                // 使用 resultTextHeight 状态变量
                     .frame(maxWidth: .infinity, minHeight: 100, maxHeight: min(500, resultTextHeight))
                     .padding(10)
                     .background(Color(.textBackgroundColor))
@@ -259,19 +258,18 @@ struct MainView: View {
         showCopyToast = true
     }
     
-    // 添加一个可以从外部调用的翻译方法
+    // 翻译
     func translateText() {
-        // 使用重构后的方法
         performAIAction(promptPrefix: "请将下面的内容翻译为简体中文（如果已经是中文，则翻译为英文），直接输出翻译结果，不要输出任何提示内容和原文：")
     }
     
+    // 总结
     func summaryText() {
-        // 使用重构后的方法
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
     }
     
+    // 解释
     func explainText() {
-        // 使用重构后的方法
         performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
     }
     
