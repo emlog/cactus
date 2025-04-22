@@ -8,11 +8,11 @@ struct MainView: View {
     @State private var toastMessage = ""
     @State private var isResultSectionExpanded = true
     @State private var isPinned = false // 跟踪置顶状态
-
-    // 添加状态变量来跟踪文本高度
+    
+    // 修改：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
-    @State private var resultTextHeight: CGFloat = 100
-
+    @State private var resultTextHeight: CGFloat = 100 // 结果区域的高度状态
+    
     var body: some View {
         Form {
             // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
@@ -24,23 +24,20 @@ struct MainView: View {
             .hidden() // 进一步隐藏
             
             Section() {
-                TextEditor(text: $contentModel.text)
-                    .font(.system(size: 15))
-                    .lineSpacing(8)
-                    .frame(maxWidth: .infinity, maxHeight: min(200, inputTextHeight))
-                    .padding(10)
-                    .background(Color(.textBackgroundColor))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color(.separatorColor), lineWidth: 1)
-                    )
-                    .onChange(of: contentModel.text) {
-                        // 当文本变化时，计算新的高度
-                        inputTextHeight = calculateTextHeight(text: contentModel.text, width: 480)
-                        // 通知窗口调整大小
-                        NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-                    }
+                // 使用 CustomTextEditor 替换 TextEditor
+                CustomTextEditor(text: $contentModel.text, onCommit: {
+                    // 当按下回车键时，触发翻译
+                    translateText()
+                }, calculatedHeight: $inputTextHeight) // 传递高度绑定
+                .frame(height: inputTextHeight) // 使用状态变量设置高度
+                .padding(0) // CustomTextEditor 内部已处理内边距
+                .background(Color(.textBackgroundColor))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color(.separatorColor), lineWidth: 1)
+                )
+                // 移除 onChange，因为高度计算和窗口调整已在 CustomTextEditor 内部处理
             }
             
             Section() {
@@ -55,7 +52,7 @@ struct MainView: View {
                     .help(NSLocalizedString("help_translate", comment: "翻译文本"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
-
+                    
                     Button(action: {
                         // 摘要总结
                         summaryText()
@@ -66,7 +63,7 @@ struct MainView: View {
                     .help(NSLocalizedString("help_summary", comment: "总结摘要"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
-
+                    
                     Button(action: {
                         // 解释说明
                         explainText()
@@ -108,10 +105,12 @@ struct MainView: View {
             }
             
             Section() {
+                // 结果区域保持使用 TextEditor，因为它不需要键盘事件处理
                 TextEditor(text: .constant(contentModel.resultText ?? ""))
                     .font(.system(size: 15))
                     .lineSpacing(8)
-                    .frame(maxWidth: .infinity, maxHeight: min(500, inputTextHeight))
+                // 修改：使用 resultTextHeight 状态变量
+                    .frame(maxWidth: .infinity, minHeight: 100, maxHeight: min(500, resultTextHeight))
                     .padding(10)
                     .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -122,9 +121,21 @@ struct MainView: View {
                     .onChange(of: contentModel.resultText) {
                         // 当结果文本变化时，计算新的高度
                         if let text = contentModel.resultText {
-                            resultTextHeight = calculateTextHeight(text: text, width: 480)
+                            // 使用 calculateTextHeight 计算结果区域高度
+                            resultTextHeight = calculateTextHeight(text: text, width: 480) // 假设宽度与输入区域类似
                             // 通知窗口调整大小
                             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                        } else {
+                            resultTextHeight = 100 // 如果结果为空，重置为最小高度
+                            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                        }
+                    }
+                // 初始化时计算一次结果区域高度
+                    .onAppear {
+                        if let text = contentModel.resultText {
+                            resultTextHeight = calculateTextHeight(text: text, width: 480)
+                        } else {
+                            resultTextHeight = 100
                         }
                     }
             }
@@ -171,41 +182,56 @@ struct MainView: View {
             }
         }
         .padding(10)
-        .frame(minWidth: 500, minHeight: 300)
+        // 修改：调整最小高度以适应内容
+        .frame(minWidth: 500, minHeight: 400) // 稍微增加最小高度
         .toast(isPresenting: $showCopyToast) {
             AlertToast(type: .regular, title: toastMessage)
         }
+        // 添加监听器，以便 CustomTextEditor 可以请求调整窗口大小
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AdjustWindowSize"))) { _ in
+            // 可以在这里触发窗口大小调整逻辑，如果 AppDelegate 中尚未处理
+            // 例如，如果你的 AppDelegate 监听这个通知并调整窗口，这里可能不需要额外操作
+            // 如果需要在这里直接调整，可能需要访问 NSWindow 实例
+            print("Received AdjustWindowSize notification in MainView")
+        }
     }
     
-    // 添加计算文本高度的方法
+    // 保留 calculateTextHeight 方法，用于计算结果区域的高度
     private func calculateTextHeight(text: String, width: CGFloat) -> CGFloat {
         let font = NSFont.systemFont(ofSize: 15)
-        let attributes = [NSAttributedString.Key.font: font]
+        // 应用行间距到属性字符串
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .paragraphStyle: paragraphStyle
+        ]
         let textStorage = NSTextStorage(string: text, attributes: attributes)
         
-        let textContainer = NSTextContainer(containerSize: NSSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        textContainer.lineFragmentPadding = 0
+        // 减去 TextEditor 的内边距和 NSTextContainer 的 lineFragmentPadding
+        let effectiveWidth = width - 20 // (padding * 2)
+        let textContainer = NSTextContainer(containerSize: NSSize(width: effectiveWidth, height: CGFloat.greatestFiniteMagnitude))
+        textContainer.lineFragmentPadding = 5 // NSTextView 默认的 padding
         
         let layoutManager = NSLayoutManager()
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
         
-        layoutManager.glyphRange(for: textContainer)
+        layoutManager.ensureLayout(for: textContainer) // 确保布局完成
         let height = layoutManager.usedRect(for: textContainer).height
         
-        // 添加一些额外空间，并设置最小高度
-        return min(max(height + 40, 100), 500) // 最小100，最大500
+        // 添加 TextEditor 的垂直内边距 (padding * 2) 和一些额外空间
+        let totalHeight = height + 20 + 10 // 加上垂直 padding 和额外空间
+        
+        // 设置最小和最大高度限制
+        return min(max(totalHeight, 100), 500) // 最小100，最大500
     }
     
     func fillText(_ newText: String) {
         DispatchQueue.main.async {
-            // 过滤开头和结尾的空行及空白
             let trimmedText = newText.trimmingCharacters(in: .whitespacesAndNewlines)
             self.contentModel.text = trimmedText
-            // 计算新文本的高度
-            self.inputTextHeight = self.calculateTextHeight(text: trimmedText, width: 480)
-            // 通知窗口调整大小
-            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+            // CustomTextEditor 会自动处理高度计算和通知
         }
     }
     
@@ -238,12 +264,12 @@ struct MainView: View {
         // 使用重构后的方法
         performAIAction(promptPrefix: "请将下面的内容翻译为简体中文（如果已经是中文，则翻译为英文），直接输出翻译结果，不要输出任何提示内容和原文：")
     }
-
+    
     func summaryText() {
         // 使用重构后的方法
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
     }
-
+    
     func explainText() {
         // 使用重构后的方法
         performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
@@ -258,7 +284,7 @@ struct MainView: View {
             contentModel.isProcessing = true // 修改：使用 contentModel.isProcessing
             let aiService = AiService() // 统一变量命名规范
             let fullPrompt = promptPrefix + "\n\n" + contentModel.text
-
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 aiService.chat(text: fullPrompt) { // 使用正确的变量名
                     DispatchQueue.main.async {
