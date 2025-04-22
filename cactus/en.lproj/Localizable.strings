@@ -34,3 +34,8 @@
 "cancel" = "cancel";
 "help_pin" = "pin";
 "help_unpin" = "unpin";
+
+// about
+"website" = "Website";
+"apptitle" = "Cactus AI Assistant";
+"version" = "Version";

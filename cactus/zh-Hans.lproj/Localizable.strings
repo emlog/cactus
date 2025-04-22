@@ -34,3 +34,8 @@
 "cancel" = "取消";
 "help_pin" = "钉住窗口";
 "help_unpin" = "取消钉住";
+
+// about
+"website" = "官方网站";
+"apptitle" = "仙人掌AI助手";
+"version" = "版本";

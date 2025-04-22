@@ -2,6 +2,7 @@
 
 仙人掌AI助手
 Cactus AI Assistant
+CactusAI
 
 副标题：基于大语言模型的智能文字助手，快速翻译、总结、解释选中文本
 
@@ -19,7 +20,7 @@ Cactus AI Assistant
 ------
 
 使用条款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-隐私策略：https://cacai.emlog.cn/orangeai-privacy-policy.html
+隐私策略：https://cactusai.cc/privacy-policy
 
 
 ### 英文介绍
@@ -37,7 +38,7 @@ Boost your reading and understanding efficiency — perfect for studying, writin
 ------
 
 Terms of Use：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Privacy Policy：https://cacai.emlog.cn/orangeai-privacy-policy.html
+Privacy Policy：https://cactusai.cc/privacy-policy-en
 
 
 ## 关键词
