@@ -34,6 +34,7 @@
 "cancel" = "cancel";
 "help_pin" = "pin";
 "help_unpin" = "unpin";
+"placeholder_main_input" = "Type here... Press Enter to search, Shift+Enter for new line.";
 
 // about
 "website" = "Website";

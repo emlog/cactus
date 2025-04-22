@@ -34,6 +34,7 @@
 "cancel" = "取消";
 "help_pin" = "钉住窗口";
 "help_unpin" = "取消钉住";
+"placeholder_main_input" = "输入内容，按回车查询，按Shift+回车换行";
 
 // about
 "website" = "官方网站";
