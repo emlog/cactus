@@ -143,7 +143,9 @@ struct CustomTextEditor: NSViewRepresentable {
             
             // 避免不必要的更新和潜在的循环
             if abs(parent.calculatedHeight - clampedHeight) > 1 { // 只有当高度变化显著时才更新
-                parent.calculatedHeight = clampedHeight
+                DispatchQueue.main.async {
+                    self.parent.calculatedHeight = clampedHeight
+                }
             }
         }
     }
