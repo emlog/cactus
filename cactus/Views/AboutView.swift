@@ -9,10 +9,8 @@ struct AboutView: View {
                     .frame(width: 70, height: 70)
             }
             
-            
             Text("Cactus")
                 .font(.system(size: 16, weight: .bold))
-            
             
             Text(NSLocalizedString("apptitle", comment: "仙人掌AI助手"))
                 .font(.system(size: 14))
