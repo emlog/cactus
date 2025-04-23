@@ -73,7 +73,8 @@ struct MainView: View {
                         clearAll()
                     }) {
                         Image(systemName: "xmark.circle")
-                            .frame(width: 20, height: 20)
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.secondary)
                     }
                     .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
                     .buttonStyle(HoverButtonStyle())
@@ -83,7 +84,8 @@ struct MainView: View {
                         copyWriting()
                     }) {
                         Image(systemName: "doc.on.doc")
-                            .frame(width: 20, height: 20)
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.secondary)
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
@@ -180,7 +182,8 @@ struct MainView: View {
                             copyResp()
                         }) {
                             Image(systemName: "doc.on.doc")
-                                .frame(width: 20, height: 20)
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.secondary)
                         }
                         .buttonStyle(HoverButtonStyle())
                         .help(NSLocalizedString("help_copy", comment: "复制"))
