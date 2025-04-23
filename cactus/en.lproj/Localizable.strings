@@ -28,12 +28,13 @@
 "help_summary" = "Summary";
 "help_explain" = "Explain";
 "help_copy" = "Copy";
+"help_pin" = "Pin";
+"help_unpin" = "Unpin";
+"help_clear" = "Clear";
 "accessibility_permission_title" = "Accessibility permissions required";
 "accessibility_permission_message" = "Please enable Accessibility permissions in System Preferences to automatically retrieve clipboard contents.。";
 "open_settings" = "open settings";
 "cancel" = "cancel";
-"help_pin" = "pin";
-"help_unpin" = "unpin";
 "placeholder_main_input" = "Type here... Press Enter to search, Shift+Enter for new line.";
 
 // about

@@ -32,9 +32,9 @@ struct MainView: View {
             }
             
             Section() {
-                HStack(spacing: 12) {
+                HStack(spacing: 6) {
+                    // 翻译按钮
                     Button(action: {
-                        // 文本翻译
                         translateText()
                     }) {
                         Image(systemName: "translate")
@@ -44,8 +44,8 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
                     
+                    // 摘要按钮
                     Button(action: {
-                        // 摘要总结
                         summaryText()
                     }) {
                         Image(systemName: "rectangle.dashed.and.paperclip")
@@ -55,8 +55,8 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
                     
+                    // 说明按钮
                     Button(action: {
-                        // 解释说明
                         explainText()
                     }) {
                         Image(systemName: "graduationcap")
@@ -68,15 +68,26 @@ struct MainView: View {
                     
                     Spacer()
 
+                    // 清除按钮
                     Button(action: {
-                        copyWriting() // 复制原文
+                        clearAll()
+                    }) {
+                        Image(systemName: "xmark.circle")
+                            .frame(width: 20, height: 20)
+                    }
+                    .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(contentModel.isProcessing)
+                    // 复制按钮
+                    Button(action: {
+                        copyWriting()
                     }) {
                         Image(systemName: "doc.on.doc")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-
+                    
                     // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
@@ -141,7 +152,7 @@ struct MainView: View {
                     }
             }
             Section() {
-                HStack(spacing: 12) {
+                HStack(spacing: 6) {
                     // pin按钮
                     Button(action: {
                         isPinned.toggle()
@@ -157,19 +168,21 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    if contentModel.isProcessing { // 修改：使用 contentModel.isProcessing
+                    if contentModel.isProcessing {
+                        // 显示loading动画
                         ProgressView()
                             .scaleEffect(0.5)
                             .frame(height: 20)
                             .padding(0)
                     } else {
+                        // 复制按钮
                         Button(action: {
                             copyResp()
                         }) {
                             Image(systemName: "doc.on.doc")
                                 .frame(width: 20, height: 20)
                         }
-                        .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
+                        .buttonStyle(HoverButtonStyle())
                         .help(NSLocalizedString("help_copy", comment: "复制"))
                     }
                 }
@@ -293,6 +306,12 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    // 在 MainView 结构体内新增方法
+    func clearAll() {
+        contentModel.text = ""
+        contentModel.resultText = nil
     }
 }
 

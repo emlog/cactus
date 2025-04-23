@@ -28,12 +28,13 @@
 "help_summary" = "总结摘要";
 "help_explain" = "解释说明";
 "help_copy" = "复制";
+"help_pin" = "钉住窗口";
+"help_unpin" = "取消钉住";
+"help_clear" = "清除内容";
 "accessibility_permission_title" = "需要辅助功能权限";
 "accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便自动获取剪贴板内容。";
 "open_settings" = "打开设置";
 "cancel" = "取消";
-"help_pin" = "钉住窗口";
-"help_unpin" = "取消钉住";
 "placeholder_main_input" = "输入内容，按回车查询，按Shift+回车换行";
 
 // about
