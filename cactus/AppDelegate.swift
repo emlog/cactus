@@ -39,12 +39,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 创建菜单
             let menu = NSMenu()
             
+            // 获取当前快捷键
+            let (keyEquivalent, modifierMask) = getCurrentShortcutForMenu()
+            
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("main", comment: "AI助手"),
                 action: #selector(openMain),
-                keyEquivalent: "x"
+                keyEquivalent: keyEquivalent
             )
-            translateMenuItem.keyEquivalentModifierMask = [.option]
+            translateMenuItem.keyEquivalentModifierMask = modifierMask
             translateMenuItem.image = NSImage(systemSymbolName: "shareplay", accessibilityDescription: nil) // 添加地球图标
             menu.addItem(translateMenuItem)
             
@@ -408,4 +411,66 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             UserDefaults.standard.removePersistentDomain(forName: appDomain)
         }
     }
+}
+
+
+/// 获取当前设置的快捷键，用于菜单展示
+private func getCurrentShortcutForMenu() -> (String, NSEvent.ModifierFlags) {
+    if let shortcut = KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcut) {
+        // Manually map KeyboardShortcuts.Shortcut.Key to String
+        let keyEquivalent: String
+        switch shortcut.key {
+        case .a: keyEquivalent = "a"
+        case .b: keyEquivalent = "b"
+        case .c: keyEquivalent = "c"
+        case .d: keyEquivalent = "d"
+        case .e: keyEquivalent = "e"
+        case .f: keyEquivalent = "f"
+        case .g: keyEquivalent = "g"
+        case .h: keyEquivalent = "h"
+        case .i: keyEquivalent = "i"
+        case .j: keyEquivalent = "j"
+        case .k: keyEquivalent = "k"
+        case .l: keyEquivalent = "l"
+        case .m: keyEquivalent = "m"
+        case .n: keyEquivalent = "n"
+        case .o: keyEquivalent = "o"
+        case .p: keyEquivalent = "p"
+        case .q: keyEquivalent = "q"
+        case .r: keyEquivalent = "r"
+        case .s: keyEquivalent = "s"
+        case .t: keyEquivalent = "t"
+        case .u: keyEquivalent = "u"
+        case .v: keyEquivalent = "v"
+        case .w: keyEquivalent = "w"
+        case .x: keyEquivalent = "x"
+        case .y: keyEquivalent = "y"
+        case .z: keyEquivalent = "z"
+        case .zero: keyEquivalent = "0"
+        case .one: keyEquivalent = "1"
+        case .two: keyEquivalent = "2"
+        case .three: keyEquivalent = "3"
+        case .four: keyEquivalent = "4"
+        case .five: keyEquivalent = "5"
+        case .six: keyEquivalent = "6"
+        case .seven: keyEquivalent = "7"
+        case .eight: keyEquivalent = "8"
+        case .nine: keyEquivalent = "9"
+        case .return: keyEquivalent = "\r"
+        case .space: keyEquivalent = " "
+        case .tab: keyEquivalent = "\t"
+        case .delete: keyEquivalent = "\u{8}"
+        case .escape: keyEquivalent = "\u{1b}"
+        default: keyEquivalent = "" // Add more cases as needed
+        }
+
+        var modifierMask: NSEvent.ModifierFlags = []
+        if shortcut.modifiers.contains(.command) { modifierMask.insert(.command) }
+        if shortcut.modifiers.contains(.option) { modifierMask.insert(.option) }
+        if shortcut.modifiers.contains(.shift) { modifierMask.insert(.shift) }
+        if shortcut.modifiers.contains(.control) { modifierMask.insert(.control) }
+        return (keyEquivalent, modifierMask)
+    }
+    // Default value (e.g., Option+X)
+    return ("x", [.option])
 }
