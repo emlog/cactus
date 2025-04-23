@@ -15,14 +15,6 @@ struct MainView: View {
     
     var body: some View {
         Form {
-            // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
-            Button("") {
-                NSApplication.shared.keyWindow?.close()
-            }
-            .keyboardShortcut(.escape, modifiers: [])
-            .frame(width: 0, height: 0) // 使按钮不可见
-            .hidden() // 进一步隐藏
-            
             Section() {
                 // 使用 CustomTextEditor 替换 TextEditor
                 CustomTextEditor(text: $contentModel.text, onCommit: {
@@ -73,7 +65,9 @@ struct MainView: View {
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+                    
                     Spacer()
+
                     Button(action: {
                         copyWriting() // 复制原文
                     }) {
@@ -82,6 +76,14 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
+
+                    // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
+                    Button("") {
+                        NSApplication.shared.keyWindow?.close()
+                    }
+                    .keyboardShortcut(.escape, modifiers: [])
+                    .frame(width: 0, height: 0) // 使按钮不可见
+                    .hidden() // 进一步隐藏
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
                 .padding(.vertical, 5)   // 为HStack添加垂直内边距
