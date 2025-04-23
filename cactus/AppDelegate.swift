@@ -19,9 +19,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var mainWindow: NSWindow?
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
-
+    
     private var settingsWindowController: SettingsWindowController?
-
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 设置应用程序的激活策略为 .accessory，以隐藏程序坞图标
         NSApp.setActivationPolicy(.accessory)
@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         // 设置全局快捷键
         setupGlobalShortcut()
-
+        
         // 监听置顶状态切换通知
         NotificationCenter.default.addObserver(
             self,
@@ -86,7 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             object: nil
         )
     }
-
+    
     private func initializeWindows() {
         // 初始化主窗口
         mainWindow = NSWindow(
@@ -219,14 +219,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 guard let self = self else { return }
                 // 确保窗口存在
                 guard let window = self.mainWindow else { return }
-
+                
                 // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
                 if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
                     window.setFrameOrigin(pinnedOrigin)
                 } else {
                     window.center() // 只有在非置顶或首次置顶时才居中
                 }
-
+                
                 // 确保窗口在最上层
                 window.makeKeyAndOrderFront(nil)
                 window.orderFrontRegardless()
@@ -384,7 +384,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
     }
-
+    
     // 当窗口被pin在一个固定位置的时候，按下快捷键 窗口位置保持不变。
     // 实现 NSWindowDelegate 的 windowDidMove 方法
     func windowDidMove(_ notification: Notification) {
@@ -394,7 +394,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             self.pinnedWindowOrigin = window.frame.origin
         }
     }
-
+    
     // 修改：实现 NSWindowDelegate 方法，当窗口失去焦点时调用
     func windowDidResignKey(_ notification: Notification) {
         // 检查失去焦点的窗口是否是 mainWindow
@@ -411,66 +411,65 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             UserDefaults.standard.removePersistentDomain(forName: appDomain)
         }
     }
-}
-
-
-/// 获取当前设置的快捷键，用于菜单展示
-private func getCurrentShortcutForMenu() -> (String, NSEvent.ModifierFlags) {
-    if let shortcut = KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcut) {
-        // Manually map KeyboardShortcuts.Shortcut.Key to String
-        let keyEquivalent: String
-        switch shortcut.key {
-        case .a: keyEquivalent = "a"
-        case .b: keyEquivalent = "b"
-        case .c: keyEquivalent = "c"
-        case .d: keyEquivalent = "d"
-        case .e: keyEquivalent = "e"
-        case .f: keyEquivalent = "f"
-        case .g: keyEquivalent = "g"
-        case .h: keyEquivalent = "h"
-        case .i: keyEquivalent = "i"
-        case .j: keyEquivalent = "j"
-        case .k: keyEquivalent = "k"
-        case .l: keyEquivalent = "l"
-        case .m: keyEquivalent = "m"
-        case .n: keyEquivalent = "n"
-        case .o: keyEquivalent = "o"
-        case .p: keyEquivalent = "p"
-        case .q: keyEquivalent = "q"
-        case .r: keyEquivalent = "r"
-        case .s: keyEquivalent = "s"
-        case .t: keyEquivalent = "t"
-        case .u: keyEquivalent = "u"
-        case .v: keyEquivalent = "v"
-        case .w: keyEquivalent = "w"
-        case .x: keyEquivalent = "x"
-        case .y: keyEquivalent = "y"
-        case .z: keyEquivalent = "z"
-        case .zero: keyEquivalent = "0"
-        case .one: keyEquivalent = "1"
-        case .two: keyEquivalent = "2"
-        case .three: keyEquivalent = "3"
-        case .four: keyEquivalent = "4"
-        case .five: keyEquivalent = "5"
-        case .six: keyEquivalent = "6"
-        case .seven: keyEquivalent = "7"
-        case .eight: keyEquivalent = "8"
-        case .nine: keyEquivalent = "9"
-        case .return: keyEquivalent = "\r"
-        case .space: keyEquivalent = " "
-        case .tab: keyEquivalent = "\t"
-        case .delete: keyEquivalent = "\u{8}"
-        case .escape: keyEquivalent = "\u{1b}"
-        default: keyEquivalent = "" // Add more cases as needed
+    
+    // 获取当前设置的快捷键，用于菜单展示
+    private func getCurrentShortcutForMenu() -> (String, NSEvent.ModifierFlags) {
+        if let shortcut = KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcut) {
+            // Manually map KeyboardShortcuts.Shortcut.Key to String
+            let keyEquivalent: String
+            switch shortcut.key {
+            case .a: keyEquivalent = "a"
+            case .b: keyEquivalent = "b"
+            case .c: keyEquivalent = "c"
+            case .d: keyEquivalent = "d"
+            case .e: keyEquivalent = "e"
+            case .f: keyEquivalent = "f"
+            case .g: keyEquivalent = "g"
+            case .h: keyEquivalent = "h"
+            case .i: keyEquivalent = "i"
+            case .j: keyEquivalent = "j"
+            case .k: keyEquivalent = "k"
+            case .l: keyEquivalent = "l"
+            case .m: keyEquivalent = "m"
+            case .n: keyEquivalent = "n"
+            case .o: keyEquivalent = "o"
+            case .p: keyEquivalent = "p"
+            case .q: keyEquivalent = "q"
+            case .r: keyEquivalent = "r"
+            case .s: keyEquivalent = "s"
+            case .t: keyEquivalent = "t"
+            case .u: keyEquivalent = "u"
+            case .v: keyEquivalent = "v"
+            case .w: keyEquivalent = "w"
+            case .x: keyEquivalent = "x"
+            case .y: keyEquivalent = "y"
+            case .z: keyEquivalent = "z"
+            case .zero: keyEquivalent = "0"
+            case .one: keyEquivalent = "1"
+            case .two: keyEquivalent = "2"
+            case .three: keyEquivalent = "3"
+            case .four: keyEquivalent = "4"
+            case .five: keyEquivalent = "5"
+            case .six: keyEquivalent = "6"
+            case .seven: keyEquivalent = "7"
+            case .eight: keyEquivalent = "8"
+            case .nine: keyEquivalent = "9"
+            case .return: keyEquivalent = "\r"
+            case .space: keyEquivalent = " "
+            case .tab: keyEquivalent = "\t"
+            case .delete: keyEquivalent = "\u{8}"
+            case .escape: keyEquivalent = "\u{1b}"
+            default: keyEquivalent = "" // Add more cases as needed
+            }
+            
+            var modifierMask: NSEvent.ModifierFlags = []
+            if shortcut.modifiers.contains(.command) { modifierMask.insert(.command) }
+            if shortcut.modifiers.contains(.option) { modifierMask.insert(.option) }
+            if shortcut.modifiers.contains(.shift) { modifierMask.insert(.shift) }
+            if shortcut.modifiers.contains(.control) { modifierMask.insert(.control) }
+            return (keyEquivalent, modifierMask)
         }
-
-        var modifierMask: NSEvent.ModifierFlags = []
-        if shortcut.modifiers.contains(.command) { modifierMask.insert(.command) }
-        if shortcut.modifiers.contains(.option) { modifierMask.insert(.option) }
-        if shortcut.modifiers.contains(.shift) { modifierMask.insert(.shift) }
-        if shortcut.modifiers.contains(.control) { modifierMask.insert(.control) }
-        return (keyEquivalent, modifierMask)
+        // Default value (e.g., Option+X)
+        return ("x", [.option])
     }
-    // Default value (e.g., Option+X)
-    return ("x", [.option])
 }
