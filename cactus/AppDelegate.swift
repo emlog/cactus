@@ -42,8 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("main", comment: "AI助手"),
                 action: #selector(openMain),
-                keyEquivalent: "j"
+                keyEquivalent: "x"
             )
+            translateMenuItem.keyEquivalentModifierMask = [.option]
             translateMenuItem.image = NSImage(systemSymbolName: "shareplay", accessibilityDescription: nil) // 添加地球图标
             menu.addItem(translateMenuItem)
             
