@@ -67,7 +67,7 @@ struct MainView: View {
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
                     
                     Spacer()
-
+                    
                     // 清除按钮
                     Button(action: {
                         clearAll()
@@ -132,9 +132,9 @@ struct MainView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color(.separatorColor), lineWidth: 1)
                     )
-                    .onChange(of: contentModel.resultText) {
+                    .onChange(of: contentModel.resultText, perform: { value in
                         // 当结果文本变化时，计算新的高度
-                        if let text = contentModel.resultText {
+                        if let text = value {
                             // 使用 calculateTextHeight 计算结果区域高度
                             resultTextHeight = calculateTextHeight(text: text, width: 480) // 假设宽度与输入区域类似
                             // 通知窗口调整大小
@@ -143,7 +143,7 @@ struct MainView: View {
                             resultTextHeight = 100 // 如果结果为空，重置为最小高度
                             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
                         }
-                    }
+                    })
                 // 初始化时计算一次结果区域高度
                     .onAppear {
                         if let text = contentModel.resultText {

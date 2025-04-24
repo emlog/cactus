@@ -13,17 +13,7 @@ struct GeneralAiPane: View {
                 VStack {
                     Form {
                         Section {
-                            Picker(selection: $settingsModel.selectedProvider, label: HStack {
-                                Text(NSLocalizedString("select_service", comment: "选择提供商"))
-                            }) {
-                                ForEach(Array(settingsModel.defaultProviders.keys.sorted()), id: \.self) { key in
-                                    Text(settingsModel.defaultProviders[key]!.title + " - " + settingsModel.defaultProviders[key]!.model).tag(key)
-                                }
-                            }
-                            .pickerStyle(MenuPickerStyle())
-                            .onChange(of: settingsModel.selectedProvider) { oldValue, newValue in
-                                updateSettingsForProvider()
-                            }
+                            providerPickerView
                         }
                     }
                     .padding()
@@ -32,6 +22,31 @@ struct GeneralAiPane: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
         }
+    }
+    
+    private var providerPickerView: some View {
+        Picker(selection: $settingsModel.selectedProvider, label: HStack {
+            Text(NSLocalizedString("select_service", comment: "选择提供商"))
+        }) {
+            providerOptions
+        }
+        .pickerStyle(MenuPickerStyle())
+        .onChange(of: settingsModel.selectedProvider) { newValue in
+            updateSettingsForProvider()
+        }
+    }
+    
+    private var providerOptions: some View {
+        ForEach(Array(settingsModel.defaultProviders.keys.sorted()), id: \.self) { key in
+            Text(providerDisplayText(for: key)).tag(key)
+        }
+    }
+    
+    private func providerDisplayText(for key: String) -> String {
+        guard let provider = settingsModel.defaultProviders[key] else {
+            return key
+        }
+        return provider.title + " - " + provider.model
     }
     
     private func updateSettingsForProvider() {
