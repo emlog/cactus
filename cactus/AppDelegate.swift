@@ -95,10 +95,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             backing: .buffered,
             defer: false
         )
-        // 初始状态不置顶，使用 normal level
-        mainWindow?.level = .normal
-        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        // mainWindow?.level = .floating // 移除此处的默认浮动设置
+        // 设置窗口始终置顶
+        mainWindow?.level = .floating // 浮动级别，保持在普通窗口之上
+        // 添加 .fullScreenPrimary 以确保在全屏模式下也能显示
+        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary]
+        // 设置窗口层级为状态栏级别，确保在大多数应用之上
+        mainWindow?.level = NSWindow.Level.statusBar
         
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
