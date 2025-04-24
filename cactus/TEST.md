@@ -18,3 +18,18 @@ One day, a kitten got lost in a park. It started to rain, and the cat shivered u
 ### 西班牙语 🇪🇸
 
 Un día, un pequeño gato se perdió en el parque. Comenzó a llover, y el gato, temblando, se refugió bajo un árbol. Entonces, una niña amable se acercó y le preguntó: “¿Estás bien?”. Ella le ofreció su paraguas al gato y lo llevó a casa. Desde aquel día, vivieron juntos para siempre. El gato vivió feliz en su nuevo hogar y se convirtió en el mejor amigo de la niña.
+
+### 法语 🇫🇷
+
+Un jour, un chaton s’est perdu dans un parc. Il s’est mis à pleuvoir, et le chaton grelottait sous un arbre. Puis une gentille fille s’est approchée et a demandé : « Ça va ? » La fille a donné son parapluie au chaton et l’a emmené chez elle. Depuis ce jour, ils ont vécu ensemble. Le chaton a vécu heureux dans sa nouvelle maison et est devenu le meilleur ami de la fille.
+
+
+
+中文：你好世界，我来了
+英语（English）： Hello world, here I come.
+法语（Français）： Bonjour le monde, j’arrive.
+西班牙语（Español）： Hola mundo, aquí voy.
+日语（日本語）： こんにちは世界、私は来た。
+韩语（한국어）： 안녕 세상아, 내가 왔어.
+
+

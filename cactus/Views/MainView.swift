@@ -276,36 +276,73 @@ struct MainView: View {
         showCopyToast = true
     }
     
+    // 辅助函数：判断字符串是否可能主要是简体中文
+    private func isLikelyChinese(_ text: String) -> Bool {
+        var containsChinese = false
+        for scalar in text.unicodeScalars {
+            let value = scalar.value
+            // 检查日文平假名 (U+3040...U+309F) 或片假名 (U+30A0...U+30FF)
+            if (0x3040...0x30FF).contains(value) {
+                return false // 包含日文假名，判定为非中文
+            }
+            // 检查韩文谚文音节 (U+AC00...U+D7AF)
+            if (0xAC00...0xD7AF).contains(value) {
+                return false // 包含韩文谚文，判定为非中文
+            }
+            // 检查 CJK 统一表意文字的主要范围 (U+4E00...U+9FFF)
+            // 这个范围包含了中日韩共用的汉字
+            if (0x4E00...0x9FFF).contains(value) {
+                containsChinese = true // 标记包含汉字字符
+            }
+            // 可以根据需要添加其他 CJK 范围的检查，但主要范围通常足够
+        }
+        // 只有在包含了汉字字符，并且没有检测到日文假名或韩文谚文时，才判定为中文
+        return containsChinese
+    }
+
     // 翻译
     func translateText() {
-        performAIAction(promptPrefix: "请将下面的内容翻译为简体中文（如果已经是中文，则翻译为英文），直接输出翻译结果，不要输出任何提示内容和原文：")
+        let inputText = contentModel.text
+        if inputText.isEmpty {
+            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
+            showCopyToast = true
+            return // 提前返回，避免执行后续逻辑
+        }
+
+        let promptPrefix: String
+        if isLikelyChinese(inputText) {
+            // 如果检测到中文，则翻译为英文
+            promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文："
+        } else {
+            // 否则，翻译为简体中文
+            promptPrefix = "请将下面的内容翻译为简体中文，直接输出翻译结果，不要输出任何提示内容和原文："
+        }
+        performAIAction(promptPrefix: promptPrefix)
     }
-    
+
     // 总结
     func summaryText() {
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
     }
-    
+
     // 解释
     func explainText() {
         performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
     }
-    
+
     // 调用AI服务
     private func performAIAction(promptPrefix: String) {
-        if contentModel.text.isEmpty {
-            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
-            showCopyToast = true
-        } else {
-            contentModel.isProcessing = true // 修改：使用 contentModel.isProcessing
-            let aiService = AiService() // 统一变量命名规范
-            let fullPrompt = promptPrefix + "\n\n" + contentModel.text
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                aiService.chat(text: fullPrompt) { // 使用正确的变量名
-                    DispatchQueue.main.async {
-                        contentModel.isProcessing = false // 修改：使用 contentModel.isProcessing
-                    }
+        // 检查移到调用函数处，这里不再重复检查
+        // if contentModel.text.isEmpty { ... }
+
+        contentModel.isProcessing = true // 修改：使用 contentModel.isProcessing
+        let aiService = AiService() // 统一变量命名规范
+        let fullPrompt = promptPrefix + "\n\n" + contentModel.text
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            aiService.chat(text: fullPrompt) { // 使用正确的变量名
+                DispatchQueue.main.async {
+                    contentModel.isProcessing = false // 修改：使用 contentModel.isProcessing
                 }
             }
         }
