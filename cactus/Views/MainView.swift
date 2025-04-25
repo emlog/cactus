@@ -83,7 +83,7 @@ struct MainView: View {
                     Button(action: {
                         copyWriting()
                     }) {
-                        Image(systemName: "doc.on.doc")
+                        Image(systemName: "square.on.square")
                             .frame(width: 15, height: 15)
                             .foregroundColor(.secondary)
                     }
@@ -181,7 +181,7 @@ struct MainView: View {
                         Button(action: {
                             copyResp()
                         }) {
-                            Image(systemName: "doc.on.doc")
+                            Image(systemName: "square.on.square")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(.secondary)
                         }

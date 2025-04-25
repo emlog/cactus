@@ -22,7 +22,7 @@
 "siliconflow" = "Siliconflow";
 
 // main
-"pop_text_empty" = "Please enter content first";
+"pop_text_empty" = "No copyable content";
 "pop_copy_success" = "Copy successful";
 "help_translate" = "Translate";
 "help_summary" = "Summary";

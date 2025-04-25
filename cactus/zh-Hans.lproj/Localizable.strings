@@ -22,7 +22,7 @@
 "siliconflow" = "硅基流动";
 
 // main
-"pop_text_empty" = "请先输入内容";
+"pop_text_empty" = "没有可复制的内容";
 "pop_copy_success" = "复制成功";
 "help_translate" = "翻译文本";
 "help_summary" = "总结摘要";
