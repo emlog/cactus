@@ -256,7 +256,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 显示权限提示
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("accessibility_permission_title", comment: "需要辅助功能权限")
-            alert.informativeText = NSLocalizedString("accessibility_permission_message", comment: "请在系统偏好设置中启用辅助功能权限，以便自动获取剪贴板内容。")
+            alert.informativeText = NSLocalizedString("accessibility_permission_message", comment: "请在系统偏好设置中启用辅助功能权限")
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
             alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
