@@ -23,6 +23,9 @@
 
 // main
 "pop_text_empty" = "No copyable content";
+"pop_translate_text_empty" = "Enter text to translate.";
+"pop_summary_text_empty" = "Enter text to summarize.";
+"pop_explain_text_empty" = "Enter text to explain.";
 "pop_copy_success" = "Copy successful";
 "help_translate" = "Translate";
 "help_summary" = "Summary";

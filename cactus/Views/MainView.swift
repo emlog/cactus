@@ -304,9 +304,9 @@ struct MainView: View {
     func translateText() {
         let inputText = contentModel.text
         if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_text_empty", comment: "请先输入内容")
+            toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
             showCopyToast = true
-            return // 提前返回，避免执行后续逻辑
+            return
         }
 
         let promptPrefix: String
@@ -322,11 +322,21 @@ struct MainView: View {
 
     // 总结
     func summaryText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
+            showCopyToast = true
+            return
+        }
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
     }
 
     // 解释
     func explainText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
+            showCopyToast = true
+            return
+        }
         performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
     }
 

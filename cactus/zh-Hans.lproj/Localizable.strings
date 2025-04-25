@@ -23,6 +23,9 @@
 
 // main
 "pop_text_empty" = "没有可复制的内容";
+"pop_translate_text_empty" = "请输入要翻译的文字";
+"pop_summary_text_empty" = "请输入要总结的内容";
+"pop_explain_text_empty" = "请输入要解释的内容";
 "pop_copy_success" = "复制成功";
 "help_translate" = "翻译文本";
 "help_summary" = "总结摘要";
