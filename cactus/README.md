@@ -51,7 +51,7 @@ AI Assistant,Text Tool,Translate,Summarize,Productivity
 ## 更新内容
 
 修复已知问题，优化用户体验
-Fix known issues, optimize user experience
+Fix some issues, optimize user experience
 
 
 
