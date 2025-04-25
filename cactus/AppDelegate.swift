@@ -410,6 +410,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     func clearUserDefaults() {
         if let appDomain = Bundle.main.bundleIdentifier {
+            print("Clearing UserDefaults for domain: \(appDomain)")
             UserDefaults.standard.removePersistentDomain(forName: appDomain)
         }
     }
