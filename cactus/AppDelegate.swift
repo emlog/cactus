@@ -254,8 +254,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
     
         if accessEnabled {
-            // 如果有权限，立即尝试获取剪贴板内容
-            getClipboardContent(completion: completion)
+            // 如果有权限，尝试获取剪贴板内容
+            // 无论 getClipboardContent 内部是成功(true)还是失败(false)获取内容
+            // 只要权限是开启的，我们就调用原始的 completion(true)，
+            // 以便 openMain 函数总是能显示窗口。
+            getClipboardContent { _ /* contentRetrievedSuccess - 我们忽略这个内部结果 */ in
+                // 因为辅助权限已开启，所以调用 completion(true) 来触发主窗口显示
+                completion(true)
+            }
         } else {
             // 显示权限提示
             let alert = NSAlert()
@@ -274,7 +280,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     // 用户点击了“打开设置”，此时不调用 completion，避免触发 openMain 中的窗口显示逻辑
                 } else {
                     // 用户点击了“取消”或其他方式关闭了弹窗
-                    completion(false) // 明确告知操作未成功，且用户未去设置
+                    completion(false) // 明确告知操作未成功（因为权限问题），且用户未去设置
                 }
             }
         }
