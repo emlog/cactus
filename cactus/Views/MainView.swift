@@ -48,7 +48,7 @@ struct MainView: View {
                     Button(action: {
                         summaryText()
                     }) {
-                        Image(systemName: "rectangle.dashed.and.paperclip")
+                        Image(systemName: "pencil.and.list.clipboard.rtl")
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_summary", comment: "总结摘要"))
@@ -59,7 +59,7 @@ struct MainView: View {
                     Button(action: {
                         explainText()
                     }) {
-                        Image(systemName: "graduationcap")
+                        Image(systemName: "lightbulb.max")
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
