@@ -215,28 +215,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc func openMain() {
         // 1. 先尝试获取剪贴板内容（这会触发模拟复制）
         checkAccessibilityPermissionAndGetClipboard { [weak self] success in
-            // 2. 无论成功与否，都激活并显示窗口
+            // 2. 仅在成功获取剪贴板内容 (success == true) 时，激活并显示窗口
             // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                // 确保窗口存在
-                guard let window = self.mainWindow else { return }
-                
-                // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
-                if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
-                    window.setFrameOrigin(pinnedOrigin)
+    
+                if success {
+                    // 确保窗口存在
+                    guard let window = self.mainWindow else { return }
+    
+                    // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
+                    if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
+                        window.setFrameOrigin(pinnedOrigin)
+                    } else {
+                        window.center() // 只有在非置顶或首次置顶时才居中
+                    }
+    
+                    // 确保窗口在最上层
+                    window.makeKeyAndOrderFront(nil)
+                    window.orderFrontRegardless()
+                    NSApp.activate(ignoringOtherApps: true)
                 } else {
-                    window.center() // 只有在非置顶或首次置顶时才居中
-                }
-                
-                // 确保窗口在最上层
-                window.makeKeyAndOrderFront(nil)
-                window.orderFrontRegardless()
-                NSApp.activate(ignoringOtherApps: true)
-                
-                // 可以在这里根据 success 的结果决定是否显示提示信息等
-                if !success {
-                    print("未能成功获取选中文本。")
+                    // 如果 success 为 false (权限被拒绝且点了取消，或获取剪贴板失败)
+                    // 可以在这里根据需要处理，例如打印日志或显示不同的提示
+                    // 当前逻辑下，如果用户点了“打开设置”，此回调根本不会执行
+                    // 如果用户点了“取消”，或者权限已允许但获取剪贴板失败，会执行到这里
+                    print("未能成功获取选中文本或用户取消了操作。")
                 }
             }
         }
@@ -248,7 +252,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: true]
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-        
+    
         if accessEnabled {
             // 如果有权限，立即尝试获取剪贴板内容
             getClipboardContent(completion: completion)
@@ -260,16 +264,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
             alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
-            
+    
             // 在主线程显示 Alert
             DispatchQueue.main.async {
                 let response = alert.runModal()
                 if response == .alertFirstButtonReturn {
                     // 打开辅助功能设置
                     NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+                    // 用户点击了“打开设置”，此时不调用 completion，避免触发 openMain 中的窗口显示逻辑
+                } else {
+                    // 用户点击了“取消”或其他方式关闭了弹窗
+                    completion(false) // 明确告知操作未成功，且用户未去设置
                 }
-                // 无论用户是否去设置，本次操作都视为未成功获取
-                completion(false)
             }
         }
     }
