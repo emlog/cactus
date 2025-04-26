@@ -23,9 +23,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var settingsWindowController: SettingsWindowController?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // 设置应用程序的激活策略为 .accessory，以隐藏程序坞图标
-        NSApp.setActivationPolicy(.accessory)
-        
         // 创建状态栏图标
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         

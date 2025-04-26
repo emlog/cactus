@@ -17,9 +17,22 @@
 		F292ABA82D6575070089583E /* Cactus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cactus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F2729B252DBD126C006A86B8 /* Exceptions for "cactus" folder in "cactus" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F292ABA72D6575070089583E /* cactus */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F292ABAA2D6575070089583E /* cactus */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F2729B252DBD126C006A86B8 /* Exceptions for "cactus" folder in "cactus" target */,
+			);
 			path = cactus;
 			sourceTree = "<group>";
 		};
@@ -287,6 +300,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = cactus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌AI助手";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -320,6 +334,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = cactus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌AI助手";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
