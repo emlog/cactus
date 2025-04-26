@@ -13,7 +13,7 @@ struct CactusApp: App {
     
     // It's impossible to create sceneless application,
     // so we are hacking this around by creating a menubar
-    // scene that is always hidden.
+    // scene that is always hidden.
     @State private var hiddenMenu: Bool = false
     
     var body: some Scene {
