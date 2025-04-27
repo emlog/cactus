@@ -195,12 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     
     // 关于窗口
-    @objc func openAbout() {
-#if DEBUG
-        // 仅在调试环境中执行的代码
-        clearUserDefaults()
-#endif
-        
+    @objc func openAbout() {        
         // 调整窗口位置到当前屏幕的中心
         aboutWindow?.center()
         aboutWindow?.makeKeyAndOrderFront(nil)
@@ -412,13 +407,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             if !isMainWindowPinned {
                 window.close()
             }
-        }
-    }
-    
-    func clearUserDefaults() {
-        if let appDomain = Bundle.main.bundleIdentifier {
-            print("Clearing UserDefaults for domain: \(appDomain)")
-            UserDefaults.standard.removePersistentDomain(forName: appDomain)
         }
     }
     
