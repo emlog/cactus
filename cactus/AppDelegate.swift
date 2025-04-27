@@ -326,8 +326,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     mainView.translateText()
                 }
                 success = true
-            } else {
-                print("未能获取到新的剪贴板内容或内容未改变。")
             }
             
             // 恢复原始剪贴板内容

@@ -209,7 +209,7 @@ struct MainView: View {
             // 可以在这里触发窗口大小调整逻辑，如果 AppDelegate 中尚未处理
             // 例如，如果你的 AppDelegate 监听这个通知并调整窗口，这里可能不需要额外操作
             // 如果需要在这里直接调整，可能需要访问 NSWindow 实例
-            print("Received AdjustWindowSize notification in MainView")
+            // print("Received AdjustWindowSize notification in MainView")
         }
     }
     

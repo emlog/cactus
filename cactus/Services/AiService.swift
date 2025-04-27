@@ -107,8 +107,6 @@ class AiService: NSObject, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let error = error {
             print("请求错误: \(error.localizedDescription)")
-        } else {
-            print("请求完成")
         }
         
         DispatchQueue.main.async {
