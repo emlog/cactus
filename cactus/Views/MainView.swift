@@ -276,6 +276,16 @@ struct MainView: View {
         showCopyToast = true
     }
     
+    // 辅助函数：获取系统首选语言的本地化名称
+    private func getPreferredLanguageName() -> String {
+        // 获取首选语言代码，默认为简体中文
+        let preferredLanguageCode = Locale.preferredLanguages.first ?? "zh-Hans-CN"
+        // 获取语言的本地化名称，默认为 "简体中文"
+        let preferredLanguageName = Locale.current.localizedString(forLanguageCode: preferredLanguageCode) ?? "简体中文"
+        print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
+        return preferredLanguageName
+    }
+
     // 辅助函数：判断字符串是否可能主要是简体中文
     private func isLikelyChinese(_ text: String) -> Bool {
         var containsChinese = false
@@ -310,12 +320,13 @@ struct MainView: View {
         }
 
         let promptPrefix: String
+        let targetLanguage = getPreferredLanguageName() // 调用新的辅助函数
+
         if isLikelyChinese(inputText) {
             // 如果检测到中文，则翻译为英文
             promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文："
         } else {
-            // 否则，翻译为简体中文
-            promptPrefix = "请将下面的内容翻译为简体中文，直接输出翻译结果，不要输出任何提示内容和原文："
+            promptPrefix = "请将下面的内容翻译为\(targetLanguage)，直接输出翻译结果，不要输出任何提示内容和原文："
         }
         performAIAction(promptPrefix: promptPrefix)
     }
@@ -327,7 +338,9 @@ struct MainView: View {
             showCopyToast = true
             return
         }
-        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的中文总结关键信息：")
+        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        // 修改 prompt，使其使用目标语言进行总结
+        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
     }
 
     // 解释
@@ -337,7 +350,9 @@ struct MainView: View {
             showCopyToast = true
             return
         }
-        performAIAction(promptPrefix: "请用通俗易懂、简短的中文解释下面的内容中主要的概念：")
+        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        // 修改 prompt，使其使用目标语言进行解释
+        performAIAction(promptPrefix: "请用通俗易懂、简短的\(targetLanguage)解释下面的内容中主要的概念：")
     }
 
     // 调用AI服务
