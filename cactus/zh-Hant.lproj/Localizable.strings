@@ -1,0 +1,46 @@
+/*
+ Localizable.strings
+ cactus
+
+ */
+
+// Status Bar Menu
+"main" = "AI 助手";
+"setting" = "偏好設定";
+"about" = "關於";
+"quit" = "退出";
+
+// setting
+"general" = "一般";
+"service" = "服務";
+"startup" = "開機自動啟動";
+"shortcut" = "AI 助手快捷鍵";
+"select_service" = "選擇 AI 服務";
+"free" = "免費";
+"ppinfra" = "派歐算力雲";
+"openRouter" = "OpenRouter";
+"siliconflow" = "矽基流動";
+
+// main
+"pop_text_empty" = "沒有可複製的內容";
+"pop_translate_text_empty" = "請輸入要翻譯的文字";
+"pop_summary_text_empty" = "請輸入要總結的內容";
+"pop_explain_text_empty" = "請輸入要解釋的內容";
+"pop_copy_success" = "複製成功";
+"help_translate" = "翻譯文字";
+"help_summary" = "總結摘要";
+"help_explain" = "解釋說明";
+"help_copy" = "複製";
+"help_pin" = "釘選視窗";
+"help_unpin" = "取消釘選";
+"help_clear" = "清除內容";
+"accessibility_permission_title" = "需要輔助使用功能權限";
+"accessibility_permission_message" = "請在系統偏好設定中啟用輔助使用功能權限，以便翻譯與總結選取的文字。";
+"open_settings" = "打開設定";
+"cancel" = "取消";
+"placeholder_main_input" = "輸入內容，按 Enter 查詢，按 Shift+Enter 換行";
+
+// about
+"website" = "官方網站";
+"apptitle" = "仙人掌 AI 助手";
+"version" = "版本";
