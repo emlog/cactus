@@ -33,3 +33,8 @@ Un jour, un chaton s’est perdu dans un parc. Il s’est mis à pleuvoir, et le
 韩语（한국어）： 안녕 세상아, 내가 왔어.
 
 
+## chat
+
+我是一名大学生，我假期想去美国旧金山旅游，请给我制定一个3天的旅行计划。
+
+

@@ -66,6 +66,17 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
                     
+                    // 对话问答按钮
+                    Button(action: {
+                        chatText()
+                    }) {
+                        Image(systemName: "questionmark.bubble")
+                            .frame(width: 20, height: 20)
+                    }
+                    .help(NSLocalizedString("help_chat", comment: "对话问答"))
+                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
+                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+                    
                     Spacer()
                     
                     // 清除按钮
@@ -351,8 +362,17 @@ struct MainView: View {
             return
         }
         let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
-        // 修改 prompt，使其使用目标语言进行解释
         performAIAction(promptPrefix: "请用通俗易懂、简短的\(targetLanguage)解释下面的内容中主要的概念：")
+    }
+    
+    // 对话
+    func chatText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
+            showCopyToast = true
+            return
+        }
+        performAIAction(promptPrefix: "你是我的私人助理，总是能非常耐心专业的解答我下面的提出的要求或问题：")
     }
 
     // 调用AI服务

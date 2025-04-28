@@ -30,6 +30,7 @@
 "help_translate" = "翻译文本";
 "help_summary" = "总结摘要";
 "help_explain" = "解释说明";
+"help_chat" = "对话问答";
 "help_copy" = "复制";
 "help_pin" = "钉住窗口";
 "help_unpin" = "取消钉住";

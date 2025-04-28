@@ -13,34 +13,35 @@
 // setting
 "general" = "General";
 "service" = "Service";
-"startup" = "Start at Startup";
+"startup" = "Launch at Startup";
 "shortcut" = "AI Assistant Shortcut";
 "select_service" = "Select AI Service";
 "free" = "Free";
-"ppinfra" = "Ppinfra";
+"ppinfra" = "Ppinfra Cloud";
 "openRouter" = "OpenRouter";
-"siliconflow" = "Siliconflow";
+"siliconflow" = "SiliconFlow";
 
 // main
-"pop_text_empty" = "No copyable content";
-"pop_translate_text_empty" = "Enter text to translate.";
-"pop_summary_text_empty" = "Enter text to summarize.";
-"pop_explain_text_empty" = "Enter text to explain.";
-"pop_copy_success" = "Copy successful";
-"help_translate" = "Translate";
-"help_summary" = "Summary";
-"help_explain" = "Explain";
+"pop_text_empty" = "No text available to copy.";
+"pop_translate_text_empty" = "Please enter text to translate.";
+"pop_summary_text_empty" = "Please enter text to summarize.";
+"pop_explain_text_empty" = "Please enter text to explain.";
+"pop_copy_success" = "Copied successfully.";
+"help_translate" = "Translate Text";
+"help_summary" = "Summarize Text";
+"help_explain" = "Explain Text";
+"help_chat" = "Chat and Q&A";
 "help_copy" = "Copy";
-"help_pin" = "Pin";
-"help_unpin" = "Unpin";
-"help_clear" = "Clear";
-"accessibility_permission_title" = "Accessibility permissions required";
-"accessibility_permission_message" = "Please enable Accessibility permissions in System Preferences to automatically retrieve clipboard contents.。";
-"open_settings" = "open settings";
-"cancel" = "cancel";
-"placeholder_main_input" = "Type here... Press Enter to search, Shift+Enter for new line.";
+"help_pin" = "Pin Window";
+"help_unpin" = "Unpin Window";
+"help_clear" = "Clear Text";
+"accessibility_permission_title" = "Accessibility Permission Required";
+"accessibility_permission_message" = "Please enable Accessibility permissions in System Settings to allow translating and summarizing selected text.";
+"open_settings" = "Open Settings";
+"cancel" = "Cancel";
+"placeholder_main_input" = "Enter text and press Enter to submit. Press Shift+Enter to insert a line break.";
 
 // about
-"website" = "Website";
+"website" = "Official Website";
 "apptitle" = "Cactus AI Assistant";
 "version" = "Version";
