@@ -8,6 +8,7 @@ struct MainView: View {
     @State private var toastMessage = ""
     @State private var isResultSectionExpanded = true
     @State private var isPinned = false // 跟踪置顶状态
+    @State private var pinRotation: Double = 0 // 新增：用于动画的状态变量
     
     // 修改：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
@@ -168,17 +169,23 @@ struct MainView: View {
                 HStack(spacing: 6) {
                     // pin按钮
                     Button(action: {
+                        // 先切换状态
                         isPinned.toggle()
+                        // 使用动画来改变倾斜角度
+                        withAnimation(.easeInOut(duration: 0.2)) { // 可以调整动画时长
+                            pinRotation = isPinned ? 45 : 0 // 置顶时倾斜45度，否则为0度
+                        }
                         // 发送通知，告知 AppDelegate 切换置顶状态
                         NotificationCenter.default.post(name: NSNotification.Name("TogglePinState"), object: isPinned)
                     }) {
                         Image(systemName: isPinned ? "pin.fill" : "pin")
                             .frame(width: 20, height: 20)
                             .foregroundColor(isPinned ? .red : .primary) // 置顶时为红色，否则为默认颜色
+                            .rotationEffect(.degrees(pinRotation)) // 应用倾斜效果
                     }
                     .buttonStyle(HoverButtonStyle())
                     .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
-                    
+
                     Spacer()
                     
                     if contentModel.isProcessing {
