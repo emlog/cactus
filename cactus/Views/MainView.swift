@@ -185,7 +185,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
-
+                    
                     Spacer()
                     
                     if contentModel.isProcessing {
@@ -303,7 +303,7 @@ struct MainView: View {
         print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
         return preferredLanguageName
     }
-
+    
     // 辅助函数：判断字符串是否可能主要是简体中文
     private func isLikelyChinese(_ text: String) -> Bool {
         var containsChinese = false
@@ -327,7 +327,7 @@ struct MainView: View {
         // 只有在包含了汉字字符，并且没有检测到日文假名或韩文谚文时，才判定为中文
         return containsChinese
     }
-
+    
     // 翻译
     func translateText() {
         let inputText = contentModel.text
@@ -336,10 +336,10 @@ struct MainView: View {
             showCopyToast = true
             return
         }
-
+        
         let promptPrefix: String
         let targetLanguage = getPreferredLanguageName() // 调用新的辅助函数
-
+        
         if isLikelyChinese(inputText) {
             // 如果检测到中文，则翻译为英文
             promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文："
@@ -348,7 +348,7 @@ struct MainView: View {
         }
         performAIAction(promptPrefix: promptPrefix)
     }
-
+    
     // 总结
     func summaryText() {
         if contentModel.text.isEmpty {
@@ -360,7 +360,7 @@ struct MainView: View {
         // 修改 prompt，使其使用目标语言进行总结
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
     }
-
+    
     // 解释
     func explainText() {
         if contentModel.text.isEmpty {
@@ -375,22 +375,23 @@ struct MainView: View {
     // 对话
     func chatText() {
         if contentModel.text.isEmpty {
-            toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
+            toastMessage = NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容")
             showCopyToast = true
             return
         }
-        performAIAction(promptPrefix: "你是我的私人助理，总是能非常耐心专业的解答我下面的提出的要求或问题：")
+        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        performAIAction(promptPrefix: "你是我的私人助理，总是能简洁专业的解答我下面提出的要求或问题，并用\(targetLanguage)回答：")
     }
-
+    
     // 调用AI服务
     private func performAIAction(promptPrefix: String) {
         // 检查移到调用函数处，这里不再重复检查
         // if contentModel.text.isEmpty { ... }
-
+        
         contentModel.isProcessing = true // 修改：使用 contentModel.isProcessing
         let aiService = AiService() // 统一变量命名规范
         let fullPrompt = promptPrefix + "\n\n" + contentModel.text
-
+        
         DispatchQueue.global(qos: .userInitiated).async {
             aiService.chat(text: fullPrompt) { // 使用正确的变量名
                 DispatchQueue.main.async {

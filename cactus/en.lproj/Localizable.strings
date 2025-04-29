@@ -26,6 +26,7 @@
 "pop_translate_text_empty" = "Please enter text to translate.";
 "pop_summary_text_empty" = "Please enter text to summarize.";
 "pop_explain_text_empty" = "Please enter text to explain.";
+"pop_chat_text_empty" = "Please enter the question.";
 "pop_copy_success" = "Copied successfully.";
 "help_translate" = "Translate Text";
 "help_summary" = "Summarize Text";
