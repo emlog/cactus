@@ -13,11 +13,11 @@ struct AboutView: View {
             // 如果获取失败，则回退显示 "Cactus"
             Text((Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? "Cactus")
                 .font(.system(size: 16, weight: .bold))
-
+            
             Text(NSLocalizedString("apptitle", comment: "仙人掌AI助手"))
                 .font(.system(size: 14))
                 .foregroundColor(.secondary)
-
+            
             // 同时获取版本号 (CFBundleShortVersionString) 和构建号 (CFBundleVersion)
             if let ver = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
                let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String {
@@ -31,7 +31,7 @@ struct AboutView: View {
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
             }
-
+            
             Link(NSLocalizedString("website", comment: "官方网站"), destination: URL(string: "https://cactusai.cc")!)
                 .font(.system(size: 12))
                 .foregroundColor(.blue)
@@ -42,14 +42,14 @@ struct AboutView: View {
         .gesture(
             TapGesture(count: 2) // 检测双击
                 .onEnded {
-                    #if DEBUG
+#if DEBUG
                     // 仅在调试环境中执行清理操作
                     clearUserDefaults()
-                    #endif
+#endif
                 }
         )
     }
-
+    
     func clearUserDefaults() {
         if let appDomain = Bundle.main.bundleIdentifier {
             UserDefaults.standard.removePersistentDomain(forName: appDomain)

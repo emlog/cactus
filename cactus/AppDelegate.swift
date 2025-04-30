@@ -211,18 +211,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
             DispatchQueue.main.async {
                 guard let self = self else { return }
-    
+                
                 if success {
                     // 确保窗口存在
                     guard let window = self.mainWindow else { return }
-    
+                    
                     // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
                     if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
                         window.setFrameOrigin(pinnedOrigin)
                     } else {
                         window.center() // 只有在非置顶或首次置顶时才居中
                     }
-    
+                    
                     // 确保窗口在最上层
                     window.makeKeyAndOrderFront(nil)
                     window.orderFrontRegardless()
@@ -244,7 +244,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: true]
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-    
+        
         if accessEnabled {
             // 如果有权限，尝试获取剪贴板内容
             // 无论 getClipboardContent 内部是成功(true)还是失败(false)获取内容
@@ -262,7 +262,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
             alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
-    
+            
             // 在主线程显示 Alert
             DispatchQueue.main.async {
                 let response = alert.runModal()
