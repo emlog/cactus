@@ -69,8 +69,6 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 修复已知问题，优化用户体验
 Fix some issues, optimize user experience
 
-
-
 ## 开发者信息
 
 Certificate Name：dawei xu
@@ -122,7 +120,6 @@ xcrun stapler staple Cactus.dmg
 最后，测试您的 DMG 文件，确保它能正常打开和安装应用程序。
 
 
-
 ### create-dmg 工具
 这是一个更自动化的方法：
 
@@ -161,5 +158,16 @@ create-dmg \
 	•	常用名称：输入您的名字或组织名称，通常选择您自己或您公司名。
 	•	CA 证书颁发机构：选择 保存到磁盘。
 	3.	保存证书请求文件：点击 继续，并选择保存位置，将生成的 CSR 文件保存到您的电脑。文件的扩展名应该是 .certSigningRequest。
+
+
+
+## Testflight 测试流程
+
+1. 正在处理
+2. 缺少合规证明，提交合规证明操作后，开始合规证明审核，期间可以内测，但是无法外部测试。
+3. 可以开始内测
+4. 通过合规证明审核后
+5. 准备提交，可以开始外部测试
+
 
 
