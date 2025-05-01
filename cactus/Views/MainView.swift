@@ -4,13 +4,17 @@ import SwiftUI
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var settings = SettingsModel.shared
-    @State private var showCopyToast = false
-    @State private var toastMessage = ""
-    @State private var isResultSectionExpanded = true
-    @State private var isPinned = false // 跟踪置顶状态
-    @State private var pinRotation: Double = 0 // 新增：用于动画的状态变量
     
-    // 修改：使用一个状态变量来驱动 CustomTextEditor 的高度
+    // 吐司提示
+    @State private var showCompleteToast = false
+    @State private var showErrorToast = false
+    @State private var toastMessage = ""
+    
+    // 钉住窗口pin
+    @State private var isPinned = false // 跟踪置顶状态
+    @State private var pinRotation: Double = 0 // 用于动画的状态变量
+    
+    // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
     @State private var resultTextHeight: CGFloat = 100 // 结果区域的高度状态
     
@@ -219,8 +223,11 @@ struct MainView: View {
         .padding(10)
         // 修改：调整最小高度以适应内容
         .frame(minWidth: 500, minHeight: 400) // 稍微增加最小高度
-        .toast(isPresenting: $showCopyToast) {
-            AlertToast(type: .regular, title: toastMessage)
+        .toast(isPresenting: $showCompleteToast) {
+            AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
+        }
+        .toast(isPresenting: $showErrorToast) {
+            AlertToast(displayMode: .hud, type: .systemImage("xmark.circle", .red), title: toastMessage)
         }
         // 添加监听器，以便 CustomTextEditor 可以请求调整窗口大小
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AdjustWindowSize"))) { _ in
@@ -270,28 +277,87 @@ struct MainView: View {
         }
     }
     
+    // 复制输入
     func copyWriting() {
         if contentModel.text.isEmpty {
             toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
+            showErrorToast = true
         } else {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(contentModel.text, forType: .string)
             toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
+            showCompleteToast = true
         }
-        showCopyToast = true
     }
     
+    // 复制输出
     func copyResp() {
         if let promptText = contentModel.resultText, !promptText.isEmpty {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(promptText, forType: .string)
             toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
+            showCompleteToast = true
         } else {
             toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
+            showErrorToast = true
         }
-        showCopyToast = true
+    }
+    
+    // 翻译
+    func translateText() {
+        let inputText = contentModel.text
+        if inputText.isEmpty {
+            toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
+            showErrorToast = true
+            return
+        }
+        
+        let promptPrefix: String
+        let targetLanguage = getPreferredLanguageName() // 调用新的辅助函数
+        
+        if isLikelyChinese(inputText) {
+            // 如果检测到中文，则翻译为英文
+            promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文："
+        } else {
+            promptPrefix = "请将下面的内容翻译为\(targetLanguage)，直接输出翻译结果，不要输出任何提示内容和原文："
+        }
+        performAIAction(promptPrefix: promptPrefix)
+    }
+    
+    // 总结
+    func summaryText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
+            showErrorToast = true
+            return
+        }
+        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        // 修改 prompt，使其使用目标语言进行总结
+        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
+    }
+    
+    // 解释
+    func explainText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
+            showErrorToast = true
+            return
+        }
+        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        performAIAction(promptPrefix: "请用通俗易懂、简短的\(targetLanguage)解释下面的内容中主要的概念：")
+    }
+    
+    // 对话
+    func chatText() {
+        if contentModel.text.isEmpty {
+            toastMessage = NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容")
+            showErrorToast = true
+            return
+        }
+        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        performAIAction(promptPrefix: "你是我的私人助理，总是能简洁专业的解答我下面提出的要求或问题，并用\(targetLanguage)回答：")
     }
     
     // 辅助函数：获取系统首选语言的本地化名称
@@ -326,61 +392,6 @@ struct MainView: View {
         }
         // 只有在包含了汉字字符，并且没有检测到日文假名或韩文谚文时，才判定为中文
         return containsChinese
-    }
-    
-    // 翻译
-    func translateText() {
-        let inputText = contentModel.text
-        if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
-            showCopyToast = true
-            return
-        }
-        
-        let promptPrefix: String
-        let targetLanguage = getPreferredLanguageName() // 调用新的辅助函数
-        
-        if isLikelyChinese(inputText) {
-            // 如果检测到中文，则翻译为英文
-            promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文："
-        } else {
-            promptPrefix = "请将下面的内容翻译为\(targetLanguage)，直接输出翻译结果，不要输出任何提示内容和原文："
-        }
-        performAIAction(promptPrefix: promptPrefix)
-    }
-    
-    // 总结
-    func summaryText() {
-        if contentModel.text.isEmpty {
-            toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
-            showCopyToast = true
-            return
-        }
-        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
-        // 修改 prompt，使其使用目标语言进行总结
-        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
-    }
-    
-    // 解释
-    func explainText() {
-        if contentModel.text.isEmpty {
-            toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
-            showCopyToast = true
-            return
-        }
-        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
-        performAIAction(promptPrefix: "请用通俗易懂、简短的\(targetLanguage)解释下面的内容中主要的概念：")
-    }
-    
-    // 对话
-    func chatText() {
-        if contentModel.text.isEmpty {
-            toastMessage = NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容")
-            showCopyToast = true
-            return
-        }
-        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
-        performAIAction(promptPrefix: "你是我的私人助理，总是能简洁专业的解答我下面提出的要求或问题，并用\(targetLanguage)回答：")
     }
     
     // 调用AI服务
