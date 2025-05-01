@@ -450,23 +450,3 @@ struct MainView: View {
         contentModel.resultText = nil
     }
 }
-
-// 优化 HoverButtonStyle
-struct HoverButtonStyle: ButtonStyle {
-    @State private var isHovered = false
-    
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding(5) // 给图标周围增加一些空间，让背景更明显
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                // 悬停时改变背景色，增加透明度使其不突兀
-                    .fill(isHovered ? Color.gray.opacity(0.2) : Color.clear)
-            )
-            .contentShape(Rectangle()) // 确保整个区域都能响应悬停和点击
-            .onHover { hovering in
-                isHovered = hovering
-            }
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0) // 添加按压效果
-    }
-}
