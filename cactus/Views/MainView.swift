@@ -10,6 +10,10 @@ struct MainView: View {
     @State private var showErrorToast = false
     @State private var toastMessage = ""
     
+    // 复制成功状态，用于按钮图标动画
+    @State private var showInputCopySuccess = false
+    @State private var showResultCopySuccess = false
+    
     // 钉住窗口pin
     @State private var isPinned = false // 跟踪置顶状态
     @State private var pinRotation: Double = 0 // 用于动画的状态变量
@@ -99,13 +103,15 @@ struct MainView: View {
                     Button(action: {
                         copyWriting()
                     }) {
-                        Image(systemName: "square.on.square")
+                        // 根据状态改变图标和颜色
+                        Image(systemName: showInputCopySuccess ? "checkmark" : "square.on.square")
                             .frame(width: 15, height: 15)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(showInputCopySuccess ? .green : .secondary) // 成功时绿色
                     }
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
-                    
+                    .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
+
                     // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
@@ -203,12 +209,14 @@ struct MainView: View {
                         Button(action: {
                             copyResp()
                         }) {
-                            Image(systemName: "square.on.square")
+                            // 根据状态改变图标和颜色
+                            Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
                                 .frame(width: 15, height: 15)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
                         }
                         .buttonStyle(HoverButtonStyle())
                         .help(NSLocalizedString("help_copy", comment: "复制"))
+                        .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
                     }
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
@@ -286,8 +294,20 @@ struct MainView: View {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(contentModel.text, forType: .string)
+            // 恢复成功提示
             toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
             showCompleteToast = true
+            
+            // 触发成功动画
+            withAnimation {
+                showInputCopySuccess = true
+            }
+            // 1.5秒后恢复图标
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation {
+                    showInputCopySuccess = false
+                }
+            }
         }
     }
     
@@ -297,8 +317,20 @@ struct MainView: View {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(promptText, forType: .string)
+            // 恢复成功提示
             toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
             showCompleteToast = true
+            
+            // 触发成功动画
+            withAnimation {
+                showResultCopySuccess = true
+            }
+            // 1.5秒后恢复图标
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation {
+                    showResultCopySuccess = false
+                }
+            }
         } else {
             toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
             showErrorToast = true
