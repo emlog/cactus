@@ -22,6 +22,9 @@ struct MainView: View {
     @State private var inputTextHeight: CGFloat = 100
     @State private var resultTextHeight: CGFloat = 100 // 结果区域的高度状态
     
+    // 新增：用于控制输入框焦点的状态变量
+    @FocusState private var isInputEditorFocused: Bool
+    
     var body: some View {
         Form {
             Section() {
@@ -30,6 +33,7 @@ struct MainView: View {
                     // 当按下回车键时，触发翻译
                     translateText()
                 }, calculatedHeight: $inputTextHeight) // 传递高度绑定
+                .focused($isInputEditorFocused) // 新增：绑定焦点状态
                 .frame(height: inputTextHeight) // 使用状态变量设置高度
                 .padding(0) // CustomTextEditor 内部已处理内边距
                 .background(Color(.textBackgroundColor))
@@ -302,6 +306,8 @@ struct MainView: View {
                 self.resultTextHeight = 100
                 // 清除后，通知窗口调整大小
                 NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                // 新增：设置输入框焦点
+                self.isInputEditorFocused = true
             }
         }
     }
