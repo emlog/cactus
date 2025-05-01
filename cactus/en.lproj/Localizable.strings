@@ -28,6 +28,7 @@
 "pop_explain_text_empty" = "Please enter text to explain.";
 "pop_chat_text_empty" = "Please enter the question.";
 "pop_copy_success" = "Copied successfully.";
+"pop_already_cleared" = "The content has been cleared.";
 "help_translate" = "Translate Text";
 "help_summary" = "Summarize Text";
 "help_explain" = "Explain Text";

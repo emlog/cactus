@@ -285,6 +285,27 @@ struct MainView: View {
         }
     }
     
+    // 清除所有内容
+    func clearAll() {
+        let isInputEmpty = contentModel.text.isEmpty
+        let isResultEmpty = contentModel.resultText?.isEmpty ?? true
+    
+        if isInputEmpty && isResultEmpty {
+            toastMessage = NSLocalizedString("pop_already_cleared", comment: "已清空输入输出")
+            showCompleteToast = true
+        } else {
+            DispatchQueue.main.async {
+                self.contentModel.text = ""
+                self.contentModel.resultText = nil // 将结果设置为空
+                // 重置输入和输出区域的高度为默认值
+                self.inputTextHeight = 100
+                self.resultTextHeight = 100
+                // 清除后，通知窗口调整大小
+                NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+            }
+        }
+    }
+    
     // 复制输入
     func copyWriting() {
         if contentModel.text.isEmpty {
@@ -347,7 +368,7 @@ struct MainView: View {
         }
         
         let promptPrefix: String
-        let targetLanguage = getPreferredLanguageName() // 调用新的辅助函数
+        let targetLanguage = getPreferredLanguageName()
         
         if isLikelyChinese(inputText) {
             // 如果检测到中文，则翻译为英文
@@ -365,7 +386,7 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        let targetLanguage = getPreferredLanguageName()
         // 修改 prompt，使其使用目标语言进行总结
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
     }
@@ -377,7 +398,7 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        let targetLanguage = getPreferredLanguageName()
         performAIAction(promptPrefix: "请用通俗易懂、简短的\(targetLanguage)解释下面的内容中主要的概念：")
     }
     
@@ -388,7 +409,7 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let targetLanguage = getPreferredLanguageName() // 调用辅助函数获取语言
+        let targetLanguage = getPreferredLanguageName()
         performAIAction(promptPrefix: "你是我的私人助理，总是能简洁专业的解答我下面提出的要求或问题，并用\(targetLanguage)回答：")
     }
     
@@ -442,11 +463,5 @@ struct MainView: View {
                 }
             }
         }
-    }
-    
-    // 在 MainView 结构体内新增方法
-    func clearAll() {
-        contentModel.text = ""
-        contentModel.resultText = nil
     }
 }
