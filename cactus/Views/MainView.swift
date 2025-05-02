@@ -455,10 +455,15 @@ struct MainView: View {
     
     // 调用AI服务
     private func performAIAction(promptPrefix: String) {
-        // 检查移到调用函数处，这里不再重复检查
-        // if contentModel.text.isEmpty { ... }
+        guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
+            toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
+            showErrorToast = true
+            return
+        }
         
-        contentModel.isProcessing = true // 修改：使用 contentModel.isProcessing
+        contentModel.isProcessing = true // 开始处理
+        contentModel.resultText = "" // 清空旧结果
+
         let aiService = AiService() // 统一变量命名规范
         let fullPrompt = promptPrefix + "\n\n" + contentModel.text
         

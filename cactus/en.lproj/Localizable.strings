@@ -29,6 +29,7 @@
 "pop_chat_text_empty" = "Please enter the question.";
 "pop_copy_success" = "Copied successfully.";
 "pop_already_cleared" = "The content has been cleared.";
+"pop_select_model_first" = "请在偏好设置中选择AI模型";
 "help_translate" = "Translate Text";
 "help_summary" = "Summarize Text";
 "help_explain" = "Explain Text";

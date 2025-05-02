@@ -29,6 +29,7 @@
 "pop_chat_text_empty" = "請輸入要回答的問題";
 "pop_copy_success" = "複製成功";
 "pop_already_cleared" = "已清空内容";
+"pop_select_model_first" = "请在偏好设置中选择AI模型";
 "help_translate" = "翻譯文字";
 "help_summary" = "總結摘要";
 "help_explain" = "解釋說明";
