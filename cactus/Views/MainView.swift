@@ -28,11 +28,8 @@ struct MainView: View {
     var body: some View {
         Form {
             Section() {
-                // 使用 ZStack 包裹 CustomTextEditor 和按钮
                 ZStack(alignment: .bottomTrailing) {
-                    // 使用 CustomTextEditor 替换 TextEditor
                     CustomTextEditor(text: $contentModel.text, onCommit: {
-                        // 当按下回车键时，触发翻译
                         translateText()
                     }, calculatedHeight: $inputTextHeight) // 传递高度绑定
                     .focused($isInputEditorFocused) // 新增：绑定焦点状态
@@ -45,7 +42,6 @@ struct MainView: View {
                             .stroke(Color(.separatorColor), lineWidth: 1)
                     )
                     
-                    // 将清除和复制按钮放入 HStack
                     HStack(spacing: 8) { // 可以调整按钮间距
                         // 清除按钮 - 移动到这里
                         Button(action: {
@@ -73,7 +69,7 @@ struct MainView: View {
                         .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
                         .disabled(contentModel.text.isEmpty) // 输入为空时禁用
                     }
-                    .padding(8) // 为 HStack 添加内边距
+                    .padding(8)
                 }
             }
             
@@ -87,8 +83,8 @@ struct MainView: View {
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_translate", comment: "翻译文本"))
-                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(contentModel.isProcessing)
                     
                     // 摘要按钮
                     Button(action: {
@@ -98,8 +94,8 @@ struct MainView: View {
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_summary", comment: "总结摘要"))
-                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(contentModel.isProcessing)
                     
                     // 说明按钮
                     Button(action: {
@@ -109,8 +105,8 @@ struct MainView: View {
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_explain", comment: "解释说明"))
-                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(contentModel.isProcessing)
                     
                     // 对话问答按钮
                     Button(action: {
@@ -120,8 +116,8 @@ struct MainView: View {
                             .frame(width: 20, height: 20)
                     }
                     .help(NSLocalizedString("help_chat", comment: "对话问答"))
-                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .disabled(contentModel.isProcessing) // 修改：使用 contentModel.isProcessing
+                    .buttonStyle(HoverButtonStyle())
+                    .disabled(contentModel.isProcessing)
                     
                     Spacer()
                     
@@ -162,13 +158,10 @@ struct MainView: View {
             }
             
             Section() {
-                // 使用 ZStack 包裹结果 TextEditor 和复制按钮
                 ZStack(alignment: .bottomTrailing) {
-                    // 结果区域保持使用 TextEditor
                     TextEditor(text: .constant(contentModel.resultText ?? ""))
                         .font(.system(size: 15))
                         .lineSpacing(8)
-                        // 使用 resultTextHeight 状态变量
                         .frame(maxWidth: .infinity, minHeight: 100, maxHeight: min(500, resultTextHeight))
                         .padding(10)
                         .background(Color(.textBackgroundColor))
@@ -180,12 +173,12 @@ struct MainView: View {
                         .onChange(of: contentModel.resultText, perform: { value in
                             // ... (onChange logic remains the same) ...
                         })
-                        // 初始化时计算一次结果区域高度
+                    // 初始化时计算一次结果区域高度
                         .onAppear {
                             // ... (onAppear logic remains the same) ...
                         }
-
-                    // 结果区域的复制按钮 - 移动到这里
+                    
+                    // 复制按钮
                     Button(action: {
                         copyResp()
                     }) {
@@ -279,7 +272,6 @@ struct MainView: View {
         DispatchQueue.main.async {
             let trimmedText = newText.trimmingCharacters(in: .whitespacesAndNewlines)
             self.contentModel.text = trimmedText
-            // CustomTextEditor 会自动处理高度计算和通知
         }
     }
     
@@ -289,21 +281,19 @@ struct MainView: View {
         let isResultEmpty = contentModel.resultText?.isEmpty ?? true
         
         if isInputEmpty && isResultEmpty {
-            // 如果已经为空，则不显示 Toast，避免干扰
-            // toastMessage = NSLocalizedString("pop_already_cleared", comment: "已清空输入输出")
-            // showCompleteToast = true
-        } else {
-            DispatchQueue.main.async {
-                self.contentModel.text = ""
-                self.contentModel.resultText = nil // 将结果设置为空
-                // 重置输入和输出区域的高度为默认值
-                self.inputTextHeight = 100
-                self.resultTextHeight = 100
-                // 清除后，通知窗口调整大小
-                NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-                // 新增：设置输入框焦点
-                self.isInputEditorFocused = true
-            }
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.contentModel.text = ""
+            self.contentModel.resultText = nil // 将结果设置为空
+            // 重置输入和输出区域的高度为默认值
+            self.inputTextHeight = 100
+            self.resultTextHeight = 100
+            // 清除后，通知窗口调整大小
+            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+            // 新增：设置输入框焦点
+            self.isInputEditorFocused = true
         }
     }
     
