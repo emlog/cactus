@@ -19,9 +19,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var mainWindow: NSWindow?
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
-    
+    private var pinButton: NSButton? // 新增：持有 pin 按钮的引用
+
     private var settingsWindowController: SettingsWindowController?
-    
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 创建状态栏图标
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -74,51 +75,68 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         // 设置全局快捷键
         setupGlobalShortcut()
-        
-        // 监听置顶状态切换通知
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(togglePinState(_:)),
-            name: NSNotification.Name("TogglePinState"),
-            object: nil
-        )
     }
     
     private func initializeWindows() {
         // 初始化主窗口
         mainWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 600),
-            styleMask: [.titled, .closable, .resizable],  // Allow window resizing but disable zoom button
+            // styleMask: [.titled, .closable, .resizable], // 保持不变
+            // 新增 .fullSizeContentView 使内容延伸到标题栏下方
+            styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
-        // 设置窗口始终置顶
-        mainWindow?.level = .floating // 浮动级别，保持在普通窗口之上
-        // 添加 .fullScreenPrimary 以确保在全屏模式下也能显示
+        // 使标题栏透明并隐藏标题文本
+        mainWindow?.titlebarAppearsTransparent = true
+        mainWindow?.titleVisibility = .hidden
+        // 设置窗口始终置顶 - 保持不变
+        mainWindow?.level = .floating
         mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary]
-        // 设置窗口层级为状态栏级别，确保在大多数应用之上
         mainWindow?.level = NSWindow.Level.statusBar
-        
+
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
-        mainWindow?.title = ""
+        // mainWindow?.title = "" // Title is now hidden
         mainWindow?.isReleasedWhenClosed = false
-        mainWindow?.delegate = self // 设置 mainWindow 的代理为 AppDelegate 实例
-        
-        // 动态调整窗口高度
+        mainWindow?.delegate = self
+
+        // 动态调整窗口高度 - 保持不变
         let contentSize = hostingController.view.intrinsicContentSize
         mainWindow?.setContentSize(contentSize)
-        
-        // 添加通知监听器来响应文本高度变化
+
+        // 添加通知监听器来响应文本高度变化 - 保持不变
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(adjustWindowSize),
             name: NSNotification.Name("AdjustWindowSize"),
             object: nil
         )
-        
-        // 初始化关于窗口
+
+        // --- 新增：添加 Pin 按钮到标题栏 ---
+        let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
+        titlebarAccessoryViewController.layoutAttribute = .trailing // 放在右侧
+
+        pinButton = NSButton()
+        pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
+        pinButton?.bezelStyle = .texturedRounded // 或者 .regularSquare, .shadowlessSquare
+        pinButton?.isBordered = false // 通常标题栏按钮没有边框
+        pinButton?.imageScaling = .scaleProportionallyDown // 确保图标大小合适
+        pinButton?.target = self
+        pinButton?.action = #selector(pinButtonTapped)
+        pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
+        pinButton?.sendAction(on: .leftMouseDown) // 确保单击触发
+
+        // 设置按钮大小，根据需要调整
+        pinButton?.frame = NSRect(x: 0, y: 0, width: 28, height: 22) // 调整大小以适应标题栏
+
+        titlebarAccessoryViewController.view = pinButton! // 将按钮设置为视图控制器的视图
+        mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
+        // --- 结束新增 ---
+
+
+        // 初始化关于窗口 - 保持不变
         aboutWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
             styleMask: [.titled, .closable],
@@ -371,24 +389,47 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         pasteBoard.setString(textToCopy, forType: .string)
     }
     
-    // 处理置顶状态切换的方法
-    @objc private func togglePinState(_ notification: Notification) {
-        guard let shouldPin = notification.object as? Bool else { return }
-        self.isMainWindowPinned = shouldPin
-        DispatchQueue.main.async { // 确保在主线程更新 UI 相关属性
-            if self.isMainWindowPinned {
-                self.mainWindow?.level = .floating // 置顶
-                // 首次置顶时，记录当前位置
-                if self.pinnedWindowOrigin == nil {
-                    self.pinnedWindowOrigin = self.mainWindow?.frame.origin
-                }
-            } else {
-                self.mainWindow?.level = .normal // 取消置顶
-                self.pinnedWindowOrigin = nil // 取消置顶时清除位置记录
+    // Pin 按钮的 Action 方法 
+    @objc private func pinButtonTapped() {
+        isMainWindowPinned.toggle()
+        updatePinState()
+    }
+
+    // 更新 Pin 状态和按钮外观的辅助方法
+    private func updatePinState() {
+        guard let window = mainWindow else { return }
+
+        if isMainWindowPinned {
+            // 钉住窗口
+            window.level = .floating // 确保是浮动级别
+            window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary, .ignoresCycle] // 添加 ignoresCycle 防止被 Command+` 切换掉
+            // 存储当前位置
+            pinnedWindowOrigin = window.frame.origin
+
+            // 更新按钮外观
+            pinButton?.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: NSLocalizedString("help_unpin", comment: "取消置顶"))
+            pinButton?.contentTintColor = .red // 设置图标颜色为红色
+            pinButton?.toolTip = NSLocalizedString("help_unpin", comment: "取消置顶")
+
+        } else {
+            // 取消钉住
+            window.level = .normal // 恢复正常级别
+            window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary] // 移除 ignoresCycle
+            // 清除存储的位置
+            pinnedWindowOrigin = nil
+
+            // 更新按钮外观
+            pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
+            pinButton?.contentTintColor = nil // 恢复默认颜色
+            pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
+
+            // 如果窗口当前不是 key window，则关闭它
+            if !window.isKeyWindow {
+                 window.close()
             }
         }
     }
-    
+
     // 当窗口被pin在一个固定位置的时候，按下快捷键 窗口位置保持不变。
     // 实现 NSWindowDelegate 的 windowDidMove 方法
     func windowDidMove(_ notification: Notification) {
