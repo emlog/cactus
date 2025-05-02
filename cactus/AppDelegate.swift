@@ -80,9 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private func initializeWindows() {
         // 初始化主窗口
         mainWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 600),
-            // styleMask: [.titled, .closable, .resizable], // 保持不变
-            // 新增 .fullSizeContentView 使内容延伸到标题栏下方
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 400),
             styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
@@ -98,7 +96,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
-        // mainWindow?.title = "" // Title is now hidden
         mainWindow?.isReleasedWhenClosed = false
         mainWindow?.delegate = self
 
@@ -127,9 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         pinButton?.action = #selector(pinButtonTapped)
         pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
         pinButton?.sendAction(on: .leftMouseDown) // 确保单击触发
-
-        // 设置按钮大小，根据需要调整
-        pinButton?.frame = NSRect(x: 0, y: 0, width: 28, height: 22) // 调整大小以适应标题栏
+        pinButton?.frame = NSRect(x: 0, y: 0, width: 30, height: 24) // 调整大小以适应标题栏
 
         titlebarAccessoryViewController.view = pinButton! // 将按钮设置为视图控制器的视图
         mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)

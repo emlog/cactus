@@ -15,8 +15,8 @@ struct MainView: View {
     @State private var showResultCopySuccess = false
     
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
-    @State private var inputTextHeight: CGFloat = 100
-    @State private var resultTextHeight: CGFloat = 100 // 结果区域的高度状态
+    @State private var inputTextHeight: CGFloat = 120
+    @State private var resultTextHeight: CGFloat = 200 // 结果区域的高度状态
     
     // 新增：用于控制输入框焦点的状态变量
     @FocusState private var isInputEditorFocused: Bool
@@ -185,7 +185,7 @@ struct MainView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 0)
-        .frame(minWidth: 500, minHeight: 400) // 调整最小高度以适应内容
+        .frame(minWidth: 500, minHeight: 412) // 调整最小高度以适应内容
         .toast(isPresenting: $showCompleteToast) {
             AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
         }
@@ -245,8 +245,8 @@ struct MainView: View {
             self.contentModel.text = ""
             self.contentModel.resultText = nil // 将结果设置为空
             // 重置输入和输出区域的高度为默认值
-            self.inputTextHeight = 100
-            self.resultTextHeight = 100
+            self.inputTextHeight = 120
+            self.resultTextHeight = 200
             // 清除后，通知窗口调整大小
             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
             // 新增：设置输入框焦点
