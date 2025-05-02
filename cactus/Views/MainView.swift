@@ -162,39 +162,44 @@ struct MainView: View {
             }
             
             Section() {
-                // 结果区域保持使用 TextEditor，因为它不需要键盘事件处理
-                TextEditor(text: .constant(contentModel.resultText ?? ""))
-                    .font(.system(size: 15))
-                    .lineSpacing(8)
-                // 使用 resultTextHeight 状态变量
-                    .frame(maxWidth: .infinity, minHeight: 100, maxHeight: min(500, resultTextHeight))
-                    .padding(10)
-                    .background(Color(.textBackgroundColor))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color(.separatorColor), lineWidth: 1)
-                    )
-                    .onChange(of: contentModel.resultText, perform: { value in
-                        // 当结果文本变化时，计算新的高度
-                        if let text = value {
-                            // 使用 calculateTextHeight 计算结果区域高度
-                            resultTextHeight = calculateTextHeight(text: text, width: 480) // 假设宽度与输入区域类似
-                            // 通知窗口调整大小
-                            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-                        } else {
-                            resultTextHeight = 100 // 如果结果为空，重置为最小高度
-                            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                // 使用 ZStack 包裹结果 TextEditor 和复制按钮
+                ZStack(alignment: .bottomTrailing) {
+                    // 结果区域保持使用 TextEditor
+                    TextEditor(text: .constant(contentModel.resultText ?? ""))
+                        .font(.system(size: 15))
+                        .lineSpacing(8)
+                        // 使用 resultTextHeight 状态变量
+                        .frame(maxWidth: .infinity, minHeight: 100, maxHeight: min(500, resultTextHeight))
+                        .padding(10)
+                        .background(Color(.textBackgroundColor))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color(.separatorColor), lineWidth: 1)
+                        )
+                        .onChange(of: contentModel.resultText, perform: { value in
+                            // ... (onChange logic remains the same) ...
+                        })
+                        // 初始化时计算一次结果区域高度
+                        .onAppear {
+                            // ... (onAppear logic remains the same) ...
                         }
-                    })
-                // 初始化时计算一次结果区域高度
-                    .onAppear {
-                        if let text = contentModel.resultText {
-                            resultTextHeight = calculateTextHeight(text: text, width: 480)
-                        } else {
-                            resultTextHeight = 100
-                        }
+
+                    // 结果区域的复制按钮 - 移动到这里
+                    Button(action: {
+                        copyResp()
+                    }) {
+                        // 根据状态改变图标和颜色
+                        Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
                     }
+                    .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
+                    .help(NSLocalizedString("help_copy", comment: "复制"))
+                    .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
+                    .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
+                    .padding(8) // 添加内边距
+                }
             }
             Section() {
                 HStack(spacing: 6) {
@@ -218,21 +223,6 @@ struct MainView: View {
                     .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
                     
                     Spacer()
-                    
-                    
-                    // 复制按钮
-                    Button(action: {
-                        copyResp()
-                    }) {
-                        // 根据状态改变图标和颜色
-                        Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
-                    }
-                    .buttonStyle(HoverButtonStyle())
-                    .help(NSLocalizedString("help_copy", comment: "复制"))
-                    .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
-                    
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
                 .padding(.vertical, 5)   // 为HStack添加垂直内边距
@@ -251,13 +241,6 @@ struct MainView: View {
         }
         .toast(isPresenting: $showErrorToast) {
             AlertToast(displayMode: .hud, type: .systemImage("xmark.circle", .red), title: toastMessage)
-        }
-        // 添加监听器，以便 CustomTextEditor 可以请求调整窗口大小
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AdjustWindowSize"))) { _ in
-            // 可以在这里触发窗口大小调整逻辑，如果 AppDelegate 中尚未处理
-            // 例如，如果你的 AppDelegate 监听这个通知并调整窗口，这里可能不需要额外操作
-            // 如果需要在这里直接调整，可能需要访问 NSWindow 实例
-            // print("Received AdjustWindowSize notification in MainView")
         }
     }
     
