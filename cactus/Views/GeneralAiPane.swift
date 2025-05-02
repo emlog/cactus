@@ -46,7 +46,7 @@ struct GeneralAiPane: View {
         guard let provider = settingsModel.defaultProviders[key] else {
             return key
         }
-        return provider.title + " - " + provider.model
+        return provider.title
     }
     
     private func updateSettingsForProvider() {

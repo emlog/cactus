@@ -15,11 +15,11 @@
 "service" = "Service";
 "startup" = "Launch at Startup";
 "shortcut" = "AI Assistant Shortcut";
-"select_service" = "Select AI Service";
+"select_service" = "Select AI Model";
 "free" = "Free";
-"ppinfra" = "Ppinfra Cloud";
-"openRouter" = "OpenRouter";
-"siliconflow" = "SiliconFlow";
+"model_deepseek_v3" = "Deepseek-v3";
+"model_gemini2_flash" = "Gemini-2.0";
+"model_zhipu_glm4" = "Zhipu-GLM-4";
 
 // main
 "pop_text_empty" = "No text available to copy.";

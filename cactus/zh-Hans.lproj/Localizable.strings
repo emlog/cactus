@@ -15,11 +15,11 @@
 "service" = "服务";
 "startup" = "开机自动启动";
 "shortcut" = "AI助手快捷键";
-"select_service" = "选择AI服务";
+"select_service" = "选择AI模型";
 "free" = "免费";
-"ppinfra" = "派欧算力云";
-"openRouter" = "OpenRouter";
-"siliconflow" = "硅基流动";
+"model_deepseek_v3" = "Deepseek-v3";
+"model_gemini2_flash" = "Gemini-2.0";
+"model_zhipu_glm4" = "Zhipu-GLM-4";
 
 // main
 "pop_text_empty" = "没有可复制的内容";

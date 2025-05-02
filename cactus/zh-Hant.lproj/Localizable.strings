@@ -14,12 +14,12 @@
 "general" = "一般";
 "service" = "服務";
 "startup" = "開機自動啟動";
-"shortcut" = "AI 助手快捷鍵";
-"select_service" = "選擇 AI 服務";
+"shortcut" = "AI助手快捷鍵";
+"select_service" = "選擇AI模型";
 "free" = "免費";
-"ppinfra" = "派歐算力雲";
-"openRouter" = "OpenRouter";
-"siliconflow" = "矽基流動";
+"model_deepseek_v3" = "Deepseek-v3";
+"model_gemini2_flash" = "Gemini-2.0";
+"model_zhipu_glm4" = "Zhipu-GLM-4";
 
 // main
 "pop_text_empty" = "沒有可複製的內容";

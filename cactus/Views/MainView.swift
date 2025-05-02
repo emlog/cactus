@@ -115,7 +115,7 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
                     .help(NSLocalizedString("help_copy", comment: "复制"))
                     .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
-
+                    
                     // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
@@ -132,7 +132,7 @@ struct MainView: View {
                         .fill(Color(.controlBackgroundColor))
                 )
                 // 显示当前AI服务
-                Text("\(settings.defaultProviders[settings.selectedProvider]?.title ?? "") - \(settings.defaultProviders[settings.selectedProvider]?.model ?? "")")
+                Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .padding(.vertical, 6)
@@ -293,7 +293,7 @@ struct MainView: View {
     func clearAll() {
         let isInputEmpty = contentModel.text.isEmpty
         let isResultEmpty = contentModel.resultText?.isEmpty ?? true
-    
+        
         if isInputEmpty && isResultEmpty {
             toastMessage = NSLocalizedString("pop_already_cleared", comment: "已清空输入输出")
             showCompleteToast = true

@@ -170,4 +170,17 @@ create-dmg \
 5. 准备提交，可以开始外部测试
 
 
+## 第三方库
+
+### 已使用
+
+- 设置界面 https://github.com/sindresorhus/Settings
+- 吐司提示 https://github.com/elai950/AlertToast
+- 快捷键 https://github.com/sindresorhus/KeyboardShortcuts
+- 开机自动启动 https://github.com/sindresorhus/LaunchAtLogin-Legacy
+
+### 未是用【收藏】
+
+- loading动画 https://github.com/exyte/ActivityIndicatorView
+
 
