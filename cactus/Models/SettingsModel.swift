@@ -46,6 +46,6 @@ class SettingsModel: ObservableObject {
     }
     
     init() {
-        self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "siliconflow"
+        self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
     }
 }
