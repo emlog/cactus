@@ -24,29 +24,6 @@ struct MainView: View {
     var body: some View {
         Form {
             Section() {
-                HStack {
-                    // 显示当前AI服务
-                    Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 8)
-                        .frame(maxWidth: .infinity, alignment: .leading)  // 添加这行使宽度自适应
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color(.controlBackgroundColor))
-                        )
-                }
-                .padding(.horizontal, 8) // 为HStack添加水平内边距
-                .padding(.vertical, 5)   // 为HStack添加垂直内边距
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(Color(.controlBackgroundColor)) // 保持背景一致性
-                )
-            }
-            
-            Section() {
                 ZStack(alignment: .bottomTrailing) {
                     CustomTextEditor(text: $contentModel.text, onCommit: {
                         translateText()
@@ -147,6 +124,9 @@ struct MainView: View {
                             .frame(height: 20)
                             .padding(0)
                     }
+                    
+                    Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
+                        .font(.caption)
                     
                     // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
