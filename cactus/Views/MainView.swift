@@ -28,20 +28,53 @@ struct MainView: View {
     var body: some View {
         Form {
             Section() {
-                // 使用 CustomTextEditor 替换 TextEditor
-                CustomTextEditor(text: $contentModel.text, onCommit: {
-                    // 当按下回车键时，触发翻译
-                    translateText()
-                }, calculatedHeight: $inputTextHeight) // 传递高度绑定
-                .focused($isInputEditorFocused) // 新增：绑定焦点状态
-                .frame(height: inputTextHeight) // 使用状态变量设置高度
-                .padding(0) // CustomTextEditor 内部已处理内边距
-                .background(Color(.textBackgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(.separatorColor), lineWidth: 1)
-                )
+                // 使用 ZStack 包裹 CustomTextEditor 和按钮
+                ZStack(alignment: .bottomTrailing) {
+                    // 使用 CustomTextEditor 替换 TextEditor
+                    CustomTextEditor(text: $contentModel.text, onCommit: {
+                        // 当按下回车键时，触发翻译
+                        translateText()
+                    }, calculatedHeight: $inputTextHeight) // 传递高度绑定
+                    .focused($isInputEditorFocused) // 新增：绑定焦点状态
+                    .frame(height: inputTextHeight) // 使用状态变量设置高度
+                    .padding(0) // CustomTextEditor 内部已处理内边距
+                    .background(Color(.textBackgroundColor))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(.separatorColor), lineWidth: 1)
+                    )
+                    
+                    // 将清除和复制按钮放入 HStack
+                    HStack(spacing: 8) { // 可以调整按钮间距
+                        // 清除按钮 - 移动到这里
+                        Button(action: {
+                            clearAll()
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
+                        .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
+                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true)) // 调整禁用条件
+
+                        // 复制按钮
+                        Button(action: {
+                            copyWriting()
+                        }) {
+                            // 根据状态改变图标和颜色
+                            Image(systemName: showInputCopySuccess ? "checkmark" : "square.on.square")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(showInputCopySuccess ? .green : .secondary) // 成功时绿色
+                        }
+                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle 避免背景
+                        .help(NSLocalizedString("help_copy", comment: "复制"))
+                        .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
+                        .disabled(contentModel.text.isEmpty) // 输入为空时禁用
+                    }
+                    .padding(8) // 为 HStack 添加内边距
+                }
             }
             
             Section() {
@@ -92,7 +125,8 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    // 清除按钮
+                    // 清除按钮 - 从这里移除
+                    /*
                     Button(action: {
                         clearAll()
                     }) {
@@ -103,19 +137,8 @@ struct MainView: View {
                     .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
-                    // 复制按钮
-                    Button(action: {
-                        copyWriting()
-                    }) {
-                        // 根据状态改变图标和颜色
-                        Image(systemName: showInputCopySuccess ? "checkmark" : "square.on.square")
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(showInputCopySuccess ? .green : .secondary) // 成功时绿色
-                    }
-                    .buttonStyle(HoverButtonStyle()) // 应用优化后的样式
-                    .help(NSLocalizedString("help_copy", comment: "复制"))
-                    .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
-                    
+                    */
+
                     // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
@@ -295,8 +318,9 @@ struct MainView: View {
         let isResultEmpty = contentModel.resultText?.isEmpty ?? true
         
         if isInputEmpty && isResultEmpty {
-            toastMessage = NSLocalizedString("pop_already_cleared", comment: "已清空输入输出")
-            showCompleteToast = true
+            // 如果已经为空，则不显示 Toast，避免干扰
+            // toastMessage = NSLocalizedString("pop_already_cleared", comment: "已清空输入输出")
+            // showCompleteToast = true
         } else {
             DispatchQueue.main.async {
                 self.contentModel.text = ""
