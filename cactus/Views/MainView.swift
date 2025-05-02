@@ -28,6 +28,50 @@ struct MainView: View {
     var body: some View {
         Form {
             Section() {
+                HStack {
+                    // pin按钮
+                    Button(action: {
+                        // 先切换状态
+                        isPinned.toggle()
+                        // 使用动画来改变倾斜角度
+                        withAnimation(.easeInOut(duration: 0.2)) { // 可以调整动画时长
+                            pinRotation = isPinned ? 45 : 0 // 置顶时倾斜45度，否则为0度
+                        }
+                        // 发送通知，告知 AppDelegate 切换置顶状态
+                        NotificationCenter.default.post(name: NSNotification.Name("TogglePinState"), object: isPinned)
+                    }) {
+                        Image(systemName: isPinned ? "pin.fill" : "pin")
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(isPinned ? .red : .primary) // 置顶时为红色，否则为默认颜色
+                            .rotationEffect(.degrees(pinRotation)) // 应用倾斜效果
+                    }
+                    .buttonStyle(HoverButtonStyle())
+                    .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
+                    
+                    Spacer()
+                    
+                    // 显示当前AI服务
+                    Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)  // 添加这行使宽度自适应
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color(.controlBackgroundColor))
+                        )
+                }
+                .padding(.horizontal, 8) // 为HStack添加水平内边距
+                .padding(.vertical, 5)   // 为HStack添加垂直内边距
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color(.controlBackgroundColor)) // 保持背景一致性
+                )
+            }
+            
+            Section() {
                 ZStack(alignment: .bottomTrailing) {
                     CustomTextEditor(text: $contentModel.text, onCommit: {
                         translateText()
@@ -144,17 +188,6 @@ struct MainView: View {
                     RoundedRectangle(cornerRadius: 6)
                         .fill(Color(.controlBackgroundColor))
                 )
-                // 显示当前AI服务
-                Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.vertical, 6)
-                    .padding(.horizontal, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)  // 添加这行使宽度自适应
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .fill(Color(.controlBackgroundColor))
-                    )
             }
             
             Section() {
@@ -194,41 +227,10 @@ struct MainView: View {
                     .padding(8) // 添加内边距
                 }
             }
-            Section() {
-                HStack(spacing: 6) {
-                    // pin按钮
-                    Button(action: {
-                        // 先切换状态
-                        isPinned.toggle()
-                        // 使用动画来改变倾斜角度
-                        withAnimation(.easeInOut(duration: 0.2)) { // 可以调整动画时长
-                            pinRotation = isPinned ? 45 : 0 // 置顶时倾斜45度，否则为0度
-                        }
-                        // 发送通知，告知 AppDelegate 切换置顶状态
-                        NotificationCenter.default.post(name: NSNotification.Name("TogglePinState"), object: isPinned)
-                    }) {
-                        Image(systemName: isPinned ? "pin.fill" : "pin")
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(isPinned ? .red : .primary) // 置顶时为红色，否则为默认颜色
-                            .rotationEffect(.degrees(pinRotation)) // 应用倾斜效果
-                    }
-                    .buttonStyle(HoverButtonStyle())
-                    .help(isPinned ? NSLocalizedString("help_unpin", comment: "取消置顶") : NSLocalizedString("help_pin", comment: "置顶窗口"))
-                    
-                    Spacer()
-                }
-                .padding(.horizontal, 8) // 为HStack添加水平内边距
-                .padding(.vertical, 5)   // 为HStack添加垂直内边距
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(Color(.controlBackgroundColor)) // 保持背景一致性
-                )
-            }
         }
-        .padding(10)
-        // 修改：调整最小高度以适应内容
-        .frame(minWidth: 500, minHeight: 400) // 稍微增加最小高度
+        .padding(.horizontal, 10)
+        .padding(.vertical, 0)
+        .frame(minWidth: 500, minHeight: 400) // 调整最小高度以适应内容
         .toast(isPresenting: $showCompleteToast) {
             AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
         }
