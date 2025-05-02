@@ -58,7 +58,7 @@ struct MainView: View {
                         .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
                         .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true)) // 调整禁用条件
-
+                        
                         // 复制按钮
                         Button(action: {
                             copyWriting()
@@ -125,20 +125,14 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    // 清除按钮 - 从这里移除
-                    /*
-                    Button(action: {
-                        clearAll()
-                    }) {
-                        Image(systemName: "xmark.circle")
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.secondary)
+                    if contentModel.isProcessing {
+                        // 显示loading动画
+                        ProgressView()
+                            .scaleEffect(0.5)
+                            .frame(height: 20)
+                            .padding(0)
                     }
-                    .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
-                    .buttonStyle(HoverButtonStyle())
-                    .disabled(contentModel.isProcessing)
-                    */
-
+                    
                     // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
@@ -225,26 +219,20 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    if contentModel.isProcessing {
-                        // 显示loading动画
-                        ProgressView()
-                            .scaleEffect(0.5)
-                            .frame(height: 20)
-                            .padding(0)
-                    } else {
-                        // 复制按钮
-                        Button(action: {
-                            copyResp()
-                        }) {
-                            // 根据状态改变图标和颜色
-                            Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
-                                .frame(width: 15, height: 15)
-                                .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
-                        }
-                        .buttonStyle(HoverButtonStyle())
-                        .help(NSLocalizedString("help_copy", comment: "复制"))
-                        .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
+                    
+                    // 复制按钮
+                    Button(action: {
+                        copyResp()
+                    }) {
+                        // 根据状态改变图标和颜色
+                        Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
                     }
+                    .buttonStyle(HoverButtonStyle())
+                    .help(NSLocalizedString("help_copy", comment: "复制"))
+                    .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
+                    
                 }
                 .padding(.horizontal, 8) // 为HStack添加水平内边距
                 .padding(.vertical, 5)   // 为HStack添加垂直内边距
@@ -487,7 +475,7 @@ struct MainView: View {
         
         contentModel.isProcessing = true // 开始处理
         contentModel.resultText = "" // 清空旧结果
-
+        
         let aiService = AiService() // 统一变量命名规范
         let fullPrompt = promptPrefix + "\n\n" + contentModel.text
         
