@@ -65,7 +65,8 @@ struct MainView: View {
                         .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
                         .disabled(contentModel.text.isEmpty) // 输入为空时禁用
                     }
-                    .padding(8)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 10)
                 }
             }
             
@@ -184,7 +185,8 @@ struct MainView: View {
                     .help(NSLocalizedString("help_copy", comment: "复制"))
                     .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
                     .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
-                    .padding(8) // 添加内边距
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 10)
                 }
             }
         }
