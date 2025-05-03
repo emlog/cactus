@@ -32,7 +32,7 @@ struct MainView: View {
                     .frame(height: inputTextHeight) // 使用状态变量设置高度
                     // 修改：为按钮区域添加底部内边距
                     .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
-                    .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
+                    .padding(.horizontal, 0) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
                     .padding(.top, 5)        // 保持顶部内边距为0
                     .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -157,7 +157,7 @@ struct MainView: View {
                         .frame(maxWidth: .infinity, minHeight: 100, maxHeight: resultTextHeight)
                         .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
                         .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
-                        .padding(.top, 5)        // 保持顶部内边距为0
+                        .padding(.top, 10)        // 保持顶部内边距为0
                         .background(Color(.textBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
