@@ -15,10 +15,18 @@ struct GeneralSettingsPane: View {
                 }
             }
             
-            Settings.Section(label: { Text(NSLocalizedString("shortcut", comment: "AI助手快捷键")) }) {
-                // Use the defined KeyboardShortcuts.Name
+            Settings.Section(label: { Text(NSLocalizedString("shortcut_translate", comment: "选中翻译快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcut)
-                    .help(Text(NSLocalizedString("shortcut", comment: "打开AI助手的快捷键")))
+                Text(NSLocalizedString("shortcut_translate_description", comment: "选中要翻译的文字，按下快捷键快速翻译"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Settings.Section(label: { Text(NSLocalizedString("shortcut_summary", comment: "总结摘要快捷键")) }) {
+                KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutSummary)
+                Text(NSLocalizedString("shortcut_translate_summary", comment: "选中要总结的内容，按下快捷键总结摘要"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
     }
@@ -26,5 +34,5 @@ struct GeneralSettingsPane: View {
 
 #Preview {
     GeneralSettingsPane()
-        .environment(\.locale, .init(identifier: "en"))
+        .environment(\.locale, .init(identifier: "zh-Hans")) // 切换为中文预览
 }

@@ -12,6 +12,12 @@ import Settings
 import Foundation
 import ApplicationServices
 
+// 新增：定义操作类型
+enum ActionType {
+    case translate
+    case summarize
+}
+
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
@@ -37,19 +43,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 创建菜单
             let menu = NSMenu()
             
-            // 获取当前快捷键
-            let (keyEquivalent, modifierMask) = getCurrentShortcutForMenu()
-            
+            // 获取当前快捷键 (这部分可能需要调整，如果菜单快捷键和全局快捷键不一致)
+            let (keyEquivalent, modifierMask) = getCurrentShortcutForMenu() // 假设这个函数能获取合适的显示快捷键
+
             let translateMenuItem = NSMenuItem(
-                title: NSLocalizedString("main", comment: "AI助手"),
-                action: #selector(openMain),
-                keyEquivalent: keyEquivalent
+                title: NSLocalizedString("translate", comment: "选中翻译"),
+                action: #selector(openMainTranslateAction), // 修改 action
+                keyEquivalent: keyEquivalent // 考虑是否用 SettingsModel.aiShortcut.keyEquivalent
             )
-            translateMenuItem.keyEquivalentModifierMask = modifierMask
-            translateMenuItem.image = NSImage(systemSymbolName: "shareplay", accessibilityDescription: nil) // 添加地球图标
+            translateMenuItem.keyEquivalentModifierMask = modifierMask // 考虑是否用 SettingsModel.aiShortcut.modifiers
+            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
             menu.addItem(translateMenuItem)
+
+            let summaryMenuItem = NSMenuItem(
+                title: NSLocalizedString("summary", comment: "总结摘要"),
+                action: #selector(openMainSummaryAction), // 修改 action
+                keyEquivalent: "" // 通常全局快捷键不在菜单项上重复显示，或者显示不同的快捷键
+            )
+            // summaryMenuItem.keyEquivalentModifierMask = modifierMask // 同上
+            summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
+            menu.addItem(summaryMenuItem)
             
             menu.addItem(NSMenuItem.separator())
+            
             menu.addItem(NSMenuItem(
                 title: NSLocalizedString("setting", comment: "偏好设置"),
                 action: #selector(openPreferences),
@@ -60,7 +76,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 action: #selector(openAbout),
                 keyEquivalent: ""
             ))
+            
             menu.addItem(NSMenuItem.separator())
+            
             menu.addItem(NSMenuItem(
                 title: NSLocalizedString("quit", comment: "退出"),
                 action: #selector(NSApplication.terminate(_:)),
@@ -150,7 +168,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Register the keyboard shortcut
         KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcut) { [weak self] in
             DispatchQueue.main.async {
-                self?.openMain()
+                self?.openMain(action: .translate) // 指定翻译操作
+            }
+        }
+        
+        // Register the keyboard shortcut for summary
+        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutSummary) { [weak self] in
+            DispatchQueue.main.async {
+                self?.openMain(action: .summarize) // 指定总结操作
             }
         }
     }
@@ -216,26 +241,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    // 主窗口
-    @objc func openMain() {
+    // 主窗口 - 修改为接受 ActionType
+    func openMain(action: ActionType = .translate) { // 添加 action 参数，默认为 translate
         // 1. 先尝试获取剪贴板内容（这会触发模拟复制）
-        checkAccessibilityPermissionAndGetClipboard { [weak self] success in
-            // 2. 仅在成功获取剪贴板内容 (success == true) 时，激活并显示窗口
+        checkAccessibilityPermissionAndGetClipboard(action: action) { [weak self] success in // 传递 action
             // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                
+
                 if success {
                     // 确保窗口存在
                     guard let window = self.mainWindow else { return }
-                    
+
                     // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
                     if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
                         window.setFrameOrigin(pinnedOrigin)
                     } else {
                         window.center() // 只有在非置顶或首次置顶时才居中
                     }
-                    
+
                     // 确保窗口在最上层
                     window.makeKeyAndOrderFront(nil)
                     window.orderFrontRegardless()
@@ -250,9 +274,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
     }
-    
-    // 检查并提醒用户开启：辅助功能权限
-    private func checkAccessibilityPermissionAndGetClipboard(completion: @escaping (Bool) -> Void) {
+
+    // 新增：菜单项的 Action 方法
+    @objc private func openMainTranslateAction() {
+        openMain(action: .translate)
+    }
+
+    @objc private func openMainSummaryAction() {
+        openMain(action: .summarize)
+    }
+
+
+    // 检查并提醒用户开启：辅助功能权限 - 修改为接受 ActionType
+    private func checkAccessibilityPermissionAndGetClipboard(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
         // 检查辅助功能权限
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: true]
@@ -260,10 +294,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         if accessEnabled {
             // 如果有权限，尝试获取剪贴板内容
-            // 无论 getClipboardContent 内部是成功(true)还是失败(false)获取内容
-            // 只要权限是开启的，我们就调用原始的 completion(true)，
-            // 以便 openMain 函数总是能显示窗口。
-            getClipboardContent { _ /* contentRetrievedSuccess - 我们忽略这个内部结果 */ in
+            getClipboardContent(action: action) { _ /* contentRetrievedSuccess */ in // 传递 action
                 // 因为辅助权限已开启，所以调用 completion(true) 来触发主窗口显示
                 completion(true)
             }
@@ -282,37 +313,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 if response == .alertFirstButtonReturn {
                     // 打开辅助功能设置
                     NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
-                    // 用户点击了“打开设置”，此时不调用 completion，避免触发 openMain 中的窗口显示逻辑
+                    // 用户点击了“打开设置”，此时不调用 completion
                 } else {
-                    // 用户点击了“取消”或其他方式关闭了弹窗
-                    completion(false) // 明确告知操作未成功（因为权限问题），且用户未去设置
+                    // 用户点击了“取消”
+                    completion(false) // 明确告知操作未成功
                 }
             }
         }
     }
-    
-    // 按下快捷键复制选中内容到剪贴板、并调用翻译功能
-    /*
-     你遇到的问题——即使开启了辅助功能权限， CGEvent 模拟复制依然无效——通常 不是 因为缺少苹果的特殊沙盒例外授权（Temporary Exception Entitlement）。
-     CGEvent 模拟键盘事件（如 Command+C）的核心依赖是 辅助功能权限 ，而不是沙盒例外授权。沙盒例外授权主要用于突破沙盒对特定资源（如跨应用通信、访问特定文件区域等）的访问限制。只要用户授予了辅助功能权限，你的应用原则上就应该能够通过 CGEvent 发送系统级的键盘事件。
-     那么为什么它可能不起作用呢？最常见的原因是 焦点问题 和 时序问题 ：
-     1. 焦点丢失 ：这是最可能的原因。在你的 `openMain` 方法中，你首先调用了 NSApp.activate(ignoringOtherApps: true) 来激活你的应用窗口。这会导致你的应用（Cactus）成为当前活动的应用，获得键盘焦点。紧接着，在 `checkAccessibilityPermissionAndGetClipboard` -> `getClipboardContent` 中调用的 `simulateCopy` 发送的 Command+C 事件，实际上是发送给了 你自己的应用 （Cactus），而不是用户之前正在使用的、选中文本的那个应用。自然，如果你的应用当前没有可选中的文本，剪贴板内容就不会改变。
-     2. 时序问题 ：虽然你加入了一些延迟 ( DispatchQueue.main.asyncAfter , usleep )，但系统处理焦点切换和事件响应的时间可能不确定。即使焦点理论上应该在其他应用，过早或过晚地发送事件或读取剪贴板都可能导致失败。
-     解决方案建议：调整执行顺序：先模拟复制操作， 然后 再激活你的应用窗口并读取剪贴板。
-     */
-    private func getClipboardContent(completion: @escaping (Bool) -> Void) {
+
+    // 按下快捷键复制选中内容到剪贴板、并调用相应功能 - 修改为接受 ActionType
+    private func getClipboardContent(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
-        
-        // 使用模拟复制功能获取选中文本，模拟复制发生在这里，此时焦点理论上还在原应用
+
+        // 使用模拟复制功能获取选中文本
         simulateCopy()
-        
+
         // 给系统一点时间处理复制操作，然后读取剪贴板
-        // 这个延迟仍然是必要的，但要确保它在窗口激活之前完成
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // 使用 0.2 秒延迟
             guard let mainViewController = self.mainWindow?.contentViewController as? NSHostingController<MainView> else {
-                // 如果无法获取 mainViewController，也恢复剪贴板
                 if let originalContent = originalContent {
                     self.copyToClipBoard(textToCopy: originalContent)
                 }
@@ -322,25 +343,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let mainView = mainViewController.rootView
             let newContent = pasteboard.string(forType: .string)
             var success = false
-            
-            // 如果有新内容，且与原内容不同（避免误触发）
+
+            // 如果有新内容，且与原内容不同
             if let newContent = newContent, !newContent.isEmpty, newContent != originalContent {
                 mainView.fillText(newContent)
-                
-                // 添加延迟以确保文本已填充 (如果 translateText 依赖于 fillText 完成后的状态)
-                // 如果 fillText 内部已经是 async 更新，这个延迟可能不需要或者需要调整
+
+                // 添加延迟以确保文本已填充
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    // 调用翻译功能
-                    mainView.translateText()
+                    // 根据 action 调用不同的方法
+                    switch action {
+                    case .translate:
+                        mainView.translateText()
+                    case .summarize:
+                        mainView.summaryText() // 调用总结方法
+                    }
                 }
                 success = true
             }
-            
+
             // 恢复原始剪贴板内容
             if let originalContent = originalContent {
                 self.copyToClipBoard(textToCopy: originalContent)
             }
-            
+
             // 调用完成回调
             completion(success)
         }

@@ -5,16 +5,22 @@
  */
 
 // Status Bar Menu
-"main" = "AI助手";
+"main" = "打开AI助手";
 "setting" = "偏好设置";
 "about" = "关于";
 "quit" = "退出";
+
+"translate" = "选中翻译";
+"summary" = "总结摘要";
 
 // setting
 "general" = "通用";
 "service" = "服务";
 "startup" = "开机自动启动";
-"shortcut" = "AI助手快捷键";
+"shortcut_translate" = "选中翻译快捷键";
+"shortcut_translate_description" = "选中要翻译的文本，按下快捷键快速翻译";
+"shortcut_summary" = "总结摘要快捷键";
+"shortcut_translate_summary" = "选中要总结的内容，按下快捷键总结摘要";
 "select_service" = "选择AI模型";
 "free" = "免费";
 "model_deepseek_v3" = "Deepseek-v3";

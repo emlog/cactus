@@ -13,8 +13,8 @@ class SettingsModel: ObservableObject {
     static let shared = SettingsModel()
     
     // 快捷键
-    // {{ Set default shortcut to Option + J }}
     static let aiShortcut = KeyboardShortcuts.Name("aiShortcut", default: .init(.x, modifiers: [.option]))
+    static let aiShortcutSummary = KeyboardShortcuts.Name("aiShortcutSummary", default: .init(.s, modifiers: [.option]))
     
     // 内置的AI服务
     public var defaultProviders: [String: ProviderSettings] = [
