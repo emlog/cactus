@@ -5,8 +5,8 @@ struct CustomTextEditor: NSViewRepresentable {
     @Binding var text: String
     var onCommit: () -> Void // 回车键提交时的回调
     @Binding var calculatedHeight: CGFloat // 用于传递计算出的高度
-    let minHeight: CGFloat = 120 // 最小高度
-    let maxHeight: CGFloat = 200 // 最大高度
+    let minHeight: CGFloat = 100 // 最小高度
+    let maxHeight: CGFloat = 300 // 最大高度
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)

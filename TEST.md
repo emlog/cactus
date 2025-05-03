@@ -25,6 +25,15 @@ Hola mundo, aquí voy.
 안녕 세상아, 내가 왔어.
 
 
+### 长文测试
+Google on Friday faced a demand by the US government to break up its hugely profitable ad technology business. The request came after a judge found the tech giant was commanding an illegal monopoly for the second time in less than a year.
+“We have a defendant who has found ways to defy” the law, US government lawyer Julia Tarver Wood told a federal court in Virginia, as she urged the judge to dismiss Google’s assurance that it would change its behavior. “Leaving a recidivist monopolist” intact was not appropriate to solve the issue, she added.
+
+The demand is the second such request by the US government, which is also calling for the divestment of the company’s Chrome browser in a separate case over Google’s world-leading search engine business.
+
+The US government specifically alleged that Google controls the market for publishing banner ads on websites, including those of many creators and small news providers.
+
+
 ## chat
 
 我是一名大学生，我假期想去美国旧金山旅游，请给我制定一个3天的旅行计划。

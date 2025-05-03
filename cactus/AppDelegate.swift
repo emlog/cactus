@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private func initializeWindows() {
         // 初始化主窗口
         mainWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 400),
+            contentRect: NSRect(x: 0, y: 0, width: 500, height: 600),
             styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
