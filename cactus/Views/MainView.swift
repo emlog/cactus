@@ -30,7 +30,10 @@ struct MainView: View {
                     }, calculatedHeight: $inputTextHeight) // 传递高度绑定
                     .focused($isInputEditorFocused) // 新增：绑定焦点状态
                     .frame(height: inputTextHeight) // 使用状态变量设置高度
-                    .padding(0) // CustomTextEditor 内部已处理内边距
+                    // 修改：为按钮区域添加底部内边距
+                    .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
+                    .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
+                    .padding(.top, 5)        // 保持顶部内边距为0
                     .background(Color(.textBackgroundColor))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay(
@@ -66,7 +69,7 @@ struct MainView: View {
                         .disabled(contentModel.text.isEmpty) // 输入为空时禁用
                     }
                     .padding(.horizontal, 15)
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 5) // 按钮区域的垂直内边距
                 }
             }
             
@@ -152,7 +155,9 @@ struct MainView: View {
                         .font(.system(size: 15))
                         .lineSpacing(8)
                         .frame(maxWidth: .infinity, minHeight: 100, maxHeight: resultTextHeight)
-                        .padding(10)
+                        .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
+                        .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
+                        .padding(.top, 5)        // 保持顶部内边距为0
                         .background(Color(.textBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
@@ -186,7 +191,7 @@ struct MainView: View {
                     .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
                     .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
                     .padding(.horizontal, 15)
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 5)
                 }
             }
         }
