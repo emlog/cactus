@@ -44,23 +44,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let menu = NSMenu()
             
             // 获取当前快捷键 (这部分可能需要调整，如果菜单快捷键和全局快捷键不一致)
-            let (keyEquivalent, modifierMask) = getCurrentShortcutForMenu() // 假设这个函数能获取合适的显示快捷键
+            let (translateKeyEquivalent, translateModifierMask) = getShortcutForMenu(for: SettingsModel.aiShortcut) // 假设这个函数能获取合适的显示快捷键
 
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("translate", comment: "选中翻译"),
                 action: #selector(openMainTranslateAction), // 修改 action
-                keyEquivalent: keyEquivalent // 考虑是否用 SettingsModel.aiShortcut.keyEquivalent
+                keyEquivalent: translateKeyEquivalent // 考虑是否用 SettingsModel.aiShortcut.keyEquivalent
             )
-            translateMenuItem.keyEquivalentModifierMask = modifierMask // 考虑是否用 SettingsModel.aiShortcut.modifiers
+            translateMenuItem.keyEquivalentModifierMask = translateModifierMask // 考虑是否用 SettingsModel.aiShortcut.modifiers
             translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
             menu.addItem(translateMenuItem)
-
+            
+            
+            let (summaryKeyEquivalent, summaryModifierMask) = getShortcutForMenu(for: SettingsModel.aiShortcutSummary) // 假设这个函数能获取合适的显示快捷键
             let summaryMenuItem = NSMenuItem(
                 title: NSLocalizedString("summary", comment: "总结摘要"),
                 action: #selector(openMainSummaryAction), // 修改 action
-                keyEquivalent: "" // 通常全局快捷键不在菜单项上重复显示，或者显示不同的快捷键
+                keyEquivalent: summaryKeyEquivalent
             )
-            // summaryMenuItem.keyEquivalentModifierMask = modifierMask // 同上
+            summaryMenuItem.keyEquivalentModifierMask = summaryModifierMask
             summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
             menu.addItem(summaryMenuItem)
             
@@ -472,8 +474,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     
     // 获取当前设置的快捷键，用于菜单展示
-    private func getCurrentShortcutForMenu() -> (String, NSEvent.ModifierFlags) {
-        if let shortcut = KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcut) {
+    private func getShortcutForMenu(for name: KeyboardShortcuts.Name) -> (keyEquivalent: String, modifierMask: NSEvent.ModifierFlags) {
+        if let shortcut = KeyboardShortcuts.getShortcut(for: name) {
             // Manually map KeyboardShortcuts.Shortcut.Key to String
             let keyEquivalent: String
             switch shortcut.key {
