@@ -26,9 +26,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
     private var pinButton: NSButton? // 新增：持有 pin 按钮的引用
-
+    
     private var settingsWindowController: SettingsWindowController?
-
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 创建状态栏图标
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -43,27 +43,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 创建菜单
             let menu = NSMenu()
             
-            // 获取当前快捷键 (这部分可能需要调整，如果菜单快捷键和全局快捷键不一致)
-            let (translateKeyEquivalent, translateModifierMask) = getShortcutForMenu(for: SettingsModel.aiShortcut) // 假设这个函数能获取合适的显示快捷键
-
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("translate", comment: "选中翻译"),
-                action: #selector(openMainTranslateAction), // 修改 action
-                keyEquivalent: translateKeyEquivalent // 考虑是否用 SettingsModel.aiShortcut.keyEquivalent
+                action: #selector(openMainTranslateAction),
+                keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
             )
-            translateMenuItem.keyEquivalentModifierMask = translateModifierMask // 考虑是否用 SettingsModel.aiShortcut.modifiers
             translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
+            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
             menu.addItem(translateMenuItem)
             
-            
-            let (summaryKeyEquivalent, summaryModifierMask) = getShortcutForMenu(for: SettingsModel.aiShortcutSummary) // 假设这个函数能获取合适的显示快捷键
             let summaryMenuItem = NSMenuItem(
                 title: NSLocalizedString("summary", comment: "总结摘要"),
-                action: #selector(openMainSummaryAction), // 修改 action
-                keyEquivalent: summaryKeyEquivalent
+                action: #selector(openMainSummaryAction),
+                keyEquivalent: ""
             )
-            summaryMenuItem.keyEquivalentModifierMask = summaryModifierMask
             summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
+            summaryMenuItem.setShortcut(for: SettingsModel.aiShortcutSummary)
             menu.addItem(summaryMenuItem)
             
             menu.addItem(NSMenuItem.separator())
@@ -112,17 +107,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         mainWindow?.level = .floating
         mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary]
         mainWindow?.level = NSWindow.Level.statusBar
-
+        
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
         mainWindow?.contentViewController = hostingController
         mainWindow?.isReleasedWhenClosed = false
         mainWindow?.delegate = self
-
+        
         // 动态调整窗口高度 - 保持不变
         let contentSize = hostingController.view.intrinsicContentSize
         mainWindow?.setContentSize(contentSize)
-
+        
         // 添加通知监听器来响应文本高度变化 - 保持不变
         NotificationCenter.default.addObserver(
             self,
@@ -130,11 +125,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             name: NSNotification.Name("AdjustWindowSize"),
             object: nil
         )
-
+        
         // --- 新增：添加 Pin 按钮到标题栏 ---
         let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
         titlebarAccessoryViewController.layoutAttribute = .trailing // 放在右侧
-
+        
         pinButton = NSButton()
         pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
         pinButton?.bezelStyle = .texturedRounded // 或者 .regularSquare, .shadowlessSquare
@@ -145,12 +140,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
         pinButton?.sendAction(on: .leftMouseDown) // 确保单击触发
         pinButton?.frame = NSRect(x: 0, y: 0, width: 30, height: 24) // 调整大小以适应标题栏
-
+        
         titlebarAccessoryViewController.view = pinButton! // 将按钮设置为视图控制器的视图
         mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
         // --- 结束新增 ---
-
-
+        
+        
         // 初始化关于窗口 - 保持不变
         aboutWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
@@ -235,7 +230,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     
     // 关于窗口
-    @objc func openAbout() {        
+    @objc func openAbout() {
         // 调整窗口位置到当前屏幕的中心
         aboutWindow?.center()
         aboutWindow?.makeKeyAndOrderFront(nil)
@@ -250,18 +245,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
             DispatchQueue.main.async {
                 guard let self = self else { return }
-
+                
                 if success {
                     // 确保窗口存在
                     guard let window = self.mainWindow else { return }
-
+                    
                     // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
                     if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
                         window.setFrameOrigin(pinnedOrigin)
                     } else {
                         window.center() // 只有在非置顶或首次置顶时才居中
                     }
-
+                    
                     // 确保窗口在最上层
                     window.makeKeyAndOrderFront(nil)
                     window.orderFrontRegardless()
@@ -276,17 +271,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
     }
-
+    
     // 新增：菜单项的 Action 方法
     @objc private func openMainTranslateAction() {
         openMain(action: .translate)
     }
-
+    
     @objc private func openMainSummaryAction() {
         openMain(action: .summarize)
     }
-
-
+    
+    
     // 检查并提醒用户开启：辅助功能权限 - 修改为接受 ActionType
     private func checkAccessibilityPermissionAndGetClipboard(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
         // 检查辅助功能权限
@@ -323,16 +318,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
     }
-
+    
     // 按下快捷键复制选中内容到剪贴板、并调用相应功能 - 修改为接受 ActionType
     private func getClipboardContent(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
         let originalContent = pasteboard.string(forType: .string)
-
+        
         // 使用模拟复制功能获取选中文本
         simulateCopy()
-
+        
         // 给系统一点时间处理复制操作，然后读取剪贴板
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // 使用 0.2 秒延迟
             guard let mainViewController = self.mainWindow?.contentViewController as? NSHostingController<MainView> else {
@@ -345,11 +340,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let mainView = mainViewController.rootView
             let newContent = pasteboard.string(forType: .string)
             var success = false
-
+            
             // 如果有新内容，且与原内容不同
             if let newContent = newContent, !newContent.isEmpty, newContent != originalContent {
                 mainView.fillText(newContent)
-
+                
                 // 添加延迟以确保文本已填充
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // 根据 action 调用不同的方法
@@ -362,12 +357,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 }
                 success = true
             }
-
+            
             // 恢复原始剪贴板内容
             if let originalContent = originalContent {
                 self.copyToClipBoard(textToCopy: originalContent)
             }
-
+            
             // 调用完成回调
             completion(success)
         }
@@ -411,47 +406,47 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         pasteBoard.setString(textToCopy, forType: .string)
     }
     
-    // Pin 按钮的 Action 方法 
+    // Pin 按钮的 Action 方法
     @objc private func pinButtonTapped() {
         isMainWindowPinned.toggle()
         updatePinState()
     }
-
+    
     // 更新 Pin 状态和按钮外观的辅助方法
     private func updatePinState() {
         guard let window = mainWindow else { return }
-
+        
         if isMainWindowPinned {
             // 钉住窗口
             window.level = .floating // 确保是浮动级别
             window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary, .ignoresCycle] // 添加 ignoresCycle 防止被 Command+` 切换掉
             // 存储当前位置
             pinnedWindowOrigin = window.frame.origin
-
+            
             // 更新按钮外观
             pinButton?.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: NSLocalizedString("help_unpin", comment: "取消置顶"))
             pinButton?.contentTintColor = .red // 设置图标颜色为红色
             pinButton?.toolTip = NSLocalizedString("help_unpin", comment: "取消置顶")
-
+            
         } else {
             // 取消钉住
             window.level = .normal // 恢复正常级别
             window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary] // 移除 ignoresCycle
             // 清除存储的位置
             pinnedWindowOrigin = nil
-
+            
             // 更新按钮外观
             pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
             pinButton?.contentTintColor = nil // 恢复默认颜色
             pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
-
+            
             // 如果窗口当前不是 key window，则关闭它
             if !window.isKeyWindow {
-                 window.close()
+                window.close()
             }
         }
     }
-
+    
     // 当窗口被pin在一个固定位置的时候，按下快捷键 窗口位置保持不变。
     // 实现 NSWindowDelegate 的 windowDidMove 方法
     func windowDidMove(_ notification: Notification) {
@@ -471,66 +466,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 window.close()
             }
         }
-    }
-    
-    // 获取当前设置的快捷键，用于菜单展示
-    private func getShortcutForMenu(for name: KeyboardShortcuts.Name) -> (keyEquivalent: String, modifierMask: NSEvent.ModifierFlags) {
-        if let shortcut = KeyboardShortcuts.getShortcut(for: name) {
-            // Manually map KeyboardShortcuts.Shortcut.Key to String
-            let keyEquivalent: String
-            switch shortcut.key {
-            case .a: keyEquivalent = "a"
-            case .b: keyEquivalent = "b"
-            case .c: keyEquivalent = "c"
-            case .d: keyEquivalent = "d"
-            case .e: keyEquivalent = "e"
-            case .f: keyEquivalent = "f"
-            case .g: keyEquivalent = "g"
-            case .h: keyEquivalent = "h"
-            case .i: keyEquivalent = "i"
-            case .j: keyEquivalent = "j"
-            case .k: keyEquivalent = "k"
-            case .l: keyEquivalent = "l"
-            case .m: keyEquivalent = "m"
-            case .n: keyEquivalent = "n"
-            case .o: keyEquivalent = "o"
-            case .p: keyEquivalent = "p"
-            case .q: keyEquivalent = "q"
-            case .r: keyEquivalent = "r"
-            case .s: keyEquivalent = "s"
-            case .t: keyEquivalent = "t"
-            case .u: keyEquivalent = "u"
-            case .v: keyEquivalent = "v"
-            case .w: keyEquivalent = "w"
-            case .x: keyEquivalent = "x"
-            case .y: keyEquivalent = "y"
-            case .z: keyEquivalent = "z"
-            case .zero: keyEquivalent = "0"
-            case .one: keyEquivalent = "1"
-            case .two: keyEquivalent = "2"
-            case .three: keyEquivalent = "3"
-            case .four: keyEquivalent = "4"
-            case .five: keyEquivalent = "5"
-            case .six: keyEquivalent = "6"
-            case .seven: keyEquivalent = "7"
-            case .eight: keyEquivalent = "8"
-            case .nine: keyEquivalent = "9"
-            case .return: keyEquivalent = "\r"
-            case .space: keyEquivalent = " "
-            case .tab: keyEquivalent = "\t"
-            case .delete: keyEquivalent = "\u{8}"
-            case .escape: keyEquivalent = "\u{1b}"
-            default: keyEquivalent = "" // Add more cases as needed
-            }
-            
-            var modifierMask: NSEvent.ModifierFlags = []
-            if shortcut.modifiers.contains(.command) { modifierMask.insert(.command) }
-            if shortcut.modifiers.contains(.option) { modifierMask.insert(.option) }
-            if shortcut.modifiers.contains(.shift) { modifierMask.insert(.shift) }
-            if shortcut.modifiers.contains(.control) { modifierMask.insert(.control) }
-            return (keyEquivalent, modifierMask)
-        }
-        // Default value (e.g., Option+X)
-        return ("x", [.option])
     }
 }
