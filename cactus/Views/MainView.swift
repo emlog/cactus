@@ -414,16 +414,22 @@ struct MainView: View {
             return
         }
         
-        contentModel.isProcessing = true // 开始处理
-        contentModel.resultText = "" // 清空旧结果
+        contentModel.isProcessing = true
+        contentModel.resultText = ""
         
-        let aiService = AiService() // 统一变量命名规范
+        let aiService = AiService()
         let fullPrompt = promptPrefix + "\n\n" + contentModel.text
         
         DispatchQueue.global(qos: .userInitiated).async {
-            aiService.chat(text: fullPrompt) { // 使用正确的变量名
+            aiService.chat(text: fullPrompt) {
                 DispatchQueue.main.async {
-                    contentModel.isProcessing = false // 修改：使用 contentModel.isProcessing
+                    contentModel.isProcessing = false
+                }
+            } onError: { errorMessage in // 错误处理回调
+                DispatchQueue.main.async {
+                    self.toastMessage = errorMessage
+                    self.showErrorToast = true
+                    contentModel.isProcessing = false
                 }
             }
         }

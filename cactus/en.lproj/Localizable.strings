@@ -54,3 +54,7 @@
 "website" = "Website";
 "apptitle" = "Cactus AI Assistant";
 "version" = "Version";
+
+// error
+"error_invalid_config" = "System error, AI service configuration error";
+"error_request_failed" = "Request failed, switch to another AI model or check the network.";

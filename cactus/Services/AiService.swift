@@ -3,12 +3,19 @@ import Foundation
 class AiService: NSObject, URLSessionDataDelegate {
     private var fullContent = ""
     private var buffer = Data()
-    
-    func chat(text: String, completion: (() -> Void)? = nil) {
+    private var completionHandler: (() -> Void)?
+    private var errorHandler: ((String) -> Void)? // 新增：错误处理回调
+
+    func chat(text: String, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) { // 新增 onError 参数
         let settings = SettingsModel.shared
         guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
               let url = URL(string: providerSettings.baseURL) else {
-            completion?()  // 如果URL无效，立即调用完成回调
+            // 如果 URL 或配置无效，也应该触发错误回调
+            let errorMessage = NSLocalizedString("error_invalid_config", comment: "AI 服务配置无效")
+            DispatchQueue.main.async {
+                onError?(errorMessage) // 在主线程调用错误回调
+                completion?() // 确保完成回调也被调用
+            }
             return
         }
         
@@ -41,16 +48,15 @@ class AiService: NSObject, URLSessionDataDelegate {
         }
         fullContent = ""
         buffer = Data()
-        
+
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         let task = session.dataTask(with: request)
-        
+
         self.completionHandler = completion
-        
+        self.errorHandler = onError // 保存错误回调
+
         task.resume()
     }
-    
-    private var completionHandler: (() -> Void)?
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         buffer.append(data)
@@ -105,13 +111,19 @@ class AiService: NSObject, URLSessionDataDelegate {
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let error = error {
-            print("请求错误: \(error.localizedDescription)")
-        }
-        
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { // 确保在主线程执行 UI 相关操作和回调
+            if let error = error {
+                print("请求错误: \(error.localizedDescription)")
+                // 调用错误回调，传递友好的错误信息
+                let friendlyErrorMessage = NSLocalizedString("error_request_failed", comment: "请求失败，请切换其他AI模型或检查网络")
+                self.errorHandler?(friendlyErrorMessage)
+            }
+
+            // 确保完成回调总是被调用，无论成功还是失败
             self.completionHandler?()
-            self.completionHandler = nil  // 清除回调引用
+            // 清除回调引用，防止循环引用
+            self.completionHandler = nil
+            self.errorHandler = nil
         }
         // 可以在这里处理 buffer 中可能残留的最后一部分数据，虽然对于 SSE [DONE] 标记来说通常不需要
         if !buffer.isEmpty {
