@@ -5,52 +5,52 @@
  */
 
 // Status Bar Menu
-"main" = "AI 助手";
+"main" = "AI助手";
 "setting" = "偏好設定";
 "about" = "關於";
-"quit" = "退出";
+"quit" = "結束";
 
-"translate" = "选中翻译";
-"summary" = "总结摘要";
+"translate" = "翻譯所選文字";
+"summary" = "製作摘要";
 
-// setting
+// Setting
 "general" = "一般";
 "service" = "服務";
-"startup" = "開機自動啟動";
-"shortcut_translate" = "选中翻译快捷键";
-"shortcut_translate_description" = "选中要翻译的文本，按下快捷键快速翻译";
-"shortcut_summary" = "总结摘要快捷键";
-"shortcut_translate_summary" = "选中要总结的内容，按下快捷键总结摘要";
-"select_service" = "選擇AI模型";
+"startup" = "登入時啟動";
+"shortcut_translate" = "翻譯所選文字快速鍵";
+"shortcut_translate_description" = "選取文字內容，按下快速鍵即可快速翻譯";
+"shortcut_summary" = "製作摘要快速鍵";
+"shortcut_summary_description" = "選取文字內容，按下快速鍵即可製作摘要";
+"select_service" = "選取 AI 模型";
 "free" = "免費";
 "model_deepseek_v3" = "Deepseek-v3";
 "model_gemini2_flash" = "Gemini-2.0";
 "model_zhipu_glm4" = "Zhipu-GLM-4";
 
-// main
-"pop_text_empty" = "沒有可複製的內容";
+// Main Window Popups & Helpers
+"pop_text_empty" = "沒有可拷貝的內容";
 "pop_translate_text_empty" = "請輸入要翻譯的文字";
-"pop_summary_text_empty" = "請輸入要總結的內容";
+"pop_summary_text_empty" = "請輸入要製作摘要的內容";
 "pop_explain_text_empty" = "請輸入要解釋的內容";
-"pop_chat_text_empty" = "請輸入要回答的問題";
-"pop_copy_success" = "複製成功";
-"pop_already_cleared" = "已清空内容";
-"pop_select_model_first" = "请在偏好设置中选择AI模型";
+"pop_chat_text_empty" = "請輸入您的問題";
+"pop_copy_success" = "已拷貝";
+"pop_already_cleared" = "已清除內容";
+"pop_select_model_first" = "請先在偏好設定中選取 AI 模型";
 "help_translate" = "翻譯文字";
-"help_summary" = "總結摘要";
-"help_explain" = "解釋說明";
-"help_chat" = "對話問答";
-"help_copy" = "複製";
+"help_summary" = "製作摘要";
+"help_explain" = "解釋";
+"help_chat" = "聊天";
+"help_copy" = "拷貝";
 "help_pin" = "釘選視窗";
 "help_unpin" = "取消釘選";
 "help_clear" = "清除內容";
-"accessibility_permission_title" = "需要輔助使用功能權限";
-"accessibility_permission_message" = "請在系統偏好設定中啟用輔助使用功能權限，以便翻譯與總結選取的文字。";
+"accessibility_permission_title" = "需要輔助使用權限";
+"accessibility_permission_message" = "請在「系統偏好設定」中啟用輔助使用權限，以便翻譯與製作所選文字的摘要。";
 "open_settings" = "打開設定";
 "cancel" = "取消";
-"placeholder_main_input" = "輸入內容，按 Enter 查詢，按 Shift+Enter 換行";
+"placeholder_main_input" = "輸入內容，按下 Return 鍵查詢，按下 Shift + Return 鍵換行";
 
-// about
+// About Window
 "website" = "官方網站";
 "apptitle" = "仙人掌 AI 助手";
 "version" = "版本";

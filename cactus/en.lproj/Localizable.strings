@@ -10,17 +10,17 @@
 "about" = "About";
 "quit" = "Quit";
 
-"translate" = "选中翻译";
-"summary" = "总结摘要";
+"translate" = "Translate Selected Text";
+"summary" = "Summarize Selected Text";
 
 // setting
 "general" = "General";
-"service" = "Service";
-"startup" = "Launch at Startup";
-"shortcut_translate" = "选中翻译快捷键";
-"shortcut_translate_description" = "选中要翻译的文本，按下快捷键快速翻译";
-"shortcut_summary" = "总结摘要快捷键";
-"shortcut_translate_summary" = "选中要总结的内容，按下快捷键总结摘要";
+"service" = "AI Model";
+"startup" = "Open at Login";
+"shortcut_translate" = "Translate Shortcut";
+"shortcut_translate_description" = "Select text and press the shortcut to translate.";
+"shortcut_summary" = "Summarize Shortcut";
+"shortcut_translate_summary" = "Select text and press the shortcut to summarize.";
 "select_service" = "Select AI Model";
 "free" = "Free";
 "model_deepseek_v3" = "Deepseek-v3";
@@ -32,25 +32,25 @@
 "pop_translate_text_empty" = "Please enter text to translate.";
 "pop_summary_text_empty" = "Please enter text to summarize.";
 "pop_explain_text_empty" = "Please enter text to explain.";
-"pop_chat_text_empty" = "Please enter the question.";
-"pop_copy_success" = "Copied successfully.";
-"pop_already_cleared" = "The content has been cleared.";
-"pop_select_model_first" = "请在偏好设置中选择AI模型";
+"pop_chat_text_empty" = "Enter your question.";
+"pop_copy_success" = "Copied";
+"pop_already_cleared" = "Text cleared.";
+"pop_select_model_first" = "Please select an AI model in Preferences first.";
 "help_translate" = "Translate Text";
 "help_summary" = "Summarize Text";
 "help_explain" = "Explain Text";
-"help_chat" = "Chat and Q&A";
+"help_chat" = "Chat";
 "help_copy" = "Copy";
 "help_pin" = "Pin Window";
 "help_unpin" = "Unpin Window";
 "help_clear" = "Clear Text";
-"accessibility_permission_title" = "Accessibility Permission Required";
-"accessibility_permission_message" = "Please enable Accessibility permissions in System Settings to allow translating and summarizing selected text.";
-"open_settings" = "Open Settings";
+"accessibility_permission_title" = "Accessibility Access Required";
+"accessibility_permission_message" = "Please grant Accessibility access in System Settings > Privacy & Security to enable translating and summarizing selected text.";
+"open_settings" = "Open System Settings";
 "cancel" = "Cancel";
-"placeholder_main_input" = "Enter text and press Enter to submit. Press Shift+Enter to insert a line break.";
+"placeholder_main_input" = "Enter text and press Enter to submit. Press Shift+Enter for a new line.";
 
 // about
-"website" = "Official Website";
+"website" = "Website";
 "apptitle" = "Cactus AI Assistant";
 "version" = "Version";
