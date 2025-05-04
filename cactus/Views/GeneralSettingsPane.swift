@@ -20,6 +20,7 @@ struct GeneralSettingsPane: View {
                 Text(NSLocalizedString("shortcut_translate_description", comment: "选中要翻译的文字，按下快捷键快速翻译"))
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: true, vertical: false) // <-- 添加这一行
             }
             
             Settings.Section(label: { Text(NSLocalizedString("shortcut_summary", comment: "总结摘要快捷键")) }) {
@@ -27,6 +28,7 @@ struct GeneralSettingsPane: View {
                 Text(NSLocalizedString("shortcut_translate_summary", comment: "选中要总结的内容，按下快捷键总结摘要"))
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: true, vertical: false) // <-- 添加这一行
             }
         }
     }
