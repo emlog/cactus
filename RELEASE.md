@@ -16,6 +16,11 @@
 
 ## 打包发布
 
+1、进入Product/achive
+2、选择Distribute App
+3、export 到处app到项目根目录
+4、./build.sh 运行打包脚本
+
 ### 开发者信息
 
 Certificate Name：dawei xu
@@ -66,30 +71,6 @@ xcrun stapler staple Cactus.dmg
 ### 4. 测试安装包
 最后，测试您的 DMG 文件，确保它能正常打开和安装应用程序。
 
-
-### create-dmg 工具
-这是一个更自动化的方法：
-
-1. 安装 create-dmg 工具：
-```bash
-brew install create-dmg
- ```
-
-2. 使用以下命令创建 DMG：
-```bash
-create-dmg \
-  --volname "Cactus" \
-  --volicon "/Users/xudawei/cactus/AppIcon.icns" \
-  --background "/Users/xudawei/cactus/background.png" \
-  --window-pos 200 120 \
-  --window-size 800 400 \
-  --icon-size 100 \
-  --icon "Cactus.app" 200 190 \
-  --hide-extension "Cactus.app" \
-  --app-drop-link 600 185 \
-  "Cactus.dmg" \
-  "/path/to/exported/Cactus.app/"
- ```
 
 
 ### 生成签名证书

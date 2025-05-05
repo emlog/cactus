@@ -10,15 +10,14 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # 配置信息
-APP_NAME="cactus"
+APP_NAME="Cactus"
 DEVELOPER_ID="Developer ID Application: dawei xu (MYB38L5YW9)"
 APPLE_ID="emlog@qq.com"
 APP_PASSWORD="qbsl-pjfd-ugam-qtsq"
 TEAM_ID="MYB38L5YW9"
-APP_PATH="./cactus.app"
-DMG_NAME="cactus.dmg"
-ICON_PATH="./AppIcon.icns"
-BACKGROUND_PATH="./background.png"
+APP_PATH="./Cactus.app"
+DMG_NAME="Cactus.dmg"
+ICON_PATH="./Cactus.app/Contents/Resources/AppIcon.icns" # 修改路径指向 .app 包内部
 
 # 检查应用是否存在
 if [ ! -d "$APP_PATH" ]; then
@@ -45,35 +44,34 @@ if ! command -v create-dmg &> /dev/null; then
     brew install create-dmg
 fi
 
-# 检查图标和背景文件是否存在
-if [ -f "$ICON_PATH" ] && [ -f "$BACKGROUND_PATH" ]; then
-    # 使用高级DMG创建方式，包含应用程序文件夹快捷方式
+# 检查图标文件是否存在
+if [ -f "$ICON_PATH" ]; then
+    echo -e "${YELLOW}找到图标文件，使用 create-dmg 创建 DMG...${NC}"
     create-dmg \
         --volname "Cactus" \
         --volicon "$ICON_PATH" \
-        --background "$BACKGROUND_PATH" \
         --window-pos 200 120 \
-        --window-size 800 400 \
+        --window-size 600 400 \
         --icon-size 100 \
-        --icon "cactus.app" 200 190 \
-        --hide-extension "cactus.app" \
-        --app-drop-link 600 185 \
+        --icon "Cactus.app" 200 160 \
+        --hide-extension "Cactus.app" \
+        --app-drop-link 400 160 \
         "$DMG_NAME" \
         "$APP_PATH"
 else
     # 创建临时目录用于DMG制作
-    echo -e "${YELLOW}未找到图标或背景文件，使用简单DMG创建方式，但仍添加应用程序文件夹快捷方式${NC}"
+    echo -e "${YELLOW}未找到图标文件 $ICON_PATH，使用简单 hdiutil 创建方式，但仍添加应用程序文件夹快捷方式${NC}"
     TMP_DIR=$(mktemp -d)
-    
+
     # 复制应用到临时目录
     cp -R "$APP_PATH" "$TMP_DIR/"
-    
+
     # 创建应用程序文件夹的符号链接
     ln -s /Applications "$TMP_DIR/Applications"
-    
+
     # 创建DMG
     hdiutil create -volname "Cactus" -srcfolder "$TMP_DIR" -ov -format UDZO "$DMG_NAME"
-    
+
     # 清理临时目录
     rm -rf "$TMP_DIR"
 fi
