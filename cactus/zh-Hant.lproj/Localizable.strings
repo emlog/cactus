@@ -24,8 +24,8 @@
 "select_service" = "選取 AI 模型";
 "free" = "免費";
 "model_deepseek_v3" = "Deepseek-v3";
-"model_gemini2_flash" = "Gemini-2.0";
 "model_zhipu_glm4" = "Zhipu-GLM-4";
+"model_cactusai_mix" = "CactusAI-Mix";
 
 // Main Window Popups & Helpers
 "pop_text_empty" = "沒有可拷貝的內容";

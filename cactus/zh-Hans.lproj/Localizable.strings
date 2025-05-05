@@ -24,8 +24,8 @@
 "select_service" = "选择AI模型";
 "free" = "免费";
 "model_deepseek_v3" = "Deepseek-v3";
-"model_gemini2_flash" = "Gemini-2.0";
 "model_zhipu_glm4" = "Zhipu-GLM-4";
+"model_cactusai_mix" = "CactusAI-Mix";
 
 // main
 "pop_text_empty" = "没有可复制的内容";
