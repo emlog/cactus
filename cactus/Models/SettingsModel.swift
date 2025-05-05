@@ -18,12 +18,6 @@ class SettingsModel: ObservableObject {
     
     // 内置的AI服务
     public var defaultProviders: [String: ProviderSettings] = [
-        "model_deepseek_v3": ProviderSettings(
-            title: NSLocalizedString("model_deepseek_v3", comment: "model_deepseek"),
-            baseURL: "https://api.ppinfra.com/v3/openai/v1/chat/completions",
-            apiKey: "sk_JMYoUFzDZ258ZTDNItfKINu35r__rx8pM_j0Zqab7CQ",
-            model: "deepseek/deepseek-v3/community"
-        ),
         "model_zhipu_glm4": ProviderSettings(
             title: NSLocalizedString("model_zhipu_glm4", comment: "model_zhipuai"),
             baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
