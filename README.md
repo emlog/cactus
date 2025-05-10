@@ -11,9 +11,9 @@ Translate, Summarize
 
 ## 关键词
 
-翻译助手,AI总结,智能解释,文本处理,学习工具
+翻译,AI 总结,智能解释,文本处理,学习工具
 AI Assistant,Text Tool,Translate,Summarize,Productivity
-翻譯助手,AI 摘要,智慧解釋,文字處理,學習工具
+翻譯,AI 摘要,智慧解釋,文字處理,學習工具
 
 ### 简体中文介绍
 
@@ -79,7 +79,7 @@ Fix some issues, optimize user experience
 - 快捷键 https://github.com/sindresorhus/KeyboardShortcuts
 - 开机自动启动 https://github.com/sindresorhus/LaunchAtLogin-Legacy
 
-### 未是用【收藏】
+### 未使用
 
 - loading动画 https://github.com/exyte/ActivityIndicatorView
 
