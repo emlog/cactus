@@ -47,8 +47,8 @@ struct MainView: View {
                             .stroke(Color(.separatorColor), lineWidth: 1)
                     )
                     
-                    HStack(spacing: 8) { // 可以调整按钮间距
-                        // 清除按钮 - 移动到这里
+                    HStack(spacing: 8) {
+                        // 清除按钮
                         Button(action: {
                             clearAll()
                         }) {
@@ -219,12 +219,22 @@ struct MainView: View {
             }
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
-        .frame(minWidth: 500, minHeight: 390) // 调整最小高度以适应内容
+        .frame(minWidth: 500, minHeight: 390)
         .toast(isPresenting: $showCompleteToast) {
             AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
         }
         .toast(isPresenting: $showErrorToast) {
             AlertToast(displayMode: .hud, type: .systemImage("xmark.circle", .red), title: toastMessage)
+        }
+        .onAppear {
+            // 监听窗口关闭通知
+            NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil, queue: .main) { _ in
+                stopSpeaking()
+            }
+        }
+        .onDisappear {
+            // 移除通知监听，防止内存泄漏
+            NotificationCenter.default.removeObserver(self, name: NSWindow.willCloseNotification, object: nil)
         }
     }
     
@@ -274,6 +284,8 @@ struct MainView: View {
         if isInputEmpty && isResultEmpty {
             return
         }
+        
+        stopSpeaking()
         
         DispatchQueue.main.async {
             self.contentModel.text = ""
