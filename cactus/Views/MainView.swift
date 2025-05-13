@@ -1,5 +1,6 @@
 import AlertToast
 import SwiftUI
+import AVFoundation
 
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
@@ -20,6 +21,11 @@ struct MainView: View {
     
     // 新增：用于控制输入框焦点的状态变量
     @FocusState private var isInputEditorFocused: Bool
+    
+    // 语音朗读相关状态
+    @State private var isSpeakingInput = false
+    @State private var isSpeakingResult = false
+    private let speechSynthesizer = AVSpeechSynthesizer()
     
     var body: some View {
         Form {
@@ -178,20 +184,37 @@ struct MainView: View {
                         })
                     
                     // 复制按钮
-                    Button(action: {
-                        copyResp()
-                    }) {
-                        // 根据状态改变图标和颜色
-                        Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
+                    HStack(spacing: 8) {
+                        // 语音朗读按钮（输出）
+                        Button(action: {
+                            if isSpeakingResult {
+                                stopSpeaking()
+                            } else {
+                                speakText(contentModel.resultText ?? "", isInput: false)
+                            }
+                        }) {
+                            Image(systemName: isSpeakingResult ? "stop.circle" : "speaker.wave.2.circle")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(isSpeakingResult ? .red : .secondary)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help(isSpeakingResult ? "停止朗读" : "朗读结果内容")
+                        .disabled(contentModel.resultText?.isEmpty ?? true)
+                        
+                        Button(action: {
+                            copyResp()
+                        }) {
+                            Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
+                        }
+                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
+                        .help(NSLocalizedString("help_copy", comment: "复制"))
+                        .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
+                        .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
                     }
-                    .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
-                    .help(NSLocalizedString("help_copy", comment: "复制"))
-                    .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
-                    .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
                     .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
+                    .padding(.vertical, 5) // 按钮区域的垂直内边距
                 }
             }
         }
@@ -433,5 +456,42 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    // 语音朗读相关方法
+    private func speakText(_ text: String, isInput: Bool) {
+        stopSpeaking()
+        guard !text.isEmpty else { return }
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "zh-CN") // 可根据需要调整语言
+        speechSynthesizer.speak(utterance)
+        if isInput {
+            isSpeakingInput = true
+            isSpeakingResult = false
+        } else {
+            isSpeakingInput = false
+            isSpeakingResult = true
+        }
+    }
+    private func stopSpeaking() {
+        if speechSynthesizer.isSpeaking {
+            speechSynthesizer.stopSpeaking(at: .immediate)
+        }
+        isSpeakingInput = false
+        isSpeakingResult = false
+    }
+}
+
+// 语音代理，朗读结束后重置状态
+class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate {
+    let onFinish: () -> Void
+    init(onFinish: @escaping () -> Void) {
+        self.onFinish = onFinish
+    }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        onFinish()
+    }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        onFinish()
     }
 }
