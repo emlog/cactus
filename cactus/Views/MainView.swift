@@ -48,6 +48,22 @@ struct MainView: View {
                     )
                     
                     HStack(spacing: 8) {
+                        // 语音朗读按钮（新增）
+                        Button(action: {
+                            if isSpeakingInput {
+                                stopSpeaking() // 停止朗读输入内容
+                            } else {
+                                speakText(contentModel.text, isInput: true)
+                            }
+                        }) {
+                            Image(systemName: isSpeakingInput ? "stop.circle" : "speaker.wave.2.circle")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(isSpeakingInput ? .red : .secondary)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help(isSpeakingInput ? "停止朗读" : "朗读输入内容")
+                        .disabled(contentModel.text.isEmpty)
+                        
                         // 清除按钮
                         Button(action: {
                             clearAll()
@@ -183,12 +199,10 @@ struct MainView: View {
                             }
                         })
                     
-                    // 复制按钮
                     HStack(spacing: 8) {
-                        // 语音朗读按钮（输出）
                         Button(action: {
                             if isSpeakingResult {
-                                stopSpeaking()
+                                stopSpeaking() // 语音朗读（输出）
                             } else {
                                 speakText(contentModel.resultText ?? "", isInput: false)
                             }
@@ -202,7 +216,7 @@ struct MainView: View {
                         .disabled(contentModel.resultText?.isEmpty ?? true)
                         
                         Button(action: {
-                            copyResp()
+                            copyResp()// 复制输出
                         }) {
                             Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
                                 .frame(width: 15, height: 15)
