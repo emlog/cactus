@@ -484,18 +484,23 @@ struct MainView: View {
         }
     }
     
-    // 语音朗读相关方法
-    private func speakText(_ text: String, isInput: Bool) {
+    // 语音朗读
+    func speakText(_ text: String, isInput: Bool) {
         stopSpeaking()
         guard !text.isEmpty else { return }
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "zh-CN") // 可根据需要调整语言
+        // 使用 detectLanguageCode 自动识别语言
+        let langCode = detectLanguageCode(for: text)
+        print("lang: " + langCode)
+        utterance.voice = AVSpeechSynthesisVoice(language: langCode)
+        utterance.rate = 0.5
+        utterance.volume = 1.0
+        utterance.pitchMultiplier = 1.0
+        speechSynthesizer.delegate = self as? AVSpeechSynthesizerDelegate
         speechSynthesizer.speak(utterance)
         if isInput {
             isSpeakingInput = true
-            isSpeakingResult = false
         } else {
-            isSpeakingInput = false
             isSpeakingResult = true
         }
     }
@@ -505,6 +510,52 @@ struct MainView: View {
         }
         isSpeakingInput = false
         isSpeakingResult = false
+    }
+    
+    /// 通过正则表达式识别文本语言类型，返回对应的语言代码
+    func detectLanguageCode(for text: String) -> String {
+        // 日文假名 Unicode 范围
+        let hiraganaRange = "\u{3040}"..."\u{309F}"
+        let katakanaRange = "\u{30A0}"..."\u{30FF}"
+        // 中文汉字 Unicode 范围
+        let chineseRange = "\u{4E00}"..."\u{9FFF}"
+        // 韩文
+        let koreanRegex = "[\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7AF]"
+        // 英文
+        let englishRegex = "[A-Za-z]"
+    
+        var hiraganaCount = 0
+        var katakanaCount = 0
+        var chineseCount = 0
+    
+        for scalar in text.unicodeScalars {
+            if hiraganaRange.contains(String(scalar)) {
+                hiraganaCount += 1
+            } else if katakanaRange.contains(String(scalar)) {
+                katakanaCount += 1
+            } else if chineseRange.contains(String(scalar)) {
+                chineseCount += 1
+            }
+        }
+    
+        let total = text.count
+        // 如果假名占比大于2%，判为日文
+        if total > 0 && Double(hiraganaCount + katakanaCount) / Double(total) > 0.02 {
+            return "ja-JP"
+        }
+        // 如果汉字多且没有假名，判为中文
+        if chineseCount > 0 && hiraganaCount == 0 && katakanaCount == 0 {
+            return "zh-CN"
+        }
+        
+        if let _ = text.range(of: koreanRegex, options: .regularExpression) {
+            return "ko-KR"
+        } 
+
+        if let _ = text.range(of: englishRegex, options: .regularExpression) {
+            return "en-US"
+        }
+        return "en-US"
     }
 }
 
