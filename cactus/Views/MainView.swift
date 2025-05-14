@@ -39,7 +39,6 @@ struct MainView: View {
                     }, calculatedHeight: $inputTextHeight) // 传递高度绑定
                     .focused($isInputEditorFocused) // 新增：绑定焦点状态
                     .frame(height: inputTextHeight) // 使用状态变量设置高度
-                    // 修改：为按钮区域添加底部内边距
                     .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
                     .padding(.horizontal, 0) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
                     .padding(.top, 5)        // 保持顶部内边距为0
@@ -51,10 +50,22 @@ struct MainView: View {
                     )
                     
                     HStack(spacing: 8) {
+                        // 清除按钮
+                        Button(action: {
+                            clearAll()
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
+                        .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
+                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
+                        
                         // 语音朗读按钮（新增）
                         Button(action: {
                             if isSpeakingInput {
-                                stopSpeaking() // 停止朗读输入内容
+                                stopSpeaking()
                             } else {
                                 speakText(contentModel.text, isInput: true)
                             }
@@ -66,18 +77,6 @@ struct MainView: View {
                         .buttonStyle(PlainButtonStyle())
                         .help(isSpeakingInput ? "停止朗读" : "朗读输入内容")
                         .disabled(contentModel.text.isEmpty)
-                        
-                        // 清除按钮
-                        Button(action: {
-                            clearAll()
-                        }) {
-                            Image(systemName: "xmark.circle")
-                                .frame(width: 15, height: 15)
-                                .foregroundColor(.secondary)
-                        }
-                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
-                        .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
-                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true)) // 调整禁用条件
                         
                         // 复制按钮
                         Button(action: {
@@ -157,7 +156,7 @@ struct MainView: View {
                     Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
                         .font(.caption)
                     
-                    // 添加一个隐藏的按钮来监听 ESC 键，关闭当前窗口
+                    // 隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
                     }
@@ -379,7 +378,7 @@ struct MainView: View {
         }
         
         let promptPrefix: String
-        let targetLanguage = getPreferredLanguageName()
+        let targetLanguage = Lang.getPreferredLanguageName()
         
         if Lang.isLikelyChinese(inputText) {
             // 如果检测到中文，则翻译为英文
@@ -397,7 +396,7 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let targetLanguage = getPreferredLanguageName()
+        let targetLanguage = Lang.getPreferredLanguageName()
         // 修改 prompt，使其使用目标语言进行总结
         performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
     }
@@ -409,7 +408,7 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let targetLanguage = getPreferredLanguageName()
+        let targetLanguage = Lang.getPreferredLanguageName()
         performAIAction(promptPrefix: "请用通俗易懂、简短的\(targetLanguage)解释下面的内容中主要的概念：")
     }
     
@@ -420,18 +419,8 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let targetLanguage = getPreferredLanguageName()
+        let targetLanguage = Lang.getPreferredLanguageName()
         performAIAction(promptPrefix: "你是我的私人助理，总是能简洁专业的解答我下面提出的要求或问题，并用\(targetLanguage)回答：")
-    }
-    
-    // 辅助函数：获取系统首选语言的本地化名称
-    private func getPreferredLanguageName() -> String {
-        // 获取首选语言代码，默认为简体中文
-        let preferredLanguageCode = Locale.preferredLanguages.first ?? "zh-Hans-CN"
-        // 获取语言的本地化名称，默认为 "简体中文"
-        let preferredLanguageName = Locale.current.localizedString(forLanguageCode: preferredLanguageCode) ?? "简体中文"
-        print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
-        return preferredLanguageName
     }
     
     // 调用AI服务

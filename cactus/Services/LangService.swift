@@ -5,6 +5,8 @@
 //  Created by 许大伟 on 2025/5/14.
 //
 
+import SwiftUI
+
 class LangService {
     static let shared = LangService()
     private init() {}
@@ -77,5 +79,15 @@ class LangService {
             return "en-US"
         }
         return "en-US"
+    }
+    
+    // 获取系统首选语言的本地化名称
+    public func getPreferredLanguageName() -> String {
+        // 获取首选语言代码，默认为简体中文
+        let preferredLanguageCode = Locale.preferredLanguages.first ?? "zh-Hans-CN"
+        // 获取语言的本地化名称，默认为 "简体中文"
+        let preferredLanguageName = Locale.current.localizedString(forLanguageCode: preferredLanguageCode) ?? "简体中文"
+        print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
+        return preferredLanguageName
     }
 }
