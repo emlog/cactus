@@ -5,30 +5,24 @@ import AVFoundation
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var settings = SettingsModel.shared
-    
+    @State private var Ai = AiService.shared
+    @State private var Lang = LangService.shared
     // 吐司提示
     @State private var showCompleteToast = false
     @State private var showErrorToast = false
     @State private var toastMessage = ""
-    
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
     @State private var showResultCopySuccess = false
-    
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
     @State private var resultTextHeight: CGFloat = 200 // 结果区域的高度状态
-    
     // 新增：用于控制输入框焦点的状态变量
     @FocusState private var isInputEditorFocused: Bool
-    
     // 语音朗读相关状态
     @State private var isSpeakingInput = false
     @State private var isSpeakingResult = false
-    private let speechSynthesizer = AVSpeechSynthesizer()
-    
-    @State private var Ai = AiService.shared
-    @State private var Lang = LangService.shared
+    private let speechService = SpeechService.shared
     
     var body: some View {
         Form {
@@ -455,41 +449,24 @@ struct MainView: View {
     func speakText(_ text: String, isInput: Bool) {
         stopSpeaking()
         guard !text.isEmpty else { return }
-        let utterance = AVSpeechUtterance(string: text)
-        // 使用 detectLanguageCode 自动识别语言
+        
         let langCode = Lang.detectLanguageCode(for: text)
         print("lang: " + langCode)
-        utterance.voice = AVSpeechSynthesisVoice(language: langCode)
-        utterance.rate = 0.5
-        utterance.volume = 1.0
-        utterance.pitchMultiplier = 1.0
-        speechSynthesizer.delegate = self as? AVSpeechSynthesizerDelegate
-        speechSynthesizer.speak(utterance)
-        if isInput {
-            isSpeakingInput = true
-        } else {
-            isSpeakingResult = true
+        // 设置状态变化回调
+        speechService.onSpeakingStateChanged = { isSpeaking in
+            DispatchQueue.main.async {
+                if isInput {
+                    self.isSpeakingInput = isSpeaking
+                } else {
+                    self.isSpeakingResult = isSpeaking
+                }
+            }
         }
+        
+        speechService.speak(text, langCode: langCode)
     }
+    
     private func stopSpeaking() {
-        if speechSynthesizer.isSpeaking {
-            speechSynthesizer.stopSpeaking(at: .immediate)
-        }
-        isSpeakingInput = false
-        isSpeakingResult = false
-    }
-}
-
-// 语音代理，朗读结束后重置状态
-class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate {
-    let onFinish: () -> Void
-    init(onFinish: @escaping () -> Void) {
-        self.onFinish = onFinish
-    }
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        onFinish()
-    }
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        onFinish()
+        speechService.stopSpeaking()
     }
 }
