@@ -1,18 +1,21 @@
 import AVFoundation
 
-@MainActor
+
 final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     static let shared = SpeechService()
-    private let speechSynthesizer = AVSpeechSynthesizer()
     private var isSpeaking = false
     var onSpeakingStateChanged: ((Bool) -> Void)?
     
+    // 使用单一实例，避免每次创建新的合成器
+    private let speechSynthesizer = AVSpeechSynthesizer()
+    
     private override init() {
         super.init()
+        // 设置代理，确保回调能正常工作
         speechSynthesizer.delegate = self
     }
     
-    func speak(_ text: String, langCode: String) {
+    public func speak(_ text: String, langCode: String) {
         stopSpeaking()
         guard !text.isEmpty else { return }
         
@@ -24,15 +27,29 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
         
         isSpeaking = true
         onSpeakingStateChanged?(true)
-        speechSynthesizer.speak(utterance)
+        
+        // 使用异步任务避免主线程阻塞
+        Task(priority: .medium) {
+            // 使用类的单一实例而不是创建新实例
+            self.speechSynthesizer.speak(utterance)
+        }
     }
     
-    func stopSpeaking() {
-        if speechSynthesizer.isSpeaking {
-            speechSynthesizer.stopSpeaking(at: .immediate)
+    public func stopSpeaking() {
+        // 只有在正在说话时才需要停止
+        guard isSpeaking else { return }
+        
+        Task(priority: .medium) {
+            // 使用类的单一实例而不是创建新实例
+            self.speechSynthesizer.stopSpeaking(at: .immediate)
+            
+            // 更新状态和触发回调
+            // 注意：这里可能需要在主线程上执行
+            await MainActor.run {
+                self.isSpeaking = false
+                self.onSpeakingStateChanged?(false)
+            }
         }
-        isSpeaking = false
-        onSpeakingStateChanged?(false)
     }
     
     // - nonisolated 告诉编译器这个方法可以在任何线程上被调用
