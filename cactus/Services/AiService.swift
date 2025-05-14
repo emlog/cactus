@@ -5,6 +5,8 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var buffer = Data()
     private var completionHandler: (() -> Void)?
     private var errorHandler: ((String) -> Void)? // 新增：错误处理回调
+    
+    static let shared = AiService()
 
     func chat(text: String, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) { // 新增 onError 参数
         let settings = SettingsModel.shared
