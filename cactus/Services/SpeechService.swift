@@ -1,6 +1,7 @@
 import AVFoundation
 
-class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
+@MainActor
+final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     static let shared = SpeechService()
     private let speechSynthesizer = AVSpeechSynthesizer()
     private var isSpeaking = false
@@ -34,14 +35,12 @@ class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
         onSpeakingStateChanged?(false)
     }
     
-    // AVSpeechSynthesizerDelegate methods
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        isSpeaking = false
-        onSpeakingStateChanged?(false)
-    }
-    
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        isSpeaking = false
-        onSpeakingStateChanged?(false)
+    // - nonisolated 告诉编译器这个方法可以在任何线程上被调用
+    // - Task { @MainActor in } 创建一个新的任务，并确保其中的代码在主线程上执行
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        Task { @MainActor in
+            isSpeaking = false
+            onSpeakingStateChanged?(false)
+        }
     }
 }
