@@ -5,56 +5,56 @@
  */
 
 // Status Bar Menu
-"main" = "打开AI助手";
-"setting" = "偏好设置";
-"about" = "关于";
-"quit" = "退出";
+"main" = "AI 도우미 열기";
+"setting" = "환경설정";
+"about" = "앱 정보";
+"quit" = "종료";
 
-"translate" = "选中翻译";
-"summary" = "总结摘要";
+"translate" = "선택 번역";
+"summary" = "요약";
 
 // setting
-"general" = "通用";
-"service" = "服务";
-"startup" = "开机自动启动";
-"shortcut_translate" = "选中翻译快捷键";
-"shortcut_translate_description" = "选中文字内容，按下快捷键快速翻译";
-"shortcut_summary" = "总结摘要快捷键";
-"shortcut_translate_summary" = "选中文字内容，按下快捷键总结摘要";
-"select_service" = "选择AI模型";
-"free" = "免费";
+"general" = "일반";
+"service" = "서비스";
+"startup" = "시작 시 자동 실행";
+"shortcut_translate" = "번역 단축키";
+"shortcut_translate_description" = "텍스트를 선택하고 단축키로 빠르게 번역";
+"shortcut_summary" = "요약 단축키";
+"shortcut_translate_summary" = "텍스트를 선택하고 단축키로 요약";
+"select_service" = "AI 모델 선택";
+"free" = "무료";
 "model_deepseek_v3" = "Deepseek-v3";
 "model_zhipu_glm4" = "Zhipu-GLM-4";
 "model_cactusai_mix" = "CactusAI-Mix";
 
 // main
-"pop_text_empty" = "没有可复制的内容";
-"pop_translate_text_empty" = "请输入要翻译的文字";
-"pop_summary_text_empty" = "请输入要总结的内容";
-"pop_explain_text_empty" = "请输入要解释的内容";
-"pop_chat_text_empty" = "请输入要解答的问题";
-"pop_copy_success" = "复制成功";
-"pop_already_cleared" = "已清空内容";
-"pop_select_model_first" = "请在偏好设置中选择AI模型";
-"help_translate" = "翻译文本";
-"help_summary" = "总结摘要";
-"help_explain" = "解释说明";
-"help_chat" = "对话问答";
-"help_copy" = "复制";
-"help_pin" = "钉住窗口";
-"help_unpin" = "取消钉住";
-"help_clear" = "清除内容";
-"accessibility_permission_title" = "需要辅助功能权限";
-"accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便翻译总结选中文字。";
-"open_settings" = "打开设置";
-"cancel" = "取消";
-"placeholder_main_input" = "输入内容，按回车查询，按Shift+回车换行";
+"pop_text_empty" = "복사할 수 있는 내용이 없습니다";
+"pop_translate_text_empty" = "번역할 텍스트를 입력하세요";
+"pop_summary_text_empty" = "요약할 내용을 입력하세요";
+"pop_explain_text_empty" = "설명할 내용을 입력하세요";
+"pop_chat_text_empty" = "질문할 내용을 입력하세요";
+"pop_copy_success" = "복사 완료";
+"pop_already_cleared" = "이미 지워진 내용입니다";
+"pop_select_model_first" = "환경설정에서 AI 모델을 먼저 선택하세요";
+"help_translate" = "텍스트 번역";
+"help_summary" = "요약";
+"help_explain" = "설명";
+"help_chat" = "채팅 질문";
+"help_copy" = "복사";
+"help_pin" = "창 고정";
+"help_unpin" = "고정 해제";
+"help_clear" = "내용 지우기";
+"accessibility_permission_title" = "손쉬운 사용 권한 필요";
+"accessibility_permission_message" = "선택한 텍스트를 번역하고 요약하려면 시스템 설정에서 손쉬운 사용 권한을 활성화하세요.";
+"open_settings" = "설정 열기";
+"cancel" = "취소";
+"placeholder_main_input" = "내용 입력 후 Enter로 실행, Shift+Enter로 줄바꿈";
 
 // about
-"website" = "官方网站";
-"apptitle" = "仙人掌AI助手";
-"version" = "版本";
+"website" = "공식 웹사이트";
+"apptitle" = "선인장 AI 도우미";
+"version" = "버전";
 
 // error
-"error_invalid_config" = "系统错误，AI服务配置错误";
-"error_request_failed" = "请求失败，请切换其他AI模型或检查网络";
+"error_invalid_config" = "시스템 오류: AI 서비스 설정 오류";
+"error_request_failed" = "요청 실패. 다른 AI 모델로 전환하거나 네트워크를 확인하세요";
