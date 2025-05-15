@@ -81,6 +81,33 @@ class LangService {
         return "en-US"
     }
     
+    // 判断文本是句子还是单词
+    public func isSentence(_ text: String) -> Bool {
+        // 去除首尾空格
+        let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // 如果文本为空，返回false
+        if trimmedText.isEmpty {
+            return false
+        }
+        
+        // 检查是否包含句子终止符号（句号、问号、感叹号等）
+        let sentenceEndingPunctuation = [".", "?", "!", "。", "？", "！", "…"]
+        let containsEndingPunctuation = sentenceEndingPunctuation.contains { trimmedText.contains($0) }
+        
+        // 检查是否包含空格（多个单词的特征）
+        let containsSpace = trimmedText.contains(" ")
+        
+        // 检查长度（通常句子比单个单词长）
+        let isLongEnough = trimmedText.count > 3
+        
+        // 综合判断：
+        // 1. 如果包含句子终止符号，很可能是句子
+        // 2. 如果包含空格（多个单词），很可能是句子
+        // 3. 如果文本足够长，更可能是句子而不是单词
+        return containsEndingPunctuation || (containsSpace && isLongEnough)
+    }
+    
     // 获取系统首选语言的本地化名称
     public func getPreferredLanguageName() -> String {
         // 获取首选语言代码，默认为简体中文
