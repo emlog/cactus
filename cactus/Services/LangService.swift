@@ -92,7 +92,7 @@ class LangService {
         }
         
         // 检查是否包含句子终止符号（句号、问号、感叹号等）
-        let sentenceEndingPunctuation = [".", "?", "!", "。", "？", "！", "…"]
+        let sentenceEndingPunctuation = [".", "?", "!", "。", "？", "！", "…", "、"]
         let containsEndingPunctuation = sentenceEndingPunctuation.contains { trimmedText.contains($0) }
         
         // 检查是否包含空格（多个单词的特征）

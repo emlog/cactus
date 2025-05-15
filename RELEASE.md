@@ -81,3 +81,17 @@ xcrun stapler staple Cactus.dmg
 
 - sparkle https://sparkle-project.org/
 
+
+## 第三方库
+
+### 已使用
+
+- 设置界面 https://github.com/sindresorhus/Settings
+- 吐司提示 https://github.com/elai950/AlertToast
+- 快捷键 https://github.com/sindresorhus/KeyboardShortcuts
+- 开机自动启动 https://github.com/sindresorhus/LaunchAtLogin-Legacy
+
+### 未使用
+
+- loading动画 https://github.com/exyte/ActivityIndicatorView
+
