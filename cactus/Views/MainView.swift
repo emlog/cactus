@@ -56,20 +56,15 @@ struct MainView: View {
                         .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
                         
-                        // 语音朗读按钮（新增）
+                        // 语音朗读（输入）
                         Button(action: {
-                            if isSpeakingInput {
-                                stopSpeaking()
-                            } else {
-                                speakText(contentModel.text, isInput: true)
-                            }
+                            speakText(contentModel.text)
                         }) {
-                            Image(systemName: isSpeakingInput ? "stop.circle" : "speaker.wave.2.circle")
+                            Image(systemName: "speaker.wave.2.circle")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingInput ? .red : .secondary)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .help(isSpeakingInput ? "停止朗读" : "朗读输入内容")
                         .disabled(contentModel.text.isEmpty)
                         
                         // 复制按钮
@@ -197,18 +192,13 @@ struct MainView: View {
                     
                     HStack(spacing: 8) {
                         Button(action: {
-                            if isSpeakingResult {
-                                stopSpeaking() // 语音朗读（输出）
-                            } else {
-                                speakText(contentModel.resultText ?? "", isInput: false)
-                            }
+                            speakText(contentModel.resultText ?? "")
                         }) {
-                            Image(systemName: isSpeakingResult ? "stop.circle" : "speaker.wave.2.circle")
+                            Image(systemName: "speaker.wave.2.circle")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingResult ? .red : .secondary)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .help(isSpeakingResult ? "停止朗读" : "朗读结果内容")
                         .disabled(contentModel.resultText?.isEmpty ?? true)
                         
                         Button(action: {
@@ -245,6 +235,7 @@ struct MainView: View {
         .onDisappear {
             // 移除通知监听，防止内存泄漏
             NotificationCenter.default.removeObserver(self, name: NSWindow.willCloseNotification, object: nil)
+            stopSpeaking()
         }
     }
     
@@ -446,23 +437,11 @@ struct MainView: View {
     }
     
     // 语音朗读
-    func speakText(_ text: String, isInput: Bool) {
-        stopSpeaking()
+    func speakText(_ text: String) {
         guard !text.isEmpty else { return }
         
         let langCode = Lang.detectLanguageCode(for: text)
         print("lang: " + langCode)
-        // 设置状态变化回调
-        speechService.onSpeakingStateChanged = { isSpeaking in
-            DispatchQueue.main.async {
-                if isInput {
-                    self.isSpeakingInput = isSpeaking
-                } else {
-                    self.isSpeakingResult = isSpeaking
-                }
-            }
-        }
-        
         speechService.speak(text, langCode: langCode)
     }
     

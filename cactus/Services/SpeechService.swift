@@ -4,7 +4,6 @@ import AVFoundation
 final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     static let shared = SpeechService()
     private var isSpeaking = false
-    var onSpeakingStateChanged: ((Bool) -> Void)?
     
     // 使用单一实例，避免每次创建新的合成器
     private let speechSynthesizer = AVSpeechSynthesizer()
@@ -26,7 +25,6 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
         utterance.pitchMultiplier = 1.0
         
         isSpeaking = true
-        onSpeakingStateChanged?(true)
         
         // 使用异步任务避免主线程阻塞
         Task(priority: .medium) {
@@ -36,9 +34,6 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     }
     
     public func stopSpeaking() {
-        // 只有在正在说话时才需要停止
-        guard isSpeaking else { return }
-        
         Task(priority: .medium) {
             // 使用类的单一实例而不是创建新实例
             self.speechSynthesizer.stopSpeaking(at: .immediate)
@@ -47,7 +42,6 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
             // 注意：这里可能需要在主线程上执行
             await MainActor.run {
                 self.isSpeaking = false
-                self.onSpeakingStateChanged?(false)
             }
         }
     }
@@ -57,7 +51,6 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         Task { @MainActor in
             isSpeaking = false
-            onSpeakingStateChanged?(false)
         }
     }
 }
