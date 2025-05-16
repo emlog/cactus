@@ -24,8 +24,6 @@ struct MainView: View {
     @State private var isSpeakingResult = false
     private let speechService = SpeechService.shared
     
-    // @State private var isHovering = false // <--- 移除这一行
-    
     var body: some View {
         Form {
             Section() {
@@ -72,10 +70,9 @@ struct MainView: View {
                         Button(action: {
                             copyWriting()
                         }) {
-                            // 根据状态改变图标和颜色
                             Image(systemName: showInputCopySuccess ? "checkmark" : "square.on.square")
                                 .frame(width: 15, height: 15)
-                                .foregroundColor(showInputCopySuccess ? .green : .secondary) // 成功时绿色
+                                .foregroundColor(showInputCopySuccess ? .green : .secondary)
                         }
                         .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle 避免背景
                         .help(NSLocalizedString("help_copy", comment: "复制"))
@@ -83,7 +80,7 @@ struct MainView: View {
                         .disabled(contentModel.text.isEmpty) // 输入为空时禁用
                     }
                     .padding(.horizontal, 15)
-                    .padding(.vertical, 5) // 按钮区域的垂直内边距
+                    .padding(.vertical, 5)
                 }
             }
             
@@ -155,8 +152,8 @@ struct MainView: View {
                     .frame(width: 0, height: 0) // 使按钮不可见
                     .hidden() // 进一步隐藏
                 }
-                .padding(.horizontal, 8) // 为HStack添加水平内边距
-                .padding(.vertical, 5)   // 为HStack添加垂直内边距
+                .padding(.horizontal, 8)
+                .padding(.vertical, 5)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
@@ -216,7 +213,7 @@ struct MainView: View {
                         .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
                     }
                     .padding(.horizontal, 15)
-                    .padding(.vertical, 5) // 按钮区域的垂直内边距
+                    .padding(.vertical, 5)
                 }
             }
         }
