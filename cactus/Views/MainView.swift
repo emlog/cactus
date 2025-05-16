@@ -368,12 +368,12 @@ struct MainView: View {
         
         if Lang.isLikelyChinese(inputText) {
             // 如果检测到中文，则翻译为英文
-            promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文："
+            promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文：\n"
         } else if(Lang.isSentence(inputText) == false) {
             // 如果检测到是单词
-            promptPrefix = "请将下面的单词翻译为\(targetLanguage)，给出国际音标、权威词典的解释以及包含该单词的1个例句，不要输出任何提示性内容和备注：\n"
+            promptPrefix = "请将下面的单词翻译为\(targetLanguage)，给出国际音标、权威词典的解释以及包含该单词的1个例句，不要输出任何提示性内容和备注，可以加入必要的换行让排版美观，但是不需要markdown格式：\n"
         } else {
-            promptPrefix = "请将下面的内容翻译为\(targetLanguage)，直接输出翻译结果，不要输出任何提示内容和原文："
+            promptPrefix = "请将下面的内容翻译为\(targetLanguage)，直接输出翻译结果，不要输出任何提示内容和原文：\n"
         }
         performAIAction(promptPrefix: promptPrefix)
     }
@@ -387,7 +387,7 @@ struct MainView: View {
         }
         let targetLanguage = Lang.getPreferredLanguageName()
         // 修改 prompt，使其使用目标语言进行总结
-        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：")
+        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：\n")
     }
     
     // 解释
@@ -398,7 +398,7 @@ struct MainView: View {
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        performAIAction(promptPrefix: "请用简洁易懂的\(targetLanguage)解释下面的内容中的核心概念：")
+        performAIAction(promptPrefix: "请用简洁易懂的\(targetLanguage)解释下面内容中的核心概念：\n")
     }
     
     // 对话
