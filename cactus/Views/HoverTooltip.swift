@@ -24,7 +24,7 @@ struct HoverTooltipModifier: ViewModifier {
                                     .fill(Color.black.opacity(0.85)) // 背景颜色和透明度
                                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2) // 添加阴影
                             )
-                            .foregroundColor(Color(white: 0.85)) // 文本颜色，降低亮度
+                            .foregroundColor(Color(white: 0.75)) // 文本颜色，降低亮度
                             .offset(y: -35) // 向上偏移量，可以根据需要调整
                             .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .bottom))) // 更平滑的过渡动画
                             .zIndex(1) // 确保提示在最上层

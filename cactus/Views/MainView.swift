@@ -145,6 +145,7 @@ struct MainView: View {
                     
                     Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
                         .font(.caption)
+                        .foregroundColor(Color(white: 0.65)) // 文本颜色，降低亮度
                     
                     // 隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
