@@ -4,11 +4,15 @@ import SwiftUI
 struct HoverButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) var isEnabled // 获取按钮的启用状态
     @State private var isHovering = false // 跟踪悬停状态
+
+    // 自定义内边距属性
+    var horizontalPadding: CGFloat = 4
+    var verticalPadding: CGFloat = 4
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.horizontal, 4) // 左右内边距
-            .padding(.vertical, 4)   // 上下内边距
+            .padding(.horizontal, horizontalPadding) // 使用自定义水平内边距
+            .padding(.vertical, verticalPadding)   // 使用自定义垂直内边距
             .background(backgroundView(configuration: configuration)) // 使用新的背景视图逻辑
             .clipShape(RoundedRectangle(cornerRadius: 4)) // 圆角
             .contentShape(Rectangle()) // 确保整个区域都响应悬停

@@ -48,11 +48,11 @@ struct MainView: View {
                         Button(action: {
                             clearAll()
                         }) {
-                            Image(systemName: "xmark.circle")
+                            Image(systemName: "")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(.secondary)
                         }
-                        .buttonStyle(HoverButtonStyle())
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
                         
                         // 语音朗读（输入）
@@ -63,7 +63,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingInput ? .red : .secondary)
                         }
-                        .buttonStyle(HoverButtonStyle())
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .disabled(contentModel.text.isEmpty)
                         
                         // 复制按钮
@@ -74,7 +74,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(showInputCopySuccess ? .green : .secondary)
                         }
-                        .buttonStyle(HoverButtonStyle())
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .help(NSLocalizedString("help_copy", comment: "复制"))
                         .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
                         .disabled(contentModel.text.isEmpty) // 输入为空时禁用
@@ -93,7 +93,7 @@ struct MainView: View {
                         Image(systemName: "translate")
                             .frame(width: 20, height: 20)
                     }
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"), delay: 0.5)
                     
@@ -104,7 +104,7 @@ struct MainView: View {
                         Image(systemName: "pencil.and.list.clipboard.rtl")
                             .frame(width: 20, height: 20)
                     }
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"), delay: 0.5)
                     
@@ -115,7 +115,7 @@ struct MainView: View {
                         Image(systemName: "lightbulb.max")
                             .frame(width: 20, height: 20)
                     }
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_explain", comment: "解释说明"), delay: 0.5)
                     
@@ -126,7 +126,7 @@ struct MainView: View {
                         Image(systemName: "questionmark.bubble")
                             .frame(width: 20, height: 20)
                     }
-                    .buttonStyle(HoverButtonStyle())
+                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
                     
@@ -188,7 +188,6 @@ struct MainView: View {
                                 NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
                             }
                         })
-                    
                     HStack(spacing: 8) {
                         Button(action: {
                             speakText(contentModel.resultText ?? "")
@@ -197,7 +196,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingResult ? .red : .secondary)
                         }
-                        .buttonStyle(HoverButtonStyle())
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .disabled(contentModel.resultText?.isEmpty ?? true)
                         
                         Button(action: {
@@ -207,7 +206,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
                         }
-                        .buttonStyle(HoverButtonStyle())
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .help(NSLocalizedString("help_copy", comment: "复制"))
                         .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
                         .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
