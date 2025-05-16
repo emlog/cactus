@@ -24,6 +24,8 @@ struct MainView: View {
     @State private var isSpeakingResult = false
     private let speechService = SpeechService.shared
     
+    // @State private var isHovering = false // <--- 移除这一行
+    
     var body: some View {
         Form {
             Section() {
@@ -53,7 +55,6 @@ struct MainView: View {
                                 .foregroundColor(.secondary)
                         }
                         .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
-                        .help(NSLocalizedString("help_clear", comment: "清除输入和结果"))
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
                         
                         // 语音朗读（输入）
@@ -95,9 +96,9 @@ struct MainView: View {
                         Image(systemName: "translate")
                             .frame(width: 20, height: 20)
                     }
-                    .help(NSLocalizedString("help_translate", comment: "翻译文本"))
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
+                    .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"))
                     
                     // 摘要按钮
                     Button(action: {
@@ -106,9 +107,9 @@ struct MainView: View {
                         Image(systemName: "pencil.and.list.clipboard.rtl")
                             .frame(width: 20, height: 20)
                     }
-                    .help(NSLocalizedString("help_summary", comment: "总结摘要"))
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
+                    .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"))
                     
                     // 说明按钮
                     Button(action: {
@@ -117,9 +118,9 @@ struct MainView: View {
                         Image(systemName: "lightbulb.max")
                             .frame(width: 20, height: 20)
                     }
-                    .help(NSLocalizedString("help_explain", comment: "解释说明"))
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
+                    .hoverTooltip(NSLocalizedString("help_explain", comment: "解释说明"))
                     
                     // 对话问答按钮
                     Button(action: {
@@ -128,9 +129,9 @@ struct MainView: View {
                         Image(systemName: "questionmark.bubble")
                             .frame(width: 20, height: 20)
                     }
-                    .help(NSLocalizedString("help_chat", comment: "对话问答"))
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
+                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"))
                     
                     Spacer()
                     
