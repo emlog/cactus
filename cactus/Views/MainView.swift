@@ -98,7 +98,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"))
+                    .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"), delay: 0.5)
                     
                     // 摘要按钮
                     Button(action: {
@@ -109,7 +109,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"))
+                    .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"), delay: 0.5)
                     
                     // 说明按钮
                     Button(action: {
@@ -120,7 +120,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_explain", comment: "解释说明"))
+                    .hoverTooltip(NSLocalizedString("help_explain", comment: "解释说明"), delay: 0.5)
                     
                     // 对话问答按钮
                     Button(action: {
@@ -131,7 +131,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle())
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"))
+                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
                     
                     Spacer()
                     
