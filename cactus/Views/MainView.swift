@@ -52,7 +52,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(.secondary)
                         }
-                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
+                        .buttonStyle(HoverButtonStyle())
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
                         
                         // 语音朗读（输入）
@@ -63,7 +63,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingInput ? .red : .secondary)
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(HoverButtonStyle())
                         .disabled(contentModel.text.isEmpty)
                         
                         // 复制按钮
@@ -74,7 +74,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(showInputCopySuccess ? .green : .secondary)
                         }
-                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle 避免背景
+                        .buttonStyle(HoverButtonStyle())
                         .help(NSLocalizedString("help_copy", comment: "复制"))
                         .animation(.easeInOut, value: showInputCopySuccess) // 添加动画效果
                         .disabled(contentModel.text.isEmpty) // 输入为空时禁用
@@ -197,7 +197,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingResult ? .red : .secondary)
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(HoverButtonStyle())
                         .disabled(contentModel.resultText?.isEmpty ?? true)
                         
                         Button(action: {
@@ -207,7 +207,7 @@ struct MainView: View {
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
                         }
-                        .buttonStyle(PlainButtonStyle()) // 使用 PlainButtonStyle
+                        .buttonStyle(HoverButtonStyle())
                         .help(NSLocalizedString("help_copy", comment: "复制"))
                         .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
                         .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
