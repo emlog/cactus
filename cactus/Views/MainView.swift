@@ -48,7 +48,7 @@ struct MainView: View {
                         Button(action: {
                             clearAll()
                         }) {
-                            Image(systemName: "")
+                            Image(systemName: "xmark.circle")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(.secondary)
                         }
@@ -360,19 +360,29 @@ struct MainView: View {
             return
         }
         
-        let promptPrefix: String
+        let systemMessage: String
         let targetLanguage = Lang.getPreferredLanguageName()
         
         if Lang.isLikelyChinese(inputText) {
-            // 如果检测到中文，则翻译为英文
-            promptPrefix = "请将下面的内容翻译为英文，直接输出翻译结果，不要输出任何提示内容和原文：\n"
-        } else if(Lang.isSentence(inputText) == false) {
-            // 如果检测到是单词
-            promptPrefix = "请将下面的单词翻译为\(targetLanguage)，给出国际音标、权威词典的解释以及包含该单词的1个例句，不要输出任何提示性内容和备注，可以加入必要的换行让排版美观，但是不需要markdown格式：\n"
+            // 中文 => 英文翻译
+            systemMessage = "你是一名专业的中译英翻译助手。请将用户输入的中文内容准确翻译为英文。只输出英文翻译，不添加原文或任何解释说明。"
+        } else if Lang.isSentence(inputText) == false {
+            // 单词查询
+            systemMessage = """
+    你是一个多功能英汉词典。用户将输入一个英文单词。请使用 \(targetLanguage) 输出以下内容：
+    - 翻译结果
+    - 国际音标
+    - 单词类型
+    - 单词出处
+    - 一个包含该单词的例句，并翻译为 \(targetLanguage)
+    
+    不需要任何说明文字或提示语。排版清晰美观，可适当换行，但无需使用 markdown。
+    """
         } else {
-            promptPrefix = "请将下面的内容翻译为\(targetLanguage)，直接输出翻译结果，不要输出任何提示内容和原文：\n"
+            // 一般句子翻译
+            systemMessage = "你是一名专业的翻译助手。请将用户输入的内容准确翻译为 \(targetLanguage)，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
         }
-        performAIAction(promptPrefix: promptPrefix)
+        performAIAction(systemMessage: systemMessage)
     }
     
     // 总结
@@ -383,8 +393,8 @@ struct MainView: View {
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        // 修改 prompt，使其使用目标语言进行总结
-        performAIAction(promptPrefix: "请将下面的内容用尽可能简短的\(targetLanguage)总结关键信息：\n")
+        let systemMessage = "你是我的内容摘要助手。请用简洁的 \(targetLanguage) 总结我输入文本的核心要点，输出应尽可能简短，仅保留最关键信息。禁止输出原文、解释或引导性语言。"
+        performAIAction(systemMessage: systemMessage)
     }
     
     // 解释
@@ -395,7 +405,8 @@ struct MainView: View {
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        performAIAction(promptPrefix: "请用简洁易懂的\(targetLanguage)解释下面内容中的核心概念：\n")
+        let systemMessage = "你是我的百科全书助手。请用简洁、通俗易懂的 \(targetLanguage) 解释我输入内容中的核心概念，仅输出解释内容，不添加引导语、原文或其他注释。"
+        performAIAction(systemMessage: systemMessage)
     }
     
     // 对话
@@ -406,11 +417,12 @@ struct MainView: View {
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        performAIAction(promptPrefix: "你是我的私人助理，总是能简洁专业的解答我下面提出的要求或问题，并用\(targetLanguage)回答：")
+        let systemMessage = "你是我的智能私人助理，请始终用清晰、简洁且专业的 \(targetLanguage) 回应我的问题或指令。不添加客套、解释或无关内容，确保回答直截了当。"
+        performAIAction(systemMessage: systemMessage)
     }
     
     // 调用AI服务
-    private func performAIAction(promptPrefix: String) {
+    private func performAIAction(systemMessage: String) {
         guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
             showErrorToast = true
@@ -420,10 +432,8 @@ struct MainView: View {
         contentModel.isProcessing = true
         contentModel.resultText = ""
         
-        let fullPrompt = promptPrefix + "\n\n" + contentModel.text
-        
         DispatchQueue.global(qos: .userInitiated).async {
-            Ai.chat(text: fullPrompt) {
+            Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
                 DispatchQueue.main.async {
                     contentModel.isProcessing = false
                 }

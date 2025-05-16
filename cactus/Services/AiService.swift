@@ -8,7 +8,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     static let shared = AiService()
 
-    func chat(text: String, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) { // 新增 onError 参数
+    func chat(text: String, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) { // 新增 systemMessage 参数
         let settings = SettingsModel.shared
         guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
               let url = URL(string: providerSettings.baseURL) else {
@@ -29,11 +29,19 @@ class AiService: NSObject, URLSessionDataDelegate {
         print("Request URL: \(url)")
         print("Request Headers: \(request.allHTTPHeaderFields ?? [:])")
         
+        var messages: [[String: String]] = []
+        
+        // 如果 systemMessage 存在且不为空，则添加到 messages 数组
+        if let systemContent = systemMessage, !systemContent.isEmpty {
+            messages.append(["role": "system", "content": systemContent])
+        }
+        
+        // 添加用户消息
+        messages.append(["role": "user", "content": text])
+        
         let body: [String: Any] = [
             "model": providerSettings.model,
-            "messages": [
-                ["role": "user", "content":  text]
-            ],
+            "messages": messages, // 使用更新后的 messages 数组
             "max_tokens": 1000,
             "stream": true
         ]
