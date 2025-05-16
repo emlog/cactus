@@ -1,6 +1,6 @@
 import SwiftUI
 
-// 自定义按钮样式，实现悬停效果
+// 主按钮样式 - 翻译、总结、解释、对话按钮
 struct HoverButtonStyle: ButtonStyle {
     @State private var isHovering = false // 跟踪悬停状态
 
