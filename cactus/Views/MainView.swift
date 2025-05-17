@@ -369,18 +369,28 @@ struct MainView: View {
         } else if Lang.isSentence(inputText) == false {
             // 单词查询
             systemMessage = """
-你是一个多功能英汉词典。用户将输入一个英文单词。请使用 \(targetLanguage) 输出以下内容，格式如下：
+你是一个多功能词典。查询用户输入的单词，并使用 \(targetLanguage) 输出准确的查询结果，格式如下：
 
-翻译结果  
-/国际音标/  
+翻译 
+音标  
 词性  
-词源（包括来源语言及演变过程）
+词源
 
 例句：  
-英文例句  
-对应的中文翻译
+包含该单词的例句  
+对应的 \(targetLanguage) 例句翻译。
 
-不要添加任何多余的提示语或解释，不使用“翻译结果：”“国际音标：”等冒号形式的标注。排版清晰自然，无需 markdown 语法。
+如查询 tiger 输出例子：
+
+老虎
+/taɪgər/
+名词
+来自古法语“tigre”，源自拉丁语“tigri”，意为“老虎”
+
+The tiger is the largest of all the cats. 
+老虎是最大的猫科动物。
+
+不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然，无需 markdown 语法。
 """
         } else {
             // 一般句子翻译
@@ -412,9 +422,9 @@ struct MainView: View {
         let systemMessage = """
 你是我的百科全书助手。请用简洁、通俗易懂的 \(targetLanguage) 解释我输入内容中的 1 至 5 个核心概念，仅输出这些概念的解释，不添加任何引导语、原文或注释。输出格式如下：
 
-1. 概念1：解释内容  
-2. 概念2：解释内容  
-（最多 5 项），无需 markdown 语法。
+1. xxx：解释内容  
+2. xxx：解释内容  
+（不超过5项），无需 markdown 语法。
 """
         performAIAction(systemMessage: systemMessage)
     }
