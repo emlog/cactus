@@ -21,6 +21,13 @@ struct HoverButtonStyle: ButtonStyle {
                     isHovering = hovering
                 }
             }
+            // 添加这一行：当按钮被点击时重置悬停状态
+            .onChange(of: configuration.isPressed) { isPressed in
+                if isPressed {
+                    // 当按钮被按下时，确保悬停状态被重置
+                    isHovering = false
+                }
+            }
             .scaleEffect(isEnabled && configuration.isPressed ? 0.95 : 1.0) // 仅在启用时响应按下缩小效果
             .opacity(isEnabled ? 1.0 : 0.5) // 禁用时降低透明度
             .animation(.easeInOut(duration: 0.1), value: isHovering) // 添加动画
@@ -33,6 +40,9 @@ struct HoverButtonStyle: ButtonStyle {
     private func backgroundView(configuration: Configuration) -> some View {
         if !isEnabled {
             Color.gray.opacity(0.1) // 禁用时的背景色
+        } else if configuration.isPressed {
+            // 当按钮被按下时，使用按下状态的背景色，而不是悬停状态
+            Color.gray.opacity(0.3)
         } else if isHovering {
             Color.gray.opacity(0.2) // 悬停时背景变灰
         } else {
