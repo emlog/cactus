@@ -5,19 +5,29 @@ Cactus AI Assistant
 
 ## 副标题：
 
-基于大语言模型的智能文字助手，快速翻译、总结、解释选中文本
+快捷翻译总结解释，一键高效处理文字
+快速翻譯、摘要與解釋，智慧處理文字內容
+AIで選択テキストを翻訳・要約・解説
+선택한 텍스트 AI로 번역·요약·설명
 Translate, Summarize
-基於大型語言模型的智慧文字助手，快速翻譯、摘要、解釋選取文字
-AIで素早く翻訳・要約・説明する文章アシスタント
-AI로 빠르게 번역, 요약, 설명하는 텍스트 도우미
+
+
+
+## 推广文本
+选中文本，一键调用 AI 翻译、总结或通俗解释。支持快捷键启动，提升阅读与写作效率，适用于学习、工作等多种场景。
+選取文字後即可啟用 AI 翻譯、重點摘要或簡易說明。支援快捷鍵啟動，讓閱讀與創作更高效，助你工作學習無障礙。
+テキストを選択するだけで、AIが即座に翻訳・要約・わかりやすく解説。ショートカット対応で作業効率を大幅アップ。
+텍스트를 선택하면 AI가 자동으로 번역, 요약 또는 쉽게 설명해줍니다. 단축키 지원으로 업무 및 학습 효율을 높이세요.
+Select any text and use AI to translate, summarize, or explain it in plain language. Boost your productivity with one shortcut. Perfect for reading & writing.
+
 
 ## 关键词
 
-翻译,AI 总结,智能解释,文本处理,学习工具
-AI Assistant,Text Tool,Translate,Summarize,Productivity
-翻譯,AI 摘要,智慧解釋,文字處理,學習工具
-翻訳,AI要約,知的説明,テキスト処理,学習ツール
-번역,AI 요약,지능형 설명,텍스트 처리,학습 도구
+翻译,AI助手,文字助手,总结,解释,智能翻译,内容提炼,快捷翻译,mac翻译,mac总结,mac助手
+翻譯,AI助手,文字摘要,智能總結,內容精華,快速翻譯,文字解釋,智慧翻譯,Mac翻譯,AI工具,寫作助手
+翻訳,AIアシスタント,文章要約,内容整理,テキスト翻訳,文章解析,スマート翻訳,Macアプリ,ライティング支援,AIツール
+번역,AI도우미,문서요약,텍스트해석,지능형요약,스마트번역,내용정리,맥앱,AI툴,문서보조,작문도움
+translator,AI assistant,text summary,quick translate,explain text,writing helper,smart translation
 
 ### 简体中文介绍
 
