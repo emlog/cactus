@@ -28,7 +28,7 @@ class SettingsModel: ObservableObject {
             title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_max"),
             baseURL: "https://api.cactusai.cc/v1/chat/completions",
             apiKey: "sk-xxx",
-            model: "THUDM/glm-4-9b-chat"
+            model: "internlm/internlm2_5-7b-chat"
         )
     ]
     
