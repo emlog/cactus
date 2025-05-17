@@ -369,15 +369,19 @@ struct MainView: View {
         } else if Lang.isSentence(inputText) == false {
             // 单词查询
             systemMessage = """
-    你是一个多功能英汉词典。用户将输入一个英文单词。请使用 \(targetLanguage) 输出以下内容：
-    - 翻译结果
-    - 国际音标
-    - 单词类型
-    - 单词出处
-    - 一个包含该单词的例句，并翻译为 \(targetLanguage)
-    
-    不需要任何说明文字或提示语。排版清晰美观，可适当换行，但无需使用 markdown。
-    """
+你是一个多功能英汉词典。用户将输入一个英文单词。请使用 \(targetLanguage) 输出以下内容，格式如下：
+
+翻译结果  
+/国际音标/  
+词性  
+词源（包括来源语言及演变过程）
+
+例句：  
+英文例句  
+对应的中文翻译
+
+不要添加任何多余的提示语或解释，不使用“翻译结果：”“国际音标：”等冒号形式的标注。排版清晰自然，无需 markdown 语法。
+"""
         } else {
             // 一般句子翻译
             systemMessage = "你是一名专业的翻译助手。请将用户输入的内容准确翻译为 \(targetLanguage)，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
@@ -405,7 +409,13 @@ struct MainView: View {
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        let systemMessage = "你是我的百科全书助手。请用简洁、通俗易懂的 \(targetLanguage) 解释我输入内容中的核心概念，仅输出解释内容，不添加引导语、原文或其他注释。"
+        let systemMessage = """
+你是我的百科全书助手。请用简洁、通俗易懂的 \(targetLanguage) 解释我输入内容中的 1 至 5 个核心概念，仅输出这些概念的解释，不添加任何引导语、原文或注释。输出格式如下：
+
+1. 概念1：解释内容  
+2. 概念2：解释内容  
+（最多 5 项），无需 markdown 语法。
+"""
         performAIAction(systemMessage: systemMessage)
     }
     
@@ -417,7 +427,7 @@ struct MainView: View {
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        let systemMessage = "你是我的智能私人助理，请始终用清晰、简洁且专业的 \(targetLanguage) 回应我的问题或指令。不添加客套、解释或无关内容，确保回答直截了当。"
+        let systemMessage = "你是我的智能私人助理，请始终用清晰、简洁且专业的 \(targetLanguage) 回应我的问题或指令。不添加客套、解释或无关内容，确保回答直截了当，无需 markdown 语法。"
         performAIAction(systemMessage: systemMessage)
     }
     
