@@ -126,7 +126,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             object: nil
         )
         
-        // --- 新增：添加 Pin 按钮到标题栏 ---
+        // 添加 Pin 按钮到标题栏
         let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
         titlebarAccessoryViewController.layoutAttribute = .trailing // 放在右侧
         
@@ -143,8 +143,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         titlebarAccessoryViewController.view = pinButton! // 将按钮设置为视图控制器的视图
         mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
-        // --- 结束新增 ---
-        
         
         // 初始化关于窗口 - 保持不变
         aboutWindow = NSWindow(
@@ -272,7 +270,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
     
-    // 新增：菜单项的 Action 方法
+    // 菜单项的 Action 方法
     @objc private func openMainTranslateAction() {
         openMain(action: .translate)
     }
@@ -280,7 +278,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc private func openMainSummaryAction() {
         openMain(action: .summarize)
     }
-    
     
     // 检查并提醒用户开启：辅助功能权限 - 修改为接受 ActionType
     private func checkAccessibilityPermissionAndGetClipboard(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
