@@ -162,62 +162,66 @@ struct MainView: View {
             }
             
             Section() {
-                ZStack(alignment: .bottomTrailing) {
-                    TextEditor(text: .constant(contentModel.resultText ?? ""))
-                        .font(.system(size: 15))
-                        .lineSpacing(8)
-                        .frame(maxWidth: .infinity, minHeight: 100, maxHeight: resultTextHeight)
-                        .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
-                        .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
-                        .padding(.top, 10)        // 保持顶部内边距为0
-                        .background(Color(.textBackgroundColor))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(.separatorColor), lineWidth: 1)
-                        )
-                        .onChange(of: contentModel.resultText, perform: { value in
-                            // 当结果文本变化时，计算新的高度
-                            if let text = value {
-                                // 使用 calculateTextHeight 计算结果区域高度
-                                resultTextHeight = calculateTextHeight(text: text, width: 480) // 假设宽度与输入区域类似
-                                // 通知窗口调整大小
+                // 只有当 contentModel.resultText 不为 nil 且不为空时，才显示 ZStack
+                if let resultText = contentModel.resultText, !resultText.isEmpty {
+                    ZStack(alignment: .bottomTrailing) {
+                        TextEditor(text: .constant(resultText)) // 使用解包后的 resultText
+                            .font(.system(size: 15))
+                            .lineSpacing(8)
+                            .frame(maxWidth: .infinity, minHeight: 100, maxHeight: resultTextHeight)
+                            .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
+                            .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
+                            .padding(.top, 10)        // 保持顶部内边距为0
+                            .background(Color(.textBackgroundColor))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color(.separatorColor), lineWidth: 1)
+                            )
+                            .onChange(of: contentModel.resultText, perform: { value in
+                                // 当结果文本变化时，计算新的高度
+                                if let text = value, !text.isEmpty {
+                                    // 使用 calculateTextHeight 计算结果区域高度
+                                    resultTextHeight = calculateTextHeight(text: text, width: 480) // 假设宽度与输入区域类似
+                                } else {
+                                    resultTextHeight = 200 // 如果结果为空，重置为最小高度（或隐藏时的默认值）
+                                }
+                                // 通知窗口调整大小 (无论显示或隐藏，都需要通知)
                                 NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-                            } else {
-                                resultTextHeight = 200 // 如果结果为空，重置为最小高度
-                                NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                            })
+                        HStack(spacing: 8) {
+                            Button(action: {
+                                speakText(contentModel.resultText ?? "")
+                            }) {
+                                Image(systemName: "speaker.wave.2.circle")
+                                    .frame(width: 15, height: 15)
+                                    .foregroundColor(isSpeakingResult ? .red : .secondary)
                             }
-                        })
-                    HStack(spacing: 8) {
-                        Button(action: {
-                            speakText(contentModel.resultText ?? "")
-                        }) {
-                            Image(systemName: "speaker.wave.2.circle")
-                                .frame(width: 15, height: 15)
-                                .foregroundColor(isSpeakingResult ? .red : .secondary)
+                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                            .disabled(contentModel.resultText?.isEmpty ?? true)
+                            
+                            Button(action: {
+                                copyResp()// 复制输出
+                            }) {
+                                Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
+                                    .frame(width: 15, height: 15)
+                                    .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
+                            }
+                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                            .help(NSLocalizedString("help_copy", comment: "复制"))
+                            .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
+                            .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
                         }
-                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                        .disabled(contentModel.resultText?.isEmpty ?? true)
-                        
-                        Button(action: {
-                            copyResp()// 复制输出
-                        }) {
-                            Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
-                                .frame(width: 15, height: 15)
-                                .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
-                        }
-                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                        .help(NSLocalizedString("help_copy", comment: "复制"))
-                        .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
-                        .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 5)
                     }
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
+                    .transition(.opacity.combined(with: .scale)) // ZStack自身的过渡动画保持不变
                 }
             }
+            // 移除了之前在这里的 .animation(.easeInOut, value: contentModel.resultText?.isEmpty ?? true)
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
-        .frame(minWidth: 500, minHeight: 390)
+        .frame(minWidth: 500)
         .toast(isPresenting: $showCompleteToast) {
             AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
         }
@@ -253,7 +257,7 @@ struct MainView: View {
         let effectiveWidth = width - 20 // (padding * 2)
         let textContainer = NSTextContainer(containerSize: NSSize(width: effectiveWidth, height: CGFloat.greatestFiniteMagnitude))
         textContainer.lineFragmentPadding = 5 // NSTextView 默认的 padding
-        
+
         let layoutManager = NSLayoutManager()
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
