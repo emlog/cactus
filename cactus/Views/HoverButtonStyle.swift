@@ -31,8 +31,6 @@ struct HoverButtonStyle: ButtonStyle {
             .scaleEffect(isEnabled && configuration.isPressed ? 0.95 : 1.0) // 仅在启用时响应按下缩小效果
             .opacity(isEnabled ? 1.0 : 0.5) // 禁用时降低透明度
             .animation(.easeInOut(duration: 0.1), value: isHovering) // 添加动画
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed) // 按下动画
-            .animation(.easeInOut(duration: 0.1), value: isEnabled) // 启用/禁用状态变化动画
     }
     
     // 辅助方法来决定背景颜色
