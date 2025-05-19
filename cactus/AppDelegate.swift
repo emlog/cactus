@@ -12,7 +12,7 @@ import Settings
 import Foundation
 import ApplicationServices
 
-// 新增：定义操作类型
+// 定义操作类型
 enum ActionType {
     case translate
     case summarize
@@ -25,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var mainWindow: NSWindow?
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
-    private var pinButton: NSButton? // 新增：持有 pin 按钮的引用
+    private var pinButton: NSButton? // 持有 pin 按钮的引用
     
     private var settingsWindowController: SettingsWindowController?
     
@@ -454,7 +454,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
     
-    // 修改：实现 NSWindowDelegate 方法，当窗口失去焦点时调用
+    // 实现 NSWindowDelegate 方法，当窗口失去焦点时调用
     func windowDidResignKey(_ notification: Notification) {
         // 检查失去焦点的窗口是否是 mainWindow
         if let window = notification.object as? NSWindow, window == mainWindow {

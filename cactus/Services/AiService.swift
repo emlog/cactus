@@ -4,11 +4,11 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var fullContent = ""
     private var buffer = Data()
     private var completionHandler: (() -> Void)?
-    private var errorHandler: ((String) -> Void)? // 新增：错误处理回调
+    private var errorHandler: ((String) -> Void)? // 错误处理回调
     
     static let shared = AiService()
 
-    func chat(text: String, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) { // 新增 systemMessage 参数
+    func chat(text: String, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
         let settings = SettingsModel.shared
         guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
               let url = URL(string: providerSettings.baseURL) else {

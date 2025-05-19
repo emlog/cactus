@@ -37,7 +37,7 @@ struct AboutView: View {
                 .foregroundColor(.blue)
                 .padding(.top, 5)
         }
-        .frame(width: 280, height: 200)
+        .frame(width: 324, height: 200)
         .contentShape(Rectangle()) // 让整个 VStack 区域都能响应手势
         .gesture(
             TapGesture(count: 2) // 检测双击

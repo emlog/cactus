@@ -17,7 +17,7 @@ struct MainView: View {
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
     @State private var resultTextHeight: CGFloat = 200 // 结果区域的高度状态
-    // 新增：用于控制输入框焦点的状态变量
+    // 用于控制输入框焦点的状态变量
     @FocusState private var isInputEditorFocused: Bool
     // 语音朗读相关状态
     @State private var isSpeakingInput = false
@@ -31,7 +31,7 @@ struct MainView: View {
                     CustomTextEditor(text: $contentModel.text, onCommit: {
                         translateText()
                     }, calculatedHeight: $inputTextHeight) // 传递高度绑定
-                    .focused($isInputEditorFocused) // 新增：绑定焦点状态
+                    .focused($isInputEditorFocused) // 绑定焦点状态
                     .frame(height: inputTextHeight) // 使用状态变量设置高度
                     .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
                     .padding(.horizontal, 0) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
@@ -298,7 +298,7 @@ struct MainView: View {
             self.resultTextHeight = 200
             // 清除后，通知窗口调整大小
             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-            // 新增：设置输入框焦点
+            // 设置输入框焦点
             self.isInputEditorFocused = true
         }
     }
