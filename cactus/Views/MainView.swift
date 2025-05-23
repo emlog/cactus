@@ -18,13 +18,13 @@ struct MainView: View {
     
     // 默认尺寸
     private let minInputTextHeight: CGFloat = 100
-    private let minResultTextHeight: CGFloat = 200
+    private let minResultTextHeight: CGFloat = 100
     private let maxResultTextHeight: CGFloat = 500
     private let minTextWidth: CGFloat = 500
     
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
-    @State private var resultTextHeight: CGFloat = 200
+    @State private var resultTextHeight: CGFloat = 100
     
     // 用于控制输入框焦点的状态变量
     @FocusState private var isInputEditorFocused: Bool
@@ -196,8 +196,6 @@ struct MainView: View {
                                 if let text = value, !text.isEmpty {
                                     // 使用 calculateTextHeight 计算结果区域高度
                                     resultTextHeight = calculateTextHeight(text: text, width: minTextWidth)
-                                    // 设置窗口已展开状态
-                                    isResultViewExpanded = true
                                 } else {
                                     resultTextHeight = minResultTextHeight // 如果结果为空，重置为最小高度
                                 }
@@ -476,6 +474,8 @@ The tiger is the largest of all the cats.
         DispatchQueue.global(qos: .userInitiated).async {
             Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
                 DispatchQueue.main.async {
+                    // 设置窗口已展开状态，避免重复展开和收起输出窗口导致页面跳动，之前放在输出view的onchage中，这依赖内容是否变更来触发，某些情况输出内容并无变化。
+                    isResultViewExpanded = true
                     contentModel.isProcessing = false
                 }
             } onError: { errorMessage in // 错误处理回调
