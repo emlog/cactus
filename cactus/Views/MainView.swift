@@ -11,18 +11,31 @@ struct MainView: View {
     @State private var showCompleteToast = false
     @State private var showErrorToast = false
     @State private var toastMessage = ""
+    
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
     @State private var showResultCopySuccess = false
+    
+    // 默认尺寸
+    private let minInputTextHeight: CGFloat = 100
+    private let minResultTextHeight: CGFloat = 200
+    private let maxResultTextHeight: CGFloat = 500
+    private let minTextWidth: CGFloat = 500
+    
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
-    @State private var resultTextHeight: CGFloat = 200 // 结果区域的高度状态
+    @State private var resultTextHeight: CGFloat = 200
+    
     // 用于控制输入框焦点的状态变量
     @FocusState private var isInputEditorFocused: Bool
+    
     // 语音朗读相关状态
     @State private var isSpeakingInput = false
     @State private var isSpeakingResult = false
     private let speechService = SpeechService.shared
+    
+    // 跟踪输出窗口是否已展开
+    @State private var isResultViewExpanded = false
     
     var body: some View {
         Form {
@@ -162,13 +175,13 @@ struct MainView: View {
             }
             
             Section() {
-                // 只有当 contentModel.resultText 不为 nil 且不为空时，才显示 ZStack
-                if let resultText = contentModel.resultText, !resultText.isEmpty {
+                // 当 resultText 不为 nil 且 不为空 或 窗口已展开时，显示结果区域
+                if let resultText = contentModel.resultText, !resultText.isEmpty || isResultViewExpanded {
                     ZStack(alignment: .bottomTrailing) {
                         TextEditor(text: .constant(resultText)) // 使用解包后的 resultText
                             .font(.system(size: 15))
                             .lineSpacing(8)
-                            .frame(maxWidth: .infinity, minHeight: 100, maxHeight: resultTextHeight)
+                            .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight)
                             .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
                             .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
                             .padding(.top, 10)        // 保持顶部内边距为0
@@ -182,11 +195,13 @@ struct MainView: View {
                                 // 当结果文本变化时，计算新的高度
                                 if let text = value, !text.isEmpty {
                                     // 使用 calculateTextHeight 计算结果区域高度
-                                    resultTextHeight = calculateTextHeight(text: text, width: 480) // 假设宽度与输入区域类似
+                                    resultTextHeight = calculateTextHeight(text: text, width: minTextWidth)
+                                    // 设置窗口已展开状态
+                                    isResultViewExpanded = true
                                 } else {
-                                    resultTextHeight = 200 // 如果结果为空，重置为最小高度（或隐藏时的默认值）
+                                    resultTextHeight = minResultTextHeight // 如果结果为空，重置为最小高度
                                 }
-                                // 通知窗口调整大小 (无论显示或隐藏，都需要通知)
+                                // 通知窗口调整大小
                                 NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
                             })
                         HStack(spacing: 8) {
@@ -221,7 +236,7 @@ struct MainView: View {
             // 移除了之前在这里的 .animation(.easeInOut, value: contentModel.resultText?.isEmpty ?? true)
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
-        .frame(minWidth: 500)
+        .frame(minWidth: minTextWidth)
         .toast(isPresenting: $showCompleteToast) {
             AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
         }
@@ -269,7 +284,7 @@ struct MainView: View {
         let totalHeight = height + 20 + 10 // 加上垂直 padding 和额外空间
         
         // 设置最小和最大高度限制
-        return min(max(totalHeight, 200), 500) // 最小200，最大500
+        return min(max(totalHeight, minResultTextHeight), maxResultTextHeight)
     }
     
     func fillText(_ newText: String) {
@@ -294,8 +309,10 @@ struct MainView: View {
             self.contentModel.text = ""
             self.contentModel.resultText = nil // 将结果设置为空
             // 重置输入和输出区域的高度为默认值
-            self.inputTextHeight = 100
-            self.resultTextHeight = 200
+            self.inputTextHeight = minInputTextHeight
+            self.resultTextHeight = minResultTextHeight
+            // 重置展开状态
+            self.isResultViewExpanded = false
             // 清除后，通知窗口调整大小
             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
             // 设置输入框焦点
