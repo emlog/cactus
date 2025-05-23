@@ -20,7 +20,7 @@ struct MainView: View {
     private let minInputTextHeight: CGFloat = 100
     private let minResultTextHeight: CGFloat = 100
     private let maxResultTextHeight: CGFloat = 500
-    private let minTextWidth: CGFloat = 500
+    private let minTextWidth: CGFloat = 580
     
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
