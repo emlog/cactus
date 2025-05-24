@@ -460,6 +460,12 @@ The tiger is the largest of all the cats.
         performAIAction(systemMessage: systemMessage)
     }
     
+    // 只做一些清理窗口的动作
+    func noactionText() {
+        contentModel.resultText = nil
+        isResultViewExpanded = false
+    }
+    
     // 调用AI服务
     private func performAIAction(systemMessage: String) {
         guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {

@@ -372,7 +372,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     case .summarize:
                         mainView.summaryText() // 调用总结方法
                     case .nothing:
-                        // 不执行任何操作
+                        mainView.noactionText()
                         break
                     }
                 }
