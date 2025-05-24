@@ -371,7 +371,7 @@ struct MainView: View {
     
     // 翻译
     func translateText() {
-        let inputText = contentModel.text
+        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
             showErrorToast = true
@@ -419,7 +419,8 @@ The tiger is the largest of all the cats.
     
     // 总结
     func summaryText() {
-        if contentModel.text.isEmpty {
+        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
             showErrorToast = true
             return
@@ -431,7 +432,8 @@ The tiger is the largest of all the cats.
     
     // 解释
     func explainText() {
-        if contentModel.text.isEmpty {
+        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
             showErrorToast = true
             return
@@ -449,7 +451,8 @@ The tiger is the largest of all the cats.
     
     // 对话
     func chatText() {
-        if contentModel.text.isEmpty {
+        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容")
             showErrorToast = true
             return
