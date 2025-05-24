@@ -231,7 +231,6 @@ struct MainView: View {
                     .transition(.opacity.combined(with: .scale)) // ZStack自身的过渡动画保持不变
                 }
             }
-            // 移除了之前在这里的 .animation(.easeInOut, value: contentModel.resultText?.isEmpty ?? true)
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
         .frame(minWidth: minTextWidth)
@@ -270,7 +269,7 @@ struct MainView: View {
         let effectiveWidth = width - 20 // (padding * 2)
         let textContainer = NSTextContainer(containerSize: NSSize(width: effectiveWidth, height: CGFloat.greatestFiniteMagnitude))
         textContainer.lineFragmentPadding = 5 // NSTextView 默认的 padding
-
+        
         let layoutManager = NSLayoutManager()
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
@@ -456,7 +455,8 @@ The tiger is the largest of all the cats.
             return
         }
         let targetLanguage = Lang.getPreferredLanguageName()
-        let systemMessage = "你是我的智能私人助理，请始终用清晰、简洁且专业的 \(targetLanguage) 回应我的问题或指令。不添加客套、解释或无关内容，确保回答直截了当，无需 markdown 语法。"
+        let systemMessage = "你是我的智能私人助理，请始终用清晰专业的 \(targetLanguage) 回应我的问题或指令。不添加任何引导语、客套或无关内容，除非指令要求无需 markdown 语法。"
+        
         performAIAction(systemMessage: systemMessage)
     }
     

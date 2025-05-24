@@ -10,7 +10,7 @@
 "about" = "關於";
 "quit" = "結束";
 
-"openmain" = "主窗口";
+"openmain" = "打開視窗";
 "translate" = "翻譯所選文字";
 "summary" = "製作摘要";
 
@@ -18,8 +18,8 @@
 "general" = "一般";
 "service" = "服務";
 "startup" = "登入時啟動";
-"shortcut_openmain" = "打开主窗口快捷键";
-"shortcut_openmain_description" = "打开主窗口，并将选中的文字填充到输入框内";
+"shortcut_openmain" = "主視窗快捷鍵";
+"shortcut_openmain_description" = "打開主視窗，並將選取文字自動填入輸入框";
 "shortcut_translate" = "翻譯所選文字快速鍵";
 "shortcut_translate_description" = "選取文字內容，按下快速鍵即可快速翻譯";
 "shortcut_summary" = "製作摘要快速鍵";
