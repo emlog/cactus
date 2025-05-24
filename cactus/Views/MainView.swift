@@ -487,10 +487,11 @@ The tiger is the largest of all the cats.
                     isResultViewExpanded = true
                     contentModel.isProcessing = false
                 }
-            } onError: { errorMessage in // 错误处理回调
+            } onError: { errorMessage in
                 DispatchQueue.main.async {
                     self.toastMessage = errorMessage
                     self.showErrorToast = true
+                    contentModel.resultText = errorMessage // 将错误信息显示在主输出区域
                     contentModel.isProcessing = false
                 }
             }
