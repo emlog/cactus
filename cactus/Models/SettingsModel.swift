@@ -30,6 +30,12 @@ class SettingsModel: ObservableObject {
             baseURL: "https://api.cactusai.cc/v1/chat/completions",
             apiKey: "sk-xxx",
             model: "internlm/internlm2_5-7b-chat"
+        ),
+        "model_qwen3": ProviderSettings(
+            title: NSLocalizedString("model_qwen3", comment: "model_qwen3"),
+            baseURL: "https://openrouter.ai/api/v1/chat/completions",
+            apiKey: "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",
+            model: "qwen/qwen3-8b:free"
         )
     ]
     
