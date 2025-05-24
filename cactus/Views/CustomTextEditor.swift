@@ -72,7 +72,7 @@ struct CustomTextEditor: NSViewRepresentable {
         init(_ parent: CustomTextEditor) {
             self.parent = parent
         }
-
+        
         // 处理键盘命令
         func textView(_ textView: NSTextView, doCommandBy selector: Selector) -> Bool {
             if selector == #selector(NSResponder.insertNewline(_:)) {
@@ -132,8 +132,6 @@ struct CustomTextEditor: NSViewRepresentable {
         // 文本存储变化时（例如粘贴）也需要更新
         func textViewDidChangeSelection(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
-            // 在选择变化时也可能需要重新计算高度，特别是对于多行文本编辑器
-            calculateAndUpdateHeight(textView: textView)
             
             // 确保光标可见（自动滚动到光标位置）
             textView.scrollRangeToVisible(textView.selectedRange)
@@ -152,7 +150,7 @@ struct CustomTextEditor: NSViewRepresentable {
             let clampedHeight = max(parent.minHeight, min(newHeight, parent.maxHeight))
             
             // 避免不必要的更新和潜在的循环
-            if abs(parent.calculatedHeight - clampedHeight) > 1 { // 只有当高度变化显著时才更新
+            if abs(parent.calculatedHeight - clampedHeight) > 5 { // 尝试增大阈值，例如 2 或 5
                 DispatchQueue.main.async {
                     self.parent.calculatedHeight = clampedHeight
                 }
