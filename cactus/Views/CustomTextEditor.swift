@@ -133,6 +133,9 @@ struct CustomTextEditor: NSViewRepresentable {
         func textViewDidChangeSelection(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
             
+            // 在选择变化时也可能需要重新计算高度，特别是对于多行文本编辑器
+            calculateAndUpdateHeight(textView: textView)
+            
             // 确保光标可见（自动滚动到光标位置）
             textView.scrollRangeToVisible(textView.selectedRange)
         }
