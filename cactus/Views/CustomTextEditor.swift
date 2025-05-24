@@ -72,7 +72,7 @@ struct CustomTextEditor: NSViewRepresentable {
         init(_ parent: CustomTextEditor) {
             self.parent = parent
         }
-        
+
         // 处理键盘命令
         func textView(_ textView: NSTextView, doCommandBy selector: Selector) -> Bool {
             if selector == #selector(NSResponder.insertNewline(_:)) {
@@ -85,6 +85,8 @@ struct CustomTextEditor: NSViewRepresentable {
                         textView.setSelectedRange(NSRange(location: currentRange.location + 1, length: 0))
                         // 手动触发文本变化通知，确保高度等更新
                         textView.didChangeText()
+                        // 确保光标可见（自动滚动到光标位置）
+                        textView.scrollRangeToVisible(textView.selectedRange)
                         return true // 已处理为换行
                     }
                     return false // 无法处理
@@ -102,6 +104,8 @@ struct CustomTextEditor: NSViewRepresentable {
                     textView.setSelectedRange(NSRange(location: currentRange.location + 1, length: 0))
                     // 手动触发文本变化通知
                     textView.didChangeText()
+                    // 确保光标可见（自动滚动到光标位置）
+                    textView.scrollRangeToVisible(textView.selectedRange)
                     return true // 已处理为换行
                 }
                 return false // 无法处理
@@ -120,6 +124,9 @@ struct CustomTextEditor: NSViewRepresentable {
             }
             // 计算并更新高度
             calculateAndUpdateHeight(textView: textView)
+            
+            // 确保光标可见（自动滚动到光标位置）
+            textView.scrollRangeToVisible(textView.selectedRange)
         }
         
         // 文本存储变化时（例如粘贴）也需要更新
@@ -127,6 +134,9 @@ struct CustomTextEditor: NSViewRepresentable {
             guard let textView = notification.object as? NSTextView else { return }
             // 在选择变化时也可能需要重新计算高度，特别是对于多行文本编辑器
             calculateAndUpdateHeight(textView: textView)
+            
+            // 确保光标可见（自动滚动到光标位置）
+            textView.scrollRangeToVisible(textView.selectedRange)
         }
         
         private func calculateAndUpdateHeight(textView: NSTextView) {
