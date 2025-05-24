@@ -10,6 +10,7 @@
 "about" = "앱 정보";
 "quit" = "종료";
 
+"openmain" = "主窗口";
 "translate" = "선택 번역";
 "summary" = "요약";
 
@@ -17,6 +18,8 @@
 "general" = "일반";
 "service" = "서비스";
 "startup" = "시작 시 자동 실행";
+"shortcut_openmain" = "打开主窗口快捷键";
+"shortcut_openmain_description" = "打开主窗口，并将选中的文字填充到输入框内";
 "shortcut_translate" = "번역 단축키";
 "shortcut_translate_description" = "텍스트를 선택하고 단축키로 빠르게 번역";
 "shortcut_summary" = "요약 단축키";

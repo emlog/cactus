@@ -10,6 +10,7 @@
 "about" = "このアプリについて";
 "quit" = "終了";
 
+"openmain" = "主窗口";
 "translate" = "選択して翻訳";
 "summary" = "要約";
 
@@ -17,6 +18,8 @@
 "general" = "一般";
 "service" = "サービス";
 "startup" = "起動時に自動起動";
+"shortcut_openmain" = "打开主窗口快捷键";
+"shortcut_openmain_description" = "打开主窗口，并将选中的文字填充到输入框内";
 "shortcut_translate" = "翻訳ショートカットキー";
 "shortcut_translate_description" = "テキストを選択して、ショートカットキーで素早く翻訳";
 "shortcut_summary" = "要約ショートカットキー";

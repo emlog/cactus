@@ -58,7 +58,7 @@ struct AboutView: View {
     }
 }
 
-#Preview {
-    AboutView()
-        .environment(\.locale, .init(identifier: "en"))
-}
+//#Preview {
+//    AboutView()
+//        .environment(\.locale, .init(identifier: "en"))
+//}

@@ -14,6 +14,7 @@ import ApplicationServices
 
 // 定义操作类型
 enum ActionType {
+    case nothing
     case translate
     case summarize
 }
@@ -42,6 +43,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             
             // 创建菜单
             let menu = NSMenu()
+            
+            let mainMenuItem = NSMenuItem(
+                title: NSLocalizedString("openmain", comment: "打开主窗口"),
+                action: #selector(openMainAction),
+                keyEquivalent: ""
+            )
+            mainMenuItem.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
+            mainMenuItem.setShortcut(for: SettingsModel.aiShortcutMain)
+            menu.addItem(mainMenuItem)
             
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("translate", comment: "选中翻译"),
@@ -160,7 +170,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     // Setup global keyboard shortcut using KeyboardShortcuts
     private func setupGlobalShortcut() {
-        // Register the keyboard shortcut
+        // Register the keyboard shortcut for openmain
+        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutMain) { [weak self] in
+            DispatchQueue.main.async {
+                self?.openMain(action: .nothing)
+            }
+        }
+        
+        // Register the keyboard shortcut for translate
         KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcut) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .translate) // 指定翻译操作
@@ -279,8 +296,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         openMain(action: .summarize)
     }
     
+    @objc private func openMainAction() {
+        openMain(action: .nothing)
+    }
+    
     // 检查并提醒用户开启：辅助功能权限 - 修改为接受 ActionType
-    private func checkAccessibilityPermissionAndGetClipboard(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
+    private func checkAccessibilityPermissionAndGetClipboard(action: ActionType = .nothing, completion: @escaping (Bool) -> Void) { // 添加 action 参数
         // 检查辅助功能权限
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: true]
@@ -350,6 +371,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                         mainView.translateText()
                     case .summarize:
                         mainView.summaryText() // 调用总结方法
+                    case .nothing:
+                        // 不执行任何操作
+                        break
                     }
                 }
                 success = true

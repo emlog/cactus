@@ -10,6 +10,7 @@
 "about" = "关于";
 "quit" = "退出";
 
+"openmain" = "主窗口";
 "translate" = "选中翻译";
 "summary" = "总结摘要";
 
@@ -17,6 +18,8 @@
 "general" = "通用";
 "service" = "服务";
 "startup" = "开机自动启动";
+"shortcut_openmain" = "打开主窗口快捷键";
+"shortcut_openmain_description" = "打开主窗口，并将选中的文字填充到输入框内";
 "shortcut_translate" = "选中翻译快捷键";
 "shortcut_translate_description" = "选中文字内容，按下快捷键快速翻译";
 "shortcut_summary" = "总结摘要快捷键";

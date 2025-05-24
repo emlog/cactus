@@ -10,6 +10,7 @@
 "about" = "About";
 "quit" = "Quit";
 
+"openmain" = "主窗口";
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
 
@@ -17,6 +18,8 @@
 "general" = "General";
 "service" = "AI Model";
 "startup" = "Open at Login";
+"shortcut_openmain" = "打开主窗口快捷键";
+"shortcut_openmain_description" = "打开主窗口，并将选中的文字填充到输入框内";
 "shortcut_translate" = "Translate Shortcut";
 "shortcut_translate_description" = "Select text and press the shortcut to translate.";
 "shortcut_summary" = "Summarize Shortcut";
