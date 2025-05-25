@@ -11,15 +11,13 @@ AIで選択テキストを翻訳・要約・解説
 선택한 텍스트 AI로 번역·요약·설명
 Translate, Summarize
 
-
-
 ## 推广文本
-选中文本，一键调用 AI 翻译、总结或通俗解释。支持快捷键启动，提升阅读与写作效率，适用于学习、工作等多种场景。
-選取文字後即可啟用 AI 翻譯、重點摘要或簡易說明。支援快捷鍵啟動，讓閱讀與創作更高效，助你工作學習無障礙。
+
+选中文本，一键翻译、总结。提升阅读与写作效率，适用于学习、工作等多种场景。
+選取文字後即可啟用 AI 翻譯、重點摘要或簡易說明。讓閱讀與創作更高效，助你工作學習無障礙。
 テキストを選択するだけで、AIが即座に翻訳・要約・わかりやすく解説。ショートカット対応で作業効率を大幅アップ。
 텍스트를 선택하면 AI가 자동으로 번역, 요약 또는 쉽게 설명해줍니다. 단축키 지원으로 업무 및 학습 효율을 높이세요.
 Select any text and use AI to translate, summarize, or explain it in plain language. Boost your productivity with one shortcut. Perfect for reading & writing.
-
 
 ## 关键词
 
@@ -44,7 +42,6 @@ translator,AI assistant,text summary,quick translate,explain text,writing helper
 使用条款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 隐私策略：https://cactusai.cc/privacy-policy
 
-
 ### 英文介绍
 
 Cactus AI Assistant is an AI-powered text assistant for quick translation, summarization, and explanation of selected content.
@@ -59,7 +56,6 @@ Key Features
 
 Terms of Use：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Privacy Policy：https://cactusai.cc/privacy-policy-en
-
 
 ### 繁体中文介绍
 
@@ -76,10 +72,7 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 使用條款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 隱私政策：https://cactusai.cc/privacy-policy-en
 
-
-
 ### 日语
-
 
 Cactus AIアシスタント は、大規模言語モデルに基づいたスマートなテキストアシスタントです。選択したテキストをすばやく翻訳・要約・わかりやすく説明します。
 
@@ -123,5 +116,3 @@ Thanks for your review work.
 
 修复已知问题，优化用户体验
 Fix some issues, optimize user experience
-
-
