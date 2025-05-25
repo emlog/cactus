@@ -153,7 +153,7 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    // 切换model按钮
+                    // Model selection menu button
                     Menu {
                         ForEach(settings.defaultProviders.keys.sorted(), id: \.self) { key in
                             Button(action: {
@@ -168,9 +168,12 @@ struct MainView: View {
                                 }
                             }
                         }
-                    } label: {}
-                        .menuStyle(BorderlessButtonMenuStyle())
-                        .frame(maxWidth: 30, alignment: .trailing)
+                    } label: {
+                        Image(systemName: "ellipsis")
+                    }
+                    .menuIndicator(.hidden) // Hide the menu indicator arrow
+                    .menuStyle(BorderlessButtonMenuStyle())
+                    .frame(maxWidth: 20, alignment: .trailing)
                     
                     // 隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
