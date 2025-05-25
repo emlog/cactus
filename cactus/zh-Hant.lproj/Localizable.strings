@@ -40,8 +40,8 @@
 "pop_copy_success" = "已拷貝";
 "pop_already_cleared" = "已清除內容";
 "pop_select_model_first" = "請先在偏好設定中選取 AI 模型";
-"help_translate" = "翻譯文字";
-"help_summary" = "製作摘要";
+"help_translate" = "翻譯文字 (%@)";
+"help_summary" = "製作摘要 (%@)";
 "help_explain" = "解釋";
 "help_chat" = "聊天";
 "help_copy" = "拷貝";

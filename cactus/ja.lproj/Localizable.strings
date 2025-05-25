@@ -40,8 +40,8 @@
 "pop_copy_success" = "コピーしました";
 "pop_already_cleared" = "内容はすでにクリアされています";
 "pop_select_model_first" = "環境設定でAIモデルを選択してください";
-"help_translate" = "テキスト翻訳";
-"help_summary" = "要約";
+"help_translate" = "テキスト翻訳 (%@)";
+"help_summary" = "要約 (%@)";
 "help_explain" = "説明";
 "help_chat" = "チャット";
 "help_copy" = "コピー";

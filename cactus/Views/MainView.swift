@@ -1,6 +1,7 @@
 import AlertToast
 import SwiftUI
 import AVFoundation
+import KeyboardShortcuts
 
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
@@ -108,7 +109,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"), delay: 0.5)
+                    .hoverTooltip(String(format: NSLocalizedString("help_translate", comment: "翻译文本 (%@)"), KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcut)?.description ?? ""), delay: 0.5)
                     
                     // 摘要按钮
                     Button(action: {
@@ -119,7 +120,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"), delay: 0.5)
+                    .hoverTooltip(String(format: NSLocalizedString("help_summary", comment: "总结摘要 (%@)"), KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcutSummary)?.description ?? ""), delay: 0.5)
                     
                     // 说明按钮
                     Button(action: {

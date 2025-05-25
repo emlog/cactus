@@ -40,8 +40,8 @@
 "pop_copy_success" = "Copied";
 "pop_already_cleared" = "Text cleared.";
 "pop_select_model_first" = "Please select an AI model in Preferences first.";
-"help_translate" = "Translate Text";
-"help_summary" = "Summarize Text";
+"help_translate" = "Translate Text (%@)";
+"help_summary" = "Summarize Text (%@)";
 "help_explain" = "Explain Text";
 "help_chat" = "Chat";
 "help_copy" = "Copy";
