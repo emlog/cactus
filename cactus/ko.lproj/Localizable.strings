@@ -27,7 +27,7 @@
 "select_service" = "AI 모델 선택";
 "free" = "무료";
 "model_deepseek_v3" = "Deepseek-v3";
-"model_zhipu_glm4" = "Zhipu-GLM-4";
+"model_zhipu_glm4" = "Zhipu-GLM-4 (추천)";
 "model_cactusai_mix" = "CactusAI-Mix";
 "model_qwen3" = "Qwen3";
 

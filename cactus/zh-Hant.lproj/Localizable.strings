@@ -27,7 +27,7 @@
 "select_service" = "選取 AI 模型";
 "free" = "免費";
 "model_deepseek_v3" = "Deepseek-v3";
-"model_zhipu_glm4" = "Zhipu-GLM-4";
+"model_zhipu_glm4" = "Zhipu-GLM-4 (推薦)";
 "model_cactusai_mix" = "CactusAI-Mix";
 "model_qwen3" = "Qwen3";
 

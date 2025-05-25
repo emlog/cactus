@@ -29,7 +29,7 @@
 "model_deepseek_v3" = "Deepseek-v3";
 "model_zhipu_glm4" = "Zhipu-GLM-4";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "Qwen3";
+"model_qwen3" = "Qwen3 (Recommended)";
 
 // main
 "pop_text_empty" = "No text available to copy.";
