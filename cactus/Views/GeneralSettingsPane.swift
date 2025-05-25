@@ -8,7 +8,7 @@ struct GeneralSettingsPane: View {
     @StateObject private var settingsModel = SettingsModel()
     
     var body: some View {
-        Settings.Container(contentWidth: 450) {
+        Settings.Container(contentWidth: 500) {
             Settings.Section(title: "", bottomDivider: true) {
                 LaunchAtLogin.Toggle {
                     Text(NSLocalizedString("startup", comment: "开机自启动"))
