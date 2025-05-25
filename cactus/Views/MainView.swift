@@ -143,8 +143,6 @@ struct MainView: View {
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
                     
-                    Spacer()
-                    
                     if contentModel.isProcessing {
                         // 显示loading动画
                         ProgressView()
@@ -153,9 +151,26 @@ struct MainView: View {
                             .padding(0)
                     }
                     
-                    Text(settings.defaultProviders[settings.selectedProvider]?.title ?? "")
-                        .font(.caption)
-                        .foregroundColor(Color(white: 0.65)) // 文本颜色，降低亮度
+                    Spacer()
+                    
+                    // 切换model按钮
+                    Menu {
+                        ForEach(settings.defaultProviders.keys.sorted(), id: \.self) { key in
+                            Button(action: {
+                                settings.selectedProvider = key
+                            }) {
+                                HStack {
+                                    Text(settings.defaultProviders[key]?.title ?? "")
+                                    Spacer()
+                                    if settings.selectedProvider == key {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                    } label: {}
+                        .menuStyle(BorderlessButtonMenuStyle())
+                        .frame(maxWidth: 30, alignment: .trailing)
                     
                     // 隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
