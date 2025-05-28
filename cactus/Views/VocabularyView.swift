@@ -11,6 +11,7 @@ import CoreData
 struct VocabularyView: View {
     @ObservedObject private var vocabularyManager = VocabularyManager.shared
     @State private var selectedWord: WordEntry?
+    @FocusState private var isViewFocused: Bool
     
     var body: some View {
         HSplitView {
@@ -98,12 +99,34 @@ struct VocabularyView: View {
             .frame(minWidth: 400)
         }
         .frame(width: 600, height: 400)
+        .focusable()
+        .focused($isViewFocused)
+        .overlay(
+            // 隐藏的按钮用于键盘快捷键
+            VStack {
+                Button("Previous") {
+                    selectPreviousWord()
+                }
+                .keyboardShortcut(.upArrow, modifiers: [])
+                .opacity(0)
+                .allowsHitTesting(false)
+                
+                Button("Next") {
+                    selectNextWord()
+                }
+                .keyboardShortcut(.downArrow, modifiers: [])
+                .opacity(0)
+                .allowsHitTesting(false)
+            }
+        )
         .onAppear {
             vocabularyManager.fetchWordEntries()
             // 默认选择第一个单词
             if selectedWord == nil && !vocabularyManager.wordEntries.isEmpty {
                 selectedWord = vocabularyManager.wordEntries.first
             }
+            // 设置焦点以接收键盘事件
+            isViewFocused = true
         }
         .onChange(of: vocabularyManager.wordEntries) { newEntries in
             // 当单词列表更新时，如果没有选中的单词且列表不为空，则选择第一个
@@ -117,6 +140,38 @@ struct VocabularyView: View {
         }
     }
     
+    private func selectPreviousWord() {
+        guard !vocabularyManager.wordEntries.isEmpty else { return }
+        
+        guard let currentWord = selectedWord,
+              let currentIndex = vocabularyManager.wordEntries.firstIndex(of: currentWord) else {
+            selectedWord = vocabularyManager.wordEntries.last
+            return
+        }
+        
+        if currentIndex > 0 {
+            selectedWord = vocabularyManager.wordEntries[currentIndex - 1]
+        } else {
+            selectedWord = vocabularyManager.wordEntries.last
+        }
+    }
+    
+    private func selectNextWord() {
+        guard !vocabularyManager.wordEntries.isEmpty else { return }
+        
+        guard let currentWord = selectedWord,
+              let currentIndex = vocabularyManager.wordEntries.firstIndex(of: currentWord) else {
+            selectedWord = vocabularyManager.wordEntries.first
+            return
+        }
+        
+        if currentIndex < vocabularyManager.wordEntries.count - 1 {
+            selectedWord = vocabularyManager.wordEntries[currentIndex + 1]
+        } else {
+            selectedWord = vocabularyManager.wordEntries.first
+        }
+    }
+    
     private func formatDate(_ date: Date?) -> String {
         guard let date = date else { return "" }
         let formatter = DateFormatter()
@@ -124,4 +179,10 @@ struct VocabularyView: View {
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
+}
+
+// 为了支持通知，需要添加扩展
+extension Notification.Name {
+    static let upArrowPressed = Notification.Name("upArrowPressed")
+    static let downArrowPressed = Notification.Name("downArrowPressed")
 }
