@@ -21,6 +21,8 @@ struct VocabularyView: View {
                         Text(wordEntry.word ?? "")
                             .font(.system(size: 14, weight: .medium))
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
                     .padding(.vertical, 2)
                     .background(
                         RoundedRectangle(cornerRadius: 4)
@@ -52,12 +54,14 @@ struct VocabularyView: View {
                         Text(selectedWord.word ?? "")
                             .font(.largeTitle)
                             .fontWeight(.bold)
+                            .textSelection(.enabled)
                         
                         ScrollView {
                             Text(selectedWord.definition ?? "")
                                 .font(.body)
                                 .lineSpacing(4)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .textSelection(.enabled)
                         }
                         
                         Spacer()
