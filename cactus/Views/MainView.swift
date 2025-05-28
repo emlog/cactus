@@ -6,6 +6,7 @@ import KeyboardShortcuts
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var settings = SettingsModel.shared
+    @ObservedObject private var vocabularyManager = VocabularyManager.shared // 添加这行
     @State private var Ai = AiService.shared
     @State private var Lang = LangService.shared
     // 吐司提示
@@ -389,6 +390,7 @@ struct MainView: View {
     }
     
     // 翻译
+    // 在translateText()方法中添加保存单词的逻辑
     func translateText() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
@@ -404,7 +406,7 @@ struct MainView: View {
             // 中文 => 英文翻译
             systemMessage = "你是一名专业的中译英翻译助手。请将用户输入的中文内容准确翻译为英文。只输出英文翻译，不添加原文或任何解释说明。"
         } else if Lang.isSentence(inputText) == false {
-            // 单词查询
+            // 单词查询 - 这里添加保存到生词本的逻辑
             systemMessage = """
 你是一个多功能词典。查询用户输入的单词，并使用 \(targetLanguage) 输出准确的查询结果，格式如下：
 
@@ -422,18 +424,55 @@ struct MainView: View {
 老虎
 /taɪgər/
 名词
-来自古法语“tigre”，源自拉丁语“tigri”，意为“老虎”
+来自古法语"tigre"，源自拉丁语"tigri"，意为"老虎"
 
 The tiger is the largest of all the cats. 
 老虎是最大的猫科动物。
 
 不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然，无需 markdown 语法。
 """
+            
+            // 执行AI查询，并在成功后保存到生词本
+            performAIActionWithVocabulary(systemMessage: systemMessage, word: inputText)
+            return
         } else {
             // 一般句子翻译
             systemMessage = "你是一名专业的翻译助手。请将用户输入的内容准确翻译为 \(targetLanguage)，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
         }
         performAIAction(systemMessage: systemMessage)
+    }
+    
+    // 新增方法：带生词本保存功能的AI调用
+    private func performAIActionWithVocabulary(systemMessage: String, word: String) {
+        guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
+            toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
+            showErrorToast = true
+            return
+        }
+        
+        contentModel.isProcessing = true
+        contentModel.resultText = ""
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
+                DispatchQueue.main.async {
+                    isResultViewExpanded = true
+                    contentModel.isProcessing = false
+                    
+                    // 保存到生词本
+                    if let definition = contentModel.resultText, !definition.isEmpty {
+                        vocabularyManager.addWord(word, definition: definition)
+                    }
+                }
+            } onError: { errorMessage in
+                DispatchQueue.main.async {
+                    self.toastMessage = errorMessage
+                    self.showErrorToast = true
+                    contentModel.resultText = errorMessage
+                    contentModel.isProcessing = false
+                }
+            }
+        }
     }
     
     // 总结

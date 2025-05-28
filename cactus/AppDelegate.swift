@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var settingsWindow: NSWindow?
     var aboutWindow: NSWindow?
     var mainWindow: NSWindow?
+    var vocabularyWindow: NSWindow? // 添加生词本窗口变量
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
     private var pinButton: NSButton? // 持有 pin 按钮的引用
@@ -71,6 +72,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             summaryMenuItem.setShortcut(for: SettingsModel.aiShortcutSummary)
             menu.addItem(summaryMenuItem)
             
+            menu.addItem(NSMenuItem.separator())
+            
+            // 添加生词本菜单项
+            let vocabularyMenuItem = NSMenuItem(
+                title: NSLocalizedString("vocabulary", comment: "生词本"),
+                action: #selector(openVocabulary),
+                keyEquivalent: ""
+            )
+            vocabularyMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil)
+            menu.addItem(vocabularyMenuItem)
+
             menu.addItem(NSMenuItem.separator())
             
             menu.addItem(NSMenuItem(
@@ -166,6 +178,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         aboutWindow?.contentViewController = aboutHostingController
         aboutWindow?.title = NSLocalizedString("about", comment: "关于")
         aboutWindow?.isReleasedWhenClosed = false
+        
+        // 初始化生词本窗口
+        vocabularyWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        let vocabularyView = VocabularyView()
+        let vocabularyHostingController = NSHostingController(rootView: vocabularyView)
+        vocabularyWindow?.contentViewController = vocabularyHostingController
+        vocabularyWindow?.title = NSLocalizedString("vocabulary", comment: "生词本")
+        vocabularyWindow?.isReleasedWhenClosed = false
     }
     
     // Setup global keyboard shortcut using KeyboardShortcuts
@@ -211,6 +236,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // 否则直接设置大小
             mainWindow?.setContentSize(contentSize)
         }
+    }
+    
+    // 生词本窗口
+    @objc func openVocabulary() {
+        // 调整窗口位置到当前屏幕的中心
+        vocabularyWindow?.center()
+        vocabularyWindow?.makeKeyAndOrderFront(nil)
+        vocabularyWindow?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     // 偏好设置窗口

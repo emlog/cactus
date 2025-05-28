@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
 		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
+		F2400C112DE729D000264BAD /* VocabularyModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2400C0F2DE729D000264BAD /* VocabularyModel.xcdatamodeld */; };
 		F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */; };
 		F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99DEF2D76F31E00BF5BA3 /* LaunchAtLogin */; };
 		F2C60FEB2DC5BA93003EA757 /* RELEASE.md in Resources */ = {isa = PBXBuildFile; fileRef = F2C60FEA2DC5BA93003EA757 /* RELEASE.md */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F2400C102DE729D000264BAD /* VocabularyModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VocabularyModel.xcdatamodel; sourceTree = "<group>"; };
 		F292ABA82D6575070089583E /* Cactus Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cactus Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2C60FEA2DC5BA93003EA757 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
 		F2FCA65A2DC05CE20007539A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		F292AB9F2D6575070089583E = {
 			isa = PBXGroup;
 			children = (
+				F2400C0F2DE729D000264BAD /* VocabularyModel.xcdatamodeld */,
 				F292ABAA2D6575070089583E /* cactus */,
 				F2FCA65A2DC05CE20007539A /* README.md */,
 				F2C60FEA2DC5BA93003EA757 /* RELEASE.md */,
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2400C112DE729D000264BAD /* VocabularyModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +450,19 @@
 			productName = LaunchAtLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		F2400C0F2DE729D000264BAD /* VocabularyModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F2400C102DE729D000264BAD /* VocabularyModel.xcdatamodel */,
+			);
+			currentVersion = F2400C102DE729D000264BAD /* VocabularyModel.xcdatamodel */;
+			path = VocabularyModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F292ABA02D6575070089583E /* Project object */;
 }
