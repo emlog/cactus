@@ -69,7 +69,22 @@
 
 // pro
 "premium" = "高级版";
+"premium_owned" = "您已经拥有高级版";
+"premium_processing" = "处理中...";
+"premium_unlock" = "解锁高级版";
+"premium_restore" = "恢复购买";
+"alert_ok" = "好";
 "premium_features" = "高级版功能";
 "premium_feature_unlimited_usage" = "无限制的翻译总结使用量";
 "premium_feature_unlimited_vocabulary" = "无限制的单词本使用";
 "premium_unlock_button" = "开通高级版";
+
+// Purchase Manager
+"purchase_load_product_failed" = "加载产品信息失败";
+"purchase_product_not_loaded" = "产品信息未加载";
+"purchase_pending" = "购买正在处理中，请稍后查看";
+"purchase_unknown_error" = "未知错误";
+"purchase_failed" = "购买失败";
+"purchase_not_found" = "未找到购买记录";
+"purchase_restore_failed" = "恢复购买失败";
+"purchase_loading" = "加载中...";

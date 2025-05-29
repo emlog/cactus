@@ -35,7 +35,7 @@ struct PremiumPane: View {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.green)
                                     .font(.title2)
-                                Text("您已经拥有高级版")
+                                Text(NSLocalizedString("premium_owned", comment: "You already own Premium"))
                                     .font(.headline)
                                     .foregroundColor(.primary)
                             }
@@ -56,13 +56,15 @@ struct PremiumPane: View {
                                         ProgressView()
                                             .scaleEffect(0.8)
                                             .foregroundColor(.white)
-                                            .frame(width: 16, height: 16)  // 固定进度条尺寸
+                                            .frame(width: 16, height: 16)
                                     }
-                                    Text(purchaseManager.isLoading ? "处理中..." : "解锁高级版 - \(purchaseManager.productPrice)")
+                                    Text(purchaseManager.isLoading ? 
+                                         NSLocalizedString("premium_processing", comment: "Processing...") : 
+                                         "\(NSLocalizedString("premium_unlock", comment: "Unlock Premium")) - \(purchaseManager.productPrice)")
                                         .font(.headline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.white)
-                                        .frame(minHeight: 20)  // 固定文字最小高度
+                                        .frame(minHeight: 20)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 44)  // 固定按钮高度
@@ -84,11 +86,11 @@ struct PremiumPane: View {
                                 purchaseManager.restorePurchases()
                             }) {
                                 HStack {
-                                    Text("恢复购买")
+                                    Text(NSLocalizedString("premium_restore", comment: "Restore Purchase"))
                                         .font(.subheadline)
                                         .foregroundColor(.accentColor)
                                 }
-                                .frame(height: 32)  // 固定恢复购买按钮高度
+                                .frame(height: 32)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
@@ -116,8 +118,8 @@ struct PremiumPane: View {
                 showAlert = true
             }
         }
-        .alert("提示", isPresented: $showAlert) {
-            Button("确定") {
+        .alert("", isPresented: $showAlert) {
+            Button(NSLocalizedString("alert_ok", comment: "OK")) {
                 purchaseManager.errorMessage = nil
             }
         } message: {

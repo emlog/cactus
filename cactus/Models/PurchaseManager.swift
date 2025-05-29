@@ -30,7 +30,7 @@ class PurchaseManager: NSObject, ObservableObject {
         } catch {
             print("Failed to load product: \(error)")
             await MainActor.run {
-                self.errorMessage = "加载产品信息失败"
+                self.errorMessage = NSLocalizedString("purchase_load_product_failed", comment: "Failed to load product information")
             }
         }
     }
@@ -66,7 +66,7 @@ class PurchaseManager: NSObject, ObservableObject {
     @MainActor
     func purchase() {
         guard let product = product else {
-            errorMessage = "产品信息未加载"
+            errorMessage = NSLocalizedString("purchase_product_not_loaded", comment: "Product information not loaded")
             return
         }
         
@@ -90,12 +90,12 @@ class PurchaseManager: NSObject, ObservableObject {
                     break
                 case .pending:
                     // 购买待处理
-                    self.errorMessage = "购买正在处理中，请稍后查看"
+                    self.errorMessage = NSLocalizedString("purchase_pending", comment: "Purchase is being processed, please check later")
                 @unknown default:
-                    self.errorMessage = "未知错误"
+                    self.errorMessage = NSLocalizedString("purchase_unknown_error", comment: "Unknown error")
                 }
             } catch {
-                self.errorMessage = "购买失败: \(error.localizedDescription)"
+                self.errorMessage = "\(NSLocalizedString("purchase_failed", comment: "Purchase failed")): \(error.localizedDescription)"
             }
             
             self.isLoading = false
@@ -124,17 +124,19 @@ class PurchaseManager: NSObject, ObservableObject {
                 }
                 
                 if !foundPurchase {
-                    self.errorMessage = "未找到购买记录"
+                    self.errorMessage = NSLocalizedString("purchase_not_found", comment: "No purchase record found")
                 }
             } catch {
-                self.errorMessage = "恢复购买失败: \(error.localizedDescription)"
+                self.errorMessage = "\(NSLocalizedString("purchase_restore_failed", comment: "Failed to restore purchase")): \(error.localizedDescription)"
             }
         }
     }
     
     // 获取产品价格
     var productPrice: String {
-        guard let product = product else { return "加载中..." }
+        guard let product = product else { 
+            return NSLocalizedString("purchase_loading", comment: "Loading...")
+        }
         return product.displayPrice
     }
 }
