@@ -4,8 +4,8 @@ import CoreData
 class VocabularyManager: ObservableObject {
     static let shared = VocabularyManager()
     
-    lazy var persistentContainer: NSPersistentCloudKitContainer = { // Changed to NSPersistentCloudKitContainer
-        let container = NSPersistentCloudKitContainer(name: "VocabularyModel") // Changed to NSPersistentCloudKitContainer
+    lazy var persistentContainer: NSPersistentCloudKitContainer = {
+        let container = NSPersistentCloudKitContainer(name: "VocabularyModel") // 这里的 name 参数应该指向您的数据模型文件（ .xcdatamodeld 文件）的名称，而不是 iCloud 容器的标识符
         
         // Get the App Group store URL
         guard let privateStoreDescription = container.persistentStoreDescriptions.first else {
@@ -15,8 +15,10 @@ class VocabularyManager: ObservableObject {
         privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         
-        container.loadPersistentStores { storeDescription, error in // storeDescription is added
-            if let error = error as NSError? { // Cast to NSError for more details
+        // storeDescription is added
+        container.loadPersistentStores { storeDescription, error in
+             // Cast to NSError for more details
+            if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
