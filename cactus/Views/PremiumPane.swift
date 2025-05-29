@@ -12,8 +12,8 @@ struct PremiumPane: View {
                 VStack(spacing: 6) {
                     // 标题部分
                     Text(NSLocalizedString("premium_features", comment: "Premium Features"))
-                        .font(.title)
-                        .padding(.top)
+                        .font(.title2)  // 从.title改为.title2，降低一号字体
+                        .padding(.top, 8)  // 从.padding(.top)改为具体数值，减少上边距
                     
                     // 特性列表
                     VStack(spacing: 2) {
@@ -135,11 +135,11 @@ struct FeatureRow: View {
     let text: String
     
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 8) {
             Image(systemName: icon)
                 .foregroundColor(.accentColor)
                 .font(.system(size: 24, weight: .semibold))
-                .frame(width: 36, height: 36)
+                .frame(width: 28, height: 28)
                 .background(Color.accentColor.opacity(0.1))
                 .clipShape(Circle())
             
@@ -149,6 +149,6 @@ struct FeatureRow: View {
             
             Spacer()
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 2)
     }
 }
