@@ -66,3 +66,10 @@
 // error
 "error_invalid_config" = "系统错误，AI服务配置错误";
 "error_request_failed" = "请求失败，请切换其他AI模型或检查网络";
+
+// pro
+"premium" = "高级版";
+"premium_features" = "高级版功能";
+"premium_feature_unlimited_usage" = "无限制的翻译总结使用量";
+"premium_feature_unlimited_vocabulary" = "无限制的单词本使用";
+"premium_unlock_button" = "开通高级版";

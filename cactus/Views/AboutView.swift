@@ -31,11 +31,6 @@ struct AboutView: View {
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
             }
-            
-            Link(NSLocalizedString("website", comment: "官方网站"), destination: URL(string: "https://cactusai.cc")!)
-                .font(.system(size: 12))
-                .foregroundColor(.blue)
-                .padding(.top, 5)
         }
         .frame(width: 324, height: 200)
         .contentShape(Rectangle()) // 让整个 VStack 区域都能响应手势
@@ -57,8 +52,3 @@ struct AboutView: View {
         }
     }
 }
-
-//#Preview {
-//    AboutView()
-//        .environment(\.locale, .init(identifier: "en"))
-//}

@@ -277,6 +277,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // Use system symbols for toolbar icons with fallback
             let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
             let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
+            let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage() // 新增高级版图标
             
             settingsWindowController = SettingsWindowController(
                 panes: [
@@ -293,6 +294,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                         toolbarIcon: aiIcon
                     ) {
                         GeneralAiPane()
+                    },
+                    Settings.Pane( // 新增高级版 Pane
+                        identifier: Settings.PaneIdentifier.premium,
+                        title: NSLocalizedString("premium", comment: "高级版"),
+                        toolbarIcon: premiumIcon
+                    ) {
+                        PremiumPane()
                     }
                 ]
             )
@@ -336,7 +344,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     NSApp.activate(ignoringOtherApps: true)
                 } else {
                     // 如果 success 为 false (权限被拒绝且点了取消，或获取剪贴板失败)
-                    // 可以在这里根据需要处理，例如打印日志或显示不同的提示
                     // 当前逻辑下，如果用户点了“打开设置”，此回调根本不会执行
                     // 如果用户点了“取消”，或者权限已允许但获取剪贴板失败，会执行到这里
                     print("未能成功获取选中文本或用户取消了操作。")
