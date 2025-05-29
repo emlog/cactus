@@ -67,26 +67,26 @@ struct VocabularyView: View {
             VStack {
                 if let selectedWord = selectedWord {
                     VStack(alignment: .leading, spacing: 16) {
-                        // 单词标题和朗读按钮
+                        // 单词标题
+                        Text(selectedWord.word ?? "")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .textSelection(.enabled)
+                        
+                        // 朗读按钮移到单词下面
                         HStack {
-                            Text(selectedWord.word ?? "")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .textSelection(.enabled)
-                            
-                            Spacer()
-                            
-                            // 朗读按钮
                             Button(action: {
                                 speakWord(selectedWord.word ?? "")
                             }) {
-                                Image(systemName: "speaker.wave.2.circle")
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(isSpeakingWord ? .red : .secondary)
+                                HStack(spacing: 6) {
+                                    Image(systemName: "speaker.wave.2.circle")
+                                        .frame(width: 16, height: 16)
+                                }
                             }
-                            .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 6))
+                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                             .disabled((selectedWord.word ?? "").isEmpty)
-                            .help("朗读单词")
+                            
+                            Spacer()
                         }
                         
                         ScrollView {
@@ -179,19 +179,7 @@ struct VocabularyView: View {
     // 添加朗读功能
     private func speakWord(_ word: String) {
         guard !word.isEmpty else { return }
-        
-        if isSpeakingWord {
-            stopSpeaking()
-        } else {
-            isSpeakingWord = true
-            // 使用英语朗读单词
-            speechService.speak(word, langCode: "en-US")
-            
-            // 设置一个定时器来重置朗读状态
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                isSpeakingWord = false
-            }
-        }
+        speechService.speak(word, langCode: "en-US")
     }
     
     private func stopSpeaking() {
