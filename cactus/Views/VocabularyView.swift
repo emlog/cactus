@@ -52,7 +52,7 @@ struct VocabularyView: View {
                 
                 // 底部显示总单词数量
                 HStack {
-                    Text("共 \(vocabularyManager.wordEntries.count) 个单词")
+                    Text("共计： \(vocabularyManager.wordEntries.count)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
@@ -101,9 +101,8 @@ struct VocabularyView: View {
                         
                         HStack {
                             Spacer()
-                            Button("删除") {
+                            Button(action: {
                                 vocabularyManager.deleteWord(selectedWord)
-                                // 删除后选择下一个单词，如果没有则选择第一个
                                 if let currentIndex = vocabularyManager.wordEntries.firstIndex(of: selectedWord) {
                                     if currentIndex < vocabularyManager.wordEntries.count - 1 {
                                         self.selectedWord = vocabularyManager.wordEntries[currentIndex + 1]
@@ -113,17 +112,17 @@ struct VocabularyView: View {
                                         self.selectedWord = nil
                                     }
                                 }
+                            }) {
+                                Image(systemName: "trash")
+                                    .frame(width: 15, height: 15)
                             }
-                            .buttonStyle(.borderedProminent)
+                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                             .controlSize(.regular)
                         }
                     }
                     .padding()
                 } else {
                     VStack {
-                        Spacer()
-                        Text("选择一个单词查看详情")
-                            .foregroundColor(.secondary)
                         Spacer()
                     }
                 }
