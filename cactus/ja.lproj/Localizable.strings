@@ -5,17 +5,15 @@
  */
 
 // Status Bar Menu
-"main" = "AIアシスタントを開く";
+"openmain" = "ウィンドウを開く";
+"translate" = "選択して翻訳";
+"summary" = "要約";
+"vocabulary" = "単語帳";
 "setting" = "環境設定";
 "about" = "このアプリについて";
 "contact" = "お問い合わせ";
 "rate_app" = "アプリを評価する";
 "quit" = "終了";
-
-"openmain" = "ウィンドウを開く";
-"translate" = "選択して翻訳";
-"summary" = "要約";
-"vocabulary" = "単語帳";
 
 // setting
 "general" = "一般";

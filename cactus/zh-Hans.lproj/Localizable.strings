@@ -5,17 +5,15 @@
  */
 
 // Status Bar Menu
-"main" = "打开AI助手";
+"openmain" = "打开窗口";
+"translate" = "选中翻译";
+"summary" = "总结摘要";
+"vocabulary" = "生词本";
 "setting" = "偏好设置";
 "about" = "关于";
 "contact" = "联系我们";
 "rate_app" = "给个好评吧";
 "quit" = "退出";
-
-"openmain" = "打开窗口";
-"translate" = "选中翻译";
-"summary" = "总结摘要";
-"vocabulary" = "生词本";
 
 // setting
 "general" = "通用";

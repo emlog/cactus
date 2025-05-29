@@ -5,17 +5,15 @@
  */
 
 // Status Bar Menu
-"main" = "AI Assistant";
+"openmain" = "Open Window";
+"translate" = "Translate Selected Text";
+"summary" = "Summarize Selected Text";
+"vocabulary" = "Vocabulary Notebook";
 "setting" = "Preferences";
 "about" = "About";
 "contact" = "Contact Us";
 "rate_app" = "Rate This App";
 "quit" = "Quit";
-
-"openmain" = "Open Window";
-"translate" = "Translate Selected Text";
-"summary" = "Summarize Selected Text";
-"vocabulary" = "Vocabulary Notebook";
 
 // setting
 "general" = "General";

@@ -5,17 +5,15 @@
  */
 
 // Status Bar Menu
-"main" = "AI助手";
-"setting" = "偏好設定";
-"about" = "關於";
-"contact" = "聯絡我們";
-"rate_app" = "給個好評吧";
-"quit" = "結束";
-
 "openmain" = "打開視窗";
 "translate" = "翻譯所選文字";
 "summary" = "製作摘要";
 "vocabulary" = "單字本";
+"setting" = "偏好設定";
+"about" = "關於";
+"contact" = "聯絡我們";
+"rate_app" = "給個好評吧";
+"quit" = "結束"
 
 // Setting
 "general" = "一般";

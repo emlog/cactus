@@ -5,17 +5,15 @@
  */
 
 // Status Bar Menu
-"main" = "AI 도우미 열기";
+"openmain" = "창 열기";
+"translate" = "선택 번역";
+"summary" = "요약";
+"vocabulary" = "단어장";
 "setting" = "환경설정";
 "about" = "앱 정보";
 "contact" = "문의하기";
 "rate_app" = "앱 평가하기";
 "quit" = "종료";
-
-"openmain" = "창 열기";
-"translate" = "선택 번역";
-"summary" = "요약";
-"vocabulary" = "단어장";
 
 // setting
 "general" = "일반";
