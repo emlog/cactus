@@ -9,6 +9,7 @@
 "setting" = "偏好设置";
 "about" = "关于";
 "contact" = "联系我们";
+"rate_app" = "给个好评吧";
 "quit" = "退出";
 
 "openmain" = "打开窗口";
@@ -60,6 +61,9 @@
 "website" = "官方网站";
 "apptitle" = "仙人掌AI助手";
 "version" = "版本";
+
+// vocabulary
+"sum" = "总计";
 
 // error
 "error_invalid_config" = "系统错误，AI服务配置错误";

@@ -52,7 +52,7 @@ struct VocabularyView: View {
                 
                 // 底部显示总单词数量
                 HStack {
-                    Text("共计： \(vocabularyManager.wordEntries.count)")
+                    Text(NSLocalizedString("sum", comment: "共计") + "： \(vocabularyManager.wordEntries.count)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)

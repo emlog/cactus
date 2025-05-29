@@ -8,12 +8,14 @@
 "main" = "AI Assistant";
 "setting" = "Preferences";
 "about" = "About";
+"contact" = "Contact Us";
+"rate_app" = "Rate This App";
 "quit" = "Quit";
 
 "openmain" = "Open Window";
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
-"vocabulary" = "生词本";
+"vocabulary" = "Vocabulary Notebook";
 
 // setting
 "general" = "General";
@@ -59,6 +61,9 @@
 "website" = "Website";
 "apptitle" = "Cactus AI Assistant";
 "version" = "Version";
+
+// vocabulary
+"sum" = "Total";
 
 // error
 "error_invalid_config" = "System error, AI service configuration error";

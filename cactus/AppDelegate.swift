@@ -100,6 +100,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 action: #selector(openContact),
                 keyEquivalent: ""
             ))
+            menu.addItem(NSMenuItem(
+                title: NSLocalizedString("rate_app", comment: "给个好评吧"),
+                action: #selector(rateApp),
+                keyEquivalent: ""
+            ))
             
             menu.addItem(NSMenuItem.separator())
             
@@ -255,6 +260,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // 联系我们
     @objc func openContact() {
         if let url = URL(string: "https://cactusai.cc/about") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
+    // 给个好评吧
+    @objc func rateApp() {
+        if let url = URL(string: "macappstore://apps.apple.com/app/id6743790378?action=write-review") {
             NSWorkspace.shared.open(url)
         }
     }

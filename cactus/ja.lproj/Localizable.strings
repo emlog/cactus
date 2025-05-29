@@ -8,11 +8,14 @@
 "main" = "AIアシスタントを開く";
 "setting" = "環境設定";
 "about" = "このアプリについて";
+"contact" = "お問い合わせ";
+"rate_app" = "アプリを評価する";
 "quit" = "終了";
 
 "openmain" = "ウィンドウを開く";
 "translate" = "選択して翻訳";
 "summary" = "要約";
+"vocabulary" = "単語帳";
 
 // setting
 "general" = "一般";
@@ -58,6 +61,9 @@
 "website" = "公式サイト";
 "apptitle" = "Cactus AIアシスタント";
 "version" = "バージョン";
+
+// vocabulary
+"sum" = "合計";
 
 // error
 "error_invalid_config" = "システムエラー：AIサービスの設定が正しくありません";
