@@ -7,7 +7,6 @@ class PurchaseManager: NSObject, ObservableObject {
     
     @Published var isPremiumUser = false
     @Published var isLoading = false
-    @Published var isRestoring = false  // 新增：恢复购买的加载状态
     @Published var errorMessage: String?
     
     private let productID = "cactus.pro"
@@ -106,7 +105,6 @@ class PurchaseManager: NSObject, ObservableObject {
     // 恢复购买
     @MainActor
     func restorePurchases() {
-        isRestoring = true  // 使用单独的状态
         errorMessage = nil
         
         Task {
@@ -131,8 +129,6 @@ class PurchaseManager: NSObject, ObservableObject {
             } catch {
                 self.errorMessage = "恢复购买失败: \(error.localizedDescription)"
             }
-            
-            self.isRestoring = false  // 重置恢复购买状态
         }
     }
     

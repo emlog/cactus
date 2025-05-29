@@ -84,12 +84,7 @@ struct PremiumPane: View {
                                 purchaseManager.restorePurchases()
                             }) {
                                 HStack {
-                                    if purchaseManager.isRestoring {
-                                        ProgressView()
-                                            .scaleEffect(0.6)
-                                            .foregroundColor(.accentColor)
-                                    }
-                                    Text(purchaseManager.isRestoring ? "恢复中..." : "恢复购买")
+                                    Text("恢复购买")
                                         .font(.subheadline)
                                         .foregroundColor(.accentColor)
                                 }
