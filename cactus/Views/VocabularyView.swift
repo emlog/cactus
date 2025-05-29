@@ -21,7 +21,18 @@ struct VocabularyView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(wordEntry.word ?? "")
                             .font(.system(size: 14, weight: .medium))
+                            .frame(maxWidth: .infinity, alignment: .leading) // 确保文本占据可用宽度
+                            .padding(.vertical, 4) // 增加一些垂直内边距使点击区域更友好
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(selectedWord?.objectID == wordEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
+                            )
+                            .contentShape(Rectangle()) // 确保整个区域可点击
+                            .onTapGesture {
+                                selectedWord = wordEntry
+                            }
                     }
+                    .id(wordEntry.objectID) // 为VStack本身添加ID，增强稳定性
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
                     .padding(.vertical, 2)
@@ -64,6 +75,7 @@ struct VocabularyView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .textSelection(.enabled)
                         }
+                        // .fixedSize(horizontal: false, vertical: true) // 移除这一行
                         
                         Spacer()
                         

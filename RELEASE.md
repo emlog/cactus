@@ -25,6 +25,7 @@
 
 Certificate Name：dawei xu
 bundle-id：dawei-snow.cactus
+iCloud Container：iCloud.snow.cactusai
 app 专有密码：qbsl-pjfd-ugam-qtsq
 备案号：京ICP备09000973号-6A
 

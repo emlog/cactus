@@ -4,13 +4,26 @@ import CoreData
 class VocabularyManager: ObservableObject {
     static let shared = VocabularyManager()
     
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "VocabularyModel")
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Core Data error: \(error)")
+    lazy var persistentContainer: NSPersistentCloudKitContainer = { // Changed to NSPersistentCloudKitContainer
+        let container = NSPersistentCloudKitContainer(name: "VocabularyModel") // Changed to NSPersistentCloudKitContainer
+        
+        // Get the App Group store URL
+        guard let privateStoreDescription = container.persistentStoreDescriptions.first else {
+            fatalError("###<persistentContainer>: Failed to get a persistent store description.")
+        }
+        // Enable history tracking and remote notifications
+        privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        
+        container.loadPersistentStores { storeDescription, error in // storeDescription is added
+            if let error = error as NSError? { // Cast to NSError for more details
+                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
+        
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        
         return container
     }()
     

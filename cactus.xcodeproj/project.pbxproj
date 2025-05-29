@@ -19,7 +19,7 @@
 
 /* Begin PBXFileReference section */
 		F2400C102DE729D000264BAD /* VocabularyModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VocabularyModel.xcdatamodel; sourceTree = "<group>"; };
-		F292ABA82D6575070089583E /* Cactus Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cactus Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F292ABA82D6575070089583E /* Cactus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cactus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2C60FEA2DC5BA93003EA757 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
 		F2FCA65A2DC05CE20007539A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F2FCA65B2DC05CE20007539A /* TEST.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TEST.md; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		F292ABA92D6575070089583E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F292ABA82D6575070089583E /* Cactus Dev.app */,
+				F292ABA82D6575070089583E /* Cactus.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,7 +107,7 @@
 				F2B99DEF2D76F31E00BF5BA3 /* LaunchAtLogin */,
 			);
 			productName = cactus;
-			productReference = F292ABA82D6575070089583E /* Cactus Dev.app */;
+			productReference = F292ABA82D6575070089583E /* Cactus.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -322,6 +322,7 @@
 				INFOPLIST_FILE = cactus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌AI助手";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -329,8 +330,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dawei-snow.cactus.dev";
-				PRODUCT_NAME = "Cactus Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = "dawei-snow.cactus";
+				PRODUCT_NAME = Cactus;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -356,6 +357,7 @@
 				INFOPLIST_FILE = cactus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "仙人掌AI助手";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

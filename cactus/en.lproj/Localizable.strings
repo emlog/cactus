@@ -13,6 +13,7 @@
 "openmain" = "Open Window";
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
+"vocabulary" = "生词本";
 
 // setting
 "general" = "General";

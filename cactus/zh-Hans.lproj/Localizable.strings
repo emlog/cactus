@@ -13,6 +13,7 @@
 "openmain" = "打开窗口";
 "translate" = "选中翻译";
 "summary" = "总结摘要";
+"vocabulary" = "生词本";
 
 // setting
 "general" = "通用";
@@ -62,4 +63,3 @@
 // error
 "error_invalid_config" = "系统错误，AI服务配置错误";
 "error_request_failed" = "请求失败，请切换其他AI模型或检查网络";
-"vocabulary" = "生词本";
