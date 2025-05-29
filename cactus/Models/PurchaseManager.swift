@@ -24,6 +24,39 @@ class PurchaseManager: NSObject, ObservableObject {
             await productTask
             await statusTask
         }
+        // 新增：启动任务以监听交易更新
+        Task(priority: .background) {
+            await listenForTransactions()
+        }
+    }
+    
+    // 新增：监听交易更新的方法
+    func listenForTransactions() async {
+        for await result in Transaction.updates {
+            do {
+                let transaction = try self.checkVerified(result)
+                // 交易验证成功，更新应用状态
+                await MainActor.run {
+                    self.isPremiumUser = true
+                    UserDefaults.standard.set(true, forKey: "isPremiumUser")
+                }
+                // 完成交易
+                await transaction.finish()
+            } catch {
+                // 交易验证失败
+                print("Transaction failed verification: \(error)")
+            }
+        }
+    }
+
+    // 辅助方法：检查并返回验证后的交易
+    func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
+        switch result {
+        case .unverified(_, let error):
+            throw error // 验证失败，抛出错误
+        case .verified(let safe):
+            return safe // 验证成功，返回安全内容
+        }
     }
     
     // 加载产品信息
@@ -65,12 +98,15 @@ class PurchaseManager: NSObject, ObservableObject {
             
             // 验证App Store的购买状态
             for await result in Transaction.currentEntitlements {
-                if case .verified(let transaction) = result {
+                do {
+                    let transaction = try self.checkVerified(result)
                     if transaction.productID == productID {
                         self.isPremiumUser = true
                         UserDefaults.standard.set(true, forKey: "isPremiumUser")
                         return
                     }
+                } catch {
+                    print("Transaction failed verification in currentEntitlements: \(error)")
                 }
             }
             
@@ -100,12 +136,12 @@ class PurchaseManager: NSObject, ObservableObject {
                 
                 switch result {
                 case .success(let verification):
-                    if case .verified(let transaction) = verification {
-                        // 购买成功
-                        await transaction.finish()
-                        self.isPremiumUser = true
-                        UserDefaults.standard.set(true, forKey: "isPremiumUser")
-                    }
+                    // 使用辅助方法检查验证结果
+                    let transaction = try self.checkVerified(verification)
+                    // 购买成功
+                    await transaction.finish()
+                    self.isPremiumUser = true
+                    UserDefaults.standard.set(true, forKey: "isPremiumUser")
                 case .userCancelled:
                     // 用户取消购买
                     break
@@ -134,13 +170,16 @@ class PurchaseManager: NSObject, ObservableObject {
                 
                 var foundPurchase = false
                 for await result in Transaction.currentEntitlements {
-                    if case .verified(let transaction) = result {
+                    do {
+                        let transaction = try self.checkVerified(result)
                         if transaction.productID == productID {
                             self.isPremiumUser = true
                             UserDefaults.standard.set(true, forKey: "isPremiumUser")
                             foundPurchase = true
                             break
                         }
+                    } catch {
+                        print("Transaction failed verification in restorePurchases: \(error)")
                     }
                 }
                 
