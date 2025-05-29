@@ -49,4 +49,9 @@ class SettingsModel: ObservableObject {
     init() {
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
     }
+    
+    // 检查是否为高级用户
+    var isPremiumUser: Bool {
+        return PurchaseManager.shared.isPremiumUser
+    }
 }
