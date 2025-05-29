@@ -8,6 +8,7 @@
 "main" = "打开AI助手";
 "setting" = "偏好设置";
 "about" = "关于";
+"contact" = "联系我们";
 "quit" = "退出";
 
 "openmain" = "打开窗口";

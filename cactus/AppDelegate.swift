@@ -82,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             )
             vocabularyMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil)
             menu.addItem(vocabularyMenuItem)
-
+            
             menu.addItem(NSMenuItem.separator())
             
             menu.addItem(NSMenuItem(
@@ -93,6 +93,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             menu.addItem(NSMenuItem(
                 title: NSLocalizedString("about", comment: "关于"),
                 action: #selector(openAbout),
+                keyEquivalent: ""
+            ))
+            menu.addItem(NSMenuItem(
+                title: NSLocalizedString("contact", comment: "联系我们"),
+                action: #selector(openContact),
                 keyEquivalent: ""
             ))
             
@@ -245,6 +250,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         vocabularyWindow?.makeKeyAndOrderFront(nil)
         vocabularyWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    // 联系我们
+    @objc func openContact() {
+        if let url = URL(string: "https://cactusai.cc/about") {
+            NSWorkspace.shared.open(url)
+        }
     }
     
     // 偏好设置窗口
