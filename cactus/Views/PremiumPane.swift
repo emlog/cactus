@@ -58,13 +58,13 @@ struct PremiumPane: View {
                                             .foregroundColor(.white)
                                             .frame(width: 16, height: 16)
                                     }
-                                    Text(purchaseManager.isLoading ? 
-                                         NSLocalizedString("premium_processing", comment: "Processing...") : 
-                                         "\(NSLocalizedString("premium_unlock", comment: "Unlock Premium")) - \(purchaseManager.productPrice)")
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.white)
-                                        .frame(minHeight: 20)
+                                    Text(purchaseManager.isLoading ?
+                                         NSLocalizedString("premium_processing", comment: "Processing...") :
+                                            "\(NSLocalizedString("premium_unlock", comment: "Unlock Premium")) - \(purchaseManager.productPrice)")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .frame(minHeight: 20)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 44)  // 固定按钮高度
@@ -111,6 +111,8 @@ struct PremiumPane: View {
         }
         .onAppear {
             purchaseManager.checkPurchaseStatus()
+            // 如果产品信息还没加载，主动重新加载
+            purchaseManager.reloadProductIfNeeded()
         }
         .onChange(of: purchaseManager.errorMessage) { errorMessage in
             if let message = errorMessage, !message.isEmpty {

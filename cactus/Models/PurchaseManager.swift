@@ -8,29 +8,50 @@ class PurchaseManager: NSObject, ObservableObject {
     @Published var isPremiumUser = false
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var isProductLoaded = false  // 新增：跟踪产品加载状态
     
     private let productID = "cactus.pro"
     private var product: Product?
     
     override init() {
         super.init()
+        // 立即开始加载产品信息，不等待购买状态检查
         Task {
-            await checkPurchaseStatus()
-            await loadProduct()
+            async let productTask: () = loadProduct()
+            async let statusTask: () = checkPurchaseStatus()
+            
+            // 并行执行两个任务
+            await productTask
+            await statusTask
         }
     }
     
     // 加载产品信息
+    // 在PurchaseManager中添加重试逻辑
+    private var loadRetryCount = 0
+    private let maxRetryCount = 3
+    
     func loadProduct() async {
         do {
             let products = try await Product.products(for: [productID])
             await MainActor.run {
                 self.product = products.first
+                self.isProductLoaded = true
+                self.loadRetryCount = 0  // 重置重试计数
             }
         } catch {
             print("Failed to load product: \(error)")
-            await MainActor.run {
-                self.errorMessage = NSLocalizedString("purchase_load_product_failed", comment: "Failed to load product information")
+            
+            if loadRetryCount < maxRetryCount {
+                loadRetryCount += 1
+                // 延迟重试
+                try? await Task.sleep(nanoseconds: 2_000_000_000) // 2秒
+                await loadProduct()
+            } else {
+                await MainActor.run {
+                    self.errorMessage = NSLocalizedString("purchase_load_product_failed", comment: "Failed to load product information")
+                    self.isProductLoaded = true
+                }
             }
         }
     }
@@ -134,9 +155,23 @@ class PurchaseManager: NSObject, ObservableObject {
     
     // 获取产品价格
     var productPrice: String {
-        guard let product = product else { 
+        if !isProductLoaded {
             return NSLocalizedString("purchase_loading", comment: "Loading...")
         }
+        
+        guard let product = product else {
+            return NSLocalizedString("purchase_price_unavailable", comment: "Price unavailable")
+        }
         return product.displayPrice
+    }
+    
+    // 新增：主动重新加载产品信息的方法
+    @MainActor
+    func reloadProductIfNeeded() {
+        if !isProductLoaded || product == nil {
+            Task {
+                await loadProduct()
+            }
+        }
     }
 }

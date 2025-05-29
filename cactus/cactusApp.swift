@@ -8,7 +8,11 @@
 import SwiftUI
 
 @main
-struct CactusApp: App {
+struct cactusApp: App {
+    init() {
+        // 应用启动时立即初始化PurchaseManager，开始加载产品信息
+        _ = PurchaseManager.shared
+    }
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     // It's impossible to create sceneless application,
