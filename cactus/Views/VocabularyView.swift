@@ -13,6 +13,10 @@ struct VocabularyView: View {
     @State private var selectedWord: WordEntry?
     @FocusState private var isViewFocused: Bool
     
+    // 添加语音朗读相关状态
+    @State private var isSpeakingWord = false
+    private let speechService = SpeechService.shared
+    
     var body: some View {
         HSplitView {
             // 左侧单词列表 - 占比约20%
@@ -21,18 +25,18 @@ struct VocabularyView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(wordEntry.word ?? "")
                             .font(.system(size: 14, weight: .medium))
-                            .frame(maxWidth: .infinity, alignment: .leading) // 确保文本占据可用宽度
-                            .padding(.vertical, 4) // 增加一些垂直内边距使点击区域更友好
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 4)
                             .background(
                                 RoundedRectangle(cornerRadius: 4)
                                     .fill(selectedWord?.objectID == wordEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
                             )
-                            .contentShape(Rectangle()) // 确保整个区域可点击
+                            .contentShape(Rectangle())
                             .onTapGesture {
                                 selectedWord = wordEntry
                             }
                     }
-                    .id(wordEntry.objectID) // 为VStack本身添加ID，增强稳定性
+                    .id(wordEntry.objectID)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
                     .padding(.vertical, 2)
@@ -63,10 +67,27 @@ struct VocabularyView: View {
             VStack {
                 if let selectedWord = selectedWord {
                     VStack(alignment: .leading, spacing: 16) {
-                        Text(selectedWord.word ?? "")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .textSelection(.enabled)
+                        // 单词标题和朗读按钮
+                        HStack {
+                            Text(selectedWord.word ?? "")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .textSelection(.enabled)
+                            
+                            Spacer()
+                            
+                            // 朗读按钮
+                            Button(action: {
+                                speakWord(selectedWord.word ?? "")
+                            }) {
+                                Image(systemName: "speaker.wave.2.circle")
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(isSpeakingWord ? .red : .secondary)
+                            }
+                            .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 6))
+                            .disabled((selectedWord.word ?? "").isEmpty)
+                            .help("朗读单词")
+                        }
                         
                         ScrollView {
                             Text(selectedWord.definition ?? "")
@@ -75,7 +96,6 @@ struct VocabularyView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .textSelection(.enabled)
                         }
-                        // .fixedSize(horizontal: false, vertical: true) // 移除这一行
                         
                         Spacer()
                         
@@ -140,6 +160,10 @@ struct VocabularyView: View {
             // 设置焦点以接收键盘事件
             isViewFocused = true
         }
+        .onDisappear {
+            // 窗口关闭时停止朗读
+            stopSpeaking()
+        }
         .onChange(of: vocabularyManager.wordEntries) { newEntries in
             // 当单词列表更新时，如果没有选中的单词且列表不为空，则选择第一个
             if selectedWord == nil && !newEntries.isEmpty {
@@ -150,6 +174,29 @@ struct VocabularyView: View {
                 selectedWord = newEntries.first
             }
         }
+    }
+    
+    // 添加朗读功能
+    private func speakWord(_ word: String) {
+        guard !word.isEmpty else { return }
+        
+        if isSpeakingWord {
+            stopSpeaking()
+        } else {
+            isSpeakingWord = true
+            // 使用英语朗读单词
+            speechService.speak(word, langCode: "en-US")
+            
+            // 设置一个定时器来重置朗读状态
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                isSpeakingWord = false
+            }
+        }
+    }
+    
+    private func stopSpeaking() {
+        speechService.stopSpeaking()
+        isSpeakingWord = false
     }
     
     private func selectPreviousWord() {
