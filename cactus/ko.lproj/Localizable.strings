@@ -1,23 +1,20 @@
-/*
- Localizable.strings
- cactus
-
- */
-
 // Status Bar Menu
 "openmain" = "창 열기";
 "translate" = "선택 번역";
 "summary" = "요약";
 "vocabulary" = "단어장";
 "setting" = "환경설정";
-"about" = "앱 정보";
 "contact" = "문의하기";
 "rate_app" = "앱 평가하기";
 "quit" = "종료";
 
-// setting
+// pane
 "general" = "일반";
 "service" = "서비스";
+"premium" = "Pro";
+"about" = "앱 정보";
+
+// setting
 "startup" = "시작 시 자동 실행";
 "shortcut_openmain" = "메인 창 열기 단축키";
 "shortcut_openmain_description" = "메인 창을 열고 선택한 텍스트를 입력란에 자동으로 채웁니다";
@@ -66,3 +63,22 @@
 // error
 "error_invalid_config" = "시스템 오류: AI 서비스 설정 오류";
 "error_request_failed" = "요청 실패. 다른 AI 모델로 전환하거나 네트워크를 확인하세요";
+
+// common
+"alert_ok" = "확인";
+
+// pro
+"premium_owned" = "Pro 버전을 이미 보유하고 있습니다";
+"premium_processing" = "처리 중...";
+"premium_unlock" = "Pro 잠금 해제";
+"premium_restore" = "구매 복원";
+"premium_features" = "Pro 기능";
+"premium_feature_unlimited_usage" = "무제한 번역 및 요약 횟수";
+"premium_feature_unlimited_vocabulary" = "무제한 단어장 사용";
+"terms_of_use" = "이용 약관";
+"privacy_policy" = "개인정보 보호정책";
+
+// Purchase Manager
+"purchase_load_product_failed" = "제품 정보를 불러오지 못했습니다";
+"purchase_pending" = "구매가 처리 중입니다. 잠시 후 확인해주세요";
+"purchase_not_found" = "구매 기록을 찾을 수 없습니다";

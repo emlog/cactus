@@ -1,23 +1,20 @@
-/*
- Localizable.strings
- cactus
-
- */
-
 // Status Bar Menu
 "openmain" = "Open Window";
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
 "vocabulary" = "Vocabulary Notebook";
 "setting" = "Preferences";
-"about" = "About";
 "contact" = "Contact Us";
 "rate_app" = "Rate This App";
 "quit" = "Quit";
 
-// setting
+// pane
 "general" = "General";
 "service" = "AI Model";
+"premium" = "Pro";
+"about" = "About";
+
+// setting
 "startup" = "Open at Login";
 "shortcut_openmain" = "Shortcut to Open Main Window";
 "shortcut_openmain_description" = "Open the main window and fill the selected text into the input box";
@@ -66,3 +63,22 @@
 // error
 "error_invalid_config" = "System error, AI service configuration error";
 "error_request_failed" = "Request failed, switch to another AI model or check the network.";
+
+// common
+"alert_ok" = "OK";
+
+// pro
+"premium_owned" = "You already own the Pro version";
+"premium_processing" = "Processing...";
+"premium_unlock" = "Unlock Pro";
+"premium_restore" = "Restore Purchase";
+"premium_features" = "Premium Features";
+"premium_feature_unlimited_usage" = "Unlimited translations and summaries";
+"premium_feature_unlimited_vocabulary" = "Unlimited vocabulary usage";
+"terms_of_use" = "Terms of Use";
+"privacy_policy" = "Privacy Policy";
+
+// Purchase Manager
+"purchase_load_product_failed" = "Failed to load product information";
+"purchase_pending" = "Purchase is processing, please check later";
+"purchase_not_found" = "No purchase record found";

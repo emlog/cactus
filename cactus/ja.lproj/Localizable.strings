@@ -1,23 +1,20 @@
-/*
- Localizable.strings
- cactus
-
- */
-
 // Status Bar Menu
 "openmain" = "ウィンドウを開く";
 "translate" = "選択して翻訳";
 "summary" = "要約";
 "vocabulary" = "単語帳";
 "setting" = "環境設定";
-"about" = "このアプリについて";
 "contact" = "お問い合わせ";
 "rate_app" = "アプリを評価する";
 "quit" = "終了";
 
-// setting
+// pane
 "general" = "一般";
 "service" = "サービス";
+"premium" = "Pro";
+"about" = "このアプリについて";
+
+// setting
 "startup" = "起動時に自動起動";
 "shortcut_openmain" = "メインウィンドウを開くショートカット";
 "shortcut_openmain_description" = "メインウィンドウを開き、選択したテキストを入力欄に自動挿入します";
@@ -66,3 +63,22 @@
 // error
 "error_invalid_config" = "システムエラー：AIサービスの設定が正しくありません";
 "error_request_failed" = "リクエストに失敗しました。別のAIモデルに切り替えるか、ネットワークを確認してください";
+
+// common
+"alert_ok" = "OK";
+
+// pro
+"premium_owned" = "Pro版は既に購入済みです";
+"premium_processing" = "処理中...";
+"premium_unlock" = "Pro版をアンロック";
+"premium_restore" = "購入を復元";
+"premium_features" = "Pro機能";
+"premium_feature_unlimited_usage" = "翻訳と要約の回数が無制限";
+"premium_feature_unlimited_vocabulary" = "単語帳の利用制限なし";
+"terms_of_use" = "利用規約";
+"privacy_policy" = "プライバシーポリシー";
+
+// Purchase Manager
+"purchase_load_product_failed" = "商品情報の読み込みに失敗しました";
+"purchase_pending" = "購入処理中です。しばらくしてからご確認ください";
+"purchase_not_found" = "購入記録が見つかりませんでした";

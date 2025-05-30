@@ -1,9 +1,3 @@
-/*
- Localizable.strings
- cactus
-
- */
-
 // Status Bar Menu
 "openmain" = "打开窗口";
 "translate" = "选中翻译";

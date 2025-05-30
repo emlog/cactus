@@ -1,23 +1,20 @@
-/*
- Localizable.strings
- cactus
-
- */
-
 // Status Bar Menu
 "openmain" = "打開視窗";
 "translate" = "翻譯所選文字";
 "summary" = "製作摘要";
 "vocabulary" = "單字本";
 "setting" = "偏好設定";
-"about" = "關於";
 "contact" = "聯絡我們";
 "rate_app" = "給個好評吧";
 "quit" = "結束";
 
-// Setting
+// pane
 "general" = "一般";
 "service" = "服務";
+"premium" = "進階版";
+"about" = "關於";
+
+// Setting
 "startup" = "登入時啟動";
 "shortcut_openmain" = "主視窗快捷鍵";
 "shortcut_openmain_description" = "打開主視窗，並將選取文字自動填入輸入框";
@@ -66,3 +63,22 @@
 // error
 "error_invalid_config" = "系統錯誤，AI 服務設定錯誤";
 "error_request_failed" = "請求失敗，請切換其他 AI 模型或檢查網路";
+
+// common
+"alert_ok" = "好";
+
+// pro
+"premium_owned" = "您已擁有進階版";
+"premium_processing" = "處理中...";
+"premium_unlock" = "解鎖進階版";
+"premium_restore" = "恢復購買";
+"premium_features" = "進階功能";
+"premium_feature_unlimited_usage" = "無限制的翻譯與摘要次數";
+"premium_feature_unlimited_vocabulary" = "單字本無使用限制";
+"terms_of_use" = "使用條款";
+"privacy_policy" = "隱私政策";
+
+// Purchase Manager
+"purchase_load_product_failed" = "載入產品資訊失敗";
+"purchase_pending" = "購買處理中，請稍後查看";
+"purchase_not_found" = "未找到購買紀錄";
