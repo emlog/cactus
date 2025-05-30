@@ -134,6 +134,7 @@
 				"zh-Hant",
 				ja,
 				ko,
+				Base,
 			);
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;

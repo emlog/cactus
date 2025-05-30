@@ -81,18 +81,26 @@ struct PremiumPane: View {
                             .buttonStyle(PlainButtonStyle())
                             .disabled(purchaseManager.isLoading)
                             
-                            // 恢复购买按钮
-                            Button(action: {
-                                purchaseManager.restorePurchases()
-                            }) {
-                                HStack {
+                            // 恢复购买按钮和法律链接
+                            HStack(spacing: 10) {
+                                Button(action: {
+                                    purchaseManager.restorePurchases()
+                                }) {
                                     Text(NSLocalizedString("premium_restore", comment: "Restore Purchase"))
                                         .font(.subheadline)
                                         .foregroundColor(.accentColor)
                                 }
-                                .frame(height: 32)
+                                .buttonStyle(PlainButtonStyle())
+                                
+                                Link(NSLocalizedString("terms_of_use", comment: "Terms of Use"), destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                                    .font(.subheadline)
+                                    .foregroundColor(.accentColor)
+                                
+                                Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://cactusai.cc/privacy-policy")!)
+                                    .font(.subheadline)
+                                    .foregroundColor(.accentColor)
                             }
-                            .buttonStyle(PlainButtonStyle())
+                            .frame(height: 32)
                         }
                     }
                     
@@ -137,7 +145,7 @@ struct FeatureRow: View {
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
-                .foregroundColor(.accentColor)
+                .foregroundColor(.green)
                 .font(.system(size: 24, weight: .semibold))
                 .frame(width: 28, height: 28)
                 .background(Color.accentColor.opacity(0.1))
