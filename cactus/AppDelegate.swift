@@ -22,7 +22,6 @@ enum ActionType {
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
-    // var aboutWindow: NSWindow? // 移除独立的 aboutWindow
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow? // 添加生词本窗口变量
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
