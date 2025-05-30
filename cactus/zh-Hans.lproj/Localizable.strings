@@ -10,14 +10,17 @@
 "summary" = "总结摘要";
 "vocabulary" = "生词本";
 "setting" = "偏好设置";
-"about" = "关于";
 "contact" = "联系我们";
 "rate_app" = "给个好评吧";
 "quit" = "退出";
 
-// setting
+// pane
 "general" = "通用";
 "service" = "服务";
+"premium" = "高级版";
+"about" = "关于";
+
+// setting
 "startup" = "开机自动启动";
 "shortcut_openmain" = "打开窗口快捷键";
 "shortcut_openmain_description" = "打开窗口，并将选中的文字填充到输入框内";
@@ -71,7 +74,6 @@
 "alert_ok" = "好";
 
 // pro
-"premium" = "高级版";
 "premium_owned" = "您已经拥有高级版";
 "premium_processing" = "处理中...";
 "premium_unlock" = "解锁高级版";
