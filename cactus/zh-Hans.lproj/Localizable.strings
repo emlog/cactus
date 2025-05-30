@@ -67,13 +67,15 @@
 "error_invalid_config" = "系统错误，AI服务配置错误";
 "error_request_failed" = "请求失败，请切换其他AI模型或检查网络";
 
+// common
+"alert_ok" = "好";
+
 // pro
 "premium" = "高级版";
 "premium_owned" = "您已经拥有高级版";
 "premium_processing" = "处理中...";
 "premium_unlock" = "解锁高级版";
 "premium_restore" = "恢复购买";
-"alert_ok" = "好";
 "premium_features" = "高级版功能";
 "premium_feature_unlimited_usage" = "无限量的翻译总结次数";
 "premium_feature_unlimited_vocabulary" = "无限制的单词本使用";

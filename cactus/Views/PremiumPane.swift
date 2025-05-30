@@ -12,14 +12,13 @@ struct PremiumPane: View {
                 VStack(spacing: 6) {
                     // 标题部分
                     Text(NSLocalizedString("premium_features", comment: "Premium Features"))
-                        .font(.title2)  // 从.title改为.title2，降低一号字体
-                        .padding(.top, 8)  // 从.padding(.top)改为具体数值，减少上边距
+                        .font(.title2)
+                        .padding(.top, 8)
                     
                     // 特性列表
                     VStack(spacing: 2) {
                         FeatureRow(icon: "infinity.circle.fill",
                                    text: NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"))
-                        
                         FeatureRow(icon: "book.circle.fill",
                                    text: NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"))
                     }
@@ -59,8 +58,8 @@ struct PremiumPane: View {
                                             .frame(width: 16, height: 16)
                                     }
                                     Text(purchaseManager.isLoading ?
-                                         NSLocalizedString("premium_processing", comment: "Processing...") :
-                                            "\(NSLocalizedString("premium_unlock", comment: "Unlock Premium")) - \(purchaseManager.productPrice)")
+                                         NSLocalizedString("premium_processing", comment: "处理中...") :
+                                            "\(NSLocalizedString("premium_unlock", comment: "解锁高级版功能")) - \(purchaseManager.productPrice)")
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
