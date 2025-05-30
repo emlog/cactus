@@ -28,6 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
     private var pinButton: NSButton? // 持有 pin 按钮的引用
     
+    // 移除 settingsWindowController 的预初始化，改为按需创建
     private var settingsWindowController: SettingsWindowController?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -238,8 +239,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if wordCount > 20 && !isPremium {
             // 如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
             openPreferences()
-            settingsWindowController?.show(pane: .premium) // 跳转到高级版标签页
-            NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
+            // 延迟一点时间确保窗口已创建
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.settingsWindowController?.show(pane: .premium) // 跳转到高级版标签页
+                NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
+            }
         } else {
             // 否则，正常打开生词本
             // 调整窗口位置到当前屏幕的中心
@@ -264,51 +268,84 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
     
-    // 偏好设置窗口
+    // Preferences window - modified for lazy initialization
     @objc func openPreferences() {
-        if settingsWindowController == nil {
-            // Use system symbols for toolbar icons with fallback
-            let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
-            let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
-            let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage()
-            let aboutIcon = NSImage(systemSymbolName: "info.circle", accessibilityDescription: "Premium Settings") ?? NSImage()
-            
-            settingsWindowController = SettingsWindowController(
-                panes: [
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.general,
-                        title: NSLocalizedString("general", comment: "通用"),
-                        toolbarIcon: generalIcon
-                    ) {
-                        GeneralSettingsPane()
-                    },
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.ai,
-                        title: NSLocalizedString("service", comment: "服务"),
-                        toolbarIcon: aiIcon
-                    ) {
-                        GeneralAiPane()
-                    },
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.premium,
-                        title: NSLocalizedString("premium", comment: "高级版"),
-                        toolbarIcon: premiumIcon
-                    ) {
-                        PremiumPane()
-                    },
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.about,
-                        title: NSLocalizedString("about", comment: "关于"),
-                        toolbarIcon: aboutIcon
-                    ) {
-                        AboutPane()
-                    }
-                ]
+        // If settingsWindowController exists, close and destroy it
+        if let existingController = settingsWindowController {
+            existingController.window?.close()
+            settingsWindowController = nil
+        }
+        
+        // Create new settings window controller
+        createSettingsWindowController()
+        
+        // Add window close notification observer
+        if let window = settingsWindowController?.window {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(settingsWindowWillClose),
+                name: NSWindow.willCloseNotification,
+                object: window
             )
         }
         
         settingsWindowController?.show()
         settingsWindowController?.window?.orderFrontRegardless()
+    }
+    
+    // 创建设置窗口控制器的私有方法
+    private func createSettingsWindowController() {
+        // 使用系统图标，带回退方案
+        let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
+        let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
+        let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage()
+        let aboutIcon = NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About Settings") ?? NSImage()
+        
+        settingsWindowController = SettingsWindowController(
+            panes: [
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.general,
+                    title: NSLocalizedString("general", comment: "通用"),
+                    toolbarIcon: generalIcon
+                ) {
+                    GeneralSettingsPane()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.ai,
+                    title: NSLocalizedString("service", comment: "服务"),
+                    toolbarIcon: aiIcon
+                ) {
+                    GeneralAiPane()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.premium,
+                    title: NSLocalizedString("premium", comment: "高级版"),
+                    toolbarIcon: premiumIcon
+                ) {
+                    PremiumPane()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.about,
+                    title: NSLocalizedString("about", comment: "关于"),
+                    toolbarIcon: aboutIcon
+                ) {
+                    AboutPane()
+                }
+            ]
+        )
+    }
+    
+    // 设置窗口关闭时的清理方法
+    @objc private func settingsWindowWillClose(_ notification: Notification) {
+        // 移除通知监听
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSWindow.willCloseNotification,
+            object: notification.object
+        )
+        
+        // 销毁设置窗口控制器，释放内存
+        settingsWindowController = nil
     }
     
     // 主窗口 - 修改为接受 ActionType
