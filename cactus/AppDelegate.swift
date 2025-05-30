@@ -22,7 +22,7 @@ enum ActionType {
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusItem: NSStatusItem?
     var settingsWindow: NSWindow?
-    var aboutWindow: NSWindow?
+    // var aboutWindow: NSWindow? // 移除独立的 aboutWindow
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow? // 添加生词本窗口变量
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
@@ -88,11 +88,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             menu.addItem(NSMenuItem(
                 title: NSLocalizedString("setting", comment: "偏好设置"),
                 action: #selector(openPreferences),
-                keyEquivalent: ""
-            ))
-            menu.addItem(NSMenuItem(
-                title: NSLocalizedString("about", comment: "关于"),
-                action: #selector(openAbout),
                 keyEquivalent: ""
             ))
             menu.addItem(NSMenuItem(
@@ -175,19 +170,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         titlebarAccessoryViewController.view = pinButton! // 将按钮设置为视图控制器的视图
         mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
-        
-        // 初始化关于窗口 - 保持不变
-        aboutWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 280, height: 160),
-            styleMask: [.titled, .closable],
-            backing: .buffered,
-            defer: false
-        )
-        let aboutView = AboutView()
-        let aboutHostingController = NSHostingController(rootView: aboutView)
-        aboutWindow?.contentViewController = aboutHostingController
-        aboutWindow?.title = NSLocalizedString("about", comment: "关于")
-        aboutWindow?.isReleasedWhenClosed = false
         
         // 初始化生词本窗口
         vocabularyWindow = NSWindow(
@@ -277,7 +259,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             // Use system symbols for toolbar icons with fallback
             let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
             let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
-            let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage() // 新增高级版图标
+            let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage()
+            let aboutIcon = NSImage(systemSymbolName: "info.circle", accessibilityDescription: "Premium Settings") ?? NSImage()
             
             settingsWindowController = SettingsWindowController(
                 panes: [
@@ -295,12 +278,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     ) {
                         GeneralAiPane()
                     },
-                    Settings.Pane( // 新增高级版 Pane
+                    Settings.Pane(
                         identifier: Settings.PaneIdentifier.premium,
                         title: NSLocalizedString("premium", comment: "高级版"),
                         toolbarIcon: premiumIcon
                     ) {
                         PremiumPane()
+                    },
+                    Settings.Pane(
+                        identifier: Settings.PaneIdentifier.about,
+                        title: NSLocalizedString("about", comment: "关于"),
+                        toolbarIcon: aboutIcon
+                    ) {
+                        AboutPane()
                     }
                 ]
             )
@@ -308,15 +298,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         
         settingsWindowController?.show()
         settingsWindowController?.window?.orderFrontRegardless()
-    }
-    
-    // 关于窗口
-    @objc func openAbout() {
-        // 调整窗口位置到当前屏幕的中心
-        aboutWindow?.center()
-        aboutWindow?.makeKeyAndOrderFront(nil)
-        aboutWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
     }
     
     // 主窗口 - 修改为接受 ActionType
