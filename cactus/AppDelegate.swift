@@ -232,11 +232,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     // 生词本窗口
     @objc func openVocabulary() {
-        // 调整窗口位置到当前屏幕的中心
-        vocabularyWindow?.center()
-        vocabularyWindow?.makeKeyAndOrderFront(nil)
-        vocabularyWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
+        // 获取生词数量和用户购买状态
+        let wordCount = VocabularyManager.shared.wordEntries.count
+        let isPremium = PurchaseManager.shared.isPremiumUser
+    
+        if wordCount > 20 && !isPremium {
+            // 如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
+            openPreferences()
+            settingsWindowController?.show(pane: .premium) // 跳转到高级版标签页
+            NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
+        } else {
+            // 否则，正常打开生词本
+            // 调整窗口位置到当前屏幕的中心
+            vocabularyWindow?.center()
+            vocabularyWindow?.makeKeyAndOrderFront(nil)
+            vocabularyWindow?.orderFrontRegardless()
+            NSApp.activate(ignoringOtherApps: true)
+        }
     }
     
     // 联系我们
