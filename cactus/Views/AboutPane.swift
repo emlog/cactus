@@ -14,10 +14,12 @@ struct AboutPane: View {
                     
                     Text((Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? "Cactus")
                         .font(.system(size: 16, weight: .bold))
+                        .multilineTextAlignment(.center)
                     
                     Text(NSLocalizedString("apptitle", comment: "仙人掌AI助手"))
                         .font(.system(size: 14))
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
                     
                     // 同时获取版本号 (CFBundleShortVersionString) 和构建号 (CFBundleVersion)
                     if let ver = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
@@ -33,6 +35,7 @@ struct AboutPane: View {
                             .foregroundColor(.secondary)
                     }
                 }
+                .frame(maxWidth: .infinity) // 添加这行实现水平居中
                 .padding()
                 .contentShape(Rectangle()) // 让整个 VStack 区域都能响应手势
                 .gesture(
