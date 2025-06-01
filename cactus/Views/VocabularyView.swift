@@ -61,7 +61,7 @@ struct VocabularyView: View {
                 }
                 .background(Color(NSColor.controlBackgroundColor))
             }
-            .frame(minWidth: 120, idealWidth: 120, maxWidth: 150)
+            .frame(minWidth: 150, idealWidth: 150, maxWidth: 150)
             
             // 右侧单词详情 - 占比约80%
             VStack(spacing: 0) {
