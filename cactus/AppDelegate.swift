@@ -174,7 +174,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // 初始化生词本窗口
         vocabularyWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable],
+            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
@@ -183,6 +183,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         vocabularyWindow?.contentViewController = vocabularyHostingController
         vocabularyWindow?.title = NSLocalizedString("vocabulary", comment: "生词本")
         vocabularyWindow?.isReleasedWhenClosed = false
+        
+        // 启用最大化按钮
+        vocabularyWindow?.collectionBehavior = [.fullScreenPrimary]
     }
     
     // Setup global keyboard shortcut using KeyboardShortcuts

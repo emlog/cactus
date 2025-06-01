@@ -142,7 +142,7 @@ struct VocabularyView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .frame(width: 750, height: 500)
+        .frame(minWidth: 750, minHeight: 500)
         .focusable()
         .focused($isViewFocused)
         .overlay(
