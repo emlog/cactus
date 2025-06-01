@@ -64,43 +64,30 @@ struct VocabularyView: View {
             .frame(minWidth: 120, idealWidth: 120, maxWidth: 150)
             
             // 右侧单词详情 - 占比约80%
-            VStack {
+            VStack(spacing: 0) {
                 if let selectedWord = selectedWord {
-                    VStack(alignment: .leading, spacing: 16) {
+                    // 头部区域
+                    VStack(alignment: .leading, spacing: 12) {
                         // 单词标题
                         Text(selectedWord.word ?? "")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .textSelection(.enabled)
-                        
-                        // 朗读按钮移到单词下面
-                        HStack {
+                            .foregroundColor(.primary)
+                        // 操作按钮区域
+                        HStack(spacing: 12) {
                             Button(action: {
                                 speakWord(selectedWord.word ?? "")
                             }) {
-                                HStack(spacing: 6) {
-                                    Image(systemName: "speaker.wave.2.circle")
-                                        .frame(width: 16, height: 16)
-                                }
+                                Label("朗读", systemImage: "speaker.wave.2")
+                                    .labelStyle(.iconOnly)
+                                    .foregroundColor(.accentColor)
                             }
                             .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                             .disabled((selectedWord.word ?? "").isEmpty)
                             
                             Spacer()
-                        }
-                        
-                        ScrollView {
-                            Text(selectedWord.definition ?? "")
-                                .font(.body)
-                                .lineSpacing(4)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .textSelection(.enabled)
-                        }
-                        
-                        Spacer()
-                        
-                        HStack {
-                            Spacer()
+                            
                             Button(action: {
                                 vocabularyManager.deleteWord(selectedWord)
                                 if let currentIndex = vocabularyManager.wordEntries.firstIndex(of: selectedWord) {
@@ -113,23 +100,49 @@ struct VocabularyView: View {
                                     }
                                 }
                             }) {
-                                Image(systemName: "trash")
-                                    .frame(width: 15, height: 15)
+                                Label("删除", systemImage: "trash")
+                                    .labelStyle(.iconOnly)
+                                    .foregroundColor(.secondary)
                             }
                             .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                            .controlSize(.regular)
                         }
                     }
                     .padding()
+                    
+                    // 细微的分隔线
+                    Rectangle()
+                        .fill(Color(NSColor.separatorColor).opacity(0.5))
+                        .frame(height: 0.5)
+                    
+                    // 可滚动的内容区域
+                    GeometryReader { geometry in
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text(selectedWord.definition ?? "")
+                                    .font(.body)
+                                    .lineSpacing(4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .textSelection(.enabled)
+                                    .foregroundColor(.primary)
+                                    .padding()
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 } else {
+                    // 空状态
                     VStack {
                         Spacer()
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .frame(minWidth: 400)
+            .background(
+                Color(NSColor.controlBackgroundColor).opacity(0.1)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .frame(width: 600, height: 400)
+        .frame(width: 750, height: 500)
         .focusable()
         .focused($isViewFocused)
         .overlay(
