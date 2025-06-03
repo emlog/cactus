@@ -54,6 +54,8 @@ struct CustomTextEditor: NSViewRepresentable {
             let selectedRange = textView.selectedRange // 保存光标位置
             textView.string = text
             textView.setSelectedRange(selectedRange) // 恢复光标位置
+            // 当文本内容变化时，重新计算高度
+            context.coordinator.calculateAndUpdateHeight(textView: textView)
         }
         // 更新高度约束
         let newHeight = max(minHeight, min(calculatedHeight, maxHeight))
@@ -140,7 +142,8 @@ struct CustomTextEditor: NSViewRepresentable {
             textView.scrollRangeToVisible(textView.selectedRange)
         }
         
-        private func calculateAndUpdateHeight(textView: NSTextView) {
+        // Change 'private func' to 'func' (or 'internal func')
+        func calculateAndUpdateHeight(textView: NSTextView) { // Removed private
             let layoutManager = textView.layoutManager!
             let textContainer = textView.textContainer!
             layoutManager.ensureLayout(for: textContainer)
@@ -152,11 +155,9 @@ struct CustomTextEditor: NSViewRepresentable {
             // 更新绑定高度，限制在最小和最大值之间
             let clampedHeight = max(parent.minHeight, min(newHeight, parent.maxHeight))
             
-            // 避免不必要的更新和潜在的循环
-            if abs(parent.calculatedHeight - clampedHeight) > 5 { // 尝试增大阈值，例如 2 或 5
-                DispatchQueue.main.async {
-                    self.parent.calculatedHeight = clampedHeight
-                }
+            // 移除阈值判断，确保高度总是更新
+            DispatchQueue.main.async {
+                self.parent.calculatedHeight = clampedHeight
             }
         }
     }

@@ -138,12 +138,12 @@ n.名詞
 対応する日本語訳の例文
 
 その他の条件：
-	•	出力内容は信頼性のある辞書資料に基づくこと
-	•	音標には標準的なIPA記号を使用すること
-	•	語源情報は可能な限り古い起源まで遡ること
-	•	例文は語の核心的な意味と一般的な使い方を反映すること
-	•	レイアウトは簡潔で分かりやすく、Markdown構文は使用しないこと
-	•	解説的な語句やタグは追加しないこと
+ •	出力内容は信頼性のある辞書資料に基づくこと
+ •	音標には標準的なIPA記号を使用すること
+ •	語源情報は可能な限り古い起源まで遡ること
+ •	例文は語の核心的な意味と一般的な使い方を反映すること
+ •	レイアウトは簡潔で分かりやすく、Markdown構文は使用しないこと
+ •	解説的な語句やタグは追加しないこと
 
 以下のtigerの出力例を参考にしてください：
 
@@ -153,11 +153,11 @@ n.名詞
 語源：中期英語”teigere”、古英語”tegor”、印欧祖語”tigris”に由来
 語根：tig-（猛獣、トラ）
 類義語：panther, lion
-	1.	He took a photo of the tiger in the wild.
+ 1.	He took a photo of the tiger in the wild.
 彼は野生のトラの写真を撮った。
-	2.	The tiger roars in the danger of the jungle.
+ 2.	The tiger roars in the danger of the jungle.
 トラはジャングルの危険の中で咆哮する。
-	3.	The tiger’s stripes make it look fierce.
+ 3.	The tiger’s stripes make it look fierce.
 トラの縞模様は獰猛に見せる。
 """
         case "ko-KR":
