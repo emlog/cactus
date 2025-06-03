@@ -63,15 +63,15 @@ class promptService {
 ['taɪgər]
 n
 虎
-词源：中世纪英语“teigere”，源自古英语“tegor”，再来自古印欧语“t Incoming” 
+词源：中世纪英语"teigere"，源自古英语"tegor"，再来自古印欧语"tigris" 
 词根：tig-（猛兽，老虎）
 近义词：panther, lion
 
 1. He took a photo of the tiger in the wild.
-   野生老虎的照片。
+   他在野外拍摄了老虎的照片。
    
 2. The tiger roars in the danger of the jungle.
-   老虎在丛林中发出咆哮。
+   老虎在丛林的危险中发出咆哮。
 
 3. The tiger's stripes make it look fierce.
    老虎的条纹让它看起来很凶猛。
@@ -89,29 +89,28 @@ n
 
 例句：  
 包含该单词的例句  
-对应的繁体中文例句翻译，
+对应的繁体中文例句翻译
 其他要求：
 不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然；
 无需 markdown 语法。
-输出的结果全部翻译为符合繁体中文用户的语言习惯。
 
 最后请参考查询 tiger 的输出范例：
 
 ['taɪgər]
 n
-虎
-词源：中世纪英语“teigere”，源自古英语“tegor”，再来自古印欧语“t Incoming” 
-词根：tig-（猛兽，老虎）
+老虎
+词源：中世纪英语"teigere"，源自古英语"tegor"，再来自古印欧语"tigris" 
+词根：tig-（猛獸，老虎）
 近义词：panther, lion
 
 1. He took a photo of the tiger in the wild.
-   野生老虎的照片。
+   他在野外拍摄了老虎的照片。
    
 2. The tiger roars in the danger of the jungle.
-   老虎在丛林中发出咆哮。
+   老虎在丛林的危險中發出咆哮。
 
 3. The tiger's stripes make it look fierce.
-   老虎的条纹让它看起来很凶猛。
+   老虎的條紋讓牠看起來很兇猛。
 """
         case "ja-JP":
             return """
@@ -126,29 +125,28 @@ n
 
 例句：  
 包含该单词的例句  
-对应的日本语例句翻译，
+对应的日本语例句翻译
 其他要求：
 不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然；
 无需 markdown 语法。
-输出的结果全部翻译为符合日本语用户的语言习惯。
 
 最后请参考查询 tiger 的输出范例：
 
 ['taɪgər]
 n
-虎
-词源：中世纪英语“teigere”，源自古英语“tegor”，再来自古印欧语“t Incoming” 
-词根：tig-（猛兽，老虎）
-近义词：panther, lion
+トラ
+語源：中世英語"teigere"、古英語"tegor"、古印欧語"tigris"に由来 
+語根：tig-（猛獣、トラ）
+類義語：panther, lion
 
 1. He took a photo of the tiger in the wild.
-   野生老虎的照片。
+   彼は野生のトラの写真を撮った。
    
 2. The tiger roars in the danger of the jungle.
-   老虎在丛林中发出咆哮。
+   トラはジャングルの危険の中で咆哮する。
 
 3. The tiger's stripes make it look fierce.
-   老虎的条纹让它看起来很凶猛。
+   トラの縞模様は獰猛に見せる。
 """
         case "ko-KR":
             return """
@@ -163,68 +161,100 @@ n
 
 例句：  
 包含该单词的例句  
-对应的韩语例句翻译，
+对应的韩语例句翻译
 其他要求：
 不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然；
 无需 markdown 语法。
-输出的结果全部翻译为符合韩语用户的语言习惯。
 
 最后请参考查询 tiger 的输出范例：
 
 ['taɪgər]
 n
-虎
-词源：中世纪英语“teigere”，源自古英语“tegor”，再来自古印欧语“t Incoming” 
-词根：tig-（猛兽，老虎）
-近义词：panther, lion
+호랑이
+어원：중세 영어 "teigere", 고대 영어 "tegor", 고대 인도유럽어 "tigris"에서 유래 
+어근：tig-（맹수, 호랑이）
+유의어：panther, lion
 
 1. He took a photo of the tiger in the wild.
-   野生老虎的照片。
+   그는 야생에서 호랑이 사진을 찍었다.
    
 2. The tiger roars in the danger of the jungle.
-   老虎在丛林中发出咆哮。
+   호랑이는 정글의 위험 속에서 포효한다.
 
 3. The tiger's stripes make it look fierce.
-   老虎的条纹让它看起来很凶猛。
+   호랑이의 줄무늬는 그것을 사나워 보이게 한다.
 """
         case "en-US":
-            fallthrough // Fallthrough to default if it's English
-        default:
             return """
-你是一个多功能词典。查询用户输入的单词，并使用英语输出准确的查询结果，格式如下：
+You are a multifunctional dictionary. Search for the word entered by the user and output accurate search results in English in the following format:
 
-翻译 
-音标 
-词性 
-词源 
-词根 
-近义词 
+Translation 
+Phonetic 
+Part of speech 
+Etymology 
+Root 
+Synonyms 
 
-例句：  
-包含该单词的例句  
-对应的英语例句翻译，
-其他要求：
-不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然；
-无需 markdown 语法。
-输出的结果全部翻译为符合英语用户的语言习惯。
+Example sentences:  
+Example sentences containing the word  
+Corresponding English sentence translations
+Other requirements:
+Do not add any unnecessary prompts or explanations, do not use colon format annotations like "Translation: xxx", keep the layout clear and natural;
+No markdown syntax needed.
 
-最后请参考查询 tiger 的输出范例：
+Finally, please refer to the output example for searching tiger:
 
 ['taɪgər]
 n
-虎
-词源：中世纪英语“teigere”，源自古英语“tegor”，再来自古印欧语“t Incoming” 
-词根：tig-（猛兽，老虎）
-近义词：panther, lion
+tiger
+Etymology: From Middle English "teigere", from Old English "tegor", from Proto-Indo-European "tigris" 
+Root: tig- (fierce beast, tiger)
+Synonyms: panther, lion
 
 1. He took a photo of the tiger in the wild.
-   野生老虎的照片。
+   He captured an image of the tiger in its natural habitat.
    
 2. The tiger roars in the danger of the jungle.
-   老虎在丛林中发出咆哮。
+   The tiger vocalizes loudly when sensing jungle threats.
 
 3. The tiger's stripes make it look fierce.
-   老虎的条纹让它看起来很凶猛。
+   The tiger's distinctive markings give it a formidable appearance.
+"""
+        default:
+            return """
+You are a multifunctional dictionary. Search for the word entered by the user and output accurate search results in English in the following format:
+
+Translation 
+Phonetic 
+Part of speech 
+Etymology 
+Root 
+Synonyms 
+
+Example sentences:  
+Example sentences containing the word  
+Corresponding English sentence translations
+Other requirements:
+Do not add any unnecessary prompts or explanations, do not use colon format annotations like "Translation: xxx", keep the layout clear and natural;
+No markdown syntax needed.
+
+Finally, please refer to the output example for searching tiger:
+
+['taɪgər]
+n
+tiger
+Etymology: From Middle English "teigere", from Old English "tegor", from Proto-Indo-European "tigris" 
+Root: tig- (fierce beast, tiger)
+Synonyms: panther, lion
+
+1. He took a photo of the tiger in the wild.
+   He captured an image of the tiger in its natural habitat.
+   
+2. The tiger roars in the danger of the jungle.
+   The tiger vocalizes loudly when sensing jungle threats.
+
+3. The tiger's stripes make it look fierce.
+   The tiger's distinctive markings give it give it a formidable appearance.
 """
         }
     }
@@ -236,7 +266,7 @@ n
         case "zh-CN":
             return "你是我的内容摘要助手。请用简洁的简体中文总结我输入文本的核心要点，输出应尽可能简短，仅保留最关键信息。禁止输出原文、解释或引导性语言。"
         case "zh-TW":
-            return "你是一名專業的翻譯助手。請將使用者輸入的內容準確翻譯為繁體中文，只輸出翻譯後的內容，不包含原文、解釋或任何多餘資訊。"
+            return "你是一名专业的翻译助手。请将使用者输入的内容准确翻译为繁体中文，只输出翻译后的内容，不包含原文、解释或任何多余资讯。"
         case "ja-JP":
             return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
         case "ko-KR":
