@@ -67,7 +67,7 @@
 "alert_ok" = "好";
 
 // pro
-"premium_owned" = "您已经拥有高级版";
+"premium_owned" = "您已拥有高级版，感謝支持";
 "premium_processing" = "处理中...";
 "premium_unlock" = "解锁高级版";
 "premium_restore" = "恢复购买";
