@@ -17,45 +17,6 @@ struct VocabularyView: View {
     @State private var isSpeakingWord = false
     private let speechService = SpeechService.shared
     
-    // 辅助函数：创建高亮文本
-    private func highlightedText(word: String, definition: String) -> AttributedString {
-        var attributedString = AttributedString(definition)
-        if !word.isEmpty {
-            // 使用正则表达式进行完整单词匹配
-            // \b 表示单词边界，确保只匹配完整单词
-            let pattern = "\\b" + NSRegularExpression.escapedPattern(for: word) + "\\b"
-            
-            do {
-                let regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-                let nsString = definition as NSString
-                let matches = regex.matches(in: definition, options: [], range: NSRange(location: 0, length: nsString.length))
-                
-                // 从后往前处理匹配项，避免索引偏移问题
-                for match in matches.reversed() {
-                    let range = match.range
-                    if Range(range, in: definition) != nil {
-                        let startIndex = attributedString.index(attributedString.startIndex, offsetByCharacters: range.location)
-                        let endIndex = attributedString.index(startIndex, offsetByCharacters: range.length)
-                        let attributedRange = startIndex..<endIndex
-                        
-                        attributedString[attributedRange].backgroundColor = Color.yellow.opacity(0.5) // 高亮颜色
-                        attributedString[attributedRange].font = .system(.body, weight: .bold)
-                    }
-                }
-            } catch {
-                // 如果正则表达式创建失败，回退到原来的简单匹配
-                print("正则表达式错误: \(error)")
-                var searchRange = attributedString.startIndex..<attributedString.endIndex
-                while let range = attributedString[searchRange].range(of: word, options: .caseInsensitive) {
-                    attributedString[range].backgroundColor = Color.yellow.opacity(0.5)
-                    attributedString[range].font = .system(.body, weight: .bold)
-                    searchRange = range.upperBound..<attributedString.endIndex
-                }
-            }
-        }
-        return attributedString
-    }
-
     var body: some View {
         HSplitView {
             // 左侧单词列表 - 占比约20%
@@ -153,22 +114,17 @@ struct VocabularyView: View {
                         .fill(Color(NSColor.separatorColor).opacity(0.5))
                         .frame(height: 0.5)
                     
-                    // 可滚动的内容区域
-                    ScrollView {
-                        Text(highlightedText(word: selectedWord.word ?? "", definition: selectedWord.definition ?? ""))
-                            .font(.body)
-                            .lineSpacing(4)
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading) // 确保文本左对齐并填充可用宽度
-                            .padding(12) // 内边距
-                            .textSelection(.enabled) // 允许文本选择
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 0)
-                            .fill(Color(NSColor.textBackgroundColor))
-                            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                    )
+                    TextEditor(text: .constant(selectedWord.definition ?? ""))
+                        .font(.body)
+                        .lineSpacing(4)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(12) // 内边距
+                        .background(
+                            RoundedRectangle(cornerRadius: 0)
+                                .fill(Color(NSColor.textBackgroundColor))
+                                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                        )
                 } else {
                     // 空状态
                     VStack {
