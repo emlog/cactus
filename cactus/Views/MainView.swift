@@ -9,6 +9,7 @@ struct MainView: View {
     @ObservedObject private var vocabularyManager = VocabularyManager.shared // 添加这行
     @State private var Ai = AiService.shared
     @State private var Lang = LangService.shared
+    @State private var Prompt = promptService.shared
     // 吐司提示
     @State private var showCompleteToast = false
     @State private var showErrorToast = false
@@ -390,7 +391,6 @@ struct MainView: View {
     }
     
     // 翻译
-    // 在translateText()方法中添加保存单词的逻辑
     func translateText() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
@@ -400,52 +400,19 @@ struct MainView: View {
         }
         
         let systemMessage: String
-        let targetLanguage = Lang.getPreferredLanguageName()
         
-        if Lang.isLikelyChinese(inputText) {
-            // 中文 => 英文翻译
-            systemMessage = "你是一名专业的中译英翻译助手。请将用户输入的中文内容准确翻译为英文。只输出英文翻译，不添加原文或任何解释说明。"
+        if Lang.isTextInPreferredLanguage(inputText) {
+            // 如果是自己系统语言（中文、韩文、日文、繁体中文） => 英文翻译
+            systemMessage = Prompt.getSystemMessageForTranslateToEnglish()
         } else if Lang.isSentence(inputText) == false {
-            // 单词查询 - 这里添加保存到生词本的逻辑
-            systemMessage = """
-你是一个多功能词典。查询用户输入的单词，并使用 \(targetLanguage) 输出准确的查询结果，格式如下：
-
-翻译 
-音标 
-词性 
-词源 
-词根 
-近义词 
-
-例句：  
-包含该单词的例句  
-对应的 \(targetLanguage) 例句翻译。
-
-其他要求：
-如果单词有多个解释，请给出最常用的前几个；
-给出3个例句；
-不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然；
-无需 markdown 语法。
-
-最后请参考查询 preview 的输出范例：
-
-预览，预先显示
-['priːviːʌ]
-名词、动词
-词源：出现于14世纪，源自法语"préavis"，来自拉丁语"praeveniens"（预示的）
-词根：pre-（预先）+view（观看）
-近义词：look at, gaze at, inspect
-
-The preview showed some problems that needed to be addressed.
-预览中展示了一些需要解决的问题。
-"""
-            
-            // 执行AI查询，并在成功后保存到生词本
+            // 单词翻译
+            systemMessage = Prompt.getSystemMessageForTranslateWord()
+            // 保存到生词本
             performAIActionWithVocabulary(systemMessage: systemMessage, word: inputText)
             return
         } else {
-            // 一般句子翻译
-            systemMessage = "你是一名专业的翻译助手。请将用户输入的内容准确翻译为 \(targetLanguage)，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
+            // 句子翻译
+            systemMessage = Prompt.getSystemMessageForTranslate()
         }
         performAIAction(systemMessage: systemMessage)
     }
@@ -491,8 +458,7 @@ The preview showed some problems that needed to be addressed.
             showErrorToast = true
             return
         }
-        let targetLanguage = Lang.getPreferredLanguageName()
-        let systemMessage = "你是我的内容摘要助手。请用简洁的 \(targetLanguage) 总结我输入文本的核心要点，输出应尽可能简短，仅保留最关键信息。禁止输出原文、解释或引导性语言。"
+        let systemMessage = Prompt.getSystemMessageForSummary()
         performAIAction(systemMessage: systemMessage)
     }
     
@@ -504,14 +470,7 @@ The preview showed some problems that needed to be addressed.
             showErrorToast = true
             return
         }
-        let targetLanguage = Lang.getPreferredLanguageName()
-        let systemMessage = """
-你是我的百科全书助手。请用简洁、通俗易懂的 \(targetLanguage) 解释我输入内容中的 1 至 5 个核心概念，仅输出这些概念的解释，不添加任何引导语、原文或注释。输出格式如下：
-
-1. xxx：解释内容  
-2. xxx：解释内容  
-（不超过5项），无需 markdown 语法。
-"""
+        let systemMessage = Prompt.getSystemMessageForExplain()
         performAIAction(systemMessage: systemMessage)
     }
     
@@ -523,8 +482,7 @@ The preview showed some problems that needed to be addressed.
             showErrorToast = true
             return
         }
-        let targetLanguage = Lang.getPreferredLanguageName()
-        let systemMessage = "你是我的智能私人助理，请始终用清晰专业的 \(targetLanguage) 回应我的问题或指令。不添加任何引导语、客套或无关内容，除非指令要求无需 markdown 语法。"
+        let systemMessage = Prompt.getSystemMessageForChat()
         
         performAIAction(systemMessage: systemMessage)
     }

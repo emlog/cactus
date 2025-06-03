@@ -117,4 +117,34 @@ class LangService {
         print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
         return preferredLanguageName
     }
+
+    // Added new function to get system language code
+    public func getSystemLanguageCode() -> String {
+        let preferredLanguage = Locale.preferredLanguages.first ?? "en-US"
+        if preferredLanguage.starts(with: "zh-Hans") {
+            return "zh-CN"
+        } else if preferredLanguage.starts(with: "zh-Hant") {
+            return "zh-TW"
+        } else if preferredLanguage.starts(with: "ja") {
+            return "ja-JP"
+        } else if preferredLanguage.starts(with: "ko") {
+            return "ko-KR"
+        } else if preferredLanguage.starts(with: "en") {
+            return "en-US"
+        } else {
+            return "en-US" // Default to English for other languages
+        }
+    }
+
+    // 判断文本是否为系统首选语言（支持中、日、韩、繁体中文）
+    public func isTextInPreferredLanguage(_ text: String) -> Bool {
+        let systemLang = getSystemLanguageCode()
+        let textLang = detectLanguageCode(for: text)
+        // 只支持 zh-CN, zh-TW, ja-JP, ko-KR
+        let supported = ["zh-CN", "zh-TW", "ja-JP", "ko-KR"]
+        if supported.contains(systemLang) {
+            return systemLang == textLang
+        }
+        return false
+    }
 }
