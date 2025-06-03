@@ -12,7 +12,6 @@ import Settings
 import Foundation
 import ApplicationServices
 
-// 定义操作类型
 enum ActionType {
     case nothing
     case translate
@@ -28,7 +27,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
     private var pinButton: NSButton? // 持有 pin 按钮的引用
     
-    // 移除 settingsWindowController 的预初始化，改为按需创建
     private var settingsWindowController: SettingsWindowController?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -74,7 +72,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             
             menu.addItem(NSMenuItem.separator())
             
-            // 添加生词本菜单项
             let vocabularyMenuItem = NSMenuItem(
                 title: NSLocalizedString("vocabulary", comment: "生词本"),
                 action: #selector(openVocabulary),
@@ -112,11 +109,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             statusItem?.menu = menu
         }
         
-        // 初始化窗口
         initializeWindows()
-        
-        // 设置全局快捷键
-        setupGlobalShortcut()
+        setupGlobalShortcut() // 设置全局快捷键
     }
     
     private func initializeWindows() {
@@ -240,7 +234,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let isPremium = PurchaseManager.shared.isPremiumUser
     
         if wordCount > 20 && !isPremium {
-            // 如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
+            // 高级版：如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
             openPreferences()
             // 延迟一点时间确保窗口已创建
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -248,7 +242,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
             }
         } else {
-            // 否则，正常打开生词本
             // 调整窗口位置到当前屏幕的中心
             vocabularyWindow?.center()
             vocabularyWindow?.makeKeyAndOrderFront(nil)

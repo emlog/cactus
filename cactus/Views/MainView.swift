@@ -414,22 +414,30 @@ struct MainView: View {
 音标 
 词性 
 词源 
+词根 
+近义词 
 
 例句：  
 包含该单词的例句  
 对应的 \(targetLanguage) 例句翻译。
 
-如查询 tiger 输出例子：
+其他要求：
+如果单词有多个解释，请给出最常用的前几个；
+给出3个例句；
+不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然；
+无需 markdown 语法。
 
-老虎
-/taɪgər/
-名词
-来自古法语"tigre"，源自拉丁语"tigri"，意为"老虎"
+最后请参考查询 preview 的输出范例：
 
-The tiger is the largest of all the cats. 
-老虎是最大的猫科动物。
+预览，预先显示
+['priːviːʌ]
+名词、动词
+词源：出现于14世纪，源自法语"préavis"，来自拉丁语"praeveniens"（预示的）
+词根：pre-（预先）+view（观看）
+近义词：look at, gaze at, inspect
 
-如果单词有多个解释，请给出最常用的1到3个，不要添加任何多余的提示语或解释，不使用 翻译：xxx、等冒号形式的标注，排版清晰自然，无需 markdown 语法。
+The preview showed some problems that needed to be addressed.
+预览中展示了一些需要解决的问题。
 """
             
             // 执行AI查询，并在成功后保存到生词本
