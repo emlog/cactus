@@ -34,6 +34,20 @@ struct AboutPane: View {
                             .font(.system(size: 12))
                             .foregroundColor(.secondary)
                     }
+                    
+                    // 添加联系我们和给个好评按钮
+                    HStack(spacing: 12) {
+                        Button(NSLocalizedString("post_issue", comment: "反馈问题")) {
+                            openContact()
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        Button(NSLocalizedString("rate_app", comment: "给个好评吧")) {
+                            rateApp()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding(.top, 10)
                 }
                 .frame(maxWidth: .infinity) // 添加这行实现水平居中
                 .padding()
@@ -48,6 +62,20 @@ struct AboutPane: View {
                         }
                 )
             }
+        }
+    }
+    
+    // 联系我们
+    func openContact() {
+        if let url = URL(string: "https://cactusai.cc/about") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
+    // 给个好评吧
+    func rateApp() {
+        if let url = URL(string: "macappstore://apps.apple.com/app/id6743790378?action=write-review") {
+            NSWorkspace.shared.open(url)
         }
     }
     

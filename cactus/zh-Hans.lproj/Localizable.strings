@@ -55,6 +55,7 @@
 "website" = "官方网站";
 "apptitle" = "仙人掌AI助手";
 "version" = "版本";
+"post_issue" = "反馈问题";
 
 // vocabulary
 "sum" = "总计";
