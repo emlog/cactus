@@ -50,7 +50,6 @@
 "accessibility_permission_message" = "請在「系統偏好設定」中啟用輔助使用權限，以便翻譯與製作所選文字的摘要。";
 "open_settings" = "打開設定";
 "cancel" = "取消";
-"placeholder_main_input" = "輸入內容，按下 Return 鍵查詢，按下 Shift + Return 鍵換行";
 
 // About Window
 "website" = "官方網站";

@@ -50,7 +50,6 @@
 "accessibility_permission_message" = "テキストの選択・翻訳・要約を行うには、システム環境設定でアクセシビリティ権限を有効にしてください。";
 "open_settings" = "設定を開く";
 "cancel" = "キャンセル";
-"placeholder_main_input" = "内容を入力してEnterキーで実行、Shift+Enterで改行";
 
 // about
 "website" = "公式サイト";

@@ -50,7 +50,6 @@
 "accessibility_permission_message" = "Please grant Accessibility access in System Settings > Privacy & Security to enable translating and summarizing selected text.";
 "open_settings" = "Open System Settings";
 "cancel" = "Cancel";
-"placeholder_main_input" = "Enter text and press Enter to submit. Press Shift+Enter for a new line.";
 
 // about
 "website" = "Website";

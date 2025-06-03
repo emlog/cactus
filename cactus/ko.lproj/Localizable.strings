@@ -50,7 +50,6 @@
 "accessibility_permission_message" = "선택한 텍스트를 번역하고 요약하려면 시스템 설정에서 손쉬운 사용 권한을 활성화하세요.";
 "open_settings" = "설정 열기";
 "cancel" = "취소";
-"placeholder_main_input" = "내용 입력 후 Enter로 실행, Shift+Enter로 줄바꿈";
 
 // about
 "website" = "공식 웹사이트";

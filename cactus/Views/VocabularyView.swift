@@ -1,7 +1,7 @@
 //
 //  cactus
 //
-//  窗口：生词本
+//  生词本
 //  Created by 许大伟 on 2025/2/21.
 //
 
@@ -61,7 +61,7 @@ struct VocabularyView: View {
                 }
                 .background(Color(NSColor.controlBackgroundColor))
             }
-            .frame(minWidth: 150, idealWidth: 150, maxWidth: 150)
+            .frame(minWidth: 120, idealWidth: 120, maxWidth: 190)
             
             // 右侧单词详情 - 占比约80%
             VStack(spacing: 0) {
@@ -79,7 +79,7 @@ struct VocabularyView: View {
                             Button(action: {
                                 speakWord(selectedWord.word ?? "")
                             }) {
-                                Label("朗读", systemImage: "speaker.wave.2")
+                                Label("", systemImage: "speaker.wave.2")
                                     .labelStyle(.iconOnly)
                                     .foregroundColor(.accentColor)
                             }
@@ -100,7 +100,7 @@ struct VocabularyView: View {
                                     }
                                 }
                             }) {
-                                Label("删除", systemImage: "trash")
+                                Label("delete", systemImage: "trash")
                                     .labelStyle(.iconOnly)
                                     .foregroundColor(.secondary)
                             }
@@ -115,20 +115,17 @@ struct VocabularyView: View {
                         .frame(height: 0.5)
                     
                     // 可滚动的内容区域
-                    GeometryReader { geometry in
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text(selectedWord.definition ?? "")
-                                    .font(.body)
-                                    .lineSpacing(4)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .textSelection(.enabled)
-                                    .foregroundColor(.primary)
-                                    .padding()
-                            }
-                        }
+                    TextEditor(text: .constant(selectedWord.definition ?? ""))
+                        .font(.body)
+                        .lineSpacing(4)
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
+                        .padding(12) // 内边距
+                        .background(
+                            RoundedRectangle(cornerRadius: 0)
+                                .fill(Color(NSColor.textBackgroundColor))
+                                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                        )
                 } else {
                     // 空状态
                     VStack {

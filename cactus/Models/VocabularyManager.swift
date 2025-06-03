@@ -59,6 +59,7 @@ class VocabularyManager: ObservableObject {
             if !existingEntries.isEmpty {
                 // 如果已存在，更新时间戳
                 existingEntries.first?.timestamp = Date()
+                existingEntries.first?.definition = definition
             } else {
                 // 创建新条目
                 let newEntry = WordEntry(context: context)

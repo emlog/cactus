@@ -50,7 +50,6 @@
 "accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便翻译总结选中文字。";
 "open_settings" = "打开设置";
 "cancel" = "取消";
-"placeholder_main_input" = "输入内容，按回车查询，按Shift+回车换行";
 
 // about
 "website" = "官方网站";
