@@ -305,12 +305,24 @@ Synonyms: panther, lion
         }
     }
     
-    // 提示词：解释句子
-    public func getSystemMessageForExplain() -> String {
+    // 提示词：字典
+    public func getSystemMessageForDict() -> String {
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
         case "zh-CN":
-            return "你是我的百科全书助手。请用简洁、通俗易懂的简体中文解释我输入内容中的 1 至 5 个核心概念，仅输出这些概念的解释，不添加任何引导语、原文或注释。输出格式如下：\n\n1. xxx：解释内容  \n2. xxx：解释内容  \n（不超过5项），无需 markdown 语法。"
+            return """
+            你是一位语言学专家和辞典编辑，参考《辞海》的风格，为中文词语提供权威解释。请使用规范、严谨的语言，并按照以下格式输出：
+            【词语】  
+            拼音：（拼音）  
+            词性：（如：名词、动词、形容词、成语等）  
+            释义：  
+            1. （简明扼要的解释，偏书面语风格）  
+            2. （如有第二义项，请列出）  
+            引例：（可选，列出古文或权威文献中的例句）  
+            近义：（可选）  
+            反义：（可选）  
+            词源：（可选，如有历史、典故、出典等）
+            """
         case "zh-TW":
             return "你是我的百科全書助手。請用簡潔、通俗易懂的繁體中文解釋我輸入內容中的 1 至 5 個核心概念，僅輸出這些概念的解釋，不添加任何引導語、原文或註釋。輸出格式如下：\n\n1. xxx：解釋內容  \n2. xxx：解釋內容  \n（不超過5項），無需 markdown 語法。"
         case "ja-JP":

@@ -2,6 +2,7 @@
 "openmain" = "打开窗口";
 "translate" = "选中翻译";
 "summary" = "总结摘要";
+"dictionary" = "字词查询";
 "vocabulary" = "生词本";
 "setting" = "偏好设置";
 "contact" = "联系我们";
@@ -21,7 +22,9 @@
 "shortcut_translate" = "选中翻译快捷键";
 "shortcut_translate_description" = "选中文字内容，按下快捷键快速翻译";
 "shortcut_summary" = "总结摘要快捷键";
-"shortcut_translate_summary" = "选中文字内容，按下快捷键总结摘要";
+"shortcut_summary_description" = "选中文字内容，按下快捷键总结摘要";
+"shortcut_dict" = "字词查询快捷键";
+"shortcut_dict_description" = "选中字词，按下快捷键查询";
 "select_service" = "选择AI模型";
 "free" = "免费";
 "model_deepseek_v3" = "Deepseek-v3";
@@ -33,14 +36,14 @@
 "pop_text_empty" = "没有可复制的内容";
 "pop_translate_text_empty" = "请输入要翻译的文字";
 "pop_summary_text_empty" = "请输入要总结的内容";
-"pop_explain_text_empty" = "请输入要解释的内容";
+"pop_dict_text_empty" = "请输入要查询的字词";
 "pop_chat_text_empty" = "请输入要解答的问题";
 "pop_copy_success" = "复制成功";
 "pop_already_cleared" = "已清空内容";
 "pop_select_model_first" = "请在偏好设置中选择AI模型";
 "help_translate" = "翻译文本 (%@)";
 "help_summary" = "总结摘要 (%@)";
-"help_explain" = "解释说明";
+"help_dict" = "字典查询";
 "help_chat" = "对话问答";
 "help_copy" = "复制";
 "help_pin" = "钉住窗口";

@@ -33,7 +33,15 @@ struct GeneralSettingsPane: View {
             
             Settings.Section(label: { Text(NSLocalizedString("shortcut_summary", comment: "总结摘要快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutSummary)
-                Text(NSLocalizedString("shortcut_translate_summary", comment: "选中要总结的内容，按下快捷键总结摘要"))
+                Text(NSLocalizedString("shortcut_summary_description", comment: "选中要总结的内容，按下快捷键总结摘要"))
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+
+            Settings.Section(label: { Text(NSLocalizedString("shortcut_dict", comment: "字词查询快捷键")) }) {
+                KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutDictionary)
+                Text(NSLocalizedString("shortcut_dict_description", comment: "选中要查询的字词，按下快捷键查询"))
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)

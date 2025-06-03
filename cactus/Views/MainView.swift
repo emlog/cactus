@@ -124,16 +124,16 @@ struct MainView: View {
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(String(format: NSLocalizedString("help_summary", comment: "总结摘要 (%@)"), KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcutSummary)?.description ?? ""), delay: 0.5)
                     
-                    // 说明按钮
+                    // 字典按钮
                     Button(action: {
-                        explainText()
+                        dictionaryText()
                     }) {
-                        Image(systemName: "lightbulb.max")
+                        Image(systemName: "character.book.closed.zh")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_explain", comment: "解释说明"), delay: 0.5)
+                    .hoverTooltip(NSLocalizedString("help_dict", comment: "解释说明"), delay: 0.5)
                     
                     // 对话问答按钮
                     Button(action: {
@@ -462,15 +462,15 @@ struct MainView: View {
         performAIAction(systemMessage: systemMessage)
     }
     
-    // 解释
-    func explainText() {
+    // 字典
+    func dictionaryText() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_explain_text_empty", comment: "请先输入内容")
+            toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
             showErrorToast = true
             return
         }
-        let systemMessage = Prompt.getSystemMessageForExplain()
+        let systemMessage = Prompt.getSystemMessageForDict()
         performAIAction(systemMessage: systemMessage)
     }
     

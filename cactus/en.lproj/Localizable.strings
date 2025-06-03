@@ -21,7 +21,9 @@
 "shortcut_translate" = "Translate Shortcut";
 "shortcut_translate_description" = "Select text and press the shortcut to translate.";
 "shortcut_summary" = "Summarize Shortcut";
-"shortcut_translate_summary" = "Select text and press the shortcut to summarize.";
+"shortcut_summary_description" = "Select text and press the shortcut to summarize.";
+"shortcut_dict" = "字词查询快捷键";
+"shortcut_dict_description" = "选中字词，按下快捷键查询";
 "select_service" = "Select AI Model";
 "free" = "Free";
 "model_deepseek_v3" = "Deepseek-v3";
@@ -33,14 +35,14 @@
 "pop_text_empty" = "No text available to copy.";
 "pop_translate_text_empty" = "Please enter text to translate.";
 "pop_summary_text_empty" = "Please enter text to summarize.";
-"pop_explain_text_empty" = "Please enter text to explain.";
+"pop_dict_text_empty" = "Please enter text to explain.";
 "pop_chat_text_empty" = "Enter your question.";
 "pop_copy_success" = "Copied";
 "pop_already_cleared" = "Text cleared.";
 "pop_select_model_first" = "Please select an AI model in Preferences first.";
 "help_translate" = "Translate Text (%@)";
 "help_summary" = "Summarize Text (%@)";
-"help_explain" = "Explain Text";
+"help_dict" = "Explain Text";
 "help_chat" = "Chat";
 "help_copy" = "Copy";
 "help_pin" = "Pin Window";

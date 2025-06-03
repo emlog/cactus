@@ -16,6 +16,7 @@ enum ActionType {
     case nothing
     case translate
     case summarize
+    case dictionary
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
@@ -69,6 +70,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
             summaryMenuItem.setShortcut(for: SettingsModel.aiShortcutSummary)
             menu.addItem(summaryMenuItem)
+                        
+            let dictionaryMenuItem = NSMenuItem(
+                title: NSLocalizedString("dictionary", comment: "字词查询"),
+                action: #selector(openMainDictionaryAction),
+                keyEquivalent: ""
+            )
+            dictionaryMenuItem.image = NSImage(systemSymbolName: "character.book.closed.zh", accessibilityDescription: nil)
+            dictionaryMenuItem.setShortcut(for: SettingsModel.aiShortcutDictionary)
+            menu.addItem(dictionaryMenuItem)
             
             menu.addItem(NSMenuItem.separator())
             
@@ -77,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 action: #selector(openVocabulary),
                 keyEquivalent: ""
             )
-            vocabularyMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil)
+            vocabularyMenuItem.image = NSImage(systemSymbolName: "rectangle.and.paperclip", accessibilityDescription: nil)
             menu.addItem(vocabularyMenuItem)
             
             menu.addItem(NSMenuItem.separator())
@@ -187,7 +197,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Register the keyboard shortcut for openmain
         KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutMain) { [weak self] in
             DispatchQueue.main.async {
-                self?.openMain(action: .nothing)
+                self?.openMain(action: .nothing) // 打开主窗口
             }
         }
         
@@ -202,6 +212,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutSummary) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .summarize) // 指定总结操作
+            }
+        }
+        
+        // Register the keyboard shortcut for dictionary
+        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutDictionary) { [weak self] in
+            DispatchQueue.main.async {
+                self?.openMain(action: .dictionary) // 指定字典操作
             }
         }
     }
@@ -390,6 +407,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         openMain(action: .nothing)
     }
     
+    @objc private func openMainDictionaryAction() {
+        openMain(action: .dictionary)
+    }
+    
     // 检查并提醒用户开启：辅助功能权限 - 修改为接受 ActionType
     private func checkAccessibilityPermissionAndGetClipboard(action: ActionType = .nothing, completion: @escaping (Bool) -> Void) { // 添加 action 参数
         // 检查辅助功能权限
@@ -461,6 +482,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                         mainView.translateText()
                     case .summarize:
                         mainView.summaryText() // 调用总结方法
+                    case .dictionary:
+                        mainView.dictionaryText() // 调用总结方法
                     case .nothing:
                         mainView.noactionText()
                         break

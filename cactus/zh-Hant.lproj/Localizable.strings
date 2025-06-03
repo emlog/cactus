@@ -22,6 +22,8 @@
 "shortcut_translate_description" = "選取文字內容，按下快速鍵即可快速翻譯";
 "shortcut_summary" = "製作摘要快速鍵";
 "shortcut_summary_description" = "選取文字內容，按下快速鍵即可製作摘要";
+"shortcut_dict" = "字词查询快捷键";
+"shortcut_dict_description" = "选中字词，按下快捷键查询";
 "select_service" = "選取 AI 模型";
 "free" = "免費";
 "model_deepseek_v3" = "Deepseek-v3";
@@ -33,14 +35,14 @@
 "pop_text_empty" = "沒有可拷貝的內容";
 "pop_translate_text_empty" = "請輸入要翻譯的文字";
 "pop_summary_text_empty" = "請輸入要製作摘要的內容";
-"pop_explain_text_empty" = "請輸入要解釋的內容";
+"pop_dict_text_empty" = "請輸入要解釋的內容";
 "pop_chat_text_empty" = "請輸入您的問題";
 "pop_copy_success" = "已拷貝";
 "pop_already_cleared" = "已清除內容";
 "pop_select_model_first" = "請先在偏好設定中選取 AI 模型";
 "help_translate" = "翻譯文字 (%@)";
 "help_summary" = "製作摘要 (%@)";
-"help_explain" = "解釋";
+"help_dict" = "解釋";
 "help_chat" = "聊天";
 "help_copy" = "拷貝";
 "help_pin" = "釘選視窗";

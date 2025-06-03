@@ -21,7 +21,9 @@
 "shortcut_translate" = "번역 단축키";
 "shortcut_translate_description" = "텍스트를 선택하고 단축키로 빠르게 번역";
 "shortcut_summary" = "요약 단축키";
-"shortcut_translate_summary" = "텍스트를 선택하고 단축키로 요약";
+"shortcut_summary_description" = "텍스트를 선택하고 단축키로 요약";
+"shortcut_dict" = "字词查询快捷键";
+"shortcut_dict_description" = "选中字词，按下快捷键查询";
 "select_service" = "AI 모델 선택";
 "free" = "무료";
 "model_deepseek_v3" = "Deepseek-v3";
@@ -33,14 +35,14 @@
 "pop_text_empty" = "복사할 수 있는 내용이 없습니다";
 "pop_translate_text_empty" = "번역할 텍스트를 입력하세요";
 "pop_summary_text_empty" = "요약할 내용을 입력하세요";
-"pop_explain_text_empty" = "설명할 내용을 입력하세요";
+"pop_dict_text_empty" = "설명할 내용을 입력하세요";
 "pop_chat_text_empty" = "질문할 내용을 입력하세요";
 "pop_copy_success" = "복사 완료";
 "pop_already_cleared" = "이미 지워진 내용입니다";
 "pop_select_model_first" = "환경설정에서 AI 모델을 먼저 선택하세요";
 "help_translate" = "텍스트 번역 (%@)";
 "help_summary" = "요약 (%@)";
-"help_explain" = "설명";
+"help_dict" = "설명";
 "help_chat" = "채팅 질문";
 "help_copy" = "복사";
 "help_pin" = "창 고정";
