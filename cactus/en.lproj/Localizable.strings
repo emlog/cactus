@@ -55,6 +55,7 @@
 "website" = "Website";
 "apptitle" = "Cactus AI Assistant";
 "version" = "Version";
+"report_issue" = "Report Issue";
 
 // vocabulary
 "sum" = "Total";

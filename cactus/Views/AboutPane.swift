@@ -37,7 +37,7 @@ struct AboutPane: View {
                     
                     // 添加联系我们和给个好评按钮
                     HStack(spacing: 12) {
-                        Button(NSLocalizedString("post_issue", comment: "反馈问题")) {
+                        Button(NSLocalizedString("report_issue", comment: "反馈问题")) {
                             openContact()
                         }
                         .buttonStyle(.bordered)

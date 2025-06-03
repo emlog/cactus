@@ -55,6 +55,7 @@
 "website" = "공식 웹사이트";
 "apptitle" = "선인장 AI 도우미";
 "version" = "버전";
+"report_issue" = "문제 신고";
 
 // vocabulary
 "sum" = "총";

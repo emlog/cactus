@@ -55,6 +55,7 @@
 "website" = "公式サイト";
 "apptitle" = "Cactus AIアシスタント";
 "version" = "バージョン";
+"report_issue" = "問題を報告";
 
 // vocabulary
 "sum" = "合計";
