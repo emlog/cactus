@@ -232,7 +232,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // 获取生词数量和用户购买状态
         let wordCount = VocabularyManager.shared.wordEntries.count
         let isPremium = PurchaseManager.shared.isPremiumUser
-    
+        
         if wordCount > 20 && !isPremium {
             // 高级版：如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
             openPreferences()

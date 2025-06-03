@@ -10,17 +10,32 @@ struct PremiumPane: View {
         Settings.Container(contentWidth: 500) {
             Settings.Section(title: "", bottomDivider: true) {
                 VStack(spacing: 6) {
-                    // 标题部分
-                    Text(NSLocalizedString("premium_features", comment: "Premium Features"))
-                        .font(.title2)
-                        .padding(.top, 8)
+                    // 奢华标题部分
+                    VStack(spacing: 12) {
+                        Text(NSLocalizedString("premium_features", comment: "Premium Features"))
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color(red: 0.2, green: 0.1, blue: 0.5),  // 深紫色
+                                        Color(red: 0.4, green: 0.2, blue: 0.8)   // 紫色
+                                    ]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                    }
+                    .padding(.top, 16)
+                    .padding(.bottom, 16)
                     
                     // 特性列表
-                    VStack(spacing: 2) {
+                    VStack(spacing: 8) {
                         FeatureRow(icon: "infinity.circle.fill",
-                                   text: NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"))
+                                   text: NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"),
+                                   accentColor: Color(red: 0.2, green: 0.7, blue: 0.9)) // 蓝色
                         FeatureRow(icon: "book.circle.fill",
-                                   text: NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"))
+                                   text: NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"),
+                                   accentColor: Color(red: 0.8, green: 0.2, blue: 0.6)) // 紫红色
                     }
                     .padding(.horizontal)
                     
@@ -28,23 +43,63 @@ struct PremiumPane: View {
                     
                     // 购买状态和按钮
                     if purchaseManager.isPremiumUser {
-                        // 已购买状态
+                        // 已购买状态 - 奢华风格
                         VStack(spacing: 12) {
                             HStack {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                                    .font(.title2)
+                                ZStack {
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [
+                                                    Color(red: 0.0, green: 0.8, blue: 0.4),
+                                                    Color(red: 0.0, green: 0.6, blue: 0.3)
+                                                ]),
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                        .frame(width: 32, height: 32)
+                                        .shadow(color: Color.green.opacity(0.3), radius: 4, x: 0, y: 2)
+                                    
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 18, weight: .bold))
+                                }
+                                
                                 Text(NSLocalizedString("premium_owned", comment: "You already own Premium"))
-                                    .font(.headline)
+                                    .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(.primary)
                             }
-                            .padding(.vertical, 12)
+                            .padding(.vertical, 16)
                             .frame(maxWidth: .infinity)
-                            .background(Color.green.opacity(0.1))
-                            .cornerRadius(12)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color.green.opacity(0.1),
+                                        Color.green.opacity(0.05)
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [
+                                                Color.green.opacity(0.3),
+                                                Color.green.opacity(0.1)
+                                            ]),
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            )
+                            .cornerRadius(16)
                         }
                     } else {
-                        // 未购买状态
+                        // 未购买状态 - 奢华风格
                         VStack(spacing: 12) {
                             // 购买按钮
                             Button(action: {
@@ -57,47 +112,66 @@ struct PremiumPane: View {
                                             .foregroundColor(.white)
                                             .frame(width: 16, height: 16)
                                     }
+                                    
                                     Text(purchaseManager.isLoading ?
                                          NSLocalizedString("premium_processing", comment: "处理中...") :
                                             "\(NSLocalizedString("premium_unlock", comment: "解锁高级版功能")) - \(purchaseManager.productPrice)")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
+                                    .font(.system(size: 16, weight: .bold))
                                     .foregroundColor(.white)
                                     .frame(minHeight: 20)
                                 }
                                 .frame(maxWidth: .infinity)
-                                .frame(height: 44)  // 固定按钮高度
+                                .frame(height: 50)
                                 .background(
                                     LinearGradient(
-                                        gradient: Gradient(colors: [Color.accentColor, Color.accentColor.opacity(0.8)]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
+                                        gradient: Gradient(colors: [
+                                            Color(red: 0.85, green: 0.65, blue: 0.13), // 深金色
+                                            Color(red: 1.0, green: 0.84, blue: 0.0),  // 金色
+                                        ]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
                                     )
                                 )
-                                .cornerRadius(12)
-                                .shadow(color: Color.accentColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [
+                                                    Color.white.opacity(0.3),
+                                                    Color.clear
+                                                ]),
+                                                startPoint: .top,
+                                                endPoint: .bottom
+                                            ),
+                                            lineWidth: 1
+                                        )
+                                )
+                                .cornerRadius(16)
+                                .shadow(color: Color(red: 1.0, green: 0.84, blue: 0.0).opacity(0.4), radius: 8, x: 0, y: 4)
                             }
                             .buttonStyle(PlainButtonStyle())
                             .disabled(purchaseManager.isLoading)
+                            .scaleEffect(purchaseManager.isLoading ? 0.98 : 1.0)
+                            .animation(.easeInOut(duration: 0.1), value: purchaseManager.isLoading)
                             
                             // 恢复购买按钮和法律链接
-                            HStack(spacing: 10) {
+                            HStack(spacing: 15) {
                                 Button(action: {
                                     purchaseManager.restorePurchases()
                                 }) {
                                     Text(NSLocalizedString("premium_restore", comment: "Restore Purchase"))
-                                        .font(.subheadline)
-                                        .foregroundColor(.accentColor)
+                                        .font(.system(size: 13, weight: .medium))
+                                        .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 
                                 Link(NSLocalizedString("terms_of_use", comment: "Terms of Use"), destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
-                                    .font(.subheadline)
-                                    .foregroundColor(.accentColor)
+                                    .font(.system(size: 13, weight: .medium))
+                                    .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
                                 
                                 Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://cactusai.cc/privacy-policy")!)
-                                    .font(.subheadline)
-                                    .foregroundColor(.accentColor)
+                                    .font(.system(size: 13, weight: .medium))
+                                    .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
                             }
                             .frame(height: 32)
                         }
@@ -140,22 +214,55 @@ struct PremiumPane: View {
 struct FeatureRow: View {
     let icon: String
     let text: String
+    let accentColor: Color
+    
+    init(icon: String, text: String, accentColor: Color = Color.accentColor) {
+        self.icon = icon
+        self.text = text
+        self.accentColor = accentColor
+    }
     
     var body: some View {
-        HStack(spacing: 8) {
-            Image(systemName: icon)
-                .foregroundColor(.green)
-                .font(.system(size: 24, weight: .semibold))
-                .frame(width: 28, height: 28)
-                .background(Color.accentColor.opacity(0.1))
-                .clipShape(Circle())
+        HStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                accentColor.opacity(0.8),
+                                accentColor.opacity(0.6)
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 36, height: 36)
+                    .shadow(color: accentColor.opacity(0.3), radius: 4, x: 0, y: 2)
+                
+                Image(systemName: icon)
+                    .foregroundColor(.white)
+                    .font(.system(size: 18, weight: .bold))
+            }
             
             Text(text)
-                .font(.body)
+                .font(.system(size: 15, weight: .medium))
                 .foregroundColor(.primary)
             
             Spacer()
+            
+            Image(systemName: "checkmark")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundColor(accentColor)
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.primary.opacity(0.03))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(accentColor.opacity(0.2), lineWidth: 1)
+                )
+        )
     }
 }
