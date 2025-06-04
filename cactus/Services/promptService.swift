@@ -311,28 +311,92 @@ Synonyms: panther, lion
         switch langCode {
         case "zh-CN":
             return """
-            你是一位语言学专家和辞典编辑，参考《辞海》的风格，为中文词语提供权威解释。请使用规范、严谨的语言，并按照以下格式输出：
-            【词语】  
-            拼音：（拼音）  
-            词性：（如：名词、动词、形容词、成语等）  
-            释义：  
-            1. （简明扼要的解释，偏书面语风格）  
-            2. （如有第二义项，请列出）  
-            引例：（可选，列出古文或权威文献中的例句）  
-            近义：（可选）  
-            反义：（可选）  
-            词源：（可选，如有历史、典故、出典等）
-            """
+        你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威辞书的体例，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写。
+        
+        请按照如下格式输出：
+        
+        【词语】
+        拼音：（标准汉语拼音，带声调）
+        词性：（如：名词、动词、形容词、副词、成语、语气词等）
+        释义：
+        1.（义项一：释义应简明扼要，使用书面语表达，体现语义核心，必要时标注使用语域或语体色彩）
+        2.（义项二：如词语具有多义，请依语义发展次序依次列出）
+        引例：（可选，引用古籍、经典文献或现代权威文本中的用例，注明出处）
+        近义：（可选，列出一至三个常用近义词）
+        反义：（可选，列出一至三个常用反义词）
+        词源：（可选，说明词语的历史演变、语源、典故出处、外来语渊源等）
+        """
         case "zh-TW":
-            return "你是我的百科全書助手。請用簡潔、通俗易懂的繁體中文解釋我輸入內容中的 1 至 5 個核心概念，僅輸出這些概念的解釋，不添加任何引導語、原文或註釋。輸出格式如下：\n\n1. xxx：解釋內容  \n2. xxx：解釋內容  \n（不超過5項），無需 markdown 語法。"
+            return """
+        你是一位語言學專家和辭典編輯，參考《國語辭典》和《教育部重編國語辭典修訂本》的風格，為中文詞語提供權威解釋。請使用規範、嚴謹的語言，並按照以下格式輸出：
+        【詞語】  
+        注音：（注音符號）  
+        漢語拼音：（漢語拼音）  
+        詞性：（如：名詞、動詞、形容詞、成語等）  
+        釋義：  
+        1. （簡明扼要的解釋，偏書面語風格）  
+        2. （如有第二義項，請列出）  
+        例句：（可選，列出文獻或常用例句）  
+        近義：（可選）  
+        反義：（可選）  
+        詞源：（可選，如有歷史、典故、出典等）
+        """
         case "ja-JP":
-            return "あなたは私の百科事典アシスタントです。入力内容の1～5個の重要な概念を簡潔で分かりやすい日本語で説明してください。これらの概念の説明のみを出力し、案内文や原文、注釈は追加しないでください。出力形式は以下の通りです：\n\n1. xxx：説明内容  \n2. xxx：説明内容  \n（最大5項目）、markdown記法は不要です。"
+            return """
+        あなたは言語学の専門家で辞書編集者です。『広辞苑』や『大辞林』のスタイルを参考に、日本語の語彙について権威ある解説を提供してください。規範的で厳密な言語を使用し、以下の形式で出力してください：
+        【語彙】  
+        読み：（ひらがな読み）  
+        品詞：（名詞、動詞、形容詞、慣用句など）  
+        意味：  
+        1. （簡潔で要点を押さえた説明、書面語スタイル）  
+        2. （第二の意味がある場合は記載）  
+        用例：（任意、文献や一般的な例文）  
+        類語：（任意）  
+        対義語：（任意）  
+        語源：（任意、歴史、典故、出典など）
+        """
         case "ko-KR":
-            return "당신은 나의 백과사전 도우미입니다. 입력한 내용 중 1~5개의 핵심 개념을 간결하고 알기 쉬운 한국어로 설명해 주세요. 개념 설명만 출력하고, 안내문, 원문 또는 주석은 추가하지 마세요. 출력 형식은 다음과 같습니다:\n\n1. xxx: 설명 내용  \n2. xxx: 설명 내용  \n(최대 5개), markdown 문법은 필요 없습니다."
+            return """
+        당신은 언어학 전문가이자 사전 편집자입니다. 『표준국어대사전』과 『고려대한국어대사전』의 스타일을 참고하여 한국어 어휘에 대한 권위 있는 해설을 제공해 주세요. 규범적이고 엄밀한 언어를 사용하며, 다음 형식으로 출력해 주세요：
+        【어휘】  
+        발음：（한글 발음）  
+        품사：（명사, 동사, 형용사, 관용구 등）  
+        뜻풀이：  
+        1. （간명하고 핵심을 짚는 설명, 문어체 스타일）  
+        2. （제2의 뜻이 있을 경우 기재）  
+        용례：（선택사항, 문헌이나 일반적인 예문）  
+        유의어：（선택사항）  
+        반의어：（선택사항）  
+        어원：（선택사항, 역사, 전고, 출전 등）
+        """
         case "en-US":
-            return "You are my encyclopedia assistant. Please explain 1 to 5 key concepts from my input in concise and easy-to-understand English. Output only these explanations, without any lead-in, original text, or notes. The output format is as follows:\n\n1. xxx: explanation  \n2. xxx: explanation  \n(up to 5 items), no markdown syntax needed."
+            return """
+        You are a linguistics expert and dictionary editor. Following the style of the Oxford English Dictionary and Merriam-Webster Dictionary, provide authoritative explanations for English vocabulary. Use precise and scholarly language, and output in the following format:
+        【Word】  
+        Pronunciation: (IPA phonetic transcription)  
+        Part of Speech: (noun, verb, adjective, idiom, etc.)  
+        Definition:  
+        1. (Concise and precise explanation, formal style)  
+        2. (If there is a second meaning, list it)  
+        Examples: (Optional, citations from literature or common usage)  
+        Synonyms: (Optional)  
+        Antonyms: (Optional)  
+        Etymology: (Optional, historical background, origin, sources)
+        """
         default:
-            return "You are my encyclopedia assistant. Please explain 1 to 5 key concepts from my input in concise and easy-to-understand English. Output only these explanations, without any lead-in, original text, or notes. The output format is as follows:\n\n1. xxx: explanation  \n2. xxx: explanation  \n(up to 5 items), no markdown syntax needed."
+            return """
+        You are a linguistics expert and dictionary editor. Following the style of the Oxford English Dictionary and Merriam-Webster Dictionary, provide authoritative explanations for English vocabulary. Use precise and scholarly language, and output in the following format:
+        【Word】  
+        Pronunciation: (IPA phonetic transcription)  
+        Part of Speech: (noun, verb, adjective, idiom, etc.)  
+        Definition:  
+        1. (Concise and precise explanation, formal style)  
+        2. (If there is a second meaning, list it)  
+        Examples: (Optional, citations from literature or common usage)  
+        Synonyms: (Optional)  
+        Antonyms: (Optional)  
+        Etymology: (Optional, historical background, origin, sources)
+        """
         }
     }
     

@@ -3,6 +3,7 @@
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
 "vocabulary" = "Vocabulary Notebook";
+"dictionary" = "Dictionary Lookup";
 "setting" = "Preferences";
 "contact" = "Contact Us";
 "rate_app" = "Rate This App";
@@ -22,8 +23,8 @@
 "shortcut_translate_description" = "Select text and press the shortcut to translate.";
 "shortcut_summary" = "Summarize Shortcut";
 "shortcut_summary_description" = "Select text and press the shortcut to summarize.";
-"shortcut_dict" = "字词查询快捷键";
-"shortcut_dict_description" = "选中字词，按下快捷键查询";
+"shortcut_dict" = "Dictionary Shortcut Key";
+"shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
 "select_service" = "Select AI Model";
 "free" = "Free";
 "model_deepseek_v3" = "Deepseek-v3";

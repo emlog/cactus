@@ -72,7 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             menu.addItem(summaryMenuItem)
                         
             let dictionaryMenuItem = NSMenuItem(
-                title: NSLocalizedString("dictionary", comment: "字词查询"),
+                title: NSLocalizedString("dictionary", comment: "字典查询"),
                 action: #selector(openMainDictionaryAction),
                 keyEquivalent: ""
             )

@@ -3,6 +3,7 @@
 "translate" = "選択して翻訳";
 "summary" = "要約";
 "vocabulary" = "単語帳";
+"dictionary" = "辞書検索";
 "setting" = "環境設定";
 "contact" = "お問い合わせ";
 "rate_app" = "アプリを評価する";
@@ -22,8 +23,8 @@
 "shortcut_translate_description" = "テキストを選択して、ショートカットキーで素早く翻訳";
 "shortcut_summary" = "要約ショートカットキー";
 "shortcut_summary_description" = "テキストを選択して、ショートカットキーで要約";
-"shortcut_dict" = "字词查询快捷键";
-"shortcut_dict_description" = "选中字词，按下快捷键查询";
+"shortcut_dict" = "辞書検索ショートカットキー";
+"shortcut_dict_description" = "単語を選択してショートカットキーで検索";
 "select_service" = "AIモデルを選択";
 "free" = "無料";
 "model_deepseek_v3" = "Deepseek-v3";
