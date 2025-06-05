@@ -45,6 +45,13 @@ class SettingsModel: ObservableObject {
             apiKey: "",
             model: "",
             requiresCustomConfig: true
+        ),
+        "siliconflow": ProviderSettings(
+            title: "siliconflow",
+            baseURL: "https://api.siliconflow.cn/v1/chat/completions",
+            apiKey: "",
+            model: "",
+            requiresCustomConfig: true
         )
     ]
     
@@ -69,6 +76,28 @@ class SettingsModel: ObservableObject {
         "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
     ]
     
+    // siliconflow 用户配置
+    @Published var siliconflowApiKey: String {
+        didSet {
+            UserDefaults.standard.set(siliconflowApiKey, forKey: "siliconflowApiKey")
+            updateSiliconflowConfig()
+        }
+    }
+    
+    @Published var selectedSiliconflowModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedSiliconflowModel, forKey: "selectedSiliconflowModel")
+            updateSiliconflowConfig()
+        }
+    }
+    
+    // siliconflow 可选模型
+    let siliconflowModels = [
+        "Qwen/Qwen3-30B-A3B": "Qwen3-30B",
+        "THUDM/GLM-4-32B-0414": "GLM-4-32B",
+        "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
+    ]
+    
     // 选中的AI服务
     @Published var selectedProvider: String {
         didSet {
@@ -79,12 +108,15 @@ class SettingsModel: ObservableObject {
     init() {
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
         self.openaiApiKey = UserDefaults.standard.string(forKey: "openaiApiKey") ?? ""
-        self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? "gpt-4"
+        self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? ""
+        
+        self.siliconflowApiKey = UserDefaults.standard.string(forKey: "siliconflowApiKey") ?? ""
+        self.selectedSiliconflowModel = UserDefaults.standard.string(forKey: "selectedSiliconflowModel") ?? ""
         
         updateOpenAIConfig()
+        updateSiliconflowConfig()
     }
     
-    // 更新OpenAI配置
     private func updateOpenAIConfig() {
         if var openaiProvider = defaultProviders["openai"] {
             openaiProvider.apiKey = openaiApiKey
@@ -93,14 +125,17 @@ class SettingsModel: ObservableObject {
         }
     }
     
+    private func updateSiliconflowConfig() {
+        if var siliconflowProvider = defaultProviders["siliconflow"] {
+            siliconflowProvider.apiKey = siliconflowApiKey
+            siliconflowProvider.model = selectedSiliconflowModel
+            defaultProviders["siliconflow"] = siliconflowProvider
+        }
+    }
+    
     // 检查当前选择的提供商是否需要自定义配置
     var currentProviderRequiresConfig: Bool {
         return defaultProviders[selectedProvider]?.requiresCustomConfig ?? false
-    }
-    
-    // 检查OpenAI配置是否完整
-    var isOpenAIConfigValid: Bool {
-        return !openaiApiKey.isEmpty
     }
     
     // 检查是否为高级用户
