@@ -137,9 +137,4 @@ class SettingsModel: ObservableObject {
     var currentProviderRequiresConfig: Bool {
         return defaultProviders[selectedProvider]?.requiresCustomConfig ?? false
     }
-    
-    // 检查是否为高级用户
-    var isPremiumUser: Bool {
-        return PurchaseManager.shared.isPremiumUser
-    }
 }

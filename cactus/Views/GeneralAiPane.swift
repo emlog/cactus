@@ -7,6 +7,11 @@ struct GeneralAiPane: View {
     
     @ObservedObject private var settingsModel = SettingsModel.shared
     
+    // 检查是否为高级用户
+    var isPremiumUser: Bool {
+        return PurchaseManager.shared.isPremiumUser
+    }
+    
     var body: some View {
         Settings.Container(contentWidth: 500) {
             Settings.Section(label: { Text(NSLocalizedString("select_service", comment: "选择提供商")) }) {
@@ -17,7 +22,7 @@ struct GeneralAiPane: View {
                 .frame(width: 400) // 添加此行来限制宽度
             }
         }
-        if settingsModel.selectedProvider == "openai" {
+        if settingsModel.selectedProvider == "openai" && isPremiumUser {
             Settings.Container(contentWidth: 400) {
                 Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "API密钥")) }) {
                     SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.openaiApiKey)
@@ -38,7 +43,7 @@ struct GeneralAiPane: View {
             .padding(.leading, 30)
         }
         
-        if settingsModel.selectedProvider == "siliconflow" {
+        if settingsModel.selectedProvider == "siliconflow" && isPremiumUser {
             Settings.Container(contentWidth: 400) {
                 Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "API密钥")) }) {
                     SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.siliconflowApiKey)
@@ -62,7 +67,12 @@ struct GeneralAiPane: View {
     
     private var providerOptions: some View {
         ForEach(Array(settingsModel.defaultProviders.keys.sorted()), id: \.self) { key in
-            Text(providerDisplayText(for: key)).tag(key)
+            // 只有高级用户才能看到 openai 和 siliconflow
+            if (key == "openai" || key == "siliconflow") && !isPremiumUser {
+                EmptyView()
+            } else {
+                Text(providerDisplayText(for: key)).tag(key)
+            }
         }
     }
     
