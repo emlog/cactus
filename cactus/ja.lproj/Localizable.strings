@@ -13,7 +13,7 @@
 "general" = "一般";
 "service" = "サービス";
 "premium" = "Pro";
-"about" = "このアプリについて";
+"about" = "アプリ情報";
 
 // setting
 "startup" = "起動時に自動起動";
