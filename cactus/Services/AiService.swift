@@ -7,7 +7,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var errorHandler: ((String) -> Void)? // 错误处理回调
     
     static let shared = AiService()
-
+    
     func chat(text: String, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
         let settings = SettingsModel.shared
         guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
@@ -58,13 +58,13 @@ class AiService: NSObject, URLSessionDataDelegate {
         }
         fullContent = ""
         buffer = Data()
-
+        
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         let task = session.dataTask(with: request)
-
+        
         self.completionHandler = completion
         self.errorHandler = onError // 保存错误回调
-
+        
         task.resume()
     }
     
@@ -116,6 +116,13 @@ class AiService: NSObject, URLSessionDataDelegate {
                 } else {
                     // 可以选择打印非 data: 前缀的行，以供调试
                     print("Skipping non-data line: \(trimmedLine)")
+                    
+                    // 直接将API返回的内容输出给调用方，不进行JSON解码
+                    fullContent += trimmedLine + "\n"
+                    
+                    DispatchQueue.main.async {
+                        TextContentModel.shared.resultText = self.fullContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
                 }
             } else {
                 print("无法将行数据解码为 UTF-8 字符串")
@@ -133,7 +140,7 @@ class AiService: NSObject, URLSessionDataDelegate {
                 let friendlyErrorMessage = NSLocalizedString("error_request_failed", comment: "请求失败，请切换其他AI模型或检查网络")
                 self.errorHandler?(friendlyErrorMessage)
             }
-
+            
             // 确保完成回调总是被调用，无论成功还是失败
             self.completionHandler?()
             // 清除回调引用，防止循环引用

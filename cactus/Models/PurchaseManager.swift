@@ -48,7 +48,7 @@ class PurchaseManager: NSObject, ObservableObject {
             }
         }
     }
-
+    
     // 辅助方法：检查并返回验证后的交易
     func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {

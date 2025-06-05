@@ -4,7 +4,7 @@ import SwiftUI
 struct HoverButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) var isEnabled // 获取按钮的启用状态
     @State private var isHovering = false // 跟踪悬停状态
-
+    
     // 自定义内边距属性
     var horizontalPadding: CGFloat = 4
     var verticalPadding: CGFloat = 4
@@ -21,7 +21,7 @@ struct HoverButtonStyle: ButtonStyle {
                     isHovering = hovering
                 }
             }
-            // 添加这一行：当按钮被点击时重置悬停状态
+        // 添加这一行：当按钮被点击时重置悬停状态
             .onChange(of: configuration.isPressed) { isPressed in
                 if isPressed {
                     // 当按钮被按下时，确保悬停状态被重置

@@ -10,7 +10,7 @@ import SwiftUI
 class LangService {
     static let shared = LangService()
     private init() {}
-
+    
     // 检测文本是否为中文
     public func isLikelyChinese(_ text: String) -> Bool {
         var containsChinese = false
@@ -34,7 +34,7 @@ class LangService {
         // 只有在包含了汉字字符，并且没有检测到日文假名或韩文谚文时，才判定为中文
         return containsChinese
     }
-
+    
     // 通过正则表达式识别文本语言类型，返回对应的语言代码
     public func detectLanguageCode(for text: String) -> String {
         // 日文假名 Unicode 范围
@@ -46,11 +46,11 @@ class LangService {
         let koreanRegex = "[\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7AF]"
         // 英文
         let englishRegex = "[A-Za-z]"
-    
+        
         var hiraganaCount = 0
         var katakanaCount = 0
         var chineseCount = 0
-    
+        
         for scalar in text.unicodeScalars {
             if hiraganaRange.contains(String(scalar)) {
                 hiraganaCount += 1
@@ -60,7 +60,7 @@ class LangService {
                 chineseCount += 1
             }
         }
-    
+        
         let total = text.count
         // 如果假名占比大于2%，判为日文
         if total > 0 && Double(hiraganaCount + katakanaCount) / Double(total) > 0.02 {
@@ -74,7 +74,7 @@ class LangService {
         if let _ = text.range(of: koreanRegex, options: .regularExpression) {
             return "ko-KR"
         } 
-
+        
         if let _ = text.range(of: englishRegex, options: .regularExpression) {
             return "en-US"
         }
@@ -117,7 +117,7 @@ class LangService {
         print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
         return preferredLanguageName
     }
-
+    
     // Added new function to get system language code
     public func getSystemLanguageCode() -> String {
         let preferredLanguage = Locale.preferredLanguages.first ?? "en-US"
@@ -135,7 +135,7 @@ class LangService {
             return "en-US" // Default to English for other languages
         }
     }
-
+    
     // 判断文本是否为系统首选语言（支持中、日、韩、繁体中文）
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
         let systemLang = getSystemLanguageCode()

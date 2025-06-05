@@ -38,7 +38,7 @@ struct GeneralSettingsPane: View {
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
-
+            
             Settings.Section(label: { Text(NSLocalizedString("shortcut_dict", comment: "字典查询快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutDictionary)
                 Text(NSLocalizedString("shortcut_dict_description", comment: "选中要查询的字词，按下快捷键查询"))

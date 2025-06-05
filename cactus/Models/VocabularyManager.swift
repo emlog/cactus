@@ -17,7 +17,7 @@ class VocabularyManager: ObservableObject {
         
         // storeDescription is added
         container.loadPersistentStores { storeDescription, error in
-             // Cast to NSError for more details
+            // Cast to NSError for more details
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
