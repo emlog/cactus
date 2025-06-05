@@ -24,6 +24,9 @@ struct GeneralAiPane: View {
         }
         if settingsModel.selectedProvider == "openai" && isPremiumUser {
             Settings.Container(contentWidth: 400) {
+                Settings.Section(title: "", bottomDivider: true) {
+                    Text(NSLocalizedString("openai_config", comment: "OpenAI配置"))
+                }
                 Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "API密钥")) }) {
                     SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.openaiApiKey)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -45,7 +48,10 @@ struct GeneralAiPane: View {
         
         if settingsModel.selectedProvider == "siliconflow" && isPremiumUser {
             Settings.Container(contentWidth: 400) {
-                Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "API密钥")) }) {
+                Settings.Section(title: "", bottomDivider: true) {
+                    Text(NSLocalizedString("siliconflow_config", comment: "硅基流动配置"))
+                }
+                Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "密钥")) }) {
                     SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.siliconflowApiKey)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 300)

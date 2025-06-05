@@ -25,12 +25,19 @@
 "shortcut_summary_description" = "텍스트를 선택하고 단축키로 요약";
 "shortcut_dict" = "사전 검색 단축키";
 "shortcut_dict_description" = "단어를 선택한 후 단축키로 검색";
-"select_service" = "AI 모델 선택";
-"free" = "무료";
-"model_deepseek_v3" = "Deepseek-v3";
+
+// ai setting
+"select_service" = "AI 서비스 선택";
+"openai_config" = "OpenAI 설정";
+"siliconflow_config" = "SiliconFlow 설정";
+"enter_api_key" = "API 키를 입력하세요";
+"api_key" = "API 키";
+"model" = "모델";
 "model_zhipu_glm4" = "Zhipu-GLM-4 (추천)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3";
+"model_openai" = "OpenAI";
+"model_siliconflow" = "SiliconFlow";
 
 // main
 "pop_text_empty" = "복사할 수 있는 내용이 없습니다";
@@ -78,6 +85,7 @@
 "premium_features" = "Pro 기능";
 "premium_feature_unlimited_usage" = "무제한 번역 및 요약 횟수";
 "premium_feature_unlimited_vocabulary" = "무제한 단어장 사용";
+"premium_feature_custom_model" = "OpenAI 등 다양한 맞춤형 AI 모델 잠금 해제";
 "terms_of_use" = "이용 약관";
 "privacy_policy" = "개인정보 보호정책";
 

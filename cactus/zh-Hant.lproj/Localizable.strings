@@ -25,12 +25,19 @@
 "shortcut_summary_description" = "選取文字內容，按下快速鍵即可製作摘要";
 "shortcut_dict" = "字典查詢快捷鍵";
 "shortcut_dict_description" = "選取詞後按快捷鍵查詢";
-"select_service" = "選取 AI 模型";
-"free" = "免費";
-"model_deepseek_v3" = "Deepseek-v3";
-"model_zhipu_glm4" = "Zhipu-GLM-4 (推薦)";
+
+// ai setting
+"select_service" = "選擇 AI 服務";
+"openai_config" = "OpenAI 設定";
+"siliconflow_config" = "SiliconFlow 設定";
+"enter_api_key" = "請輸入密鑰（API KEY）";
+"api_key" = "密鑰";
+"model" = "模型";
+"model_zhipu_glm4" = "Zhipu-GLM-4（推薦）";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3";
+"model_openai" = "OpenAI";
+"model_siliconflow" = "SiliconFlow";
 
 // Main Window Popups & Helpers
 "pop_text_empty" = "沒有可拷貝的內容";
@@ -78,6 +85,7 @@
 "premium_features" = "進階功能";
 "premium_feature_unlimited_usage" = "無限制的翻譯與摘要次數";
 "premium_feature_unlimited_vocabulary" = "單字本無使用限制";
+"premium_feature_custom_model" = "解鎖 OpenAI 等更多自訂 AI 模型";
 "terms_of_use" = "使用條款";
 "privacy_policy" = "隱私政策";
 

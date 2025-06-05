@@ -25,12 +25,19 @@
 "shortcut_summary_description" = "Select text and press the shortcut to summarize.";
 "shortcut_dict" = "Dictionary Shortcut Key";
 "shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
-"select_service" = "Select AI Model";
-"free" = "Free";
-"model_deepseek_v3" = "Deepseek-v3";
+
+// ai setting
+"select_service" = "Select AI Service";
+"openai_config" = "OpenAI Setting";
+"siliconflow_config" = "Siliconflow Setting";
+"enter_api_key" = "Please Enter API KEY";
+"api_key" = "API KEY";
+"model" = "Model";
 "model_zhipu_glm4" = "Zhipu-GLM-4";
 "model_cactusai_mix" = "CactusAI-Mix";
 "model_qwen3" = "Qwen3 (Recommended)";
+"model_openai" = "OpenAI";
+"model_siliconflow" = "Siliconflow";
 
 // main
 "pop_text_empty" = "No text available to copy.";
@@ -78,6 +85,7 @@
 "premium_features" = "Premium Features";
 "premium_feature_unlimited_usage" = "Unlimited translations and summaries";
 "premium_feature_unlimited_vocabulary" = "Unlimited vocabulary usage";
+"premium_feature_custom_model" = "Unlock more custom AI models like OpenAI";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
 

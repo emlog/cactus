@@ -25,12 +25,19 @@
 "shortcut_summary_description" = "テキストを選択して、ショートカットキーで要約";
 "shortcut_dict" = "辞書検索ショートカットキー";
 "shortcut_dict_description" = "単語を選択してショートカットキーで検索";
-"select_service" = "AIモデルを選択";
-"free" = "無料";
-"model_deepseek_v3" = "Deepseek-v3";
-"model_zhipu_glm4" = "Zhipu-GLM-4 (おすすめ)";
+
+// ai setting
+"select_service" = "AIサービスを選択";
+"openai_config" = "OpenAI設定";
+"siliconflow_config" = "SiliconFlow設定";
+"enter_api_key" = "APIキーを入力してください";
+"api_key" = "APIキー";
+"model" = "モデル";
+"model_zhipu_glm4" = "Zhipu-GLM-4（おすすめ）";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3";
+"model_openai" = "OpenAI";
+"model_siliconflow" = "SiliconFlow";
 
 // main
 "pop_text_empty" = "コピーできる内容がありません";
@@ -78,6 +85,7 @@
 "premium_features" = "Pro機能";
 "premium_feature_unlimited_usage" = "翻訳と要約の回数が無制限";
 "premium_feature_unlimited_vocabulary" = "単語帳の利用制限なし";
+"premium_feature_custom_model" = "OpenAIなどのカスタムAIモデルを解放する";
 "terms_of_use" = "利用規約";
 "privacy_policy" = "プライバシーポリシー";
 

@@ -40,14 +40,14 @@ class SettingsModel: ObservableObject {
             model: "qwen/qwen3-8b:free"
         ),
         "openai": ProviderSettings(
-            title: "OpenAI",
+            title: NSLocalizedString("model_openai", comment: "openai"),
             baseURL: "https://api.openai.com/v1/chat/completions",
             apiKey: "",
             model: "",
             requiresCustomConfig: true
         ),
         "siliconflow": ProviderSettings(
-            title: "siliconflow",
+            title: NSLocalizedString("model_siliconflow", comment: "siliconflow"),
             baseURL: "https://api.siliconflow.cn/v1/chat/completions",
             apiKey: "",
             model: "",
