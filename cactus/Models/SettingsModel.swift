@@ -74,6 +74,7 @@ class SettingsModel: ObservableObject {
     let openaiModels = [
         "gpt-4.1-2025-04-14": "GPT-4.1",
         "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
+        "gpt-4o-mini-2024-07-18": "GPT-4o mini",
     ]
     
     // siliconflow 用户配置
@@ -93,7 +94,6 @@ class SettingsModel: ObservableObject {
     
     // siliconflow 可选模型
     let siliconflowModels = [
-        "Qwen/Qwen3-30B-A3B": "Qwen3-30B",
         "THUDM/GLM-4-32B-0414": "GLM-4-32B",
         "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
     ]
