@@ -25,7 +25,20 @@ struct GeneralAiPane: View {
         if settingsModel.selectedProvider == "openai" && isPremiumUser {
             Settings.Container(contentWidth: 400) {
                 Settings.Section(title: "", bottomDivider: true) {
-                    Text(NSLocalizedString("openai_config", comment: "OpenAI配置"))
+                    HStack {
+                        Text(NSLocalizedString("openai_config", comment: "OpenAI配置"))
+                        Button(action: {
+                            if let url = URL(string: "https://platform.openai.com/api-keys") {
+                                NSWorkspace.shared.open(url)
+                            }
+                        }) {
+                            Image(systemName: "questionmark.circle")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 14))
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        Spacer()
+                    }
                 }
                 Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "API密钥")) }) {
                     SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.openaiApiKey)
@@ -49,7 +62,20 @@ struct GeneralAiPane: View {
         if settingsModel.selectedProvider == "siliconflow" && isPremiumUser {
             Settings.Container(contentWidth: 400) {
                 Settings.Section(title: "", bottomDivider: true) {
-                    Text(NSLocalizedString("siliconflow_config", comment: "硅基流动配置"))
+                    HStack {
+                        Text(NSLocalizedString("siliconflow_config", comment: "硅基流动配置"))
+                        Button(action: {
+                            if let url = URL(string: "https://cloud.siliconflow.cn/account/ak") {
+                                NSWorkspace.shared.open(url)
+                            }
+                        }) {
+                            Image(systemName: "questionmark.circle")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 14))
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        Spacer()
+                    }
                 }
                 Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "密钥")) }) {
                     SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.siliconflowApiKey)
