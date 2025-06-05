@@ -25,12 +25,16 @@
 "shortcut_summary_description" = "选中文字内容，按下快捷键总结摘要";
 "shortcut_dict" = "字典查询快捷键";
 "shortcut_dict_description" = "选中字词，按下快捷键查询";
-"select_service" = "选择AI模型";
+
+// ai setting
+"select_service" = "选择AI服务";
+"api_key" = "密钥";
+"model" = "模型";
 "free" = "免费";
 "model_deepseek_v3" = "Deepseek-v3";
 "model_zhipu_glm4" = "Zhipu-GLM-4 (推荐)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3";
 
 // main
 "pop_text_empty" = "没有可复制的内容";
@@ -78,6 +82,7 @@
 "premium_features" = "高级版功能";
 "premium_feature_unlimited_usage" = "无限量的翻译总结次数";
 "premium_feature_unlimited_vocabulary" = "无限制的生词本使用";
+"premium_feature_custom_model" = "解锁更多自定义AI模型";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私策略";
 

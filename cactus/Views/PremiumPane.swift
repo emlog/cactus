@@ -32,10 +32,13 @@ struct PremiumPane: View {
                     VStack(spacing: 8) {
                         FeatureRow(icon: "infinity.circle.fill",
                                    text: NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"),
-                                   accentColor: Color(red: 0.2, green: 0.7, blue: 0.9)) // 蓝色
+                                   accentColor: Color(red: 0.0, green: 0.48, blue: 1.0)) // 现代蓝色 - iOS系统蓝
                         FeatureRow(icon: "book.circle.fill",
                                    text: NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"),
-                                   accentColor: Color(red: 0.8, green: 0.2, blue: 0.6)) // 紫红色
+                                   accentColor: Color(red: 0.34, green: 0.34, blue: 0.84)) // 现代紫色 - 更柔和的紫
+                        FeatureRow(icon: "bolt.circle.fill",
+                                   text: NSLocalizedString("premium_feature_custom_model", comment: "解锁更多自定义AI模型"),
+                                   accentColor: Color(red: 1.0, green: 0.45, blue: 0.0)) // 现代橙色 - 活力橙
                     }
                     .padding(.horizontal)
                     
