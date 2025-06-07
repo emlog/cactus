@@ -2,8 +2,9 @@
 "openmain" = "ウィンドウを開く";
 "translate" = "選択して翻訳";
 "summary" = "要約";
-"vocabulary" = "単語帳";
 "dictionary" = "辞書検索";
+"vocabulary" = "単語帳";
+"favorites" = "お気に入り";
 "setting" = "環境設定";
 "contact" = "お問い合わせ";
 "rate_app" = "アプリを評価する";
@@ -47,11 +48,15 @@
 "pop_chat_text_empty" = "質問内容を入力してください";
 "pop_copy_success" = "コピーしました";
 "pop_already_cleared" = "内容はすでにクリアされています";
+"pop_favorite_added" = "お気に入りに追加しました";
 "pop_select_model_first" = "環境設定でAIモデルを選択してください";
 "help_translate" = "テキスト翻訳 (%@)";
 "help_summary" = "要約 (%@)";
-"help_dict" = "説明";
-"help_chat" = "チャット";
+"help_dict" = "辞書検索";
+"help_chat" = "チャット応答";
+"help_clear" = "クリア";
+"help_favorite" = "お気に入り";
+"help_speak" = "読み上げ";
 "help_copy" = "コピー";
 "help_pin" = "ウィンドウを固定";
 "help_unpin" = "固定を解除";
@@ -67,15 +72,13 @@
 "version" = "バージョン";
 "report_issue" = "問題を報告";
 
-// vocabulary
-"sum" = "合計";
-
 // error
 "error_invalid_config" = "システムエラー：AIサービスの設定が正しくありません";
 "error_request_failed" = "リクエストに失敗しました。別のAIモデルに切り替えるか、ネットワークを確認してください";
 
 // common
 "alert_ok" = "OK";
+"sum" = "合計";
 
 // pro
 "premium_owned" = "Pro版は既に購入済みです";

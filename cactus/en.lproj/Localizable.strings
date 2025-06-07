@@ -2,8 +2,9 @@
 "openmain" = "Open Window";
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
-"vocabulary" = "Vocabulary Notebook";
 "dictionary" = "Dictionary Lookup";
+"vocabulary" = "Vocabulary Notebook";
+"favorites" = "Favorites";
 "setting" = "Preferences";
 "contact" = "Contact Us";
 "rate_app" = "Rate This App";
@@ -47,11 +48,15 @@
 "pop_chat_text_empty" = "Enter your question.";
 "pop_copy_success" = "Copied";
 "pop_already_cleared" = "Text cleared.";
+"pop_favorite_added" = "Added to Favorites.";
 "pop_select_model_first" = "Please select an AI model in Preferences first.";
 "help_translate" = "Translate Text (%@)";
 "help_summary" = "Summarize Text (%@)";
-"help_dict" = "Explain Text";
-"help_chat" = "Chat";
+"help_dict" = "Dictionary Lookup";
+"help_chat" = "Chat Q&A";
+"help_clear" = "Clear";
+"help_favorite" = "Favorite";
+"help_speak" = "Speak";
 "help_copy" = "Copy";
 "help_pin" = "Pin Window";
 "help_unpin" = "Unpin Window";
@@ -67,15 +72,13 @@
 "version" = "Version";
 "report_issue" = "Report Issue";
 
-// vocabulary
-"sum" = "Total";
-
 // error
 "error_invalid_config" = "System error, AI service configuration error";
 "error_request_failed" = "Request failed, switch to another AI model or check the network.";
 
 // common
 "alert_ok" = "OK";
+"sum" = "Total";
 
 // pro
 "premium_owned" = "You already own the Pro version";
