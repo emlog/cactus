@@ -14,6 +14,10 @@ struct FavoriteView: View {
     @State private var selectedFavorite: FavoriteEntry?
     @FocusState private var isViewFocused: Bool
     
+    // 复制成功状态，用于按钮图标动画
+    @State private var showInputCopySuccess = false
+    @State private var showOutputCopySuccess = false
+    
     var body: some View {
         HSplitView {
             // 左侧收藏列表 - 占比约30%
@@ -22,7 +26,8 @@ struct FavoriteView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         // 显示输入内容的前两行作为标题
                         Text(getPreviewText(favoriteEntry.inputContent ?? ""))
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.system(size: 15))
+                            .lineSpacing(8)
                             .lineLimit(2)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 6)
@@ -71,97 +76,123 @@ struct FavoriteView: View {
             // 右侧收藏详情 - 占比约70%
             VStack(spacing: 0) {
                 if let selectedFavorite = selectedFavorite {
-                    // 头部操作区域
-                    HStack {
-                        Text(formatDate(selectedFavorite.timestamp))
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        
-                        Spacer()
-                        
-                        // 复制输入内容按钮
-                        Button(action: {
-                            copyToClipboard(selectedFavorite.inputContent ?? "")
-                        }) {
-                            Label("复制输入", systemImage: "doc.on.doc")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(.accentColor)
-                        }
-                        .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
-                        .help("复制输入内容")
-                        
-                        // 复制输出内容按钮
-                        Button(action: {
-                            copyToClipboard(selectedFavorite.outputContent ?? "")
-                        }) {
-                            Label("复制输出", systemImage: "doc.on.doc.fill")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(.accentColor)
-                        }
-                        .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
-                        .help("复制输出内容")
-                        
-                        // 删除按钮
-                        Button(action: {
-                            favoriteManager.deleteFavorite(selectedFavorite)
-                            if let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: selectedFavorite) {
-                                if currentIndex < favoriteManager.favoriteEntries.count - 1 {
-                                    self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
-                                } else if !favoriteManager.favoriteEntries.isEmpty && currentIndex > 0 {
-                                    self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
-                                } else {
-                                    self.selectedFavorite = nil
-                                }
-                            }
-                        }) {
-                            Label("删除", systemImage: "trash")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(.secondary)
-                        }
-                        .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
-                        .help("删除收藏")
-                    }
-                    .padding()
-                    
-                    // 分隔线
-                    Rectangle()
-                        .fill(Color(NSColor.separatorColor).opacity(0.5))
-                        .frame(height: 0.5)
-                    
-                    // 内容区域
                     VStack(spacing: 12) {
                         // 输入内容区域
                         VStack(alignment: .leading, spacing: 8) {
-                            ScrollView {
-                                Text(selectedFavorite.inputContent ?? "")
-                                    .font(.body)
-                                    .textSelection(.enabled)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(12)
+                            ZStack(alignment: .bottomTrailing) {
+                                ScrollView {
+                                    Text(selectedFavorite.inputContent ?? "")
+                                        .font(.system(size: 15))
+                                        .lineSpacing(8)
+                                        .textSelection(.enabled)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.bottom, 25) // 为按钮留出空间
+                                        .padding(.horizontal, 12)
+                                        .padding(.top, 12)
+                                }
+                                .background(Color(.textBackgroundColor))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color(.separatorColor), lineWidth: 1)
+                                )
+                                .frame(maxHeight: 200)
+                                
+                                // 输入内容操作按钮
+                                HStack(spacing: 8) {
+                                    Button(action: {
+                                        copyToClipboard(selectedFavorite.inputContent ?? "")
+                                        // 触发成功动画
+                                        withAnimation {
+                                            showInputCopySuccess = true
+                                        }
+                                        // 1.5秒后恢复图标
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                            withAnimation {
+                                                showInputCopySuccess = false
+                                            }
+                                        }
+                                    }) {
+                                        Image(systemName: showInputCopySuccess ? "checkmark" : "square.on.square")
+                                            .frame(width: 15, height: 15)
+                                            .foregroundColor(showInputCopySuccess ? .green : .secondary)
+                                    }
+                                    .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                                    .help("复制输入内容")
+                                    .animation(.easeInOut, value: showInputCopySuccess)
+                                    
+                                    // 删除按钮
+                                    Button(action: {
+                                        favoriteManager.deleteFavorite(selectedFavorite)
+                                        if let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: selectedFavorite) {
+                                            if currentIndex < favoriteManager.favoriteEntries.count - 1 {
+                                                self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
+                                            } else if !favoriteManager.favoriteEntries.isEmpty && currentIndex > 0 {
+                                                self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
+                                            } else {
+                                                self.selectedFavorite = nil
+                                            }
+                                        }
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .frame(width: 15, height: 15)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
+                                    .help("删除收藏")
+                                }
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 5)
                             }
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color(NSColor.textBackgroundColor))
-                                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
-                            )
-                            .frame(maxHeight: 200)
                         }
                         
                         // 输出内容区域
                         VStack(alignment: .leading, spacing: 8) {
-                            ScrollView {
-                                Text(selectedFavorite.outputContent ?? "")
-                                    .font(.body)
-                                    .textSelection(.enabled)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(12)
+                            ZStack(alignment: .bottomTrailing) {
+                                ScrollView {
+                                    Text(selectedFavorite.outputContent ?? "")
+                                        .font(.system(size: 15))
+                                        .lineSpacing(8)
+                                        .textSelection(.enabled)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.bottom, 25) // 为按钮留出空间
+                                        .padding(.horizontal, 12)
+                                        .padding(.top, 12)
+                                }
+                                .background(Color(.textBackgroundColor))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color(.separatorColor), lineWidth: 1)
+                                )
+                                .frame(maxHeight: .infinity)
+                                
+                                // 输出内容操作按钮
+                                HStack(spacing: 8) {
+                                    Button(action: {
+                                        copyToClipboard(selectedFavorite.outputContent ?? "")
+                                        // 触发成功动画
+                                        withAnimation {
+                                            showOutputCopySuccess = true
+                                        }
+                                        // 1.5秒后恢复图标
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                            withAnimation {
+                                                showOutputCopySuccess = false
+                                            }
+                                        }
+                                    }) {
+                                        Image(systemName: showOutputCopySuccess ? "checkmark" : "square.on.square")
+                                            .frame(width: 15, height: 15)
+                                            .foregroundColor(showOutputCopySuccess ? .green : .secondary)
+                                    }
+                                    .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                                    .help("复制输出内容")
+                                    .animation(.easeInOut, value: showOutputCopySuccess)
+                                }
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 5)
                             }
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color(NSColor.textBackgroundColor))
-                                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
-                            )
-                            .frame(maxHeight: .infinity)
                         }
                     }
                     .padding()
