@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var settingsWindow: NSWindow?
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow? // 添加生词本窗口变量
+    var favoriteWindow: NSWindow? // 添加收藏夹窗口变量
     private var isMainWindowPinned = false // 跟踪主窗口置顶状态
     private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
     private var pinButton: NSButton? // 持有 pin 按钮的引用
@@ -41,9 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 button.image = image
             }
             
-            // 创建菜单
             let menu = NSMenu()
             
+            // 打开主窗口
             let mainMenuItem = NSMenuItem(
                 title: NSLocalizedString("openmain", comment: "打开主窗口"),
                 action: #selector(openMainAction),
@@ -53,6 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             mainMenuItem.setShortcut(for: SettingsModel.aiShortcutMain)
             menu.addItem(mainMenuItem)
             
+            // 选中翻译
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("translate", comment: "选中翻译"),
                 action: #selector(openMainTranslateAction),
@@ -62,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
             menu.addItem(translateMenuItem)
             
+            // 总结摘要
             let summaryMenuItem = NSMenuItem(
                 title: NSLocalizedString("summary", comment: "总结摘要"),
                 action: #selector(openMainSummaryAction),
@@ -70,33 +73,47 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
             summaryMenuItem.setShortcut(for: SettingsModel.aiShortcutSummary)
             menu.addItem(summaryMenuItem)
-                        
+            // 字典查询
             let dictionaryMenuItem = NSMenuItem(
                 title: NSLocalizedString("dictionary", comment: "字典查询"),
                 action: #selector(openMainDictionaryAction),
                 keyEquivalent: ""
             )
-            dictionaryMenuItem.image = NSImage(systemSymbolName: "character.book.closed.zh", accessibilityDescription: nil)
+            dictionaryMenuItem.image = NSImage(systemSymbolName: "books.vertical", accessibilityDescription: nil)
             dictionaryMenuItem.setShortcut(for: SettingsModel.aiShortcutDictionary)
             menu.addItem(dictionaryMenuItem)
             
             menu.addItem(NSMenuItem.separator())
             
+            // 生词本
             let vocabularyMenuItem = NSMenuItem(
                 title: NSLocalizedString("vocabulary", comment: "生词本"),
                 action: #selector(openVocabulary),
                 keyEquivalent: ""
             )
-            vocabularyMenuItem.image = NSImage(systemSymbolName: "rectangle.and.paperclip", accessibilityDescription: nil)
+            vocabularyMenuItem.image = NSImage(systemSymbolName: "book.pages", accessibilityDescription: nil)
             menu.addItem(vocabularyMenuItem)
+            
+            // 收藏夹
+            let favoritesMenuItem = NSMenuItem(
+                title: NSLocalizedString("favorites", comment: "收藏夹"),
+                action: #selector(openFavorites),
+                keyEquivalent: ""
+            )
+            favoritesMenuItem.image = NSImage(systemSymbolName: "heart", accessibilityDescription: nil)
+            menu.addItem(favoritesMenuItem)
             
             menu.addItem(NSMenuItem.separator())
             
+            // 偏好设置
             menu.addItem(NSMenuItem(
                 title: NSLocalizedString("setting", comment: "偏好设置"),
                 action: #selector(openPreferences),
                 keyEquivalent: ""
             ))
+            
+            menu.addItem(NSMenuItem.separator())
+            
             menu.addItem(NSMenuItem(
                 title: NSLocalizedString("contact", comment: "联系我们"),
                 action: #selector(openContact),
@@ -187,9 +204,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         vocabularyWindow?.contentViewController = vocabularyHostingController
         vocabularyWindow?.title = NSLocalizedString("vocabulary", comment: "生词本")
         vocabularyWindow?.isReleasedWhenClosed = false
+        vocabularyWindow?.collectionBehavior = [.fullScreenPrimary] // 启用最大化按钮
         
-        // 启用最大化按钮
-        vocabularyWindow?.collectionBehavior = [.fullScreenPrimary]
+        // 初始化收藏夹窗口
+        favoriteWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
+            backing: .buffered,
+            defer: false
+        )
+        let favoriteView = FavoriteView()
+        let favoriteHostingController = NSHostingController(rootView: favoriteView)
+        favoriteWindow?.contentViewController = favoriteHostingController
+        favoriteWindow?.title = NSLocalizedString("favorites", comment: "收藏夹")
+        favoriteWindow?.isReleasedWhenClosed = false
+        favoriteWindow?.collectionBehavior = [.fullScreenPrimary] // 启用最大化按钮
     }
     
     // Setup global keyboard shortcut using KeyboardShortcuts
@@ -265,6 +294,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             vocabularyWindow?.orderFrontRegardless()
             NSApp.activate(ignoringOtherApps: true)
         }
+    }
+    
+    // 创建收藏夹窗口
+    private func createFavoriteWindow() {
+        favoriteWindow?.center()
+        favoriteWindow?.makeKeyAndOrderFront(nil)
+        favoriteWindow?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    // 收藏夹
+    @objc func openFavorites() {
+        // 确保收藏夹窗口存在
+        if favoriteWindow == nil {
+            createFavoriteWindow()
+        }
+        
+        // 调整窗口位置到当前屏幕的中心
+        favoriteWindow?.center()
+        favoriteWindow?.makeKeyAndOrderFront(nil)
+        favoriteWindow?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     // 联系我们

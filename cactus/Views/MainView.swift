@@ -71,6 +71,18 @@ struct MainView: View {
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
                         
+                        // 收藏按钮
+                        Button(action: {
+                            addToFavorites()
+                        }) {
+                            Label("", systemImage: "heart")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("add_to_favorites", comment: "添加到收藏夹"))
+                        .disabled(contentModel.text.isEmpty || (contentModel.resultText?.isEmpty ?? true))
+                        
                         // 语音朗读（输入）
                         Button(action: {
                             speakText(contentModel.text)
@@ -128,7 +140,7 @@ struct MainView: View {
                     Button(action: {
                         dictionaryText()
                     }) {
-                        Image(systemName: "character.book.closed.zh")
+                        Image(systemName: "books.vertical")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
@@ -223,6 +235,7 @@ struct MainView: View {
                                 // 通知窗口调整大小
                                 NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
                             })
+                        // 在结果区域的操作按钮中添加收藏按钮
                         HStack(spacing: 8) {
                             Button(action: {
                                 speakText(contentModel.resultText ?? "")
@@ -417,7 +430,7 @@ struct MainView: View {
         performAIAction(systemMessage: systemMessage)
     }
     
-    // 新增方法：带生词本保存功能的AI调用
+    // 带生词本保存功能的AI调用
     private func performAIActionWithVocabulary(systemMessage: String, word: String) {
         guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
@@ -533,5 +546,24 @@ struct MainView: View {
     
     private func stopSpeaking() {
         speechService.stopSpeaking()
+    }
+    
+    // 添加收藏功能方法
+    func addToFavorites() {
+        guard !contentModel.text.isEmpty,
+              let resultText = contentModel.resultText,
+              !resultText.isEmpty else {
+            toastMessage = NSLocalizedString("favorite_content_empty", comment: "内容为空，无法收藏")
+            showErrorToast = true
+            return
+        }
+        
+        FavoriteManager.shared.addFavorite(
+            inputContent: contentModel.text,
+            outputContent: resultText
+        )
+        
+        toastMessage = NSLocalizedString("favorite_added", comment: "已添加到收藏夹")
+        showCompleteToast = true
     }
 }

@@ -4,6 +4,7 @@
 "summary" = "总结摘要";
 "dictionary" = "字典查询";
 "vocabulary" = "生词本";
+"favorites" = "收藏夹";
 "setting" = "偏好设置";
 "contact" = "联系我们";
 "rate_app" = "给个好评吧";
@@ -69,6 +70,14 @@
 
 // vocabulary
 "sum" = "总计";
+
+// favorites
+"favorite_detail" = "收藏详情";
+"no_favorites" = "暂无收藏";
+"no_favorites_hint" = "在主界面点击收藏按钮来添加收藏";
+"add_to_favorites" = "添加到收藏夹";
+"favorite_added" = "已添加到收藏夹";
+"favorite_content_empty" = "内容为空，无法收藏";
 
 // error
 "error_invalid_config" = "系统错误，AI服务配置错误";

@@ -1,0 +1,290 @@
+//
+//  FavoriteView.swift
+//  cactus
+//
+//  收藏夹
+//  Created by 许大伟 on 2025/2/21.
+//
+
+import SwiftUI
+import CoreData
+
+struct FavoriteView: View {
+    @ObservedObject private var favoriteManager = FavoriteManager.shared
+    @State private var selectedFavorite: FavoriteEntry?
+    @FocusState private var isViewFocused: Bool
+    
+    var body: some View {
+        HSplitView {
+            // 左侧收藏列表 - 占比约30%
+            VStack(spacing: 0) {
+                List(favoriteManager.favoriteEntries, id: \.objectID) { favoriteEntry in
+                    VStack(alignment: .leading, spacing: 4) {
+                        // 显示输入内容的前两行作为标题
+                        Text(getPreviewText(favoriteEntry.inputContent ?? ""))
+                            .font(.system(size: 13, weight: .medium))
+                            .lineLimit(2)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(selectedFavorite?.objectID == favoriteEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
+                            )
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedFavorite = favoriteEntry
+                            }
+                        
+                        // 显示添加时间
+                        Text(formatDate(favoriteEntry.timestamp))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .id(favoriteEntry.objectID)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                    .padding(.vertical, 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(selectedFavorite?.objectID == favoriteEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
+                    )
+                    .onTapGesture {
+                        selectedFavorite = favoriteEntry
+                    }
+                }
+                .listStyle(PlainListStyle())
+                
+                // 底部显示总收藏数量
+                HStack {
+                    Text(NSLocalizedString("sum", comment: "共计") + "： \(favoriteManager.favoriteEntries.count)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                    Spacer()
+                }
+                .background(Color(NSColor.controlBackgroundColor))
+            }
+            .frame(minWidth: 180, idealWidth: 220, maxWidth: 280)
+            
+            // 右侧收藏详情 - 占比约70%
+            VStack(spacing: 0) {
+                if let selectedFavorite = selectedFavorite {
+                    // 头部操作区域
+                    HStack {
+                        Text(formatDate(selectedFavorite.timestamp))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        // 复制输入内容按钮
+                        Button(action: {
+                            copyToClipboard(selectedFavorite.inputContent ?? "")
+                        }) {
+                            Label("复制输入", systemImage: "doc.on.doc")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
+                        .help("复制输入内容")
+                        
+                        // 复制输出内容按钮
+                        Button(action: {
+                            copyToClipboard(selectedFavorite.outputContent ?? "")
+                        }) {
+                            Label("复制输出", systemImage: "doc.on.doc.fill")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
+                        .help("复制输出内容")
+                        
+                        // 删除按钮
+                        Button(action: {
+                            favoriteManager.deleteFavorite(selectedFavorite)
+                            if let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: selectedFavorite) {
+                                if currentIndex < favoriteManager.favoriteEntries.count - 1 {
+                                    self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
+                                } else if !favoriteManager.favoriteEntries.isEmpty && currentIndex > 0 {
+                                    self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
+                                } else {
+                                    self.selectedFavorite = nil
+                                }
+                            }
+                        }) {
+                            Label("删除", systemImage: "trash")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
+                        .help("删除收藏")
+                    }
+                    .padding()
+                    
+                    // 分隔线
+                    Rectangle()
+                        .fill(Color(NSColor.separatorColor).opacity(0.5))
+                        .frame(height: 0.5)
+                    
+                    // 内容区域
+                    VStack(spacing: 12) {
+                        // 输入内容区域
+                        VStack(alignment: .leading, spacing: 8) {
+                            ScrollView {
+                                Text(selectedFavorite.inputContent ?? "")
+                                    .font(.body)
+                                    .textSelection(.enabled)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(12)
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(NSColor.textBackgroundColor))
+                                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                            )
+                            .frame(maxHeight: 200)
+                        }
+                        
+                        // 输出内容区域
+                        VStack(alignment: .leading, spacing: 8) {
+                            ScrollView {
+                                Text(selectedFavorite.outputContent ?? "")
+                                    .font(.body)
+                                    .textSelection(.enabled)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(12)
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(NSColor.textBackgroundColor))
+                                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                            )
+                            .frame(maxHeight: .infinity)
+                        }
+                    }
+                    .padding()
+                    
+                } else {
+                    // 空状态
+                    VStack(spacing: 16) {
+                        Image(systemName: "heart.text.square")
+                            .font(.system(size: 48))
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("no_favorites", comment: "暂无收藏"))
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("no_favorites_hint", comment: "在主界面点击收藏按钮来添加收藏"))
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .background(
+                Color(NSColor.controlBackgroundColor).opacity(0.1)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+        .frame(minWidth: 800, minHeight: 600)
+        .focusable()
+        .focused($isViewFocused)
+        .overlay(
+            // 隐藏的按钮用于键盘快捷键
+            VStack {
+                Button("Previous") {
+                    selectPreviousFavorite()
+                }
+                .keyboardShortcut(.upArrow, modifiers: [])
+                .opacity(0)
+                .allowsHitTesting(false)
+                
+                Button("Next") {
+                    selectNextFavorite()
+                }
+                .keyboardShortcut(.downArrow, modifiers: [])
+                .opacity(0)
+                .allowsHitTesting(false)
+            }
+        )
+        .onAppear {
+            favoriteManager.fetchFavoriteEntries()
+            // 默认选择第一个收藏
+            if selectedFavorite == nil && !favoriteManager.favoriteEntries.isEmpty {
+                selectedFavorite = favoriteManager.favoriteEntries.first
+            }
+            // 设置焦点以接收键盘事件
+            isViewFocused = true
+        }
+        .onChange(of: favoriteManager.favoriteEntries) { newEntries in
+            // 当收藏列表更新时，如果没有选中的收藏且列表不为空，则选择第一个
+            if selectedFavorite == nil && !newEntries.isEmpty {
+                selectedFavorite = newEntries.first
+            }
+            // 如果当前选中的收藏不在新列表中，则重新选择第一个
+            if let selected = selectedFavorite, !newEntries.contains(selected) {
+                selectedFavorite = newEntries.first
+            }
+        }
+    }
+    
+    // 获取预览文本（前50个字符）
+    private func getPreviewText(_ text: String) -> String {
+        if text.count > 50 {
+            return String(text.prefix(50)) + "..."
+        }
+        return text
+    }
+    
+    // 复制到剪贴板
+    private func copyToClipboard(_ text: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+    }
+    
+    // 选择上一个收藏
+    private func selectPreviousFavorite() {
+        guard !favoriteManager.favoriteEntries.isEmpty else { return }
+        
+        guard let currentFavorite = selectedFavorite,
+              let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: currentFavorite) else {
+            selectedFavorite = favoriteManager.favoriteEntries.last
+            return
+        }
+        
+        if currentIndex > 0 {
+            selectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
+        } else {
+            selectedFavorite = favoriteManager.favoriteEntries.last
+        }
+    }
+    
+    // 选择下一个收藏
+    private func selectNextFavorite() {
+        guard !favoriteManager.favoriteEntries.isEmpty else { return }
+        
+        guard let currentFavorite = selectedFavorite,
+              let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: currentFavorite) else {
+            selectedFavorite = favoriteManager.favoriteEntries.first
+            return
+        }
+        
+        if currentIndex < favoriteManager.favoriteEntries.count - 1 {
+            selectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
+        } else {
+            selectedFavorite = favoriteManager.favoriteEntries.first
+        }
+    }
+    
+    // 格式化日期
+    private func formatDate(_ date: Date?) -> String {
+        guard let date = date else { return "" }
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+}

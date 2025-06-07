@@ -5,4 +5,9 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="word" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="FavoriteEntry" representedClassName="FavoriteEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="inputContent" optional="YES" attributeType="String"/>
+        <attribute name="outputContent" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
 </model>
