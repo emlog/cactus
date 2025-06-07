@@ -86,7 +86,7 @@ struct FavoriteView: View {
                                         .lineSpacing(8)
                                         .textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.bottom, 25) // 为按钮留出空间
+                                        .padding(.bottom, 40) // 增加底部内边距，确保文本不被按钮遮挡
                                         .padding(.horizontal, 12)
                                         .padding(.top, 12)
                                 }
@@ -118,7 +118,6 @@ struct FavoriteView: View {
                                             .foregroundColor(showInputCopySuccess ? .green : .secondary)
                                     }
                                     .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                                    .help("复制输入内容")
                                     .animation(.easeInOut, value: showInputCopySuccess)
                                     
                                     // 删除按钮
@@ -139,8 +138,12 @@ struct FavoriteView: View {
                                             .foregroundColor(.secondary)
                                     }
                                     .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
-                                    .help("删除收藏")
                                 }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color(.textBackgroundColor).opacity(1.0))
+                                        .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                                )
                                 .padding(.horizontal, 15)
                                 .padding(.vertical, 5)
                             }
@@ -155,7 +158,7 @@ struct FavoriteView: View {
                                         .lineSpacing(8)
                                         .textSelection(.enabled)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.bottom, 25) // 为按钮留出空间
+                                        .padding(.bottom, 40) // 增加底部内边距，确保文本不被按钮遮挡
                                         .padding(.horizontal, 12)
                                         .padding(.top, 12)
                                 }
@@ -187,9 +190,13 @@ struct FavoriteView: View {
                                             .foregroundColor(showOutputCopySuccess ? .green : .secondary)
                                     }
                                     .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                                    .help("复制输出内容")
                                     .animation(.easeInOut, value: showOutputCopySuccess)
                                 }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color(.textBackgroundColor).opacity(1.0))
+                                        .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                                )
                                 .padding(.horizontal, 15)
                                 .padding(.vertical, 5)
                             }
@@ -199,17 +206,8 @@ struct FavoriteView: View {
                     
                 } else {
                     // 空状态
-                    VStack(spacing: 16) {
-                        Image(systemName: "heart.text.square")
-                            .font(.system(size: 48))
-                            .foregroundColor(.secondary)
-                        Text(NSLocalizedString("no_favorites", comment: "暂无收藏"))
-                            .font(.title2)
-                            .foregroundColor(.secondary)
-                        Text(NSLocalizedString("no_favorites_hint", comment: "在主界面点击收藏按钮来添加收藏"))
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
+                    VStack {
+                        Spacer()
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }

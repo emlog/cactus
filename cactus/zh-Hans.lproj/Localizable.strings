@@ -48,11 +48,15 @@
 "pop_chat_text_empty" = "请输入要解答的问题";
 "pop_copy_success" = "复制成功";
 "pop_already_cleared" = "已清空内容";
+"pop_favorite_added" = "已添加到收藏夹";
 "pop_select_model_first" = "请在偏好设置中选择AI模型";
 "help_translate" = "翻译文本 (%@)";
 "help_summary" = "总结摘要 (%@)";
 "help_dict" = "字典查询";
 "help_chat" = "对话问答";
+"help_clear" = "清空";
+"help_favorite" = "收藏";
+"help_speak" = "朗读";
 "help_copy" = "复制";
 "help_pin" = "钉住窗口";
 "help_unpin" = "取消钉住";
@@ -68,23 +72,13 @@
 "version" = "版本";
 "report_issue" = "反馈问题";
 
-// vocabulary
-"sum" = "总计";
-
-// favorites
-"favorite_detail" = "收藏详情";
-"no_favorites" = "暂无收藏";
-"no_favorites_hint" = "在主界面点击收藏按钮来添加收藏";
-"add_to_favorites" = "添加到收藏夹";
-"favorite_added" = "已添加到收藏夹";
-"favorite_content_empty" = "内容为空，无法收藏";
-
 // error
 "error_invalid_config" = "系统错误，AI服务配置错误";
 "error_request_failed" = "请求失败，请切换其他AI模型或检查网络";
 
 // common
 "alert_ok" = "好";
+"sum" = "总计";
 
 // pro
 "premium_owned" = "您已拥有高级版，感謝支持";

@@ -69,6 +69,7 @@ struct MainView: View {
                                 .foregroundColor(.secondary)
                         }
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("help_clear", comment: "清空"))
                         .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
                         
                         // 收藏按钮
@@ -77,11 +78,11 @@ struct MainView: View {
                         }) {
                             Label("", systemImage: "heart")
                                 .labelStyle(.iconOnly)
-                                .foregroundColor(.accentColor)
+                                .foregroundColor(.secondary)
                         }
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                        .help(NSLocalizedString("add_to_favorites", comment: "添加到收藏夹"))
-                        .disabled(contentModel.text.isEmpty || (contentModel.resultText?.isEmpty ?? true))
+                        .help(NSLocalizedString("help_favorite", comment: "收藏"))
+                        .disabled(contentModel.text.isEmpty)
                         
                         // 语音朗读（输入）
                         Button(action: {
@@ -92,6 +93,7 @@ struct MainView: View {
                                 .foregroundColor(isSpeakingInput ? .red : .secondary)
                         }
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("help_speak", comment: "朗读"))
                         .disabled(contentModel.text.isEmpty)
                         
                         // 复制按钮
@@ -245,6 +247,7 @@ struct MainView: View {
                                     .foregroundColor(isSpeakingResult ? .red : .secondary)
                             }
                             .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                            .help(NSLocalizedString("help_speak", comment: "朗读"))
                             .disabled(contentModel.resultText?.isEmpty ?? true)
                             
                             Button(action: {
@@ -550,10 +553,10 @@ struct MainView: View {
     
     // 添加收藏功能方法
     func addToFavorites() {
-        guard !contentModel.text.isEmpty,
-              let resultText = contentModel.resultText,
-              !resultText.isEmpty else {
-            toastMessage = NSLocalizedString("favorite_content_empty", comment: "内容为空，无法收藏")
+        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        let resultText = contentModel.resultText ?? ""
+        guard !inputText.isEmpty else {
+            toastMessage = "favorite content is empty"
             showErrorToast = true
             return
         }
@@ -563,7 +566,7 @@ struct MainView: View {
             outputContent: resultText
         )
         
-        toastMessage = NSLocalizedString("favorite_added", comment: "已添加到收藏夹")
+        toastMessage = NSLocalizedString("pop_favorite_added", comment: "已添加到收藏夹")
         showCompleteToast = true
     }
 }
