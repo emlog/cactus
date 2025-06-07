@@ -27,7 +27,7 @@ struct VocabularyView: View {
                             .font(.system(size: 14, weight: .medium))
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading) // 新增
-                    .padding(.vertical, 12)
+                    .padding(.vertical, 10)
                     .contentShape(Rectangle())
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(

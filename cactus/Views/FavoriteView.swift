@@ -32,9 +32,10 @@ struct FavoriteView: View {
                         Text(formatDate(favoriteEntry.timestamp))
                             .font(.caption)
                             .foregroundColor(.secondary)
+                            .padding(.top, 2)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.vertical, 12)
+                    .padding(.vertical, 10)
                     .contentShape(Rectangle())
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(
