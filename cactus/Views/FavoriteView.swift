@@ -24,26 +24,25 @@ struct FavoriteView: View {
             VStack(spacing: 0) {
                 List(favoriteManager.favoriteEntries, id: \.objectID) { favoriteEntry in
                     VStack(alignment: .leading, spacing: 0) {
-                        // 显示输入内容的前两行作为标题
                         Text(getPreviewText(favoriteEntry.inputContent ?? ""))
-                            .font(.system(size: 15))
-                            .lineSpacing(8)
+                            .font(.system(size: 14, weight: .medium))
+                            .lineSpacing(4)
                             .lineLimit(2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.vertical, 6)
-                        // 显示添加时间
+                            
                         Text(formatDate(favoriteEntry.timestamp))
                             .font(.caption)
                             .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .id(favoriteEntry.objectID)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                    .padding(.vertical, 12)
                     .contentShape(Rectangle())
-                    .padding(0)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(selectedFavorite?.objectID == favoriteEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(
+                        RoundedRectangle(cornerRadius: 0)
+                            .fill(selectedFavorite?.objectID == favoriteEntry.objectID 
+                                ? Color.accentColor.opacity(0.2) 
+                                : Color.clear)
+                            .padding(.vertical, 0)
                     )
                     .onTapGesture {
                         selectedFavorite = favoriteEntry
