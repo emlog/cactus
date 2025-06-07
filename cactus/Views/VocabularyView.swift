@@ -25,22 +25,23 @@ struct VocabularyView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         Text(wordEntry.word ?? "")
                             .font(.system(size: 14, weight: .medium))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.vertical, 4)
                     }
-                    .id(wordEntry.objectID)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading) // 新增
+                    .padding(.vertical, 12)
                     .contentShape(Rectangle())
-                    .padding(.vertical, 2)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(selectedWord?.objectID == wordEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(
+                        RoundedRectangle(cornerRadius: 0)
+                            .fill(selectedWord?.objectID == wordEntry.objectID 
+                                ? Color.accentColor.opacity(0.2) 
+                                : Color.clear)
+                            .padding(.vertical, 0)
                     )
                     .onTapGesture {
                         selectedWord = wordEntry
                     }
                 }
-                .listStyle(PlainListStyle())
+                .listStyle(.plain)
                 
                 // 底部显示总单词数量
                 HStack {
