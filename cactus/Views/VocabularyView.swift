@@ -22,19 +22,11 @@ struct VocabularyView: View {
             // 左侧单词列表 - 占比约20%
             VStack(spacing: 0) {
                 List(vocabularyManager.wordEntries, id: \.objectID) { wordEntry in
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 0) {
                         Text(wordEntry.word ?? "")
                             .font(.system(size: 14, weight: .medium))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 4)
-                            .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(selectedWord?.objectID == wordEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
-                            )
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedWord = wordEntry
-                            }
                     }
                     .id(wordEntry.objectID)
                     .frame(maxWidth: .infinity, alignment: .leading)

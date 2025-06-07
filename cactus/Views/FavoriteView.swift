@@ -23,7 +23,7 @@ struct FavoriteView: View {
             // 左侧收藏列表 - 占比约30%
             VStack(spacing: 0) {
                 List(favoriteManager.favoriteEntries, id: \.objectID) { favoriteEntry in
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 0) {
                         // 显示输入内容的前两行作为标题
                         Text(getPreviewText(favoriteEntry.inputContent ?? ""))
                             .font(.system(size: 15))
@@ -31,15 +31,6 @@ struct FavoriteView: View {
                             .lineLimit(2)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 6)
-                            .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(selectedFavorite?.objectID == favoriteEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
-                            )
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedFavorite = favoriteEntry
-                            }
-                        
                         // 显示添加时间
                         Text(formatDate(favoriteEntry.timestamp))
                             .font(.caption)
@@ -49,7 +40,7 @@ struct FavoriteView: View {
                     .id(favoriteEntry.objectID)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
-                    .padding(.vertical, 2)
+                    .padding(0)
                     .background(
                         RoundedRectangle(cornerRadius: 4)
                             .fill(selectedFavorite?.objectID == favoriteEntry.objectID ? Color.accentColor.opacity(0.2) : Color.clear)
