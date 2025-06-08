@@ -296,26 +296,26 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
     
-    // 创建收藏夹窗口
-    private func createFavoriteWindow() {
-        favoriteWindow?.center()
-        favoriteWindow?.makeKeyAndOrderFront(nil)
-        favoriteWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
-    }
-    
-    // 收藏夹
+    // 收藏夹窗口
     @objc func openFavorites() {
-        // 确保收藏夹窗口存在
-        if favoriteWindow == nil {
-            createFavoriteWindow()
-        }
+        // 获取数量和用户购买状态
+        let favCount = FavoriteManager.shared.favoriteEntries.count
+        let isPremium = PurchaseManager.shared.isPremiumUser
         
-        // 调整窗口位置到当前屏幕的中心
-        favoriteWindow?.center()
-        favoriteWindow?.makeKeyAndOrderFront(nil)
-        favoriteWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
+        if favCount > 20 && !isPremium  {
+            // 高级版：如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
+            openPreferences()
+            // 延迟一点时间确保窗口已创建
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.settingsWindowController?.show(pane: .premium) // 跳转到高级版标签页
+                NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
+            }
+        } else {
+            favoriteWindow?.center()
+            favoriteWindow?.makeKeyAndOrderFront(nil)
+            favoriteWindow?.orderFrontRegardless()
+            NSApp.activate(ignoringOtherApps: true)
+        }
     }
     
     // 联系我们

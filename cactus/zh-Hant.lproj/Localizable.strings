@@ -87,7 +87,7 @@
 "premium_restore" = "恢復購買";
 "premium_features" = "進階功能";
 "premium_feature_unlimited_usage" = "無限制的翻譯與摘要次數";
-"premium_feature_unlimited_vocabulary" = "單字本無使用限制";
+"premium_feature_unlimited_vocabulary" = "生字本與收藏夾無限制使用";
 "premium_feature_custom_model" = "解鎖 OpenAI 等更多自訂 AI 模型";
 "terms_of_use" = "使用條款";
 "privacy_policy" = "隱私政策";

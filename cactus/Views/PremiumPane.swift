@@ -156,29 +156,29 @@ struct PremiumPane: View {
                             .disabled(purchaseManager.isLoading)
                             .scaleEffect(purchaseManager.isLoading ? 0.98 : 1.0)
                             .animation(.easeInOut(duration: 0.1), value: purchaseManager.isLoading)
-                            
-                            // 恢复购买按钮和法律链接
-                            HStack(spacing: 15) {
-                                Button(action: {
-                                    purchaseManager.restorePurchases()
-                                }) {
-                                    Text(NSLocalizedString("premium_restore", comment: "Restore Purchase"))
-                                        .font(.system(size: 13, weight: .medium))
-                                        .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                
-                                Link(NSLocalizedString("terms_of_use", comment: "Terms of Use"), destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
-                                
-                                Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://cactusai.cc/privacy-policy")!)
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
-                            }
-                            .frame(height: 32)
                         }
                     }
+                    
+                    // 恢复购买按钮和法律链接
+                    HStack(spacing: 15) {
+                        Button(action: {
+                            purchaseManager.restorePurchases()
+                        }) {
+                            Text(NSLocalizedString("premium_restore", comment: "Restore Purchase"))
+                                .font(.caption)
+                                .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        Link(NSLocalizedString("terms_of_use", comment: "Terms of Use"), destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                            .font(.caption)
+                            .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
+                        
+                        Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://cactusai.cc/privacy-policy")!)
+                            .font(.caption)
+                            .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
+                    }
+                    .frame(height: 32)
                     
                     // 错误信息
                     if let errorMessage = purchaseManager.errorMessage {
