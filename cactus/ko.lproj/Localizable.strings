@@ -34,9 +34,9 @@
 "enter_api_key" = "API 키를 입력하세요";
 "api_key" = "API 키";
 "model" = "모델";
-"model_zhipu_glm4" = "Zhipu-GLM-4 (추천)";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B (추천)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 

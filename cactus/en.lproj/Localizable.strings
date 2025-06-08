@@ -34,9 +34,9 @@
 "enter_api_key" = "Please Enter API KEY";
 "api_key" = "API KEY";
 "model" = "Model";
-"model_zhipu_glm4" = "Zhipu-GLM-4";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3 (Recommended)";
+"model_qwen3" = "OpenRouter-Qwen3-8B (Recommended)";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "Siliconflow";
 

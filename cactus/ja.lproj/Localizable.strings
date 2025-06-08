@@ -34,9 +34,9 @@
 "enter_api_key" = "APIキーを入力してください";
 "api_key" = "APIキー";
 "model" = "モデル";
-"model_zhipu_glm4" = "Zhipu-GLM-4（おすすめ）";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B（おすすめ）";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 

@@ -34,9 +34,9 @@
 "enter_api_key" = "請輸入密鑰（API KEY）";
 "api_key" = "密鑰";
 "model" = "模型";
-"model_zhipu_glm4" = "Zhipu-GLM-4（推薦）";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B（推薦）";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3";
+"model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 

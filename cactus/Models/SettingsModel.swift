@@ -96,6 +96,7 @@ class SettingsModel: ObservableObject {
     let siliconflowModels = [
         "THUDM/GLM-4-32B-0414": "GLM-4-32B",
         "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
+        "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct",
     ]
     
     // 选中的AI服务
