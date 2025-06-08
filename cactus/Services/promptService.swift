@@ -313,6 +313,10 @@ Synonyms: panther, lion
             return """
         你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威辞书的体例，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写。
         
+        其他要求：
+        - 排版簡潔清晰，無需markdown語法
+        - 不添加解釋性文字或標籤
+        
         请按照如下格式输出：
         
         【词语】
@@ -328,7 +332,13 @@ Synonyms: panther, lion
         """
         case "zh-TW":
             return """
-        你是一位語言學專家和辭典編輯，參考《國語辭典》和《教育部重編國語辭典修訂本》的風格，為中文詞語提供權威解釋。請使用規範、嚴謹的語言，並按照以下格式輸出：
+        你是一位語言學專家和辭典編輯，參考《國語辭典》和《教育部重編國語辭典修訂本》的風格，為中文詞語提供權威解釋。請使用規範、嚴謹的語言，
+        
+        其他要求：
+        - 排版簡潔清晰，無需markdown語法
+        - 不添加解釋性文字或標籤
+        
+        按照以下格式輸出：
         【詞語】  
         注音：（注音符號）  
         漢語拼音：（漢語拼音）  
@@ -343,7 +353,13 @@ Synonyms: panther, lion
         """
         case "ja-JP":
             return """
-        あなたは言語学の専門家で辞書編集者です。『広辞苑』や『大辞林』のスタイルを参考に、日本語の語彙について権威ある解説を提供してください。規範的で厳密な言語を使用し、以下の形式で出力してください：
+        あなたは言語学の専門家で辞書編集者です。『広辞苑』や『大辞林』のスタイルを参考に、日本語の語彙について権威ある解説を提供してください。規範的で厳密な言語を使用し。
+        
+        その他の条件：
+         •    レイアウトは簡潔で分かりやすく、Markdown構文は使用しないこと
+         •    解説的な語句やタグは追加しないこと
+        
+        以下の形式で出力してください：
         【語彙】  
         読み：（ひらがな読み）  
         品詞：（名詞、動詞、形容詞、慣用句など）  
@@ -357,7 +373,13 @@ Synonyms: panther, lion
         """
         case "ko-KR":
             return """
-        당신은 언어학 전문가이자 사전 편집자입니다. 『표준국어대사전』과 『고려대한국어대사전』의 스타일을 참고하여 한국어 어휘에 대한 권위 있는 해설을 제공해 주세요. 규범적이고 엄밀한 언어를 사용하며, 다음 형식으로 출력해 주세요：
+        당신은 언어학 전문가이자 사전 편집자입니다. 『표준국어대사전』과 『고려대한국어대사전』의 스타일을 참고하여 한국어 어휘에 대한 권위 있는 해설을 제공해 주세요. 규범적이고 엄밀한 언어를 사용하며.
+        
+        기타 요구사항：
+        - 배치는 간결하고 명확하며, markdown 문법은 불필요
+        - 설명적 문자나 태그는 추가하지 않음
+        
+        다음 형식으로 출력해 주세요：
         【어휘】  
         발음：（한글 발음）  
         품사：（명사, 동사, 형용사, 관용구 등）  
@@ -371,7 +393,14 @@ Synonyms: panther, lion
         """
         case "en-US":
             return """
-        You are a linguistics expert and dictionary editor. Following the style of the Oxford English Dictionary and Merriam-Webster Dictionary, provide authoritative explanations for English vocabulary. Use precise and scholarly language, and output in the following format:
+        You are a linguistics expert and dictionary editor. Following the style of the Oxford English Dictionary and Merriam-Webster Dictionary, provide authoritative explanations for English vocabulary. Use precise and scholarly language.
+        
+        Other requirements:
+        - Layout should be concise and clear, no markdown syntax needed
+        - Do not add explanatory text or tags
+        
+        
+        output in the following format:
         【Word】  
         Pronunciation: (IPA phonetic transcription)  
         Part of Speech: (noun, verb, adjective, idiom, etc.)  
