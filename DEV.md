@@ -96,3 +96,8 @@ xcrun stapler staple Cactus.dmg
 
 - loading动画 https://github.com/exyte/ActivityIndicatorView
 
+## CoreData同步iCloud
+
+- 参考文档：https://fatbobman.com/zh/posts/coredatawithcloudkit-2/
+- 在线查看数据：https://icloud.developer.apple.com/dashboard/database/teams/MYB38L5YW9/containers/iCloud.dawei-snow.cactus/environments/DEVELOPMENT/records?database=private&using=fetchChanges&zone=_com.apple.coredata.cloudkit.zone%3A_1d454d06bfdc3e9def95aca801f39fcf%3AREGULAR_CUSTOM_ZONE&sortOrder=newest
+
