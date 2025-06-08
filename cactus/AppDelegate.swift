@@ -91,7 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 action: #selector(openVocabulary),
                 keyEquivalent: ""
             )
-            vocabularyMenuItem.image = NSImage(systemSymbolName: "book.pages", accessibilityDescription: nil)
+            vocabularyMenuItem.image = NSImage(systemSymbolName: "rectangle.and.paperclip", accessibilityDescription: nil)
             menu.addItem(vocabularyMenuItem)
             
             // 收藏夹
