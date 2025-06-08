@@ -95,6 +95,7 @@ xcrun stapler staple Cactus.dmg
 ### 未使用
 
 - loading动画 https://github.com/exyte/ActivityIndicatorView
+- GRDB 数据库（替代CoreData） https://github.com/groue/GRDB.swift
 
 ## CoreData同步iCloud
 
