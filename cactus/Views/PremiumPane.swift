@@ -49,26 +49,9 @@ struct PremiumPane: View {
                         // 已购买状态 - 奢华风格
                         VStack(spacing: 12) {
                             HStack {
-                                ZStack {
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [
-                                                    Color(red: 0.0, green: 0.8, blue: 0.4),
-                                                    Color(red: 0.0, green: 0.6, blue: 0.3)
-                                                ]),
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                        .frame(width: 32, height: 32)
-                                        .shadow(color: Color.green.opacity(0.3), radius: 4, x: 0, y: 2)
-                                    
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 18, weight: .bold))
-                                }
-                                
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                                    .font(.system(size: 18, weight: .bold))
                                 Text(NSLocalizedString("premium_owned", comment: "You already own Premium"))
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(.primary)
