@@ -5,7 +5,7 @@ class VocabularyManager: ObservableObject {
     static let shared = VocabularyManager()
     
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
-        let container = NSPersistentCloudKitContainer(name: "VocabularyModel") // 这里的 name 参数应该指向您的数据模型文件（ .xcdatamodeld 文件）的名称，而不是 iCloud 容器的标识符
+        let container = NSPersistentCloudKitContainer(name: "CoreDataModel") // 这里的 name 参数应该指向您的数据模型文件（ .xcdatamodeld 文件）的名称，而不是 iCloud 容器的标识符
         
         // Get the App Group store URL
         guard let privateStoreDescription = container.persistentStoreDescriptions.first else {

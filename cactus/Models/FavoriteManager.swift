@@ -5,7 +5,7 @@ class FavoriteManager: ObservableObject {
     static let shared = FavoriteManager()
     
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
-        let container = NSPersistentCloudKitContainer(name: "VocabularyModel")
+        let container = NSPersistentCloudKitContainer(name: "CoreDataModel")
         
         guard let privateStoreDescription = container.persistentStoreDescriptions.first else {
             fatalError("###<persistentContainer>: Failed to get a persistent store description.")
