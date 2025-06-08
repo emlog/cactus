@@ -88,7 +88,7 @@ struct MainView: View {
                         Button(action: {
                             speakText(contentModel.text)
                         }) {
-                            Image(systemName: "speaker.wave.2.circle")
+                            Image(systemName: "speaker.wave.2")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(isSpeakingInput ? .red : .secondary)
                         }
@@ -242,7 +242,7 @@ struct MainView: View {
                             Button(action: {
                                 speakText(contentModel.resultText ?? "")
                             }) {
-                                Image(systemName: "speaker.wave.2.circle")
+                                Image(systemName: "speaker.wave.2")
                                     .frame(width: 15, height: 15)
                                     .foregroundColor(isSpeakingResult ? .red : .secondary)
                             }
