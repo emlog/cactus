@@ -10,21 +10,19 @@ struct PremiumPane: View {
         Settings.Container(contentWidth: 500) {
             Settings.Section(title: "", bottomDivider: true) {
                 VStack(spacing: 6) {
-                    // 奢华标题部分
-                    VStack(spacing: 12) {
-                        Text(NSLocalizedString("premium_features", comment: "Premium Features"))
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .foregroundStyle(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color(red: 0.2, green: 0.1, blue: 0.5),  // 深紫色
-                                        Color(red: 0.4, green: 0.2, blue: 0.8)   // 紫色
-                                    ]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
+                    // 奢华标题部分 (第15-22行)
+                    Text(NSLocalizedString("premium_features", comment: "Premium Features"))
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .foregroundStyle(
+                            LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color.purple.opacity(0.8),
+                                    Color.blue.opacity(0.9)
+                                ]),
+                                startPoint: .leading,
+                                endPoint: .trailing
                             )
-                    }
+                        )
                     .padding(.top, 16)
                     .padding(.bottom, 16)
                     
@@ -149,17 +147,17 @@ struct PremiumPane: View {
                         }) {
                             Text(NSLocalizedString("premium_restore", comment: "Restore Purchase"))
                                 .font(.caption)
-                                .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
+                                .foregroundColor(.blue)
                         }
                         .buttonStyle(PlainButtonStyle())
                         
                         Link(NSLocalizedString("terms_of_use", comment: "Terms of Use"), destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
                             .font(.caption)
-                            .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
+                            .foregroundColor(.blue)
                         
                         Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://cactusai.cc/privacy-policy")!)
                             .font(.caption)
-                            .foregroundColor(Color(red: 0.4, green: 0.2, blue: 0.8))
+                            .foregroundColor(.blue)
                     }
                     .frame(height: 32)
                     
@@ -210,25 +208,9 @@ struct FeatureRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(colors: [
-                                accentColor.opacity(0.8),
-                                accentColor.opacity(0.6)
-                            ]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 36, height: 36)
-                    .shadow(color: accentColor.opacity(0.3), radius: 4, x: 0, y: 2)
-                
-                Image(systemName: icon)
-                    .foregroundColor(.white)
-                    .font(.system(size: 18, weight: .bold))
-            }
+            Image(systemName: icon)
+                .foregroundColor(accentColor)
+                .font(.system(size: 20, weight: .bold))
             
             Text(text)
                 .font(.system(size: 15, weight: .medium))
