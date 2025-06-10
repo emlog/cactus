@@ -82,6 +82,10 @@ xcrun stapler staple Cactus.dmg
 
 - sparkle https://sparkle-project.org/
 
+## 制作 appicons
+
+- figma 模版（macOS Icon Template）：https://www.figma.com/community/file/857303226040719059/macos-big-sur-icon-template
+
 
 ## 第三方库
 
