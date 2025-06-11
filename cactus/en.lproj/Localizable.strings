@@ -33,6 +33,7 @@
 "siliconflow_config" = "Siliconflow Setting";
 "google_gemini_config" = "Google Gemini Setting";
 "claude_config" = "Claude Setting";
+"deepseek_config" = "Deepseek Setting";
 "enter_api_key" = "Please Enter API KEY";
 "api_key" = "API KEY";
 "model" = "Model";
@@ -43,6 +44,7 @@
 "model_siliconflow" = "Siliconflow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_deepseek" = "DeepSeek";
 
 // main
 "pop_text_empty" = "No text available to copy.";
@@ -92,7 +94,7 @@
 "premium_features" = "Premium Features";
 "premium_feature_unlimited_usage" = "Unlimited translations and summaries";
 "premium_feature_unlimited_vocabulary" = "Unlimited use of vocabulary book and favorites";
-"premium_feature_custom_model" = "Unlock more custom AI models like OpenAI";
+"premium_feature_custom_model" = "Unlock more custom AI models like GPT4 and DeepSeek";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
 

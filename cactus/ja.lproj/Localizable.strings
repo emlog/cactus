@@ -33,6 +33,7 @@
 "siliconflow_config" = "SiliconFlow設定";
 "google_gemini_config" = "Google Gemini 設定";
 "claude_config" = "Claude 設定";
+"deepseek_config" = "Deepseek 設定";
 "enter_api_key" = "APIキーを入力してください";
 "api_key" = "APIキー";
 "model" = "モデル";
@@ -43,6 +44,7 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_deepseek" = "DeepSeek";
 
 // main
 "pop_text_empty" = "コピーできる内容がありません";
@@ -92,7 +94,7 @@
 "premium_features" = "Pro機能";
 "premium_feature_unlimited_usage" = "翻訳と要約の回数が無制限";
 "premium_feature_unlimited_vocabulary" = "単語帳とお気に入りを無制限に利用可能";
-"premium_feature_custom_model" = "OpenAIなどのカスタムAIモデルを解放する";
+"premium_feature_custom_model" = "GPT4、DeepSeekなどのカスタムAIモデルを解放する";
 "terms_of_use" = "利用規約";
 "privacy_policy" = "プライバシーポリシー";
 

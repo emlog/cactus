@@ -74,6 +74,8 @@ struct GeneralAiPane: View {
         switch settingsModel.selectedProvider {
         case "openai":
             return NSLocalizedString("openai_config", comment: "OpenAI配置")
+        case "deepseek":
+            return NSLocalizedString("deepseek_config", comment: "Deepseek 配置")
         case "siliconflow":
             return NSLocalizedString("siliconflow_config", comment: "硅基流动配置")
         case "google_gemini":
@@ -90,6 +92,8 @@ struct GeneralAiPane: View {
         switch settingsModel.selectedProvider {
         case "openai":
             return $settingsModel.openaiApiKey
+        case "deepseek":
+            return $settingsModel.deepseekApiKey
         case "siliconflow":
             return $settingsModel.siliconflowApiKey
         case "google_gemini":
@@ -106,6 +110,8 @@ struct GeneralAiPane: View {
         switch settingsModel.selectedProvider {
         case "openai":
             return $settingsModel.selectedOpenAIModel
+        case "deepseek":
+            return $settingsModel.selectedDeepseekModel
         case "siliconflow":
             return $settingsModel.selectedSiliconflowModel
         case "google_gemini":

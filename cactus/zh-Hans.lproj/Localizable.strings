@@ -33,6 +33,7 @@
 "siliconflow_config" = "硅基流动配置";
 "google_gemini_config" = "Google Gemini 配置";
 "claude_config" = "Claude 配置";
+"deepseek_config" = "Deepseek 配置";
 "enter_api_key" = "请输入密钥(API KEY)";
 "api_key" = "密钥";
 "model" = "模型";
@@ -43,6 +44,7 @@
 "model_siliconflow" = "硅基流动";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_deepseek" = "DeepSeek";
 
 // main
 "pop_text_empty" = "没有可复制的内容";
@@ -92,7 +94,7 @@
 "premium_features" = "高级版功能";
 "premium_feature_unlimited_usage" = "无限量的翻译总结次数";
 "premium_feature_unlimited_vocabulary" = "无限制的生词本和收藏夹使用";
-"premium_feature_custom_model" = "解锁OpenAI等更多自定义AI模型";
+"premium_feature_custom_model" = "解锁GPT4、DeepSeek等更多自定义AI模型";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私策略";
 

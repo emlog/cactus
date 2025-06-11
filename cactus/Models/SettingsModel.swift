@@ -67,6 +67,18 @@ class SettingsModel: ObservableObject {
                 "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
             ]
         ),
+        "deepseek": ProviderSettings(
+            title: NSLocalizedString("model_deepseek", comment: "deepseek"),
+            baseURL: "https://api.deepseek.com/chat/completions",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://platform.deepseek.com/api_keys",
+            requiresCustomConfig: true,
+            availableModels: [
+                "deepseek-chat": "DeepSeek-V3-0324",
+                "deepseek-reasoner": "DeepSeek-R1-0528"
+            ]
+        ),
         "google_gemini": ProviderSettings(
             title: NSLocalizedString("model_google_gemini", comment: "Google Gemini"),
             baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
@@ -93,13 +105,14 @@ class SettingsModel: ObservableObject {
             ]
         )
     ]
-
+    
     // 新增：保持原始顺序的键数组
     public var providerKeys: [String] = [
         "model_zhipu_glm4",
         "model_qwen3",
         "model_cactusai_mix",
         "siliconflow",
+        "deepseek",
         "openai",
         "google_gemini",
         "claude"
@@ -142,14 +155,14 @@ class SettingsModel: ObservableObject {
             updateGoogleGeminiConfig()
         }
     }
-
+    
     @Published var selectedGoogleGeminiModel: String {
         didSet {
             UserDefaults.standard.set(selectedGoogleGeminiModel, forKey: "selectedGoogleGeminiModel")
             updateGoogleGeminiConfig()
         }
     }
-
+    
     // claude 用户配置
     @Published var claudeApiKey: String {
         didSet {
@@ -157,10 +170,25 @@ class SettingsModel: ObservableObject {
             updateClaudeConfig()
         }
     }
-
+    
     @Published var selectedClaudeModel: String {
         didSet {
             UserDefaults.standard.set(selectedClaudeModel, forKey: "selectedClaudeModel")
+            updateClaudeConfig()
+        }
+    }
+    
+    // deepseek 用户配置
+    @Published var deepseekApiKey: String {
+        didSet {
+            UserDefaults.standard.set(deepseekApiKey, forKey: "deepseekApiKey")
+            updateDeepseekConfig()
+        }
+    }
+    
+    @Published var selectedDeepseekModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedDeepseekModel, forKey: "selectedDeepseekModel")
             updateClaudeConfig()
         }
     }
@@ -179,17 +207,21 @@ class SettingsModel: ObservableObject {
         
         self.siliconflowApiKey = UserDefaults.standard.string(forKey: "siliconflowApiKey") ?? ""
         self.selectedSiliconflowModel = UserDefaults.standard.string(forKey: "selectedSiliconflowModel") ?? ""
-
+        
         self.googleGeminiApiKey = UserDefaults.standard.string(forKey: "googleGeminiApiKey") ?? ""
         self.selectedGoogleGeminiModel = UserDefaults.standard.string(forKey: "selectedGoogleGeminiModel") ?? ""
-
+        
         self.claudeApiKey = UserDefaults.standard.string(forKey: "claudeApiKey") ?? ""
         self.selectedClaudeModel = UserDefaults.standard.string(forKey: "selectedClaudeModel") ?? ""
+        
+        self.deepseekApiKey = UserDefaults.standard.string(forKey: "deepseekApiKey") ?? ""
+        self.selectedDeepseekModel = UserDefaults.standard.string(forKey: "selectedDeepseekModel") ?? ""
         
         updateOpenAIConfig()
         updateSiliconflowConfig()
         updateGoogleGeminiConfig()
         updateClaudeConfig()
+        updateDeepseekConfig()
     }
     
     private func updateOpenAIConfig() {
@@ -207,7 +239,7 @@ class SettingsModel: ObservableObject {
             defaultProviders["siliconflow"] = siliconflowProvider
         }
     }
-
+    
     private func updateGoogleGeminiConfig() {
         if var googleGeminiProvider = defaultProviders["google_gemini"] {
             googleGeminiProvider.apiKey = googleGeminiApiKey
@@ -215,12 +247,20 @@ class SettingsModel: ObservableObject {
             defaultProviders["google_gemini"] = googleGeminiProvider
         }
     }
-
+    
     private func updateClaudeConfig() {
         if var claudeProvider = defaultProviders["claude"] {
             claudeProvider.apiKey = claudeApiKey
             claudeProvider.model = selectedClaudeModel
             defaultProviders["claude"] = claudeProvider
+        }
+    }
+    
+    private func updateDeepseekConfig() {
+        if var deepseekProvider = defaultProviders["deepseek"] {
+            deepseekProvider.apiKey = deepseekApiKey
+            deepseekProvider.model = selectedDeepseekModel
+            defaultProviders["deepseek"] = deepseekProvider
         }
     }
     
