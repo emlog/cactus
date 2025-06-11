@@ -38,7 +38,7 @@ struct PremiumPane: View {
                                    text: NSLocalizedString("premium_feature_custom_model", comment: "解锁更多自定义AI模型"),
                                    accentColor: Color(red: 1.0, green: 0.45, blue: 0.0)) // 现代橙色 - 活力橙
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 0)
                     
                     Spacer()
                     
@@ -223,7 +223,7 @@ struct FeatureRow: View {
                 .foregroundColor(accentColor)
         }
         .padding(.vertical, 8)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 6)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.primary.opacity(0.03))

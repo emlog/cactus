@@ -141,8 +141,8 @@ struct GeneralAiPane: View {
     
     private var providerOptions: some View {
         ForEach(settingsModel.providerKeys, id: \.self) { key in
-            // 只有高级用户才能看到 openai, siliconflow, google_gemini, claude
-            if (key == "openai" || key == "siliconflow" || key == "google_gemini" || key == "claude") && !isPremiumUser {
+            // 高级版可以看到更多模型
+            if (key == "openai" || key == "google_gemini" || key == "deepseek" || key == "volcengine") && isPremiumUser {
                 EmptyView()
             } else {
                 Text(providerDisplayText(for: key)).tag(key)
