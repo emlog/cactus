@@ -96,7 +96,7 @@
 "premium_features" = "高级版功能";
 "premium_feature_unlimited_usage" = "无限量的翻译总结次数";
 "premium_feature_unlimited_vocabulary" = "无限制的生词本和收藏夹使用";
-"premium_feature_custom_model" = "解锁 GPT-4、Gemini、DeepSeek 等更多 AI 模型";
+"premium_feature_custom_model" = "解锁Claude、Gemini、DeepSeek、豆包等AI模型";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私策略";
 

@@ -142,7 +142,7 @@ struct GeneralAiPane: View {
     private var providerOptions: some View {
         ForEach(settingsModel.providerKeys, id: \.self) { key in
             // 高级版可以看到更多模型
-            if (key == "openai" || key == "google_gemini" || key == "deepseek" || key == "volcengine") && isPremiumUser {
+            if (key == "claude" || key == "google_gemini" || key == "deepseek" || key == "volcengine") && !isPremiumUser {
                 EmptyView()
             } else {
                 Text(providerDisplayText(for: key)).tag(key)

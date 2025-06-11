@@ -96,7 +96,7 @@
 "premium_features" = "Pro機能";
 "premium_feature_unlimited_usage" = "翻訳と要約の回数が無制限";
 "premium_feature_unlimited_vocabulary" = "単語帳とお気に入りを無制限に利用可能";
-"premium_feature_custom_model" = "GPT-4、Gemini、DeepSeek などの AI モデルをアンロック";
+"premium_feature_custom_model" = "Claude、Gemini、DeepSeek などの AI モデルをアンロック";
 "terms_of_use" = "利用規約";
 "privacy_policy" = "プライバシーポリシー";
 
