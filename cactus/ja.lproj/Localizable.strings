@@ -31,6 +31,8 @@
 "select_service" = "AIサービスを選択";
 "openai_config" = "OpenAI設定";
 "siliconflow_config" = "SiliconFlow設定";
+"google_gemini_config" = "Google Gemini 設定";
+"claude_config" = "Claude 設定";
 "enter_api_key" = "APIキーを入力してください";
 "api_key" = "APIキー";
 "model" = "モデル";
@@ -39,6 +41,8 @@
 "model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
+"model_google_gemini" = "Google Gemini";
+"model_claude" = "Anthropic Claude";
 
 // main
 "pop_text_empty" = "コピーできる内容がありません";

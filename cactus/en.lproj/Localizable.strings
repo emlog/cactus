@@ -31,6 +31,8 @@
 "select_service" = "Select AI Service";
 "openai_config" = "OpenAI Setting";
 "siliconflow_config" = "Siliconflow Setting";
+"google_gemini_config" = "Google Gemini Setting";
+"claude_config" = "Claude Setting";
 "enter_api_key" = "Please Enter API KEY";
 "api_key" = "API KEY";
 "model" = "Model";
@@ -39,6 +41,8 @@
 "model_qwen3" = "OpenRouter-Qwen3-8B (Recommended)";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "Siliconflow";
+"model_google_gemini" = "Google Gemini";
+"model_claude" = "Anthropic Claude";
 
 // main
 "pop_text_empty" = "No text available to copy.";

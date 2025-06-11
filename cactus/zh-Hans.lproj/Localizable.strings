@@ -41,8 +41,8 @@
 "model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "硅基流动";
-"model_google_gemini" = "Gemini";
-"model_claude" = "Claude";
+"model_google_gemini" = "Google Gemini";
+"model_claude" = "Anthropic Claude";
 
 // main
 "pop_text_empty" = "没有可复制的内容";

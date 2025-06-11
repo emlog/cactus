@@ -31,6 +31,8 @@
 "select_service" = "選擇 AI 服務";
 "openai_config" = "OpenAI 設定";
 "siliconflow_config" = "SiliconFlow 設定";
+"google_gemini_config" = "Google Gemini 設定";
+"claude_config" = "Claude 設定";
 "enter_api_key" = "請輸入密鑰（API KEY）";
 "api_key" = "密鑰";
 "model" = "模型";
@@ -39,6 +41,8 @@
 "model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
+"model_google_gemini" = "Google Gemini";
+"model_claude" = "Anthropic Claude";
 
 // Main Window Popups & Helpers
 "pop_text_empty" = "沒有可拷貝的內容";
