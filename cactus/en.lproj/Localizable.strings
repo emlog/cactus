@@ -34,6 +34,7 @@
 "google_gemini_config" = "Google Gemini Setting";
 "claude_config" = "Claude Setting";
 "deepseek_config" = "Deepseek Setting";
+"volcengine_config" = "Volcengine Setting";
 "enter_api_key" = "Please Enter API KEY";
 "api_key" = "API KEY";
 "model" = "Model";
@@ -45,6 +46,7 @@
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
+"model_volcengine" = "Volcengine";
 
 // main
 "pop_text_empty" = "No text available to copy.";

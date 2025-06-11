@@ -34,6 +34,7 @@
 "google_gemini_config" = "Google Gemini 設定";
 "claude_config" = "Claude 設定";
 "deepseek_config" = "Deepseek 設定";
+"volcengine_config" = "火山引擎設定";
 "enter_api_key" = "請輸入密鑰（API KEY）";
 "api_key" = "密鑰";
 "model" = "模型";
@@ -45,6 +46,7 @@
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
+"model_volcengine" = "火山引擎";
 
 // Main Window Popups & Helpers
 "pop_text_empty" = "沒有可拷貝的內容";

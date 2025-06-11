@@ -79,6 +79,20 @@ class SettingsModel: ObservableObject {
                 "deepseek-reasoner": "DeepSeek-R1-0528"
             ]
         ),
+        "volcengine": ProviderSettings(
+            title: NSLocalizedString("model_volcengine", comment: "volcengine"),
+            baseURL: "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey",
+            requiresCustomConfig: true,
+            availableModels: [
+                "doubao-seed-1-6-250615": "Doubao-Seed-1.6",
+                "doubao-1-5-pro-32k-250115": "Doubao-1.5-pro-32k",
+                "doubao-lite-32k-240828": "Doubao-lite",
+                "deepseek-v3-250324": "DeepSeek-V3"
+            ]
+        ),
         "google_gemini": ProviderSettings(
             title: NSLocalizedString("model_google_gemini", comment: "Google Gemini"),
             baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
@@ -113,6 +127,7 @@ class SettingsModel: ObservableObject {
         "model_cactusai_mix",
         "siliconflow",
         "deepseek",
+        "volcengine",
         "openai",
         "google_gemini",
         "claude"
@@ -193,6 +208,21 @@ class SettingsModel: ObservableObject {
         }
     }
     
+    // volcengine 用户配置
+    @Published var volcengineApiKey: String {
+        didSet {
+            UserDefaults.standard.set(volcengineApiKey, forKey: "volcengineApiKey")
+            updateDeepseekConfig()
+        }
+    }
+    
+    @Published var selectedVolcengineModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedVolcengineModel, forKey: "selectedVolcengineModel")
+            updateVolcengineConfig()
+        }
+    }
+    
     // 选中的AI服务
     @Published var selectedProvider: String {
         didSet {
@@ -217,11 +247,15 @@ class SettingsModel: ObservableObject {
         self.deepseekApiKey = UserDefaults.standard.string(forKey: "deepseekApiKey") ?? ""
         self.selectedDeepseekModel = UserDefaults.standard.string(forKey: "selectedDeepseekModel") ?? ""
         
+        self.volcengineApiKey = UserDefaults.standard.string(forKey: "volcengineApiKey") ?? ""
+        self.selectedVolcengineModel = UserDefaults.standard.string(forKey: "selectedVolcengineModel") ?? ""
+        
         updateOpenAIConfig()
         updateSiliconflowConfig()
         updateGoogleGeminiConfig()
         updateClaudeConfig()
         updateDeepseekConfig()
+        updateVolcengineConfig()
     }
     
     private func updateOpenAIConfig() {
@@ -261,6 +295,14 @@ class SettingsModel: ObservableObject {
             deepseekProvider.apiKey = deepseekApiKey
             deepseekProvider.model = selectedDeepseekModel
             defaultProviders["deepseek"] = deepseekProvider
+        }
+    }
+    
+    private func updateVolcengineConfig() {
+        if var volcengineProvider = defaultProviders["volcengine"] {
+            volcengineProvider.apiKey = volcengineApiKey
+            volcengineProvider.model = selectedVolcengineModel
+            defaultProviders["volcengine"] = volcengineProvider
         }
     }
     
