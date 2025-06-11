@@ -19,82 +19,100 @@ struct GeneralAiPane: View {
                     providerOptions
                 }
                 .pickerStyle(MenuPickerStyle())
-                .frame(width: 400) // 添加此行来限制宽度
+                .frame(width: 400)
             }
-        }
-        if settingsModel.selectedProvider == "openai" && isPremiumUser {
-            Settings.Container(contentWidth: 400) {
-                Settings.Section(title: "", bottomDivider: true) {
-                    HStack {
-                        Text(NSLocalizedString("openai_config", comment: "OpenAI配置"))
-                        Button(action: {
-                            if let url = URL(string: "https://platform.openai.com/api-keys") {
-                                NSWorkspace.shared.open(url)
-                            }
-                        }) {
-                            Image(systemName: "questionmark.circle")
-                                .foregroundColor(.blue)
-                                .font(.system(size: 14))
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        Spacer()
-                    }
-                }
-                Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "API密钥")) }) {
-                    SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.openaiApiKey)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                }
-                
-                Settings.Section(label: { Text(NSLocalizedString("model", comment: "模型")) }) {
-                    Picker(selection: $settingsModel.selectedOpenAIModel, label: EmptyView()) {
-                        ForEach(Array(settingsModel.openaiModels.keys.sorted()), id: \.self) { key in
-                            Text(settingsModel.openaiModels[key] ?? key).tag(key)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .frame(width: 300) // 添加此行来限制宽度
-                }
-            }
-            .padding(.leading, 30)
         }
         
-        if settingsModel.selectedProvider == "siliconflow" && isPremiumUser {
-            Settings.Container(contentWidth: 400) {
-                Settings.Section(title: "", bottomDivider: true) {
-                    HStack {
-                        Text(NSLocalizedString("siliconflow_config", comment: "硅基流动配置"))
-                        Button(action: {
-                            if let url = URL(string: "https://cloud.siliconflow.cn/account/ak") {
-                                NSWorkspace.shared.open(url)
-                            }
-                        }) {
-                            Image(systemName: "questionmark.circle")
-                                .foregroundColor(.blue)
-                                .font(.system(size: 14))
+        // 通用配置界面 - 适用于需要自定义配置的提供商
+        if settingsModel.currentProviderRequiresConfig && isPremiumUser {
+            providerConfigurationView
+        }
+    }
+    
+    // 通用的提供商配置视图
+    private var providerConfigurationView: some View {
+        Settings.Container(contentWidth: 400) {
+            Settings.Section(title: "", bottomDivider: true) {
+                HStack {
+                    Text(providerConfigTitle)
+                    Button(action: {
+                        if let helpUrl = settingsModel.defaultProviders[settingsModel.selectedProvider]?.helpUrl,
+                           let url = URL(string: helpUrl) {
+                            NSWorkspace.shared.open(url)
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        Spacer()
+                    }) {
+                        Image(systemName: "questionmark.circle")
+                            .foregroundColor(.blue)
+                            .font(.system(size: 14))
                     }
-                }
-                Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "密钥")) }) {
-                    SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $settingsModel.siliconflowApiKey)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                }
-                
-                Settings.Section(label: { Text(NSLocalizedString("model", comment: "模型")) }) {
-                    Picker(selection: $settingsModel.selectedSiliconflowModel, label: EmptyView()) {
-                        ForEach(Array(settingsModel.siliconflowModels.keys.sorted()), id: \.self) { key in
-                            Text(settingsModel.siliconflowModels[key] ?? key).tag(key)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .frame(width: 300) // 添加此行来限制宽度
+                    .buttonStyle(PlainButtonStyle())
+                    Spacer()
                 }
             }
-            .padding(.leading, 30)
+            
+            Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "密钥")) }) {
+                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: apiKeyBinding)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            
+            Settings.Section(label: { Text(NSLocalizedString("model", comment: "模型")) }) {
+                Picker(selection: modelBinding, label: EmptyView()) {
+                    ForEach(availableModelKeys, id: \.self) { key in
+                        Text(availableModelDisplayName(for: key)).tag(key)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .frame(width: 300)
+            }
         }
+        .padding(.leading, 30)
+    }
+    
+    // 计算属性：配置标题
+    private var providerConfigTitle: String {
+        switch settingsModel.selectedProvider {
+        case "openai":
+            return NSLocalizedString("openai_config", comment: "OpenAI配置")
+        case "siliconflow":
+            return NSLocalizedString("siliconflow_config", comment: "硅基流动配置")
+        default:
+            return NSLocalizedString("provider_config", comment: "提供商配置")
+        }
+    }
+    
+    // 计算属性：API密钥绑定
+    private var apiKeyBinding: Binding<String> {
+        switch settingsModel.selectedProvider {
+        case "openai":
+            return $settingsModel.openaiApiKey
+        case "siliconflow":
+            return $settingsModel.siliconflowApiKey
+        default:
+            return .constant("")
+        }
+    }
+    
+    // 计算属性：模型选择绑定
+    private var modelBinding: Binding<String> {
+        switch settingsModel.selectedProvider {
+        case "openai":
+            return $settingsModel.selectedOpenAIModel
+        case "siliconflow":
+            return $settingsModel.selectedSiliconflowModel
+        default:
+            return .constant("")
+        }
+    }
+    
+    // 计算属性：可用模型键列表
+    private var availableModelKeys: [String] {
+        return Array(settingsModel.defaultProviders[settingsModel.selectedProvider]?.availableModels.keys.sorted() ?? [])
+    }
+    
+    // 获取模型显示名称
+    private func availableModelDisplayName(for key: String) -> String {
+        return settingsModel.defaultProviders[settingsModel.selectedProvider]?.availableModels[key] ?? key
     }
     
     private var providerOptions: some View {

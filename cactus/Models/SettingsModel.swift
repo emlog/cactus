@@ -6,7 +6,9 @@ struct ProviderSettings: Codable {
     var baseURL: String
     var apiKey: String
     var model: String
+    var helpUrl: String = ""
     var requiresCustomConfig: Bool = false // 标识是否需要用户自定义配置
+    var availableModels: [String: String] = [:]
 }
 
 class SettingsModel: ObservableObject {
@@ -25,33 +27,45 @@ class SettingsModel: ObservableObject {
             title: NSLocalizedString("model_zhipu_glm4", comment: "model_zhipuai"),
             baseURL: "https://api.siliconflow.cn/v1/chat/completions",
             apiKey: "sk-ugnakenapgoouiubjkshrgfveopwxcrxakcuepjqgixvstye",
-            model: "THUDM/glm-4-9b-chat"
+            model: "THUDM/glm-4-9b-chat",
         ),
         "model_cactusai_mix": ProviderSettings(
             title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_max"),
             baseURL: "https://api.cactusai.cc/v1/chat/completions",
             apiKey: "sk-xxx",
-            model: "internlm/internlm2_5-7b-chat"
+            model: "internlm/internlm2_5-7b-chat",
         ),
         "model_qwen3": ProviderSettings(
             title: NSLocalizedString("model_qwen3", comment: "model_qwen3"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
             apiKey: "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",
-            model: "qwen/qwen3-8b:free"
+            model: "qwen/qwen3-8b:free",
         ),
         "openai": ProviderSettings(
             title: NSLocalizedString("model_openai", comment: "openai"),
             baseURL: "https://api.openai.com/v1/chat/completions",
             apiKey: "",
             model: "",
-            requiresCustomConfig: true
+            helpUrl: "https://platform.openai.com/api-keys",
+            requiresCustomConfig: true,
+            availableModels: [
+                "gpt-4.1-2025-04-14": "GPT-4.1",
+                "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
+                "gpt-4o-mini-2024-07-18": "GPT-4o mini"
+            ]
         ),
         "siliconflow": ProviderSettings(
             title: NSLocalizedString("model_siliconflow", comment: "siliconflow"),
             baseURL: "https://api.siliconflow.cn/v1/chat/completions",
             apiKey: "",
             model: "",
-            requiresCustomConfig: true
+            helpUrl: "https://cloud.siliconflow.cn/account/ak",
+            requiresCustomConfig: true,
+            availableModels: [
+                "THUDM/GLM-4-32B-0414": "GLM-4-32B",
+                "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
+                "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
+            ]
         )
     ]
     
@@ -70,13 +84,6 @@ class SettingsModel: ObservableObject {
         }
     }
     
-    // OpenAI 可选模型
-    let openaiModels = [
-        "gpt-4.1-2025-04-14": "GPT-4.1",
-        "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
-        "gpt-4o-mini-2024-07-18": "GPT-4o mini",
-    ]
-    
     // siliconflow 用户配置
     @Published var siliconflowApiKey: String {
         didSet {
@@ -91,13 +98,6 @@ class SettingsModel: ObservableObject {
             updateSiliconflowConfig()
         }
     }
-    
-    // siliconflow 可选模型
-    let siliconflowModels = [
-        "THUDM/GLM-4-32B-0414": "GLM-4-32B",
-        "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
-        "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct",
-    ]
     
     // 选中的AI服务
     @Published var selectedProvider: String {
