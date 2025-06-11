@@ -76,6 +76,10 @@ struct GeneralAiPane: View {
             return NSLocalizedString("openai_config", comment: "OpenAI配置")
         case "siliconflow":
             return NSLocalizedString("siliconflow_config", comment: "硅基流动配置")
+        case "google_gemini":
+            return NSLocalizedString("google_gemini_config", comment: "Google Gemini 配置")
+        case "claude":
+            return NSLocalizedString("claude_config", comment: "Claude 配置")
         default:
             return NSLocalizedString("provider_config", comment: "提供商配置")
         }
@@ -88,6 +92,10 @@ struct GeneralAiPane: View {
             return $settingsModel.openaiApiKey
         case "siliconflow":
             return $settingsModel.siliconflowApiKey
+        case "google_gemini":
+            return $settingsModel.googleGeminiApiKey
+        case "claude":
+            return $settingsModel.claudeApiKey
         default:
             return .constant("")
         }
@@ -100,6 +108,10 @@ struct GeneralAiPane: View {
             return $settingsModel.selectedOpenAIModel
         case "siliconflow":
             return $settingsModel.selectedSiliconflowModel
+        case "google_gemini":
+            return $settingsModel.selectedGoogleGeminiModel
+        case "claude":
+            return $settingsModel.selectedClaudeModel
         default:
             return .constant("")
         }
@@ -117,8 +129,8 @@ struct GeneralAiPane: View {
     
     private var providerOptions: some View {
         ForEach(Array(settingsModel.defaultProviders.keys.sorted()), id: \.self) { key in
-            // 只有高级用户才能看到 openai 和 siliconflow
-            if (key == "openai" || key == "siliconflow") && !isPremiumUser {
+            // 只有高级用户才能看到 openai, siliconflow, google_gemini, claude
+            if (key == "openai" || key == "siliconflow" || key == "google_gemini" || key == "claude") && !isPremiumUser {
                 EmptyView()
             } else {
                 Text(providerDisplayText(for: key)).tag(key)

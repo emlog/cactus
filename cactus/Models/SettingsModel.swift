@@ -27,19 +27,19 @@ class SettingsModel: ObservableObject {
             title: NSLocalizedString("model_zhipu_glm4", comment: "model_zhipuai"),
             baseURL: "https://api.siliconflow.cn/v1/chat/completions",
             apiKey: "sk-ugnakenapgoouiubjkshrgfveopwxcrxakcuepjqgixvstye",
-            model: "THUDM/glm-4-9b-chat",
+            model: "THUDM/glm-4-9b-chat"
         ),
         "model_cactusai_mix": ProviderSettings(
             title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_max"),
             baseURL: "https://api.cactusai.cc/v1/chat/completions",
             apiKey: "sk-xxx",
-            model: "internlm/internlm2_5-7b-chat",
+            model: "internlm/internlm2_5-7b-chat"
         ),
         "model_qwen3": ProviderSettings(
             title: NSLocalizedString("model_qwen3", comment: "model_qwen3"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
             apiKey: "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",
-            model: "qwen/qwen3-8b:free",
+            model: "qwen/qwen3-8b:free"
         ),
         "openai": ProviderSettings(
             title: NSLocalizedString("model_openai", comment: "openai"),
@@ -65,6 +65,31 @@ class SettingsModel: ObservableObject {
                 "THUDM/GLM-4-32B-0414": "GLM-4-32B",
                 "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
                 "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
+            ]
+        ),
+        "google_gemini": ProviderSettings(
+            title: NSLocalizedString("model_google_gemini", comment: "Google Gemini"),
+            baseURL: "https://generativelanguage.googleapis.com/v1beta/models",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://aistudio.google.com/app/apikey",
+            requiresCustomConfig: true,
+            availableModels: [
+                "gemini-2.0-flash": "Gemini-2.0-Flash",
+                "gemini-2.5-pro-preview-06-05": "Gemini-2.5-Pro"
+            ]
+        ),
+        "claude": ProviderSettings(
+            title: NSLocalizedString("model_claude", comment: "Claude"),
+            baseURL: "https://api.anthropic.com/v1/messages",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://console.anthropic.com/settings/keys",
+            requiresCustomConfig: true,
+            availableModels: [
+                "claude-sonnet-4-20250514": "claude-sonnet-4",
+                "claude-3-7-sonnet-20250219": "Claude-Sonnet-3.7",
+                "claude-3-5-sonnet-20241022": "Claude-Sonnet-3.5"
             ]
         )
     ]
@@ -99,6 +124,36 @@ class SettingsModel: ObservableObject {
         }
     }
     
+    // google_gemini 用户配置
+    @Published var googleGeminiApiKey: String {
+        didSet {
+            UserDefaults.standard.set(googleGeminiApiKey, forKey: "googleGeminiApiKey")
+            updateGoogleGeminiConfig()
+        }
+    }
+
+    @Published var selectedGoogleGeminiModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedGoogleGeminiModel, forKey: "selectedGoogleGeminiModel")
+            updateGoogleGeminiConfig()
+        }
+    }
+
+    // claude 用户配置
+    @Published var claudeApiKey: String {
+        didSet {
+            UserDefaults.standard.set(claudeApiKey, forKey: "claudeApiKey")
+            updateClaudeConfig()
+        }
+    }
+
+    @Published var selectedClaudeModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedClaudeModel, forKey: "selectedClaudeModel")
+            updateClaudeConfig()
+        }
+    }
+    
     // 选中的AI服务
     @Published var selectedProvider: String {
         didSet {
@@ -113,9 +168,17 @@ class SettingsModel: ObservableObject {
         
         self.siliconflowApiKey = UserDefaults.standard.string(forKey: "siliconflowApiKey") ?? ""
         self.selectedSiliconflowModel = UserDefaults.standard.string(forKey: "selectedSiliconflowModel") ?? ""
+
+        self.googleGeminiApiKey = UserDefaults.standard.string(forKey: "googleGeminiApiKey") ?? ""
+        self.selectedGoogleGeminiModel = UserDefaults.standard.string(forKey: "selectedGoogleGeminiModel") ?? ""
+
+        self.claudeApiKey = UserDefaults.standard.string(forKey: "claudeApiKey") ?? ""
+        self.selectedClaudeModel = UserDefaults.standard.string(forKey: "selectedClaudeModel") ?? ""
         
         updateOpenAIConfig()
         updateSiliconflowConfig()
+        updateGoogleGeminiConfig()
+        updateClaudeConfig()
     }
     
     private func updateOpenAIConfig() {
@@ -131,6 +194,22 @@ class SettingsModel: ObservableObject {
             siliconflowProvider.apiKey = siliconflowApiKey
             siliconflowProvider.model = selectedSiliconflowModel
             defaultProviders["siliconflow"] = siliconflowProvider
+        }
+    }
+
+    private func updateGoogleGeminiConfig() {
+        if var googleGeminiProvider = defaultProviders["google_gemini"] {
+            googleGeminiProvider.apiKey = googleGeminiApiKey
+            googleGeminiProvider.model = selectedGoogleGeminiModel
+            defaultProviders["google_gemini"] = googleGeminiProvider
+        }
+    }
+
+    private func updateClaudeConfig() {
+        if var claudeProvider = defaultProviders["claude"] {
+            claudeProvider.apiKey = claudeApiKey
+            claudeProvider.model = selectedClaudeModel
+            defaultProviders["claude"] = claudeProvider
         }
     }
     

@@ -31,6 +31,8 @@
 "select_service" = "选择AI服务";
 "openai_config" = "OpenAI配置";
 "siliconflow_config" = "硅基流动配置";
+"google_gemini_config" = "Google Gemini 配置";
+"claude_config" = "Claude 配置";
 "enter_api_key" = "请输入密钥(API KEY)";
 "api_key" = "密钥";
 "model" = "模型";
@@ -39,6 +41,8 @@
 "model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "硅基流动";
+"model_google_gemini" = "Gemini";
+"model_claude" = "Claude";
 
 // main
 "pop_text_empty" = "没有可复制的内容";
