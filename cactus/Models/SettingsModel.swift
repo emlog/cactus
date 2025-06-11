@@ -69,7 +69,7 @@ class SettingsModel: ObservableObject {
         ),
         "google_gemini": ProviderSettings(
             title: NSLocalizedString("model_google_gemini", comment: "Google Gemini"),
-            baseURL: "https://generativelanguage.googleapis.com/v1beta/models",
+            baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
             apiKey: "",
             model: "",
             helpUrl: "https://aistudio.google.com/app/apikey",

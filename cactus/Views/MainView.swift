@@ -172,15 +172,17 @@ struct MainView: View {
                     
                     // Model selection menu button
                     Menu {
-                        ForEach(settings.defaultProviders.keys.sorted(), id: \.self) { key in
-                            Button(action: {
-                                settings.selectedProvider = key
-                            }) {
-                                HStack {
-                                    Text(settings.defaultProviders[key]?.title ?? "")
-                                    Spacer()
-                                    if settings.selectedProvider == key {
-                                        Image(systemName: "checkmark")
+                        ForEach(settings.providerKeys, id: \.self) { key in
+                            if let provider = settings.defaultProviders[key] {
+                                Button(action: {
+                                    settings.selectedProvider = key
+                                }) {
+                                    HStack {
+                                        Text(provider.requiresCustomConfig ? "\(provider.title) - \(provider.model.isEmpty ? "NA" : provider.model)" : provider.title)
+                                        Spacer()
+                                        if settings.selectedProvider == key {
+                                            Image(systemName: "checkmark")
+                                        }
                                     }
                                 }
                             }
