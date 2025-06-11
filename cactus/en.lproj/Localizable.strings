@@ -32,7 +32,7 @@
 "openai_config" = "OpenAI Setting";
 "siliconflow_config" = "Siliconflow Setting";
 "google_gemini_config" = "Google Gemini Setting";
-"claude_config" = "Claude Setting";
+"claude_config" = "Anthropic Claude Setting";
 "deepseek_config" = "Deepseek Setting";
 "volcengine_config" = "Volcengine Setting";
 "enter_api_key" = "Please Enter API KEY";
