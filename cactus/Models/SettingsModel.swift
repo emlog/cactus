@@ -29,17 +29,17 @@ class SettingsModel: ObservableObject {
             apiKey: "sk-ugnakenapgoouiubjkshrgfveopwxcrxakcuepjqgixvstye",
             model: "THUDM/glm-4-9b-chat"
         ),
-        "model_cactusai_mix": ProviderSettings(
-            title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_max"),
-            baseURL: "https://api.cactusai.cc/v1/chat/completions",
-            apiKey: "sk-xxx",
-            model: "internlm/internlm2_5-7b-chat"
-        ),
         "model_qwen3": ProviderSettings(
             title: NSLocalizedString("model_qwen3", comment: "model_qwen3"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
             apiKey: "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",
             model: "qwen/qwen3-8b:free"
+        ),
+        "model_cactusai_mix": ProviderSettings(
+            title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_max"),
+            baseURL: "https://api.cactusai.cc/v1/chat/completions",
+            apiKey: "sk-xxx",
+            model: "internlm/internlm2_5-7b-chat"
         ),
         "openai": ProviderSettings(
             title: NSLocalizedString("model_openai", comment: "openai"),
@@ -92,6 +92,17 @@ class SettingsModel: ObservableObject {
                 "claude-3-5-sonnet-20241022": "Claude-Sonnet-3.5"
             ]
         )
+    ]
+
+    // 新增：保持原始顺序的键数组
+    public var providerKeys: [String] = [
+        "model_zhipu_glm4",
+        "model_qwen3",
+        "model_cactusai_mix",
+        "siliconflow",
+        "openai",
+        "google_gemini",
+        "claude"
     ]
     
     // OpenAI 用户配置

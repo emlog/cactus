@@ -128,7 +128,7 @@ struct GeneralAiPane: View {
     }
     
     private var providerOptions: some View {
-        ForEach(Array(settingsModel.defaultProviders.keys.sorted()), id: \.self) { key in
+        ForEach(settingsModel.providerKeys, id: \.self) { key in
             // 只有高级用户才能看到 openai, siliconflow, google_gemini, claude
             if (key == "openai" || key == "siliconflow" || key == "google_gemini" || key == "claude") && !isPremiumUser {
                 EmptyView()
