@@ -19,106 +19,20 @@ enum ActionType {
     case dictionary
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusBarManager: StatusBarManager?
-    var settingsWindow: NSWindow?
-    var mainWindow: NSWindow?
-    var vocabularyWindow: NSWindow? // 添加生词本窗口变量
-    var favoriteWindow: NSWindow? // 添加收藏夹窗口变量
-    private var isMainWindowPinned = false // 跟踪主窗口置顶状态
-    private var pinnedWindowOrigin: NSPoint? // 存储置顶时的窗口左下角坐标
-    private var pinButton: NSButton? // 持有 pin 按钮的引用
-    
-    private var settingsWindowController: SettingsWindowController?
+    private var windowManager: WindowManager?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 创建并设置状态栏管理器
         statusBarManager = StatusBarManager(appDelegate: self)
         statusBarManager?.setupStatusBar()
         
-        initializeWindows()
+        // 创建并初始化窗口管理器
+        windowManager = WindowManager(appDelegate: self)
+        windowManager?.initializeWindows()
+        
         setupGlobalShortcut() // 设置全局快捷键
-    }
-    
-    private func initializeWindows() {
-        // 初始化主窗口
-        mainWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 600),
-            styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
-            backing: .buffered,
-            defer: false
-        )
-        // 使标题栏透明并隐藏标题文本
-        mainWindow?.titlebarAppearsTransparent = true
-        mainWindow?.titleVisibility = .hidden
-        // 设置窗口始终置顶 - 保持不变
-        mainWindow?.level = .floating
-        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary]
-        mainWindow?.level = NSWindow.Level.statusBar
-        
-        let mainView = MainView()
-        let hostingController = NSHostingController(rootView: mainView)
-        mainWindow?.contentViewController = hostingController
-        mainWindow?.isReleasedWhenClosed = false
-        mainWindow?.delegate = self
-        
-        // 动态调整窗口高度 - 保持不变
-        let contentSize = hostingController.view.intrinsicContentSize
-        mainWindow?.setContentSize(contentSize)
-        
-        // 添加通知监听器来响应文本高度变化 - 保持不变
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(adjustWindowSize),
-            name: NSNotification.Name("AdjustWindowSize"),
-            object: nil
-        )
-        
-        // 添加 Pin 按钮到标题栏
-        let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
-        titlebarAccessoryViewController.layoutAttribute = .trailing // 放在右侧
-        
-        pinButton = NSButton()
-        pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
-        pinButton?.bezelStyle = .texturedRounded // 或者 .regularSquare, .shadowlessSquare
-        pinButton?.isBordered = false // 通常标题栏按钮没有边框
-        pinButton?.imageScaling = .scaleProportionallyDown // 确保图标大小合适
-        pinButton?.target = self
-        pinButton?.action = #selector(pinButtonTapped)
-        pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
-        pinButton?.sendAction(on: .leftMouseDown) // 确保单击触发
-        pinButton?.frame = NSRect(x: 0, y: 0, width: 30, height: 24) // 调整大小以适应标题栏
-        
-        titlebarAccessoryViewController.view = pinButton! // 将按钮设置为视图控制器的视图
-        mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
-        
-        // 初始化生词本窗口
-        vocabularyWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
-            backing: .buffered,
-            defer: false
-        )
-        let vocabularyView = VocabularyView()
-        let vocabularyHostingController = NSHostingController(rootView: vocabularyView)
-        vocabularyWindow?.contentViewController = vocabularyHostingController
-        vocabularyWindow?.title = NSLocalizedString("vocabulary", comment: "生词本")
-        vocabularyWindow?.isReleasedWhenClosed = false
-        vocabularyWindow?.collectionBehavior = [.fullScreenPrimary] // 启用最大化按钮
-        
-        // 初始化收藏夹窗口
-        favoriteWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
-            backing: .buffered,
-            defer: false
-        )
-        let favoriteView = FavoriteView()
-        let favoriteHostingController = NSHostingController(rootView: favoriteView)
-        favoriteWindow?.contentViewController = favoriteHostingController
-        favoriteWindow?.title = NSLocalizedString("favorites", comment: "收藏夹")
-        favoriteWindow?.isReleasedWhenClosed = false
-        favoriteWindow?.collectionBehavior = [.fullScreenPrimary] // 启用最大化按钮
     }
     
     // Setup global keyboard shortcut using KeyboardShortcuts
@@ -152,70 +66,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
     
-    // 添加调整窗口大小的方法
-    @objc private func adjustWindowSize() {
-        guard let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
-            return
-        }
-        
-        // 方法1: 使用 sizeThatFits 获取合适的大小
-        let contentSize = hostingController.sizeThatFits(in: NSSize(width: mainWindow?.frame.width ?? 500, height: CGFloat.greatestFiniteMagnitude))
-        
-        // 如果窗口已经可见，使用动画平滑过渡
-        if let window = mainWindow, window.isVisible {
-            NSAnimationContext.runAnimationGroup { context in
-                context.duration = 0.2
-                window.animator().setContentSize(contentSize)
-            }
-        } else {
-            // 否则直接设置大小
-            mainWindow?.setContentSize(contentSize)
-        }
-    }
-    
+    // MARK: - Window Management Delegation
     // 生词本窗口
     @objc func openVocabulary() {
-        // 获取生词数量和用户购买状态
-        let wordCount = VocabularyManager.shared.wordEntries.count
-        let isPremium = PurchaseManager.shared.isPremiumUser
-        
-        if wordCount > 20 && !isPremium {
-            // 高级版：如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
-            openPreferences()
-            // 延迟一点时间确保窗口已创建
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .premium) // 跳转到高级版标签页
-                NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
-            }
-        } else {
-            // 调整窗口位置到当前屏幕的中心
-            vocabularyWindow?.center()
-            vocabularyWindow?.makeKeyAndOrderFront(nil)
-            vocabularyWindow?.orderFrontRegardless()
-            NSApp.activate(ignoringOtherApps: true)
-        }
+        windowManager?.openVocabulary()
     }
     
     // 收藏夹窗口
     @objc func openFavorites() {
-        // 获取数量和用户购买状态
-        let favCount = FavoriteManager.shared.favoriteEntries.count
-        let isPremium = PurchaseManager.shared.isPremiumUser
-        
-        if favCount > 20 && !isPremium  {
-            // 高级版：如果单词超过20个且用户不是高级版，则打开设置并跳转到高级版页面
-            openPreferences()
-            // 延迟一点时间确保窗口已创建
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .premium) // 跳转到高级版标签页
-                NSApp.activate(ignoringOtherApps: true) // 确保设置窗口在前台
-            }
-        } else {
-            favoriteWindow?.center()
-            favoriteWindow?.makeKeyAndOrderFront(nil)
-            favoriteWindow?.orderFrontRegardless()
-            NSApp.activate(ignoringOtherApps: true)
-        }
+        windowManager?.openFavorites()
     }
     
     // 联系我们
@@ -232,117 +91,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
     }
     
-    // Preferences window - modified for lazy initialization
+    // Preferences window
     @objc func openPreferences() {
-        // If settingsWindowController exists, close and destroy it
-        if let existingController = settingsWindowController {
-            existingController.window?.close()
-            settingsWindowController = nil
-        }
-        
-        // Create new settings window controller
-        createSettingsWindowController()
-        
-        // Add window close notification observer
-        if let window = settingsWindowController?.window {
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(settingsWindowWillClose),
-                name: NSWindow.willCloseNotification,
-                object: window
-            )
-        }
-        
-        settingsWindowController?.show()
-        settingsWindowController?.window?.orderFrontRegardless()
+        windowManager?.openPreferences()
     }
     
-    // 创建设置窗口控制器的私有方法
-    private func createSettingsWindowController() {
-        // 使用系统图标，带回退方案
-        let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
-        let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
-        let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage()
-        let aboutIcon = NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About Settings") ?? NSImage()
-        
-        settingsWindowController = SettingsWindowController(
-            panes: [
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.general,
-                    title: NSLocalizedString("general", comment: "通用"),
-                    toolbarIcon: generalIcon
-                ) {
-                    GeneralSettingsPane()
-                },
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.ai,
-                    title: NSLocalizedString("service", comment: "服务"),
-                    toolbarIcon: aiIcon
-                ) {
-                    GeneralAiPane()
-                },
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.premium,
-                    title: NSLocalizedString("premium", comment: "高级版"),
-                    toolbarIcon: premiumIcon
-                ) {
-                    PremiumPane()
-                },
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.about,
-                    title: NSLocalizedString("about", comment: "关于"),
-                    toolbarIcon: aboutIcon
-                ) {
-                    AboutPane()
-                }
-            ]
-        )
-    }
-    
-    // 设置窗口关闭时的清理方法
-    @objc private func settingsWindowWillClose(_ notification: Notification) {
-        // 移除通知监听
-        NotificationCenter.default.removeObserver(
-            self,
-            name: NSWindow.willCloseNotification,
-            object: notification.object
-        )
-        
-        // 销毁设置窗口控制器，释放内存
-        settingsWindowController = nil
-    }
-    
-    // 主窗口 - 修改为接受 ActionType
-    func openMain(action: ActionType = .translate) { // 添加 action 参数，默认为 translate
-        // 1. 先尝试获取剪贴板内容（这会触发模拟复制）
-        checkAccessibilityPermissionAndGetClipboard(action: action) { [weak self] success in // 传递 action
-            // 使用 DispatchQueue.main.async 确保在主线程执行 UI 操作
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                if success {
-                    // 确保窗口存在
-                    guard let window = self.mainWindow else { return }
-                    
-                    // 如果窗口已置顶且有存储的位置，则恢复该位置，否则居中
-                    if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
-                        window.setFrameOrigin(pinnedOrigin)
-                    } else {
-                        window.center() // 只有在非置顶或首次置顶时才居中
-                    }
-                    
-                    // 确保窗口在最上层
-                    window.makeKeyAndOrderFront(nil)
-                    window.orderFrontRegardless()
-                    NSApp.activate(ignoringOtherApps: true)
-                } else {
-                    // 如果 success 为 false (权限被拒绝且点了取消，或获取剪贴板失败)
-                    // 当前逻辑下，如果用户点了“打开设置”，此回调根本不会执行
-                    // 如果用户点了“取消”，或者权限已允许但获取剪贴板失败，会执行到这里
-                    print("未能成功获取选中文本或用户取消了操作。")
-                }
-            }
-        }
+    // 主窗口
+    func openMain(action: ActionType = .translate) {
+        windowManager?.openMain(action: action)
     }
     
     // 菜单项的 Action 方法
@@ -360,196 +116,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     @objc private func openMainDictionaryAction() {
         openMain(action: .dictionary)
-    }
-    
-    // 检查并提醒用户开启：辅助功能权限 - 修改为接受 ActionType
-    private func checkAccessibilityPermissionAndGetClipboard(action: ActionType = .nothing, completion: @escaping (Bool) -> Void) { // 添加 action 参数
-        // 检查辅助功能权限
-        let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
-        let options = [checkOptPrompt: true]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-        
-        if accessEnabled {
-            // 如果有权限，尝试获取剪贴板内容
-            getClipboardContent(action: action) { _ /* contentRetrievedSuccess */ in // 传递 action
-                // 因为辅助权限已开启，所以调用 completion(true) 来触发主窗口显示
-                completion(true)
-            }
-        } else {
-            // 显示权限提示
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("accessibility_permission_title", comment: "需要辅助功能权限")
-            alert.informativeText = NSLocalizedString("accessibility_permission_message", comment: "请在系统偏好设置中启用辅助功能权限")
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
-            alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
-            
-            // 在主线程显示 Alert
-            DispatchQueue.main.async {
-                let response = alert.runModal()
-                if response == .alertFirstButtonReturn {
-                    // 打开辅助功能设置
-                    NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
-                    // 用户点击了“打开设置”，此时不调用 completion
-                } else {
-                    // 用户点击了“取消”
-                    completion(false) // 明确告知操作未成功
-                }
-            }
-        }
-    }
-    
-    // 按下快捷键复制选中内容到剪贴板、并调用相应功能 - 修改为接受 ActionType
-    private func getClipboardContent(action: ActionType, completion: @escaping (Bool) -> Void) { // 添加 action 参数
-        // 保存当前剪贴板内容
-        let pasteboard = NSPasteboard.general
-        let originalContent = pasteboard.string(forType: .string)
-        
-        // 使用模拟复制功能获取选中文本
-        simulateCopy()
-        
-        // 给系统一点时间处理复制操作，然后读取剪贴板
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // 使用 0.2 秒延迟
-            guard let mainViewController = self.mainWindow?.contentViewController as? NSHostingController<MainView> else {
-                if let originalContent = originalContent {
-                    self.copyToClipBoard(textToCopy: originalContent)
-                }
-                completion(false)
-                return
-            }
-            let mainView = mainViewController.rootView
-            let newContent = pasteboard.string(forType: .string)
-            var success = false
-            
-            // 如果有新内容，且与原内容不同
-            if let newContent = newContent, !newContent.isEmpty, newContent != originalContent {
-                mainView.fillText(newContent)
-                
-                // 添加延迟以确保文本已填充
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    // 根据 action 调用不同的方法
-                    switch action {
-                    case .translate:
-                        mainView.translateText()
-                    case .summarize:
-                        mainView.summaryText() // 调用总结方法
-                    case .dictionary:
-                        mainView.dictionaryText() // 调用总结方法
-                    case .nothing:
-                        mainView.noactionText()
-                        break
-                    }
-                }
-                success = true
-            }
-            
-            // 恢复原始剪贴板内容
-            if let originalContent = originalContent {
-                self.copyToClipBoard(textToCopy: originalContent)
-            }
-            
-            // 调用完成回调
-            completion(success)
-        }
-    }
-    
-    // 添加模拟复制功能
-    private func simulateCopy() {
-        // 模拟 Command+C 复制操作
-        let source = CGEventSource(stateID: .combinedSessionState)
-        
-        // 确保事件源创建成功
-        guard let eventSource = source else {
-            print("无法创建事件源")
-            return
-        }
-        
-        // 按下 Command+C
-        guard let keyDownC = CGEvent(keyboardEventSource: eventSource, virtualKey: 0x08, keyDown: true) else {
-            print("无法创建按键事件")
-            return
-        }
-        keyDownC.flags = .maskCommand
-        
-        // 释放 Command+C
-        guard let keyUpC = CGEvent(keyboardEventSource: eventSource, virtualKey: 0x08, keyDown: false) else {
-            print("无法创建释放事件")
-            return
-        }
-        keyUpC.flags = .maskCommand
-        
-        // 发送事件
-        keyDownC.post(tap: .cgAnnotatedSessionEventTap)
-        usleep(10000)  // 10毫秒延迟
-        keyUpC.post(tap: .cgAnnotatedSessionEventTap)
-    }
-    
-    // 添加复制到剪贴板的辅助函数
-    private func copyToClipBoard(textToCopy: String) {
-        let pasteBoard = NSPasteboard.general
-        pasteBoard.clearContents()
-        pasteBoard.setString(textToCopy, forType: .string)
-    }
-    
-    // Pin 按钮的 Action 方法
-    @objc private func pinButtonTapped() {
-        isMainWindowPinned.toggle()
-        updatePinState()
-    }
-    
-    // 更新 Pin 状态和按钮外观的辅助方法
-    private func updatePinState() {
-        guard let window = mainWindow else { return }
-        
-        if isMainWindowPinned {
-            // 钉住窗口
-            window.level = .floating // 确保是浮动级别
-            window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary, .ignoresCycle] // 添加 ignoresCycle 防止被 Command+` 切换掉
-            // 存储当前位置
-            pinnedWindowOrigin = window.frame.origin
-            
-            // 更新按钮外观
-            pinButton?.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: NSLocalizedString("help_unpin", comment: "取消置顶"))
-            pinButton?.contentTintColor = .red // 设置图标颜色为红色
-            pinButton?.toolTip = NSLocalizedString("help_unpin", comment: "取消置顶")
-            
-        } else {
-            // 取消钉住
-            window.level = .normal // 恢复正常级别
-            window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary] // 移除 ignoresCycle
-            // 清除存储的位置
-            pinnedWindowOrigin = nil
-            
-            // 更新按钮外观
-            pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
-            pinButton?.contentTintColor = nil // 恢复默认颜色
-            pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
-            
-            // 如果窗口当前不是 key window，则关闭它
-            if !window.isKeyWindow {
-                window.close()
-            }
-        }
-    }
-    
-    // 当窗口被pin在一个固定位置的时候，按下快捷键 窗口位置保持不变。
-    // 实现 NSWindowDelegate 的 windowDidMove 方法
-    func windowDidMove(_ notification: Notification) {
-        // 检查移动的窗口是否是 mainWindow 并且当前处于置顶状态
-        if let window = notification.object as? NSWindow, window == mainWindow, isMainWindowPinned {
-            // 更新存储的置顶位置
-            self.pinnedWindowOrigin = window.frame.origin
-        }
-    }
-    
-    // 实现 NSWindowDelegate 方法，当窗口失去焦点时调用
-    func windowDidResignKey(_ notification: Notification) {
-        // 检查失去焦点的窗口是否是 mainWindow
-        if let window = notification.object as? NSWindow, window == mainWindow {
-            // 只有在未置顶的情况下才关闭窗口
-            if !isMainWindowPinned {
-                window.close()
-            }
-        }
     }
 }
