@@ -20,7 +20,7 @@ enum ActionType {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
-    var statusItem: NSStatusItem?
+    private var statusBarManager: StatusBarManager?
     var settingsWindow: NSWindow?
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow? // 添加生词本窗口变量
@@ -32,109 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var settingsWindowController: SettingsWindowController?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // 创建状态栏图标
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
-        if let button = statusItem?.button {
-            if let image = NSImage(named: "StatusIcon") {
-                image.isTemplate = true  // 设置为模板图标，使其变为单色
-                image.size = NSSize(width: 18, height: 18)
-                button.image = image
-            }
-            
-            let menu = NSMenu()
-            
-            // 打开主窗口
-            let mainMenuItem = NSMenuItem(
-                title: NSLocalizedString("openmain", comment: "打开主窗口"),
-                action: #selector(openMainAction),
-                keyEquivalent: ""
-            )
-            mainMenuItem.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
-            mainMenuItem.setShortcut(for: SettingsModel.aiShortcutMain)
-            menu.addItem(mainMenuItem)
-            
-            // 选中翻译
-            let translateMenuItem = NSMenuItem(
-                title: NSLocalizedString("translate", comment: "选中翻译"),
-                action: #selector(openMainTranslateAction),
-                keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
-            )
-            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
-            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
-            menu.addItem(translateMenuItem)
-            
-            // 总结摘要
-            let summaryMenuItem = NSMenuItem(
-                title: NSLocalizedString("summary", comment: "总结摘要"),
-                action: #selector(openMainSummaryAction),
-                keyEquivalent: ""
-            )
-            summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
-            summaryMenuItem.setShortcut(for: SettingsModel.aiShortcutSummary)
-            menu.addItem(summaryMenuItem)
-            // 字典查询
-            let dictionaryMenuItem = NSMenuItem(
-                title: NSLocalizedString("dictionary", comment: "字典查询"),
-                action: #selector(openMainDictionaryAction),
-                keyEquivalent: ""
-            )
-            dictionaryMenuItem.image = NSImage(systemSymbolName: "books.vertical", accessibilityDescription: nil)
-            dictionaryMenuItem.setShortcut(for: SettingsModel.aiShortcutDictionary)
-            menu.addItem(dictionaryMenuItem)
-            
-            menu.addItem(NSMenuItem.separator())
-            
-            // 生词本
-            let vocabularyMenuItem = NSMenuItem(
-                title: NSLocalizedString("vocabulary", comment: "生词本"),
-                action: #selector(openVocabulary),
-                keyEquivalent: ""
-            )
-            vocabularyMenuItem.image = NSImage(systemSymbolName: "rectangle.and.paperclip", accessibilityDescription: nil)
-            menu.addItem(vocabularyMenuItem)
-            
-            // 收藏夹
-            let favoritesMenuItem = NSMenuItem(
-                title: NSLocalizedString("favorites", comment: "收藏夹"),
-                action: #selector(openFavorites),
-                keyEquivalent: ""
-            )
-            favoritesMenuItem.image = NSImage(systemSymbolName: "heart", accessibilityDescription: nil)
-            menu.addItem(favoritesMenuItem)
-            
-            menu.addItem(NSMenuItem.separator())
-            
-            // 偏好设置
-            menu.addItem(NSMenuItem(
-                title: NSLocalizedString("setting", comment: "偏好设置"),
-                action: #selector(openPreferences),
-                keyEquivalent: ""
-            ))
-            
-            menu.addItem(NSMenuItem.separator())
-            
-            menu.addItem(NSMenuItem(
-                title: NSLocalizedString("contact", comment: "联系我们"),
-                action: #selector(openContact),
-                keyEquivalent: ""
-            ))
-            menu.addItem(NSMenuItem(
-                title: NSLocalizedString("rate_app", comment: "给个好评吧"),
-                action: #selector(rateApp),
-                keyEquivalent: ""
-            ))
-            
-            menu.addItem(NSMenuItem.separator())
-            
-            menu.addItem(NSMenuItem(
-                title: NSLocalizedString("quit", comment: "退出"),
-                action: #selector(NSApplication.terminate(_:)),
-                keyEquivalent: "q"
-            ))
-            
-            statusItem?.menu = menu
-        }
+        // 创建并设置状态栏管理器
+        statusBarManager = StatusBarManager(appDelegate: self)
+        statusBarManager?.setupStatusBar()
         
         initializeWindows()
         setupGlobalShortcut() // 设置全局快捷键
