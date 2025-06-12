@@ -106,7 +106,7 @@ class AiService: NSObject, URLSessionDataDelegate {
                         } catch {
                             // 打印原始 JSON 字符串以便调试
                             print("JSON解析错误: \(error.localizedDescription), Raw JSON: \(String(dataContent))")
-                            // 新增：通过 errorHandler 将错误信息传递出去
+                            // 通过 errorHandler 将错误信息传递出去
                             let parseErrorMessage = String(format: "error: json parsing failed with raw.", String(dataContent))
                             DispatchQueue.main.async {
                                 self.errorHandler?(parseErrorMessage)

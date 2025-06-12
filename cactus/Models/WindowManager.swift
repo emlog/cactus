@@ -6,7 +6,6 @@ import Foundation
 import ApplicationServices	
 
 class WindowManager: NSObject, NSWindowDelegate {
-    // MARK: - Properties
     var settingsWindow: NSWindow?
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow?
@@ -16,15 +15,6 @@ class WindowManager: NSObject, NSWindowDelegate {
     private var pinButton: NSButton?
     private var settingsWindowController: SettingsWindowController?
     
-    weak var appDelegate: AppDelegate?
-    
-    // MARK: - Initialization
-    init(appDelegate: AppDelegate) {
-        self.appDelegate = appDelegate
-        super.init()
-    }
-    
-    // MARK: - Window Initialization
     func initializeWindows() {
         initializeMainWindow()
         initializeVocabularyWindow()

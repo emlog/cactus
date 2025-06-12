@@ -120,7 +120,7 @@ class SettingsModel: ObservableObject {
         )
     ]
     
-    // 新增：保持原始顺序的键数组
+    // 保持原始顺序的键数组
     public var providerKeys: [String] = [
         "model_zhipu_glm4",
         "model_qwen3",

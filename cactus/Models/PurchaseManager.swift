@@ -8,7 +8,7 @@ class PurchaseManager: NSObject, ObservableObject {
     @Published var isPremiumUser = false
     @Published var isLoading = false
     @Published var errorMessage: String?
-    @Published var isProductLoaded = false  // 新增：跟踪产品加载状态
+    @Published var isProductLoaded = false  // 跟踪产品加载状态
     
     private let productID = "cactus.pro"
     private var product: Product?
@@ -24,13 +24,13 @@ class PurchaseManager: NSObject, ObservableObject {
             await productTask
             await statusTask
         }
-        // 新增：启动任务以监听交易更新
+        // 启动任务以监听交易更新
         Task(priority: .background) {
             await listenForTransactions()
         }
     }
     
-    // 新增：监听交易更新的方法
+    // 监听交易更新的方法
     func listenForTransactions() async {
         for await result in Transaction.updates {
             do {
@@ -204,7 +204,7 @@ class PurchaseManager: NSObject, ObservableObject {
         return product.displayPrice
     }
     
-    // 新增：主动重新加载产品信息的方法
+    // 主动重新加载产品信息的方法
     @MainActor
     func reloadProductIfNeeded() {
         if !isProductLoaded || product == nil {
