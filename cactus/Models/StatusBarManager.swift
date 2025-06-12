@@ -13,10 +13,10 @@ import Foundation
 
 class StatusBarManager: NSObject {
     private var statusItem: NSStatusItem?
-    private weak var appDelegate: AppDelegate?
+    private weak var windowManager: WindowManager?
     
-    init(appDelegate: AppDelegate) {
-        self.appDelegate = appDelegate
+    init(windowManager: WindowManager) {
+        self.windowManager = windowManager
         super.init()
     }
     
@@ -144,34 +144,34 @@ class StatusBarManager: NSObject {
         }
     }
     
-    // MARK: - Menu Actions
+    // MARK: - Menu Actions - 直接调用WindowManager的方法
     
     @objc private func openMainAction() {
-        appDelegate?.openMain(action: .nothing)
+        windowManager?.openMain(action: .nothing)
     }
     
     @objc private func openMainTranslateAction() {
-        appDelegate?.openMain(action: .translate)
+        windowManager?.openMain(action: .translate)
     }
     
     @objc private func openMainSummaryAction() {
-        appDelegate?.openMain(action: .summarize)
+        windowManager?.openMain(action: .summarize)
     }
     
     @objc private func openMainDictionaryAction() {
-        appDelegate?.openMain(action: .dictionary)
+        windowManager?.openMain(action: .dictionary)
     }
     
     @objc private func openVocabulary() {
-        appDelegate?.openVocabulary()
+        windowManager?.openVocabulary()
     }
     
     @objc private func openFavorites() {
-        appDelegate?.openFavorites()
+        windowManager?.openFavorites()
     }
     
     @objc private func openPreferences() {
-        appDelegate?.openPreferences()
+        windowManager?.openPreferences()
     }
     
     @objc private func openContact() {
