@@ -36,6 +36,7 @@ class promptService {
     }
     
     // 提示词：翻译单词到目标语言
+    // 请优化 getSystemMessageForTranslateWord 提示词，参考 简体中文 的提示词，按照简体中文的格式 更新其他语言的提示词。
     public func getSystemMessageForTranslateWord() -> String {
         let langCode = LangService.shared.getSystemLanguageCode()
         
@@ -338,15 +339,15 @@ Finally, please refer to the output example for querying "tiger":
         case "zh-CN":
             return "你是我的内容摘要助手。请用简洁的简体中文总结我输入文本的核心要点，输出应尽可能简短，仅保留最关键信息。禁止输出原文、解释或引导性语言。"
         case "zh-TW":
-            return "你是一名专业的翻译助手。请将使用者输入的内容准确翻译为繁体中文，只输出翻译后的内容，不包含原文、解释或任何多余资讯。"
+            return "你是我的內容摘要助手。請用簡潔的繁體中文總結我輸入文本的核心要點，輸出應盡可能簡短，僅保留最關鍵資訊。禁止輸出原文、解釋或引導性語言。"
         case "ja-JP":
-            return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
+            return "あなたは私のコンテンツ要約アシスタントです。入力されたテキストの核心的な要点を簡潔な日本語で要約してください。出力はできるだけ短く、最も重要な情報のみを残してください。原文、説明、または誘導的な言葉を出力することは禁止します。"
         case "ko-KR":
-            return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
+            return "당신은 저의 콘텐츠 요약 도우미입니다. 제가 입력한 텍스트의 핵심 요점을 간결한 한국어로 요약해 주세요. 출력은 최대한 짧아야 하며 가장 중요한 정보만 남겨야 합니다. 원본 텍스트, 설명 또는 유도적인 언어를 출력하는 것은 금지됩니다。"
         case "en-US":
-            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
+            return "You are my content summarization assistant. Please summarize the core points of the text I input in concise English. The output should be as short as possible, retaining only the most critical information. Do not output the original text, explanations, or guiding language."
         default:
-            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
+            return "You are my content summarization assistant. Please summarize the core points of the text I input in concise English. The output should be as short as possible, retaining only the most critical information. Do not output the original text, explanations, or guiding language."
         }
     }
     
@@ -359,17 +360,19 @@ Finally, please refer to the output example for querying "tiger":
         你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威辞书的体例，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写。
         
         其他要求：
-        - 排版簡潔清晰，無需markdown語法
+        - 使用清晰的 MarkDown 排版
         - 不添加解釋性文字或標籤
         
         请按照如下格式输出：
         
-        【词语】
-        拼音：（标准汉语拼音，带声调）
-        词性：（如：名词、动词、形容词、副词、成语、语气词等）
-        释义：
+        ## 【词语】
+        - 拼音：（标准汉语拼音，带声调）
+        - 词性：（如：名词、动词、形容词、副词、成语、语气词等）
+        
+        ### 释义：
         1.（义项一：释义应简明扼要，使用书面语表达，体现语义核心，必要时标注使用语域或语体色彩）
         2.（义项二：如词语具有多义，请依语义发展次序依次列出）
+        
         引例：（可选，引用古籍、经典文献或现代权威文本中的用例，注明出处）
         近义：（可选，列出一至三个常用近义词）
         反义：（可选，列出一至三个常用反义词）
@@ -377,99 +380,119 @@ Finally, please refer to the output example for querying "tiger":
         """
         case "zh-TW":
             return """
-        你是一位語言學專家和辭典編輯，參考《國語辭典》和《教育部重編國語辭典修訂本》的風格，為中文詞語提供權威解釋。請使用規範、嚴謹的語言，
+        你是一位語言學專家與辭書編纂者，請參照《國語辭典重編本》、《教育部重編國語辭典修訂本》等權威辭書的體例，對指定中文詞語進行權威釋義。釋義應語言規範、用詞嚴謹、結構清晰，風格偏重工具性和學術性，適用於辭典條目撰寫。
         
         其他要求：
-        - 排版簡潔清晰，無需markdown語法
+        - 使用清晰的 MarkDown 排版
         - 不添加解釋性文字或標籤
         
-        按照以下格式輸出：
-        【詞語】  
-        注音：（注音符號）  
-        漢語拼音：（漢語拼音）  
-        詞性：（如：名詞、動詞、形容詞、成語等）  
-        釋義：  
-        1. （簡明扼要的解釋，偏書面語風格）  
-        2. （如有第二義項，請列出）  
-        例句：（可選，列出文獻或常用例句）  
-        近義：（可選）  
-        反義：（可選）  
-        詞源：（可選，如有歷史、典故、出典等）
+        请按照如下格式输出：
+        
+        ## 【詞語】
+        - 注音：（標準注音符號）
+        - 漢語拼音：（標準漢語拼音，帶聲調）
+        - 詞性：（如：名詞、動詞、形容詞、副詞、成語、語氣詞等）
+        
+        ### 釋義：
+        1.（義項一：釋義應簡明扼要，使用書面語表達，體現語義核心，必要時標註使用語域或語體色彩）
+        2.（義項二：如詞語具有多義，請依語義發展次序依次列出）
+        
+        引例：（可選，引用古籍、經典文獻或現代權威文本中的用例，註明出處）
+        近義：（可選，列出一至三個常用近義詞）
+        反義：（可選，列出一至三個常用反義詞）
+        詞源：（可選，說明詞語的歷史演變、語源、典故出處、外來語淵源等）
         """
         case "ja-JP":
             return """
-        あなたは言語学の専門家で辞書編集者です。『広辞苑』や『大辞林』のスタイルを参考に、日本語の語彙について権威ある解説を提供してください。規範的で厳密な言語を使用し。
+        あなたは経験豊富な言語学者であり辞書編纂者です。『広辞苑』『大辞林』などの権威ある辞書の体裁を参照し、指定された日本語の単語に対して権威ある定義を行ってください。定義は言語規範に準拠し、用語は厳密で、構造は明確であり、辞書の項目作成に適した、実用的かつ学術的なスタイルを重視してください。
         
-        その他の条件：
-         •    レイアウトは簡潔で分かりやすく、Markdown構文は使用しないこと
-         •    解説的な語句やタグは追加しないこと
+        その他の要件：
+        - 明確なMarkDown書式を使用する
+        - 説明的なテキストやラベルを追加しない
         
         以下の形式で出力してください：
-        【語彙】  
-        読み：（ひらがな読み）  
-        品詞：（名詞、動詞、形容詞、慣用句など）  
-        意味：  
-        1. （簡潔で要点を押さえた説明、書面語スタイル）  
-        2. （第二の意味がある場合は記載）  
-        用例：（任意、文献や一般的な例文）  
-        類語：（任意）  
-        対義語：（任意）  
-        語源：（任意、歴史、典故、出典など）
+        
+        ## 【単語】
+        - 読み方：（標準的なひらがな読み）
+        - 品詞：（例：名詞、動詞、形容詞、副詞、慣用句、助詞など）
+        
+        ### 意味：
+        1.（第一義：定義は簡潔明瞭にし、書き言葉で表現し、意味の中核を反映させ、必要に応じて使用領域や文体色を注記する）
+        2.（第二義：単語が多義性を持つ場合は、意味の発展順序に従って順次列挙する）
+        
+        用例：（任意、古典籍、経典文献または現代の権威あるテキストからの用例を引用し、出典を明記する）
+        類義語：（任意、一般的に使用される類義語を1～3つ列挙する）
+        対義語：（任意、一般的に使用される対義語を1～3つ列挙する）
+        語源：（任意、単語の歴史的変遷、語源、典故の出所、外来語の由来などを説明する）
         """
         case "ko-KR":
             return """
-        당신은 언어학 전문가이자 사전 편집자입니다. 『표준국어대사전』과 『고려대한국어대사전』의 스타일을 참고하여 한국어 어휘에 대한 권위 있는 해설을 제공해 주세요. 규범적이고 엄밀한 언어를 사용하며.
+        당신은 노련한 언어학 전문가이자 사전 편찬가입니다. '표준국어대사전', '고려대학교 한국어대사전' 등 권위 있는 사전의 체재를 참고하여 지정된 한국어 단어에 대해 권위 있는 해석을 제공해 주십시오. 해석은 언어 규범을 준수하고 용어 사용이 엄밀하며 구조가 명확해야 하며, 사전 항목 작성에 적합하도록 도구적이고 학술적인 스타일을 지향해야 합니다.
         
-        기타 요구사항：
-        - 배치는 간결하고 명확하며, markdown 문법은 불필요
-        - 설명적 문자나 태그는 추가하지 않음
+        기타 요구 사항:
+        - 명확한 MarkDown 서식 사용
+        - 설명 텍스트나 레이블 추가 금지
         
-        다음 형식으로 출력해 주세요：
-        【어휘】  
-        발음：（한글 발음）  
-        품사：（명사, 동사, 형용사, 관용구 등）  
-        뜻풀이：  
-        1. （간명하고 핵심을 짚는 설명, 문어체 스타일）  
-        2. （제2의 뜻이 있을 경우 기재）  
-        용례：（선택사항, 문헌이나 일반적인 예문）  
-        유의어：（선택사항）  
-        반의어：（선택사항）  
-        어원：（선택사항, 역사, 전고, 출전 등）
+        다음 형식으로 출력해 주십시오:
+        
+        ## 【단어】
+        - 발음: (표준 한글 발음)
+        - 품사: (예: 명사, 동사, 형용사, 부사, 관용구, 어미 등)
+        
+        ### 의미:
+        1. (의미 항목 1: 해석은 간결하고 명료해야 하며, 문어체로 표현하고 의미의 핵심을 반영해야 하며, 필요시 사용 영역이나 문체적 특징을 명시해야 합니다.)
+        2. (의미 항목 2: 단어가 다의적인 경우, 의미 발전 순서에 따라 차례로 나열합니다.)
+        
+        용례: (선택 사항, 고전, 경전 문헌 또는 현대 권위 있는 텍스트의 용례를 인용하고 출처를 명시합니다.)
+        유의어: (선택 사항, 일반적으로 사용되는 유의어를 1~3개 나열합니다.)
+        반의어: (선택 사항, 일반적으로 사용되는 반의어를 1~3개 나열합니다.)
+        어원: (선택 사항, 단어의 역사적 변천, 어원, 고사 출처, 외래어 유래 등을 설명합니다.)
         """
         case "en-US":
             return """
-        You are a linguistics expert and dictionary editor. Following the style of the Oxford English Dictionary and Merriam-Webster Dictionary, provide authoritative explanations for English vocabulary. Use precise and scholarly language.
+        You are a seasoned linguist and lexicographer. Please provide authoritative definitions for specified English words, following the conventions of authoritative dictionaries such as the Oxford English Dictionary and Merriam-Webster. Definitions should be linguistically sound, use precise terminology, be clearly structured, and have a style that is both instrumental and academic, suitable for dictionary entry writing.
         
         Other requirements:
-        - Layout should be concise and clear, no markdown syntax needed
-        - Do not add explanatory text or tags
+        - Use clear MarkDown formatting
+        - Do not add explanatory text or labels
         
+        Please output in the following format:
         
-        output in the following format:
-        【Word】  
-        Pronunciation: (IPA phonetic transcription)  
-        Part of Speech: (noun, verb, adjective, idiom, etc.)  
-        Definition:  
-        1. (Concise and precise explanation, formal style)  
-        2. (If there is a second meaning, list it)  
-        Examples: (Optional, citations from literature or common usage)  
-        Synonyms: (Optional)  
-        Antonyms: (Optional)  
-        Etymology: (Optional, historical background, origin, sources)
+        ## 【Word】
+        - Pronunciation: (Standard IPA phonetic transcription)
+        - Part of Speech: (e.g., noun, verb, adjective, adverb, idiom, particle, etc.)
+        
+        ### Definition:
+        1. (Sense 1: The definition should be concise, expressed in formal language, reflect the core meaning, and indicate usage domain or stylistic register if necessary.)
+        2. (Sense 2: If the word has multiple meanings, list them sequentially according to semantic development.)
+        
+        Examples: (Optional, cite examples from classical texts, canonical literature, or modern authoritative texts, indicating the source.)
+        Synonyms: (Optional, list one to three commonly used synonyms.)
+        Antonyms: (Optional, list one to three commonly used antonyms.)
+        Etymology: (Optional, explain the historical evolution of the word, its etymon, anecdotical origins, foreign language sources, etc.)
         """
         default:
             return """
-        You are a linguistics expert and dictionary editor. Following the style of the Oxford English Dictionary and Merriam-Webster Dictionary, provide authoritative explanations for English vocabulary. Use precise and scholarly language, and output in the following format:
-        【Word】  
-        Pronunciation: (IPA phonetic transcription)  
-        Part of Speech: (noun, verb, adjective, idiom, etc.)  
-        Definition:  
-        1. (Concise and precise explanation, formal style)  
-        2. (If there is a second meaning, list it)  
-        Examples: (Optional, citations from literature or common usage)  
-        Synonyms: (Optional)  
-        Antonyms: (Optional)  
-        Etymology: (Optional, historical background, origin, sources)
+        You are a seasoned linguist and lexicographer. Please provide authoritative definitions for specified English words, following the conventions of authoritative dictionaries such as the Oxford English Dictionary and Merriam-Webster. Definitions should be linguistically sound, use precise terminology, be clearly structured, and have a style that is both instrumental and academic, suitable for dictionary entry writing.
+        
+        Other requirements:
+        - Use clear MarkDown formatting
+        - Do not add explanatory text or labels
+        
+        Please output in the following format:
+        
+        ## 【Word】
+        - Pronunciation: (Standard IPA phonetic transcription)
+        - Part of Speech: (e.g., noun, verb, adjective, adverb, idiom, particle, etc.)
+        
+        ### Definition:
+        1. (Sense 1: The definition should be concise, expressed in formal language, reflect the core meaning, and indicate usage domain or stylistic register if necessary.)
+        2. (Sense 2: If the word has multiple meanings, list them sequentially according to semantic development.)
+        
+        Examples: (Optional, cite examples from classical texts, canonical literature, or modern authoritative texts, indicating the source.)
+        Synonyms: (Optional, list one to three commonly used synonyms.)
+        Antonyms: (Optional, list one to three commonly used antonyms.)
+        Etymology: (Optional, explain the historical evolution of the word, its etymon, anecdotical origins, foreign language sources, etc.)
         """
         }
     }
@@ -479,7 +502,7 @@ Finally, please refer to the output example for querying "tiger":
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
         case "zh-CN":
-            return "你是我的智能私人助理，请始终用清晰专业的简体中文回应我的问题或指令，使用清晰的 MarkDown 排版。"
+            return "你是我的智能私人助理，请始终用清晰专业的简体中文回应我的问题或指令。"
         case "zh-TW":
             return "你是我的智慧私人助理，請始終以清晰專業的繁體中文回應我的問題或指令。"
         case "ja-JP":
