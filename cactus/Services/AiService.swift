@@ -23,6 +23,7 @@ class AiService: NSObject, URLSessionDataDelegate {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.timeoutInterval = 300 // 设置超时时间为300秒
         request.setValue("Bearer \(providerSettings.apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         

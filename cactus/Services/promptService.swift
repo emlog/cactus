@@ -434,17 +434,17 @@ Synonyms: panther, lion
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
         case "zh-CN":
-            return "你是我的智能私人助理，请始终用清晰专业的简体中文回应我的问题或指令。不添加任何引导语、客套或无关内容，除非指令要求。无需 markdown 语法。"
+            return "你是我的智能私人助理，请始终用清晰专业的简体中文回应我的问题或指令。"
         case "zh-TW":
-            return "你是我的智慧私人助理，請始終以清晰專業的繁體中文回應我的問題或指令。不添加任何引導語、客套或無關內容，除非指令要求。無需 markdown 語法。"
+            return "你是我的智慧私人助理，請始終以清晰專業的繁體中文回應我的問題或指令。"
         case "ja-JP":
-            return "あなたは私のスマートパーソナルアシスタントです。常に明確で専門的な日本語で私の質問や指示に答えてください。案内文や余計な内容は追加せず、指示がある場合を除きます。markdown記法は不要です。"
+            return "あなたは私のスマートパーソナルアシスタントです。常に明確で専門的な日本語で私の質問や指示に答えてください。"
         case "ko-KR":
-            return "당신은 나의 스마트 개인 비서입니다. 항상 명확하고 전문적인 한국어로 제 질문이나 지시에 답변해 주세요. 안내문, 예의적 표현 또는 불필요한 내용은 추가하지 마세요(지시가 있을 때 제외). markdown 문법은 필요 없습니다."
+            return "당신은 나의 스마트 개인 비서입니다. 항상 명확하고 전문적인 한국어로 제 질문이나 지시에 답변해 주세요."
         case "en-US":
-            return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English. Do not add any lead-in, pleasantries, or irrelevant content unless instructed. No markdown syntax is needed."
+            return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English."
         default:
-            return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English. Do not add any lead-in, pleasantries, or irrelevant content unless instructed. No markdown syntax is needed."
+            return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English."
         }
     }
 }
