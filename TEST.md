@@ -16,13 +16,32 @@ Un día, un pequeño gato se perdió en el parque. Comenzó a llover, y el gato,
 ### 法语 🇫🇷
 Un jour, un chaton s’est perdu dans un parc. Il s’est mis à pleuvoir, et le chaton grelottait sous un arbre. Puis une gentille fille s’est approchée et a demandé : « Ça va ? » La fille a donné son parapluie au chaton et l’a emmené chez elle. Depuis ce jour, ils ont vécu ensemble. Le chaton a vécu heureux dans sa nouvelle maison et est devenu le meilleur ami de la fille.
 
+### 韩语 🇰🇷
+
+어느 날, 아기 고양이가 공원에서 길을 잃었어요. 비가 내리기 시작했고, 고양이는 나무 아래에서 떨고 있었어요.
+그때 한 다정한 소녀가 다가와서 말했어요. “괜찮니?”
+소녀는 고양이에게 우산을 씌워주고 집으로 데려갔어요.
+그날 이후로, 둘은 함께 살게 되었어요.
+고양이는 새로운 집에서 행복하게 지내며 소녀의 가장 친한 친구가 되었어요.
+
+
 
 你好世界，我来了
 Hello world, here I come.
-Bonjour le monde, j’arrive.
-Hola mundo, aquí voy.
 こんにちは世界、私は来た。
 안녕 세상아, 내가 왔어.
+Bonjour le monde, j’arrive.
+Hola mundo, aquí voy.
+
+
+有一天，一只小猫在公园里迷路了。开始下雨了，猫在树下颤抖着。
+有一天，一隻小貓在公園裡迷路了。開始下雨了，貓在樹下顫抖著。
+ある日、公園で子猫が迷子になりました。雨が降り始め、猫は木の下で震えていました。
+어느 날, 한 아기 고양이가 공원에서 길을 잃었어요. 비가 내리기 시작했고, 고양이는 나무 아래에서 떨고 있었어요.
+One day, a kitten got lost in the park. It started to rain, and the cat was trembling under a tree.
+
+⸻
+
 
 
 ### 长文测试
