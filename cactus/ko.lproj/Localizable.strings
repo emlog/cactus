@@ -64,7 +64,7 @@
 "help_translate" = "텍스트 번역 (%@)";
 "help_summary" = "요약 (%@)";
 "help_dict" = "사전 검색";
-"help_chat" = "대화형 질문 응답";
+"help_chat" = "메시지 보내기 (Enter)";
 "help_clear" = "지우기";
 "help_favorite" = "즐겨찾기";
 "help_speak" = "읽어주기";

@@ -45,7 +45,7 @@ struct MainView: View {
             Section() {
                 ZStack(alignment: .bottomTrailing) {
                     CustomTextEditor(text: $contentModel.text, onCommit: {
-                        translateText()
+                        chatText()
                     }, calculatedHeight: $inputTextHeight) // 传递高度绑定
                     .focused($isInputEditorFocused) // 绑定焦点状态
                     .frame(height: inputTextHeight) // 使用状态变量设置高度
@@ -149,11 +149,16 @@ struct MainView: View {
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_dict", comment: "解释说明"), delay: 0.5)
                     
+                    Rectangle()
+                        .frame(width: 1, height: 15)
+                        .foregroundColor(.gray.opacity(0.3))
+                        .padding(.horizontal, 5)
+                    
                     // 对话问答按钮
                     Button(action: {
                         chatText()
                     }) {
-                        Image(systemName: "questionmark.bubble")
+                        Image(systemName: "paperplane")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))

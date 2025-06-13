@@ -64,7 +64,7 @@
 "help_translate" = "翻譯文字 (%@)";
 "help_summary" = "製作摘要 (%@)";
 "help_dict" = "字典查詢";
-"help_chat" = "對話問答";
+"help_chat" = "發送訊息(Enter)";
 "help_clear" = "清除";
 "help_favorite" = "收藏";
 "help_speak" = "朗讀";

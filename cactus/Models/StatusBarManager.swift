@@ -44,17 +44,6 @@ class StatusBarManager: NSObject {
             mainMenuItem.target = self
             menu.addItem(mainMenuItem)
             
-            // 选中翻译
-            let translateMenuItem = NSMenuItem(
-                title: NSLocalizedString("translate", comment: "选中翻译"),
-                action: #selector(openMainTranslateAction),
-                keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
-            )
-            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
-            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
-            translateMenuItem.target = self
-            menu.addItem(translateMenuItem)
-            
             // 总结摘要
             let summaryMenuItem = NSMenuItem(
                 title: NSLocalizedString("summary", comment: "总结摘要"),
@@ -76,6 +65,19 @@ class StatusBarManager: NSObject {
             dictionaryMenuItem.setShortcut(for: SettingsModel.aiShortcutDictionary)
             dictionaryMenuItem.target = self
             menu.addItem(dictionaryMenuItem)
+            
+            menu.addItem(NSMenuItem.separator())
+            
+            // 选中翻译
+            let translateMenuItem = NSMenuItem(
+                title: NSLocalizedString("translate", comment: "选中翻译"),
+                action: #selector(openMainTranslateAction),
+                keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
+            )
+            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
+            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
+            translateMenuItem.target = self
+            menu.addItem(translateMenuItem)
             
             // 截图翻译 - 新增菜单项
             let screenshotMenuItem = NSMenuItem(
