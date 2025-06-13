@@ -95,6 +95,7 @@ xcrun stapler staple Cactus.dmg
 - 吐司提示 https://github.com/elai950/AlertToast
 - 快捷键 https://github.com/sindresorhus/KeyboardShortcuts
 - 开机自动启动 https://github.com/sindresorhus/LaunchAtLogin-Legacy
+- Markdown解析 https://github.com/gonzalezreal/swift-markdown-ui
 
 ### 未使用
 

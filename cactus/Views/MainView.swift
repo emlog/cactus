@@ -307,7 +307,7 @@ struct MainView: View {
                         .padding(.vertical, 5)
                         .background(
                             RoundedRectangle(cornerRadius: 6)
-                                .fill(Color(.controlBackgroundColor).opacity(0.8))
+                                .fill(Color(.controlBackgroundColor).opacity(0.9))
                         )
                     }
                     .transition(.opacity.combined(with: .scale)) // ZStack自身的过渡动画保持不变

@@ -47,8 +47,8 @@ class promptService {
 翻译 
 音标（使用国际音标IPA）
 词性（标注完整词性，如 n.名词、v.动词、adj.形容词等）
-词源 
 词根/词缀分析
+词源 
 同义词
 
 例句：  
@@ -60,21 +60,30 @@ class promptService {
 - 音标使用标准IPA符号
 - 词源信息需追溯到最早可考证的来源
 - 例句应体现单词的核心含义和常见用法
-- 排版简洁清晰，无需markdown语法
+- 使用清晰的 MarkDown 排版
 - 不添加解释性文字或标签
 
 最后请参考查询 tiger 的输出范例：
 
-['taɪgər]
-n.名词
-虎
-词源：中世纪英语"teigere"，源自古英语"tegor"，再来自古印欧语"tigris" 
-词根：tig-（猛兽，老虎）
-近义词：panther, lion
+## `tiger` [ˈtaɪɡər]  
+**词性**：名词（n.）  
+**中文释义**：老虎  
+**词根**：*tig-*（猛兽，老虎）
+
+### 📚 词源  
+- 中世纪英语 teigere* 
+- 来自古英语 tegor
+- 追溯至古印欧语 tigris
+
+### 🔁 近义词
+- panther（豹）  
+- lion（狮子）
+
+### ✏️ 例句解析
 
 1. He took a photo of the tiger in the wild.
    他在野外拍摄了老虎的照片。
-   
+
 2. The tiger roars in the danger of the jungle.
    老虎在丛林的危险中发出咆哮。
 
