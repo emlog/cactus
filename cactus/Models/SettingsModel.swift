@@ -20,6 +20,7 @@ class SettingsModel: ObservableObject {
     static let aiShortcutSummary = KeyboardShortcuts.Name("aiShortcutSummary", default: .init(.s, modifiers: [.option]))
     static let aiShortcutMain = KeyboardShortcuts.Name("aiShortcutMain", default: .init(.c, modifiers: [.option]))
     static let aiShortcutDictionary = KeyboardShortcuts.Name("aiShortcutDictionary", default: .init(.z, modifiers: [.option]))
+    static let aiShortcutScreenshotTranslate = KeyboardShortcuts.Name("aiShortcutScreenshotTranslate", default: .init(.a, modifiers: [.option]))
     
     // 内置的AI服务 + OpenAI选项
     public var defaultProviders: [String: ProviderSettings] = [

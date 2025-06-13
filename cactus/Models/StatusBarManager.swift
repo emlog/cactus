@@ -77,6 +77,17 @@ class StatusBarManager: NSObject {
             dictionaryMenuItem.target = self
             menu.addItem(dictionaryMenuItem)
             
+            // 截图翻译 - 新增菜单项
+            let screenshotMenuItem = NSMenuItem(
+                title: NSLocalizedString("screenshot_translate", comment: "截图翻译"),
+                action: #selector(openMainScreenshotAction),
+                keyEquivalent: ""
+            )
+            screenshotMenuItem.image = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
+            screenshotMenuItem.setShortcut(for: SettingsModel.aiShortcutScreenshotTranslate)
+            screenshotMenuItem.target = self
+            menu.addItem(screenshotMenuItem)
+            
             menu.addItem(NSMenuItem.separator())
             
             // 生词本
@@ -184,5 +195,9 @@ class StatusBarManager: NSObject {
         if let url = URL(string: "macappstore://apps.apple.com/app/id6743790378?action=write-review") {
             NSWorkspace.shared.open(url)
         }
+    }
+    
+    @objc private func openMainScreenshotAction() {
+        windowManager?.openMain(action: .screenshotTranslate)
     }
 }

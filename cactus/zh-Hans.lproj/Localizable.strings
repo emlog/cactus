@@ -3,6 +3,7 @@
 "translate" = "选中翻译";
 "summary" = "总结摘要";
 "dictionary" = "字典查询";
+"screenshot_translate" = "截屏翻译";
 "vocabulary" = "生词本";
 "favorites" = "收藏夹";
 "setting" = "偏好设置";
@@ -26,6 +27,8 @@
 "shortcut_summary_description" = "选中文字内容，按下快捷键总结摘要";
 "shortcut_dict" = "字典查询快捷键";
 "shortcut_dict_description" = "选中字词，按下快捷键查询";
+"shortcut_screenshot_translate" = "截屏翻译快捷键";
+"shortcut_screenshot_translate_description" = "截取屏幕上的文字区域，自动OCR识别并翻译";
 
 // ai setting
 "select_service" = "选择AI服务";

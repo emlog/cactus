@@ -14,6 +14,7 @@ enum ActionType {
     case translate
     case summarize
     case dictionary
+    case screenshotTranslate  // 新增截图翻译动作
 }
 
 class ShortcutManager {
@@ -50,6 +51,13 @@ class ShortcutManager {
         KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutDictionary) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .dictionary)
+            }
+        }
+        
+        // 注册截屏翻译快捷键
+        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutScreenshotTranslate) { [weak self] in
+            DispatchQueue.main.async {
+                self?.openMain(action: .screenshotTranslate)
             }
         }
     }

@@ -3,6 +3,7 @@
 "translate" = "선택 번역";
 "summary" = "요약";
 "dictionary" = "사전 검색";
+"screenshot_translate" = "스크린샷 번역";
 "vocabulary" = "단어장";
 "favorites" = "즐겨찾기";
 "setting" = "환경설정";
@@ -26,6 +27,8 @@
 "shortcut_summary_description" = "텍스트를 선택하고 단축키로 요약";
 "shortcut_dict" = "사전 검색 단축키";
 "shortcut_dict_description" = "단어를 선택한 후 단축키로 검색";
+"shortcut_screenshot_translate" = "스크린샷 번역 단축키";
+"shortcut_screenshot_translate_description" = "화면의 문자 영역을 캡처하고 자동으로 OCR 및 번역합니다";
 
 // ai setting
 "select_service" = "AI 서비스 선택";
