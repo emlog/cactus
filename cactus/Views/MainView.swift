@@ -115,7 +115,24 @@ struct MainView: View {
             }
             
             Section() {
-                HStack(spacing: 4) {
+                HStack(spacing: 2) {
+                    // 对话问答按钮
+                    Button(action: {
+                        chatText()
+                    }) {
+                        Image(systemName: "paperplane")
+                            .frame(width: 20, height: 20)
+                    }
+                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
+                    .disabled(contentModel.isProcessing)
+                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
+                    
+                    // 分隔符
+                    Rectangle()
+                        .frame(width: 1, height: 15)
+                        .foregroundColor(.gray.opacity(0.3))
+                        .padding(.horizontal, 5)
+                    
                     // 翻译按钮
                     Button(action: {
                         translateText()
@@ -148,22 +165,6 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_dict", comment: "解释说明"), delay: 0.5)
-                    
-                    Rectangle()
-                        .frame(width: 1, height: 15)
-                        .foregroundColor(.gray.opacity(0.3))
-                        .padding(.horizontal, 5)
-                    
-                    // 对话问答按钮
-                    Button(action: {
-                        chatText()
-                    }) {
-                        Image(systemName: "paperplane")
-                            .frame(width: 20, height: 20)
-                    }
-                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
-                    .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
                     
                     if contentModel.isProcessing {
                         // 显示loading动画
