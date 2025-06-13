@@ -33,6 +33,9 @@ The demand is the second such request by the US government, which is also callin
 
 The US government specifically alleged that Google controls the market for publishing banner ads on websites, including those of many creators and small news providers.
 
+### 中英文混合
+
+有一天, a kitten got lost in a park. It started to rain, and the cat shivered under a tree. Then a gentle girl came over and asked, "Are you okay?" The girl gave the cat her umbrella and took it home. From that day on, they lived together. The cat lived happily in his new home and became the girl's best friend.
 
 ## chat
 

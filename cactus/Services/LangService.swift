@@ -50,34 +50,56 @@ class LangService {
         var hiraganaCount = 0
         var katakanaCount = 0
         var chineseCount = 0
+        var koreanCount = 0
+        var englishCount = 0
         
+        // 统计各种语言字符的数量
         for scalar in text.unicodeScalars {
-            if hiraganaRange.contains(String(scalar)) {
+            let scalarString = String(scalar)
+            
+            if hiraganaRange.contains(scalarString) {
                 hiraganaCount += 1
-            } else if katakanaRange.contains(String(scalar)) {
+            } else if katakanaRange.contains(scalarString) {
                 katakanaCount += 1
-            } else if chineseRange.contains(String(scalar)) {
+            } else if chineseRange.contains(scalarString) {
                 chineseCount += 1
+            } else if scalarString.range(of: koreanRegex, options: .regularExpression) != nil {
+                koreanCount += 1
+            } else if scalarString.range(of: englishRegex, options: .regularExpression) != nil {
+                englishCount += 1
             }
         }
         
-        let total = text.count
-        // 如果假名占比大于2%，判为日文
-        if total > 0 && Double(hiraganaCount + katakanaCount) / Double(total) > 0.02 {
+        let totalCharacters = text.count
+        let halfThreshold = Double(totalCharacters) / 2.0
+        
+        // 如果文本为空，返回默认语言
+        if totalCharacters == 0 {
+            return "en-US"
+        }
+        
+        // 检查日文：假名字符超过一半
+        let japaneseCount = hiraganaCount + katakanaCount
+        if Double(japaneseCount) > halfThreshold {
             return "ja-JP"
         }
-        // 如果汉字多且没有假名，判为中文
-        if chineseCount > 0 && hiraganaCount == 0 && katakanaCount == 0 {
+        
+        // 检查中文：汉字字符超过一半且没有假名
+        if Double(chineseCount) > halfThreshold && hiraganaCount == 0 && katakanaCount == 0 {
             return "zh-CN"
         }
         
-        if let _ = text.range(of: koreanRegex, options: .regularExpression) {
+        // 检查韩文：韩文字符超过一半
+        if Double(koreanCount) > halfThreshold {
             return "ko-KR"
-        } 
+        }
         
-        if let _ = text.range(of: englishRegex, options: .regularExpression) {
+        // 检查英文：英文字符超过一半
+        if Double(englishCount) > halfThreshold {
             return "en-US"
         }
+        
+        // 如果没有任何语言的字符超过一半，返回默认语言
         return "en-US"
     }
     
