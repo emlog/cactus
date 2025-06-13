@@ -259,7 +259,7 @@ struct MainView: View {
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 10)
                         }
-                        .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight)
+                        .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight, alignment: .leading)
                         .background(Color(.textBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .overlay(
@@ -278,7 +278,6 @@ struct MainView: View {
                             NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
                         })
                         
-                        // 在结果区域的操作按钮中添加收藏按钮
                         HStack(spacing: 8) {
                             Button(action: {
                                 speakText(contentModel.resultText ?? "")
