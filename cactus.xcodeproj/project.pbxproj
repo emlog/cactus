@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F20BC9822DFC13A900BBA581 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = F20BC9812DFC13A900BBA581 /* MarkdownUI */; };
 		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
 		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
 		F2400C112DE729D000264BAD /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2400C0F2DE729D000264BAD /* CoreDataModel.xcdatamodeld */; };
@@ -56,6 +57,7 @@
 				F21844C52D75DD6D0060A838 /* Settings in Frameworks */,
 				F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */,
 				F2BCD9AC2DE9726B00C0AC97 /* StoreKit.framework in Frameworks */,
+				F20BC9822DFC13A900BBA581 /* MarkdownUI in Frameworks */,
 				F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */,
 				F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */,
 			);
@@ -117,6 +119,7 @@
 				F21844C42D75DD6D0060A838 /* Settings */,
 				F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */,
 				F2B99DEF2D76F31E00BF5BA3 /* LaunchAtLogin */,
+				F20BC9812DFC13A900BBA581 /* MarkdownUI */,
 			);
 			productName = cactus;
 			productReference = F292ABA82D6575070089583E /* Cactus.app */;
@@ -155,6 +158,7 @@
 				F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */,
 				F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				F2B99DEE2D76F31E00BF5BA3 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
+				F20BC9802DFC13A900BBA581 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F292ABA92D6575070089583E /* Products */;
@@ -409,6 +413,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F20BC9802DFC13A900BBA581 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
 		F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Settings.git";
@@ -444,6 +456,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F20BC9812DFC13A900BBA581 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F20BC9802DFC13A900BBA581 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
 		F21844C42D75DD6D0060A838 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */;

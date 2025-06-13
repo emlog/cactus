@@ -2,6 +2,7 @@ import AlertToast
 import SwiftUI
 import AVFoundation
 import KeyboardShortcuts
+import MarkdownUI
 
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
@@ -225,30 +226,58 @@ struct MainView: View {
                 // 当 resultText 不为 nil 且 不为空 或 窗口已展开时，显示结果区域
                 if let resultText = contentModel.resultText, !resultText.isEmpty || isResultViewExpanded {
                     ZStack(alignment: .bottomTrailing) {
-                        TextEditor(text: .constant(resultText)) // 使用解包后的 resultText
-                            .font(.system(size: 15))
-                            .lineSpacing(8)
-                            .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight)
-                            .padding(.bottom, 25) // 增加底部内边距，为按钮留出空间
-                            .padding(.horizontal, 5) // 保持水平内边距为0（如果 CustomTextEditor 内部已处理）
-                            .padding(.top, 10)        // 保持顶部内边距为0
-                            .background(Color(.textBackgroundColor))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color(.separatorColor), lineWidth: 1)
-                            )
-                            .onChange(of: contentModel.resultText, perform: { value in
-                                // 当结果文本变化时，计算新的高度
-                                if let text = value, !text.isEmpty {
-                                    // 使用 calculateTextHeight 计算结果区域高度
-                                    resultTextHeight = calculateTextHeight(text: text, width: minTextWidth)
-                                } else {
-                                    resultTextHeight = minResultTextHeight // 如果结果为空，重置为最小高度
+                        ScrollView {
+                            Markdown(resultText)
+                                .markdownTheme(.gitHub)
+                                .markdownTextStyle(\.text) {
+                                    FontSize(.em(0.95))
+                                    ForegroundColor(.primary)
                                 }
-                                // 通知窗口调整大小
-                                NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-                            })
+                                .markdownTextStyle(\.code) {
+                                    FontFamilyVariant(.monospaced)
+                                    FontSize(.em(0.85))
+                                    ForegroundColor(.purple)
+                                    BackgroundColor(.purple.opacity(0.1))
+                                }
+                                .markdownBlockStyle(\.codeBlock) { configuration in
+                                    configuration.label
+                                        .padding()
+                                        .background(Color(.controlBackgroundColor))
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                                .markdownBlockStyle(\.blockquote) { configuration in
+                                    configuration.label
+                                        .padding()
+                                        .overlay(alignment: .leading) {
+                                            Rectangle()
+                                                .fill(Color.blue)
+                                                .frame(width: 4)
+                                        }
+                                        .background(Color.blue.opacity(0.1))
+                                }
+                                .textSelection(.enabled)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight)
+                        .background(Color(.textBackgroundColor))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color(.separatorColor), lineWidth: 1)
+                        )
+                        .onChange(of: contentModel.resultText, perform: { value in
+                            // 当结果文本变化时，计算新的高度
+                            if let text = value, !text.isEmpty {
+                                // 使用 calculateTextHeight 计算结果区域高度
+                                resultTextHeight = calculateTextHeight(text: text, width: minTextWidth)
+                            } else {
+                                resultTextHeight = minResultTextHeight // 如果结果为空，重置为最小高度
+                            }
+                            // 通知窗口调整大小
+                            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+                        })
+                        
                         // 在结果区域的操作按钮中添加收藏按钮
                         HStack(spacing: 8) {
                             Button(action: {
@@ -276,6 +305,10 @@ struct MainView: View {
                         }
                         .padding(.horizontal, 15)
                         .padding(.vertical, 5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color(.controlBackgroundColor).opacity(0.8))
+                        )
                     }
                     .transition(.opacity.combined(with: .scale)) // ZStack自身的过渡动画保持不变
                 }
