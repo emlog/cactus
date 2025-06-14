@@ -8,19 +8,19 @@ Cactus AI Assistant
 
 ## 副标题：
 
-快捷翻译、总结、查字典，一键高效处理文字
-クイック翻訳、要約、辞書。テキストを効率処理
-빠른 번역, 요약, 사전. 텍스트를 효율적으로 처리
-Translate,Summarize,Dictionary
-快速翻譯、總結、查字典，一鍵高效處理文字
+快捷翻译、总结、查字典、支持截图OCR，高效处理文字
+クイック翻訳、要約、辞書検索、スクリーンショットOCR対応で、テキストを効率的に処理
+빠른 번역, 요약, 사전 검색, 스크린샷 OCR 지원으로 텍스트를 효율적으로 처리
+Translate,Summarize,Dictionary,OCR
+快速翻譯、總結、查字典，支援截圖OCR，高效處理文字
 
 ## 关键词
 
-翻译,AI助手,文字助手,总结,智能翻译,内容提炼,快捷翻译,macOS翻译,macOS总结,macOS助手,生词本,单词本,字典,词典,效率工具,文本处理,阅读助手,学习工具,写作辅助
-翻訳,AIアシスタント,テキストアシスタント,要約,スマート翻訳,内容抽出,クイック翻訳,mac翻訳,mac要約,macアシスタント,単語帳,辞書,効率化ツール,文章処理,読書アシスタント
-번역,AI어시스턴트,텍스트어시스턴트,요약,스마트번역,내용추출,빠른번역,맥번역,맥요약,맥어시스턴트,단어장,사전,효율성도구,텍스트처리,독서도우미,학습도구,작문보조
-Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Productivity,Study
-翻譯,AI助手,文字助手,總結,智能翻譯,內容提煉,快速翻譯,macOS翻譯,macOS總結,macOS助手,生字本,單字本,字典,詞典,效率工具,文字處理,閱讀助手,學習工具,寫作輔助
+翻译,AI助手,文字助手,总结,智能翻译,内容提炼,快捷翻译,macOS翻译,macOS总结,macOS助手,生词本,单词本,字典,词典,效率工具,文本处理,阅读助手,学习工具,写作辅助,截图OCR
+翻訳,AIアシスタント,テキストアシスタント,要約,スマート翻訳,内容抽出,クイック翻訳,mac翻訳,mac要約,macアシスタント,単語帳,辞書,効率化ツール,文章処理,読書アシスタント,スクリーンショットOCR   
+번역,AI어시스턴트,텍스트어시스턴트,요약,스마트번역,내용추출,빠른번역,맥번역,맥요약,맥어시스턴트,단어장,사전,효율성도구,텍스트처리,독서도우미,학습도구,작문보조,OCR
+Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Productivity,Study,Screen OCR
+翻譯,AI助手,文字助手,總結,智能翻譯,內容提煉,快速翻譯,macOS翻譯,macOS總結,macOS助手,生字本,單字本,字典,詞典,效率工具,文字處理,閱讀助手,學習工具,寫作輔助,螢幕OCR
 
 ### 简体中文介绍
 
@@ -30,6 +30,8 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 - 快捷翻译：选中文本，按快捷键（默认 ⌥ + X），立即翻译
 - 智能总结：提炼内容要点，一目了然
 - 字典查询：解释字词义项、词源与用法示例
+- 截图OCR：支持截图文字识别，提高文字处理效率
+- 优雅排版：支持Markdown解析，排版更美观
 
 适用于外语学习、文献阅读、知识整理、写作辅助等多种场景
 
@@ -46,6 +48,8 @@ Core Features:
 - Quick Translate: Select text, press the shortcut (default ⌥ + X), and get an instant translation
 - Smart Summarize: Extract key content points for easy comprehension
 - Dictionary Lookup: Explain word meanings, etymology, and usage examples
+- Screenshot OCR: Supports text recognition from screenshots to improve processing efficiency
+- Elegant Layout: Supports Markdown parsing for cleaner and more beautiful formatting
 
 Ideal for foreign language learning, document reading, knowledge organization, writing assistance, and various other scenarios.
 
@@ -78,6 +82,8 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 - クイック翻訳：テキストを選択し、ショートカットキー（デフォルト ⌥ + X）を押すと、即座に翻訳
 - スマート要約：コンテンツの要点を抽出し、一目で理解
 - 辞書検索：単語の意味、語源、使用例を説明
+- スクリーンショットOCR：スクリーンショットの文字認識に対応し、テキスト処理効率を向上
+- 洗練されたレイアウト：Markdown解析に対応、美しいレイアウトを実現
 
 外国語学習、文献読解、知識整理、執筆補助など、様々なシーンで活用できます。
 
@@ -94,6 +100,8 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 - 빠른 번역: 텍스트를 선택하고 단축키(기본 ⌥ + X)를 누르면 즉시 번역
 - 스마트 요약: 내용의 핵심 요점을 추출하여 한눈에 파악
 - 사전 검색: 단어의 의미, 어원, 사용 예시를 설명
+- 스크린샷 OCR: 스크린샷 텍스트 인식을 지원하여 텍스트 처리 효율 향상
+- 우아한 레이아웃: 마크다운 분석을 지원하여 더욱 아름다운 문서 구성
 
 외국어 학습, 문헌 독해, 지식 정리, 작문 보조 등 다양한 상황에 적용 가능합니다.
 
