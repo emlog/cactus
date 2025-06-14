@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import MarkdownUI
 
 struct VocabularyView: View {
     @ObservedObject private var vocabularyManager = VocabularyManager.shared
@@ -101,23 +102,52 @@ struct VocabularyView: View {
                         }
                     }
                     .padding()
-                    
                     // 细微的分隔线
                     Rectangle()
                         .fill(Color(NSColor.separatorColor).opacity(0.5))
                         .frame(height: 0.5)
+                    ScrollView {
+                        Markdown(selectedWord.definition ?? "")
+                            .markdownTheme(.gitHub)
+                            .markdownTextStyle(\.text) {
+                                FontSize(.em(0.95))
+                                ForegroundColor(.primary)
+                            }
+                            .markdownTextStyle(\.code) {
+                                FontFamilyVariant(.monospaced)
+                                FontSize(.em(0.85))
+                                ForegroundColor(.purple)
+                                BackgroundColor(.purple.opacity(0.1))
+                            }
+                            .markdownBlockStyle(\.codeBlock) { configuration in
+                                configuration.label
+                                    .padding()
+                                    .background(Color(.controlBackgroundColor))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                            .markdownBlockStyle(\.blockquote) { configuration in
+                                configuration.label
+                                    .padding()
+                                    .overlay(alignment: .leading) {
+                                        Rectangle()
+                                            .fill(Color.blue)
+                                            .frame(width: 4)
+                                    }
+                                    .background(Color.blue.opacity(0.1))
+                            }
+                            .textSelection(.enabled)
+                            .padding(.horizontal, 12)
+                            .padding(.top, 10)
+                            .padding(.bottom, 30) // 增加底部内边距，为按钮留出空间
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                    .background(Color(.textBackgroundColor))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(.separatorColor), lineWidth: 1)
+                    )
                     
-                    TextEditor(text: .constant(selectedWord.definition ?? ""))
-                        .font(.body)
-                        .lineSpacing(4)
-                        .foregroundColor(.primary)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(12) // 内边距
-                        .background(
-                            RoundedRectangle(cornerRadius: 0)
-                                .fill(Color(NSColor.textBackgroundColor))
-                                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                        )
                 } else {
                     // 空状态
                     VStack {
@@ -131,7 +161,7 @@ struct VocabularyView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .frame(minWidth: 800, minHeight: 600)
+        .frame(minWidth: 1000, minHeight: 800)
         .focusable()
         .focused($isViewFocused)
         .overlay(

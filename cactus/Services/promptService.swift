@@ -66,9 +66,10 @@ class promptService {
 
 最后请参考查询 tiger 的输出范例：
 
-## `tiger` [ˈtaɪɡər]  
-- 词性：名词（n.）  
+### `tiger`
+- [ˈtaɪɡər]  
 - 中文释义：老虎  
+- 词性：名词（n.）  
 - 词根：tig-（猛兽，老虎）
 
 ### 📚 词源  
@@ -116,9 +117,10 @@ class promptService {
 
 最後請參閱 tiger 的輸出範例：
 
-## `tiger` [ˈtaɪɡər]  
-- 詞性：名詞（n.）  
+### `tiger` 
+- [ˈtaɪɡər]  
 - 中文釋義：老虎  
+- 詞性：名詞（n.）  
 - 詞根：tig-（猛獸，老虎）
 
 ### 📚 詞源  
@@ -166,9 +168,10 @@ class promptService {
 
 最後に、tiger の検索出力例を参照してください：
 
-## `tiger` [ˈtaɪɡər]
-- 品詞：名詞（n.）
+### `tiger`
+- [ˈtaɪɡər]
 - 日本語訳：トラ
+- 品詞：名詞（n.）
 - 語根：tig-（猛獣、トラ）
 
 ### 📚 語源
@@ -216,9 +219,10 @@ class promptService {
 
 마지막으로 tiger 검색 출력 예를 참조하십시오:
 
-## `tiger` [ˈtaɪɡər]
-- 품사: 명사 (n.)
+## `tiger`
+- [ˈtaɪɡər]
 - 한국어 번역: 호랑이
+- 품사: 명사 (n.)
 - 어근: tig- (맹수, 호랑이)
 
 ### 📚 어원
@@ -265,9 +269,10 @@ Other requirements:
 
 Finally, please refer to the output example for querying "tiger":
 
-## `tiger` [ˈtaɪɡər]
-- Part of Speech: noun (n.)
+## `tiger`
+- [ˈtaɪɡər]
 - Definition: A large carnivorous feline mammal (Panthera tigris) of Asia, having a tawny coat with transverse black stripes.
+- Part of Speech: noun (n.)
 - Root: tig- (wild beast, tiger)
 
 ### 📚 Etymology
@@ -309,9 +314,10 @@ Other requirements:
 
 Finally, please refer to the output example for querying "tiger":
 
-## `tiger` [ˈtaɪɡər]
-- Part of Speech: noun (n.)
+## `tiger`
+- [ˈtaɪɡər]
 - Definition: A large carnivorous feline mammal (Panthera tigris) of Asia, having a tawny coat with transverse black stripes.
+- Part of Speech: noun (n.)
 - Root: tig- (wild beast, tiger)
 
 ### 📚 Etymology

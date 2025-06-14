@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import MarkdownUI
 
 struct FavoriteView: View {
     @ObservedObject private var favoriteManager = FavoriteManager.shared
@@ -87,7 +88,7 @@ struct FavoriteView: View {
                                     RoundedRectangle(cornerRadius: 8)
                                         .stroke(Color(.separatorColor), lineWidth: 1)
                                 )
-                                .frame(maxHeight: 200)
+                                .frame(maxHeight: 160)
                                 
                                 // 输入内容操作按钮
                                 HStack(spacing: 8) {
@@ -144,22 +145,46 @@ struct FavoriteView: View {
                         VStack(alignment: .leading, spacing: 8) {
                             ZStack(alignment: .bottomTrailing) {
                                 ScrollView {
-                                    Text(selectedFavorite.outputContent ?? "")
-                                        .font(.system(size: 15))
-                                        .lineSpacing(8)
+                                    Markdown(selectedFavorite.outputContent ?? "")
+                                        .markdownTheme(.gitHub)
+                                        .markdownTextStyle(\.text) {
+                                            FontSize(.em(0.95))
+                                            ForegroundColor(.primary)
+                                        }
+                                        .markdownTextStyle(\.code) {
+                                            FontFamilyVariant(.monospaced)
+                                            FontSize(.em(0.85))
+                                            ForegroundColor(.purple)
+                                            BackgroundColor(.purple.opacity(0.1))
+                                        }
+                                        .markdownBlockStyle(\.codeBlock) { configuration in
+                                            configuration.label
+                                                .padding()
+                                                .background(Color(.controlBackgroundColor))
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        }
+                                        .markdownBlockStyle(\.blockquote) { configuration in
+                                            configuration.label
+                                                .padding()
+                                                .overlay(alignment: .leading) {
+                                                    Rectangle()
+                                                        .fill(Color.blue)
+                                                        .frame(width: 4)
+                                                }
+                                                .background(Color.blue.opacity(0.1))
+                                        }
                                         .textSelection(.enabled)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.bottom, 40) // 增加底部内边距，确保文本不被按钮遮挡
                                         .padding(.horizontal, 12)
-                                        .padding(.top, 12)
+                                        .padding(.top, 10)
+                                        .padding(.bottom, 30) // 增加底部内边距，为按钮留出空间
                                 }
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 .background(Color(.textBackgroundColor))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8)
                                         .stroke(Color(.separatorColor), lineWidth: 1)
                                 )
-                                .frame(maxHeight: .infinity)
                                 
                                 // 输出内容操作按钮
                                 HStack(spacing: 8) {
@@ -208,7 +233,7 @@ struct FavoriteView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .frame(minWidth: 800, minHeight: 600)
+        .frame(minWidth: 1000, minHeight: 800)
         .focusable()
         .focused($isViewFocused)
         .overlay(
