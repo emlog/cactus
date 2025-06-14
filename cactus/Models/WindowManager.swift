@@ -25,7 +25,7 @@ class WindowManager: NSObject, NSWindowDelegate {
     private func initializeMainWindow() {
         // 初始化主窗口
         mainWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 600),
+            contentRect: NSRect(x: 0, y: 0, width: 690, height: 600),
             styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
@@ -37,7 +37,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         
         // 设置窗口始终置顶
         mainWindow?.level = .floating
-        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary]
+        mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         mainWindow?.level = NSWindow.Level.statusBar
         
         let mainView = MainView()

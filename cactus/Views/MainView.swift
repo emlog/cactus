@@ -23,8 +23,8 @@ struct MainView: View {
     // 默认尺寸
     private let minInputTextHeight: CGFloat = 100
     private let minResultTextHeight: CGFloat = 100
-    private let maxResultTextHeight: CGFloat = 500
-    private let minTextWidth: CGFloat = 580
+    private let maxResultTextHeight: CGFloat = 600
+    private let minTextWidth: CGFloat = 690
     
     // 输入框：使用一个状态变量来驱动 CustomTextEditor 的高度
     @State private var inputTextHeight: CGFloat = 100
@@ -117,23 +117,6 @@ struct MainView: View {
             
             Section() {
                 HStack(spacing: 2) {
-                    // 对话问答按钮
-                    Button(action: {
-                        chatText()
-                    }) {
-                        Image(systemName: "paperplane")
-                            .frame(width: 20, height: 20)
-                    }
-                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
-                    .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
-                    
-                    // 分隔符
-                    Rectangle()
-                        .frame(width: 1, height: 15)
-                        .foregroundColor(.gray.opacity(0.3))
-                        .padding(.horizontal, 5)
-                    
                     // 翻译按钮
                     Button(action: {
                         translateText()
@@ -166,6 +149,23 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_dict", comment: "解释说明"), delay: 0.5)
+                    
+                    // 分隔符
+                    Rectangle()
+                        .frame(width: 1, height: 15)
+                        .foregroundColor(.gray.opacity(0.3))
+                        .padding(.horizontal, 5)
+                    
+                    // 对话问答按钮
+                    Button(action: {
+                        chatText()
+                    }) {
+                        Image(systemName: "paperplane")
+                            .frame(width: 20, height: 20)
+                    }
+                    .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
+                    .disabled(contentModel.isProcessing)
+                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
                     
                     if contentModel.isProcessing {
                         // 显示loading动画
@@ -257,7 +257,8 @@ struct MainView: View {
                                 }
                                 .textSelection(.enabled)
                                 .padding(.horizontal, 12)
-                                .padding(.vertical, 10)
+                                .padding(.top, 10)
+                                .padding(.bottom, 30) // 增加底部内边距，为按钮留出空间
                         }
                         .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight, alignment: .leading)
                         .background(Color(.textBackgroundColor))
