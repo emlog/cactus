@@ -8,19 +8,19 @@ Cactus AI Assistant
 
 ## 副标题：
 
-快捷翻译、总结、查字典、支持截图OCR，高效处理文字
-クイック翻訳、要約、辞書検索、スクリーンショットOCR対応で、テキストを効率的に処理
-빠른 번역, 요약, 사전 검색, 스크린샷 OCR 지원으로 텍스트를 효율적으로 처리
-Translate,Summarize,Dictionary,OCR
-快速翻譯、總結、查字典，支援截圖OCR，高效處理文字
+快捷翻译、总结、查字典、支持截图OCR
+クイック翻訳、要約、辞書検索、スクリーンショットOCR対応で
+빠른 번역, 요약, 사전, OCR 스캔 지원
+Translate,Summarize,OCR
+快速翻譯、總結、查字典，支援截圖OCR
 
 ## 关键词
 
-翻译,AI助手,文字助手,总结,智能翻译,内容提炼,快捷翻译,macOS翻译,macOS总结,macOS助手,生词本,单词本,字典,词典,效率工具,文本处理,阅读助手,学习工具,写作辅助,截图OCR
-翻訳,AIアシスタント,テキストアシスタント,要約,スマート翻訳,内容抽出,クイック翻訳,mac翻訳,mac要約,macアシスタント,単語帳,辞書,効率化ツール,文章処理,読書アシスタント,スクリーンショットOCR   
-번역,AI어시스턴트,텍스트어시스턴트,요약,스마트번역,내용추출,빠른번역,맥번역,맥요약,맥어시스턴트,단어장,사전,효율성도구,텍스트처리,독서도우미,학습도구,작문보조,OCR
-Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Productivity,Study,Screen OCR
-翻譯,AI助手,文字助手,總結,智能翻譯,內容提煉,快速翻譯,macOS翻譯,macOS總結,macOS助手,生字本,單字本,字典,詞典,效率工具,文字處理,閱讀助手,學習工具,寫作輔助,螢幕OCR
+翻译,总结,AI助手,文字助手,内容提炼,快捷翻译,macOS工具,词典,生词本,效率工具,阅读助手,写作助手,截图OCR
+翻訳,要約,AIアシスタント,テキストツール,内容抽出,クイック翻訳,macアプリ,辞書,単語帳,効率化,読書補助,OCR   
+번역,요약,AI어시스턴트,텍스트도구,스마트번역,빠른번역,맥도구,사전,단어장,효율도구,독서보조,OCR
+Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Productivity,OCR
+翻譯,總結,AI助手,文字工具,內容提煉,快速翻譯,macOS工具,詞典,生字本,效率工具,閱讀助手,寫作助手,OCR
 
 ### 简体中文介绍
 
@@ -66,6 +66,8 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 - 快速翻譯：選取文字，按快速鍵（預設 ⌥ + X），立即翻譯
 - 智慧總結：提煉內容要點，一目瞭然
 - 字典查詢：解釋字詞義項、詞源與用法示例
+- 截圖OCR：支援截圖文字辨識，提高文字處理效率
+- 優雅排版：支援Markdown解析，排版更美觀
 
 適用於外語學習、文獻閱讀、知識整理、寫作輔助等多種情境
 
