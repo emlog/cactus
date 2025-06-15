@@ -61,7 +61,7 @@ class ShortcutManager {
             }
         }
     }
-
+    
     // 主窗口 - 保留此方法因为快捷键管理器需要使用
     private func openMain(action: ActionType = .translate) {
         windowManager?.openMain(action: action)

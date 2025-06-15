@@ -3,7 +3,7 @@ import SwiftUI
 import KeyboardShortcuts
 import Settings
 import Foundation
-import ApplicationServices	
+import ApplicationServices
 import Vision  // 新增 Vision 框架导入
 
 class WindowManager: NSObject, NSWindowDelegate {
@@ -305,99 +305,99 @@ class WindowManager: NSObject, NSWindowDelegate {
     
     // 新增截图和 OCR 功能
     private func performScreenshotAndOCR(completion: @escaping (Bool) -> Void) {
-    // 创建临时文件路径
-    let tempDirectory = NSTemporaryDirectory()
-    let screenshotPath = tempDirectory + "screenshot_\(Date().timeIntervalSince1970).png"
-    
-    // 使用 NSTask 调用系统截图命令
-    let task = Process()
-    task.launchPath = "/usr/sbin/screencapture"
-    task.arguments = ["-i", "-r", screenshotPath]  // -i 交互式选择区域，-r 不显示鼠标指针
-    
-    task.terminationHandler = { [weak self] process in
-        DispatchQueue.main.async {
-            if process.terminationStatus == 0 {
-                // 截图成功，使用专门的中文OCR识别
-                self?.performChineseOCROnImage(at: screenshotPath) { success in
-                    // 删除临时文件
-                    try? FileManager.default.removeItem(atPath: screenshotPath)
-                    completion(success)
+        // 创建临时文件路径
+        let tempDirectory = NSTemporaryDirectory()
+        let screenshotPath = tempDirectory + "screenshot_\(Date().timeIntervalSince1970).png"
+        
+        // 使用 NSTask 调用系统截图命令
+        let task = Process()
+        task.launchPath = "/usr/sbin/screencapture"
+        task.arguments = ["-i", "-r", screenshotPath]  // -i 交互式选择区域，-r 不显示鼠标指针
+        
+        task.terminationHandler = { [weak self] process in
+            DispatchQueue.main.async {
+                if process.terminationStatus == 0 {
+                    // 截图成功，使用专门的中文OCR识别
+                    self?.performChineseOCROnImage(at: screenshotPath) { success in
+                        // 删除临时文件
+                        try? FileManager.default.removeItem(atPath: screenshotPath)
+                        completion(success)
+                    }
+                } else {
+                    // 截图失败或用户取消
+                    completion(false)
                 }
-            } else {
-                // 截图失败或用户取消
-                completion(false)
             }
         }
-    }
-    
-    task.launch()
+        
+        task.launch()
     }
     
     // OCR 文字识别功能
     // 在 WindowManager 类中添加专门的中文OCR方法
     private func performChineseOCROnImage(at imagePath: String, completion: @escaping (Bool) -> Void) {
-    guard let image = NSImage(contentsOfFile: imagePath),
-          let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-        completion(false)
-        return
-    }
-    
-    let request = VNRecognizeTextRequest { [weak self] request, error in
-        guard let observations = request.results as? [VNRecognizedTextObservation],
-              error == nil else {
-            DispatchQueue.main.async {
-                completion(false)
-            }
+        guard let image = NSImage(contentsOfFile: imagePath),
+              let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+            completion(false)
             return
         }
         
-        // 提取识别到的文字
-        let recognizedStrings = observations.compactMap { observation in
-            observation.topCandidates(1).first?.string
-        }
-        
-        let recognizedText = recognizedStrings.joined(separator: "\n")
-        
-        DispatchQueue.main.async {
-            if !recognizedText.isEmpty {
-                // 将识别的文字填充到主窗口并触发翻译
-                guard let mainViewController = self?.mainWindow?.contentViewController as? NSHostingController<MainView> else {
+        let request = VNRecognizeTextRequest { [weak self] request, error in
+            guard let observations = request.results as? [VNRecognizedTextObservation],
+                  error == nil else {
+                DispatchQueue.main.async {
                     completion(false)
-                    return
                 }
-                
-                let mainView = mainViewController.rootView
-                mainView.fillText(recognizedText)
-                
-                // 延迟一下确保文字已填充，然后触发翻译
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    mainView.translateText()
-                }
-                
-                completion(true)
-            } else {
-                completion(false)
+                return
             }
-        }
-    }
-    
-    // 改进的多语言配置 - 主要识别英语，其次兼容中日韩
-    request.recognitionLevel = .accurate
-    request.usesLanguageCorrection = true
-    // 按优先级排序：日语优先，然后是韩语、简体中文、繁体中文、英语
-    request.recognitionLanguages = ["ja", "ko", "zh-Hans", "zh-Hant", "en"]
-    
-    // 执行 OCR 请求
-    let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-    DispatchQueue.global(qos: .userInitiated).async {
-        do {
-            try handler.perform([request])
-        } catch {
+            
+            // 提取识别到的文字
+            let recognizedStrings = observations.compactMap { observation in
+                observation.topCandidates(1).first?.string
+            }
+            
+            let recognizedText = recognizedStrings.joined(separator: "\n")
+            
             DispatchQueue.main.async {
-                completion(false)
+                if !recognizedText.isEmpty {
+                    // 将识别的文字填充到主窗口并触发翻译
+                    guard let mainViewController = self?.mainWindow?.contentViewController as? NSHostingController<MainView> else {
+                        completion(false)
+                        return
+                    }
+                    
+                    let mainView = mainViewController.rootView
+                    mainView.fillText(recognizedText)
+                    
+                    // 延迟一下确保文字已填充，然后触发翻译
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        mainView.translateText()
+                    }
+                    
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
-    }
+        
+        // 改进的多语言配置 - 主要识别英语，其次兼容中日韩
+        request.recognitionLevel = .accurate
+        request.usesLanguageCorrection = true
+        // 按优先级排序：日语优先，然后是韩语、简体中文、繁体中文、英语
+        request.recognitionLanguages = ["ja", "ko", "zh-Hans", "zh-Hant", "en"]
+        
+        // 执行 OCR 请求
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try handler.perform([request])
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+            }
+        }
     }
     
     private func getClipboardContent(action: ActionType, completion: @escaping (Bool) -> Void) {
