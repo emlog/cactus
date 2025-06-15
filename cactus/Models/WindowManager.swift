@@ -381,12 +381,12 @@ class WindowManager: NSObject, NSWindowDelegate {
             }
         }
         
-        // 改进的多语言配置 - 主要识别英语，其次兼容中日韩
+        // 按优先级排序：日语优先，然后是韩语、简体中文、繁体中文、英语
+        request.recognitionLanguages = ["zh-Hans", "zh-Hant", "en"]
         request.recognitionLevel = .accurate
         request.usesLanguageCorrection = true
-        // 按优先级排序：日语优先，然后是韩语、简体中文、繁体中文、英语
-        request.recognitionLanguages = ["ja", "ko", "zh-Hans", "zh-Hant", "en"]
-        
+        // 使用最新的 revision 以获得更好的准确性
+        request.revision = VNRecognizeTextRequestRevision3
         // 执行 OCR 请求
         let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         DispatchQueue.global(qos: .userInitiated).async {

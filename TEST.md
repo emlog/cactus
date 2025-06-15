@@ -26,12 +26,11 @@ Un jour, un chaton s’est perdu dans un parc. Il s’est mis à pleuvoir, et le
 
 
 
-你好世界，我来了
-Hello world, here I come.
-こんにちは世界、私は来た。
-안녕 세상아, 내가 왔어.
-Bonjour le monde, j’arrive.
-Hola mundo, aquí voy.
+快捷翻译、总结、查字典、支持截图OCR
+クイック翻訳、要約、辞書検索、スクリーンショットOCR対応で
+빠른 번역, 요약, 사전, OCR 스캔 지원
+Translate,Summarize,OCR
+快速翻譯、總結、查字典，支援截圖OCR
 
 
 有一天，一只小猫在公园里迷路了。开始下雨了，猫在树下颤抖着。
@@ -39,6 +38,14 @@ Hola mundo, aquí voy.
 ある日、公園で子猫が迷子になりました。雨が降り始め、猫は木の下で震えていました。
 어느 날, 한 아기 고양이가 공원에서 길을 잃었어요. 비가 내리기 시작했고, 고양이는 나무 아래에서 떨고 있었어요.
 One day, a kitten got lost in the park. It started to rain, and the cat was trembling under a tree.
+
+
+仙人掌AI助手 4+
+快捷翻译、总结、查字典、支持截图OCR
+大伟 许
+5.0 • 6 个评分
+免费
+提供 App 内购买项目
 
 ⸻
 

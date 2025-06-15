@@ -28,9 +28,7 @@ class promptService {
             return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
         case "ko-KR":
             return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
-        case "en-US":
-            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
-        default:
+        default: // en-US
             return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
         }
     }
@@ -66,7 +64,7 @@ class promptService {
 
 最后请参考查询 tiger 的输出范例：
 
-### `tiger`
+## `tiger`
 - [ˈtaɪɡər]  
 - 中文释义：老虎  
 - 词性：名词（n.）  
@@ -117,7 +115,7 @@ class promptService {
 
 最後請參閱 tiger 的輸出範例：
 
-### `tiger` 
+## `tiger`
 - [ˈtaɪɡər]  
 - 中文釋義：老虎  
 - 詞性：名詞（n.）  
@@ -168,7 +166,7 @@ class promptService {
 
 最後に、tiger の検索出力例を参照してください：
 
-### `tiger`
+## `tiger`
 - [ˈtaɪɡər]
 - 日本語訳：トラ
 - 品詞：名詞（n.）
@@ -245,51 +243,6 @@ class promptService {
 3. The tiger's stripes make it look fierce.
    호랑이의 줄무늬는 사납게 보입니다.
 """
-        case "en-US":
-            return """
-You are a multifunctional English dictionary. Search for the English word entered by the user and output accurate search results in English in the following format:
-
-Translation (Definition)
-Pronunciation (using International Phonetic Alphabet - IPA)
-Part of Speech (specify the full part of speech, e.g., n. noun, v. verb, adj. adjective, etc.)
-Root/Affix Analysis
-Etymology
-Synonyms
-
-Example Sentences:
-Example sentence containing the word
-
-Other requirements:
-- Output must be based on authoritative dictionary sources.
-- Use standard IPA symbols for pronunciation.
-- Etymological information should trace back to the earliest verifiable source.
-- Example sentences should reflect the core meaning and common usage of the word.
-- Use clear MarkDown formatting.
-- Do not add explanatory text or labels.
-
-Finally, please refer to the output example for querying "tiger":
-
-## `tiger`
-- [ˈtaɪɡər]
-- Definition: A large carnivorous feline mammal (Panthera tigris) of Asia, having a tawny coat with transverse black stripes.
-- Part of Speech: noun (n.)
-- Root: tig- (wild beast, tiger)
-
-### 📚 Etymology
-- Middle English teigere*
-- From Old English tegor
-- Tracing back to Old Indo-European tigris
-
-### 🔁 Synonyms
-- panther
-- lion
-
-### ✏️ Example Sentence Analysis
-
-1. He took a photo of the tiger in the wild.
-2. The tiger roars in the danger of the jungle.
-3. The tiger's stripes make it look fierce.
-"""
         default:
             return """
 You are a multifunctional English dictionary. Search for the English word entered by the user and output accurate search results in English in the following format:
@@ -350,8 +303,6 @@ Finally, please refer to the output example for querying "tiger":
             return "あなたは私のコンテンツ要約アシスタントです。入力されたテキストの核心的な要点を簡潔な日本語で要約してください。出力はできるだけ短く、最も重要な情報のみを残してください。原文、説明、または誘導的な言葉を出力することは禁止します。"
         case "ko-KR":
             return "당신은 저의 콘텐츠 요약 도우미입니다. 제가 입력한 텍스트의 핵심 요점을 간결한 한국어로 요약해 주세요. 출력은 최대한 짧아야 하며 가장 중요한 정보만 남겨야 합니다. 원본 텍스트, 설명 또는 유도적인 언어를 출력하는 것은 금지됩니다。"
-        case "en-US":
-            return "You are my content summarization assistant. Please summarize the core points of the text I input in concise English. The output should be as short as possible, retaining only the most critical information. Do not output the original text, explanations, or guiding language."
         default:
             return "You are my content summarization assistant. Please summarize the core points of the text I input in concise English. The output should be as short as possible, retaining only the most critical information. Do not output the original text, explanations, or guiding language."
         }
@@ -390,6 +341,14 @@ Finally, please refer to the output example for querying "tiger":
         
         ### 词源
         （可选，说明词语的历史演变、语源、典故出处、外来语渊源等）
+        
+        例如，查询“苹果”：
+        ## `苹果`
+        - 拼音：píng guǒ
+        - 词性：名词
+        ### 释义：
+        1. 蔷薇科苹果属植物的果实，味甜或略酸，是常见水果。
+        2. 特指苹果公司（Apple Inc.）或其产品。
         """
         case "zh-TW":
             return """
@@ -421,6 +380,15 @@ Finally, please refer to the output example for querying "tiger":
         
         ### 詞源
         （可選，說明詞語的歷史演變、語源、典故出處、外來語淵源等）
+        
+        例如，查詢「蘋果」：
+        ## `蘋果`
+        - 注音：ㄆㄧㄥˊ ㄍㄨㄛˇ
+        - 漢語拼音：píng guǒ
+        - 詞性：名詞
+        ### 釋義：
+        1. 薔薇科蘋果屬植物的果實，味甜或略酸，是常見水果。
+        2. 特指蘋果公司（Apple Inc.）或其產品。
         """
         case "ja-JP":
             return """
@@ -432,7 +400,7 @@ Finally, please refer to the output example for querying "tiger":
         
         以下の形式で出力してください：
         
-        ## 【検索語】
+        ## 検索語
         - 読み方：（標準的な読み方、アクセント表示は任意）
         - 品詞：（例：名詞、動詞、形容詞、副詞、慣用句など）
         
@@ -451,6 +419,14 @@ Finally, please refer to the output example for querying "tiger":
         
         ### 語源
         （任意。語の歴史的変遷、語源、典故、外来語の由来などを説明する）
+        
+        例えば、「りんご」を検索する場合：
+        ## `りんご`
+        - 読み方：りんご
+        - 品詞：名詞
+        ### 意味：
+        1. バラ科リンゴ属の植物の果実。甘いまたはやや酸っぱい味で、一般的な果物。
+        2. 特にアップル社（Apple Inc.）またはその製品を指す。
         """
         case "ko-KR":
             return """
@@ -462,7 +438,7 @@ Finally, please refer to the output example for querying "tiger":
         
         다음 형식으로 출력하십시오:
         
-        ## 【검색어】
+        ## 검색어
         - 발음: (표준 발음, 성조 표기)
         - 품사: (예: 명사, 동사, 형용사, 부사, 관용구, 어미 등)
         
@@ -481,8 +457,16 @@ Finally, please refer to the output example for querying "tiger":
         
         ### 어원
         (선택 사항. 단어의 역사적 변천, 어원, 고사성어 출처, 외래어 유래 등을 설명)
+        
+        예를 들어 "사과"를 검색하는 경우:
+        ## `사과`
+        - 발음: 사과
+        - 품사: 명사
+        ### 뜻풀이:
+        1. 장미과 사과나무속 식물의 열매로, 달거나 약간 신 맛이 나며 흔한 과일이다.
+        2. 특히 애플사(Apple Inc.) 또는 그 제품을 가리킨다.
         """
-        case "en-US":
+        default: // en-US
             return """
         You are a seasoned linguist and lexicographer. For a given English word, please provide an authoritative definition in the style of reputable dictionaries (e.g., Oxford English Dictionary, Merriam-Webster). The definition should be linguistically sound, precise in wording, clearly structured, and have an academic, instrumental tone suitable for a dictionary entry.
         
@@ -492,7 +476,7 @@ Finally, please refer to the output example for querying "tiger":
         
         Please output in the following format:
         
-        ## [Queried Word]
+        ## Queried Word
         - Pronunciation: (Standard pronunciation, e.g., IPA)
         - Part of Speech: (e.g., noun, verb, adjective, adverb, idiom, particle)
         
@@ -511,36 +495,14 @@ Finally, please refer to the output example for querying "tiger":
         
         ### Etymology
         (Optional. Explain the historical evolution of the word, its origins, etymological roots, or foreign language influences.)
-        """
-        default:
-            return """
-        You are a seasoned linguist and lexicographer. For a given English word, please provide an authoritative definition in the style of reputable dictionaries (e.g., Oxford English Dictionary, Merriam-Webster). The definition should be linguistically sound, precise in wording, clearly structured, and have an academic, instrumental tone suitable for a dictionary entry.
         
-        Other requirements:
-        - Use clear MarkDown formatting.
-        - Do not add explanatory text or labels.
-        
-        Please output in the following format:
-        
-        ## [Queried Word]
-        - Pronunciation: (Standard pronunciation, e.g., IPA)
-        - Part of Speech: (e.g., noun, verb, adjective, adverb, idiom, particle)
-        
+        For example, when querying "apple":
+        ## `apple`
+        - Pronunciation: /ˈæpəl/
+        - Part of Speech: noun
         ### Definition(s):
-        1. (Sense 1: The definition should be concise, use formal language, convey the core meaning, and indicate register or stylistic nuances if necessary.)
-        2. (Sense 2: If the word has multiple meanings, list them in order of semantic development.)
-        
-        ### Examples
-        (Optional. Cite usage examples from classical texts, seminal works, or modern authoritative sources, with attribution.)
-        
-        ### Synonyms
-        (Optional. List one to three common synonyms.)
-        
-        ### Antonyms
-        (Optional. List one to three common antonyms.)
-        
-        ### Etymology
-        (Optional. Explain the historical evolution of the word, its origins, etymological roots, or foreign language influences.)
+        1. The fruit of a tree of the rose family, which is typically round and crisp, with sweet or tart flesh.
+        2. Often used to refer to Apple Inc. or its products.
         """
         }
     }
@@ -557,9 +519,7 @@ Finally, please refer to the output example for querying "tiger":
             return "あなたは私のスマートパーソナルアシスタントです。常に明確で専門的な日本語で私の質問や指示に答えてください。"
         case "ko-KR":
             return "당신은 나의 스마트 개인 비서입니다. 항상 명확하고 전문적인 한국어로 제 질문이나 지시에 답변해 주세요."
-        case "en-US":
-            return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English."
-        default:
+        default: // en-US
             return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English."
         }
     }
