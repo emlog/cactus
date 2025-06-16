@@ -135,27 +135,43 @@ class WindowManager: NSObject, NSWindowDelegate {
     
     // MARK: - Window Opening Methods
     func openMain(action: ActionType = .translate) {
-        checkAccessibilityPermissionAndGetClipboard(action: action) { [weak self] success in
+        // 根据操作类型先执行主任务
+        if action == .screenshotTranslate {
+            performScreenshotAndOCR(completion: handleCompletion(action: action))
+        } else {
+            checkAccessibilityPermissionAndGetClipboard(action: action, completion: handleCompletion(action: action))
+        }
+    }
+    
+    private func handleCompletion(action: ActionType) -> (Bool) -> Void {
+        return { [weak self] success in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                
                 if success {
-                    guard let window = self.mainWindow else { return }
-                    
-                    if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
-                        window.setFrameOrigin(pinnedOrigin)
-                    } else {
-                        window.center()
-                    }
-                    
-                    window.makeKeyAndOrderFront(nil)
-                    window.orderFrontRegardless()
-                    NSApp.activate(ignoringOtherApps: true)
+                    self.showMainWindow()
                 } else {
-                    print("未能成功获取选中文本或用户取消了操作。")
+                    if action == .screenshotTranslate {
+                        print("截图翻译失败或用户取消了操作。")
+                    } else {
+                        print("未能成功获取选中文本或用户取消了操作。")
+                    }
                 }
             }
         }
+    }
+    
+    private func showMainWindow() {
+        guard let window = self.mainWindow else { return }
+        
+        if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
+            window.setFrameOrigin(pinnedOrigin)
+        } else {
+            window.center()
+        }
+        
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     func openVocabulary() {
@@ -272,16 +288,9 @@ class WindowManager: NSObject, NSWindowDelegate {
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
         
         if accessEnabled {
-            // 如果是截图翻译动作，直接执行截图
-            if action == .screenshotTranslate {
-                performScreenshotAndOCR { success in
-                    completion(success)
-                }
-            } else {
-                // 如果有权限，尝试获取剪贴板内容
-                getClipboardContent(action: action) { _ in
-                    completion(true)
-                }
+            // 如果有权限，尝试获取剪贴板内容
+            getClipboardContent(action: action) { _ in
+                completion(true)
             }
         } else {
             // 显示权限提示
