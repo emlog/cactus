@@ -6,6 +6,9 @@
 ### 中文 🇨🇳
 有一天，一只小猫在公园里迷路了。开始下雨了，猫在树下颤抖着。这时，一个温柔的少女走了过来，问道：“没事吧？”少女把自己的伞递给了猫，并带着它回家。从那天起，他们就一直一起生活。猫在新家里幸福地生活着，成为了少女最好的朋友。
 
+### 繁体中文
+有一天，一隻小貓在公園裡迷路了。開始下雨了，貓在樹下顫抖著。這時，一位溫柔的少女走了過來，問道：「沒事吧？」少女把自己的傘遞給了貓，並帶著牠回家。從那天起，他們就一直一起生活。貓在新家裡幸福地生活著，成為了少女最好的朋友。
+
 ### 英语 🇬🇧
 One day, a kitten got lost in a park. It started to rain, and the cat shivered under a tree. Then a gentle girl came over and asked, "Are you okay?" The girl gave the cat her umbrella and took it home. From that day on, they lived together. The cat lived happily in his new home and became the girl's best friend.
 

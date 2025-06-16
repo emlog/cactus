@@ -391,7 +391,19 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
         
         // 按优先级排序：日语优先，然后是韩语、简体中文、繁体中文、英语
-        request.recognitionLanguages = ["zh-Hans", "zh-Hant", "en"]
+        let systemLangCode = LangService.shared.getSystemLanguageCode()
+        switch systemLangCode {
+        case "zh-CN":
+            request.recognitionLanguages = ["zh-Hans", "en"]
+        case "zh-TW":
+            request.recognitionLanguages = ["zh-Hant", "en"]
+        case "ja-JP":
+            request.recognitionLanguages = ["ja", "en"]
+        case "ko-KR":
+            request.recognitionLanguages = ["ko", "en"]
+        default:
+            request.recognitionLanguages = ["zh-Hans", "en"]
+        }
         request.recognitionLevel = .accurate
         request.usesLanguageCorrection = true
         // 使用最新的 revision 以获得更好的准确性
