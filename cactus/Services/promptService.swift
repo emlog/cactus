@@ -322,7 +322,7 @@ Finally, please refer to the output example for querying "tiger":
         
         请按照如下格式输出：
         
-        ## 【查询的词语】
+        ## 查询的词语
         - 拼音：（标准汉语拼音，带声调）
         - 词性：（如：名词、动词、形容词、副词、成语、语气词等）
         - 英文翻译：（如果词语有英文翻译，需提供）
