@@ -325,6 +325,7 @@ Finally, please refer to the output example for querying "tiger":
         ## 【查询的词语】
         - 拼音：（标准汉语拼音，带声调）
         - 词性：（如：名词、动词、形容词、副词、成语、语气词等）
+        - 英文翻译：（如果词语有英文翻译，需提供）
         
         ### 释义：
         1.（义项一：释义应简明扼要，使用书面语表达，体现语义核心，必要时标注使用语域或语体色彩）
@@ -346,6 +347,7 @@ Finally, please refer to the output example for querying "tiger":
         ## `苹果`
         - 拼音：píng guǒ
         - 词性：名词
+        - 英文翻译：apple
         ### 释义：
         1. 蔷薇科苹果属植物的果实，味甜或略酸，是常见水果。
         2. 特指苹果公司（Apple Inc.）或其产品。
@@ -360,10 +362,11 @@ Finally, please refer to the output example for querying "tiger":
         
         請按照如下格式輸出：
         
-        ## 【查詢的詞語】
+        ## 查詢的詞語
         - 注音：（標準注音符號）
         - 漢語拼音：（標準漢語拼音，帶聲調）
         - 詞性：（如：名詞、動詞、形容詞、副詞、成語、語氣詞等）
+        - 英文翻譯：（如果詞語有英文翻譯，需提供）
         
         ### 釋義：
         1.（義項一：釋義應簡明扼要，使用書面語表達，體現語義核心，必要時標註使用語域或語體色彩）
@@ -386,6 +389,7 @@ Finally, please refer to the output example for querying "tiger":
         - 注音：ㄆㄧㄥˊ ㄍㄨㄛˇ
         - 漢語拼音：píng guǒ
         - 詞性：名詞
+        - 英文翻譯：apple
         ### 釋義：
         1. 薔薇科蘋果屬植物的果實，味甜或略酸，是常見水果。
         2. 特指蘋果公司（Apple Inc.）或其產品。
@@ -403,6 +407,7 @@ Finally, please refer to the output example for querying "tiger":
         ## 検索語
         - 読み方：（標準的な読み方、アクセント表示は任意）
         - 品詞：（例：名詞、動詞、形容詞、副詞、慣用句など）
+        - 英語翻訳：（単語に英語翻訳がある場合は提供してください）
         
         ### 意味：
         1.（語義1：簡潔かつ要点を押さえた書面語で表現し、意味の中核を示す。必要に応じて使用域や文体上のニュアンスを付記する）
@@ -424,6 +429,7 @@ Finally, please refer to the output example for querying "tiger":
         ## `りんご`
         - 読み方：りんご
         - 品詞：名詞
+        - 英語翻訳：apple
         ### 意味：
         1. バラ科リンゴ属の植物の果実。甘いまたはやや酸っぱい味で、一般的な果物。
         2. 特にアップル社（Apple Inc.）またはその製品を指す。
@@ -441,6 +447,7 @@ Finally, please refer to the output example for querying "tiger":
         ## 검색어
         - 발음: (표준 발음, 성조 표기)
         - 품사: (예: 명사, 동사, 형용사, 부사, 관용구, 어미 등)
+        - 영어 번역: (단어에 영어 번역이 있는 경우 제공)
         
         ### 뜻풀이:
         1. (의미 항목 1: 간결하고 핵심적인 내용을 서면으로 표현하며, 의미의 핵심을 드러내고, 필요한 경우 사용 영역이나 문체적 특징을 명시)
@@ -462,6 +469,7 @@ Finally, please refer to the output example for querying "tiger":
         ## `사과`
         - 발음: 사과
         - 품사: 명사
+        - 영어 번역: apple
         ### 뜻풀이:
         1. 장미과 사과나무속 식물의 열매로, 달거나 약간 신 맛이 나며 흔한 과일이다.
         2. 특히 애플사(Apple Inc.) 또는 그 제품을 가리킨다.
