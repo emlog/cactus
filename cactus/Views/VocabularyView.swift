@@ -34,12 +34,19 @@ struct VocabularyView: View {
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 0)
                             .fill(selectedWord?.objectID == wordEntry.objectID 
-                                ? Color.accentColor.opacity(0.2) 
-                                : Color.clear)
+                                  ? Color.accentColor.opacity(0.2) 
+                                  : Color.clear)
                             .padding(.vertical, 0)
                     )
                     .onTapGesture {
                         selectedWord = wordEntry
+                    }
+                    .contextMenu {
+                        Button(action: {
+                            deleteSelectedWord(wordEntry)
+                        }) {
+                            Label("删除", systemImage: "trash")
+                        }
                     }
                 }
                 .listStyle(.plain)
@@ -180,6 +187,13 @@ struct VocabularyView: View {
                 .keyboardShortcut(.downArrow, modifiers: [])
                 .opacity(0)
                 .allowsHitTesting(false)
+                
+                Button("Delete") {
+                    deleteCurrentWord()
+                }
+                .keyboardShortcut(.delete, modifiers: [])
+                .opacity(0)
+                .allowsHitTesting(false)
             }
         )
         .onAppear {
@@ -256,6 +270,35 @@ struct VocabularyView: View {
         formatter.dateStyle = .short
         formatter.timeStyle = .short
         return formatter.string(from: date)
+    }
+    
+    // 删除当前选中的单词
+    private func deleteCurrentWord() {
+        guard let selectedWord = selectedWord else { return }
+        deleteSelectedWord(selectedWord)
+    }
+    
+    // 删除指定单词并自动选择下一个
+    private func deleteSelectedWord(_ wordToDelete: WordEntry) {
+        guard let currentIndex = vocabularyManager.wordEntries.firstIndex(of: wordToDelete) else { return }
+        
+        // 删除前确定下一个要选择的单词
+        var nextSelectedWord: WordEntry?
+        if vocabularyManager.wordEntries.count > 1 {
+            if currentIndex < vocabularyManager.wordEntries.count - 1 {
+                // 选择下一个
+                nextSelectedWord = vocabularyManager.wordEntries[currentIndex + 1]
+            } else if currentIndex > 0 {
+                // 选择上一个
+                nextSelectedWord = vocabularyManager.wordEntries[currentIndex - 1]
+            }
+        }
+        
+        // 执行删除
+        vocabularyManager.deleteWord(wordToDelete)
+        
+        // 更新选中状态
+        selectedWord = nextSelectedWord
     }
 }
 

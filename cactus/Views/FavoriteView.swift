@@ -29,7 +29,7 @@ struct FavoriteView: View {
                             .font(.system(size: 14, weight: .medium))
                             .lineSpacing(4)
                             .lineLimit(2)
-                            
+                        
                         Text(formatDate(favoriteEntry.timestamp))
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -41,13 +41,20 @@ struct FavoriteView: View {
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 0)
-                            .fill(selectedFavorite?.objectID == favoriteEntry.objectID 
-                                ? Color.accentColor.opacity(0.2) 
-                                : Color.clear)
+                            .fill(selectedFavorite?.objectID == favoriteEntry.objectID
+                                  ? Color.accentColor.opacity(0.2)
+                                  : Color.clear)
                             .padding(.vertical, 0)
                     )
                     .onTapGesture {
                         selectedFavorite = favoriteEntry
+                    }
+                    .contextMenu {
+                        Button(action: {
+                            deleteSelectedFavorite(favoriteEntry)
+                        }) {
+                            Label("删除", systemImage: "trash")
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -252,6 +259,13 @@ struct FavoriteView: View {
                 .keyboardShortcut(.downArrow, modifiers: [])
                 .opacity(0)
                 .allowsHitTesting(false)
+                
+                Button("Delete") {
+                    deleteCurrentFavorite()
+                }
+                .keyboardShortcut(.delete, modifiers: [])
+                .opacity(0)
+                .allowsHitTesting(false)
             }
         )
         .onAppear {
@@ -331,5 +345,34 @@ struct FavoriteView: View {
         formatter.dateStyle = .short
         formatter.timeStyle = .short
         return formatter.string(from: date)
+    }
+    
+    // 删除当前选中的收藏
+    private func deleteCurrentFavorite() {
+        guard let selectedFavorite = selectedFavorite else { return }
+        deleteSelectedFavorite(selectedFavorite)
+    }
+    
+    // 删除指定收藏并自动选择下一个
+    private func deleteSelectedFavorite(_ favoriteToDelete: FavoriteEntry) {
+        guard let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: favoriteToDelete) else { return }
+        
+        // 删除前确定下一个要选择的收藏
+        var nextSelectedFavorite: FavoriteEntry?
+        if favoriteManager.favoriteEntries.count > 1 {
+            if currentIndex < favoriteManager.favoriteEntries.count - 1 {
+                // 选择下一个
+                nextSelectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
+            } else if currentIndex > 0 {
+                // 选择上一个
+                nextSelectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
+            }
+        }
+        
+        // 执行删除
+        favoriteManager.deleteFavorite(favoriteToDelete)
+        
+        // 更新选中状态
+        selectedFavorite = nextSelectedFavorite
     }
 }
