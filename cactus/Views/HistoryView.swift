@@ -382,27 +382,11 @@ struct HistoryView: View {
         guard let selectedHistory = selectedHistory else { return }
         deleteSelectedHistory(selectedHistory)
     }
-    // 删除指定历史记录并自动选择下一个
+    
+    // 删除指定历史记录
     private func deleteSelectedHistory(_ historyToDelete: HistoryEntry) {
-        guard let currentIndex = historyManager.historyEntries.firstIndex(of: historyToDelete) else { return }
-        
-        // 删除前确定下一个要选择的历史记录
-        var nextSelectedHistory: HistoryEntry?
-        if historyManager.historyEntries.count > 1 {
-            if currentIndex < historyManager.historyEntries.count - 1 {
-                // 选择下一个
-                nextSelectedHistory = historyManager.historyEntries[currentIndex + 1]
-            } else if currentIndex > 0 {
-                // 选择上一个
-                nextSelectedHistory = historyManager.historyEntries[currentIndex - 1]
-            }
-        }
-        
         // 执行删除
         historyManager.deleteHistory(historyToDelete)
-        
-        // 更新选中状态
-        selectedHistory = nextSelectedHistory
     }
     
     // 检查历史记录是否已收藏

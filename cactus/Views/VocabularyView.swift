@@ -269,27 +269,10 @@ struct VocabularyView: View {
         deleteSelectedWord(selectedWord)
     }
     
-    // 删除指定单词并自动选择下一个
+    // 删除指定单词
     private func deleteSelectedWord(_ wordToDelete: WordEntry) {
-        guard let currentIndex = vocabularyManager.wordEntries.firstIndex(of: wordToDelete) else { return }
-        
-        // 删除前确定下一个要选择的单词
-        var nextSelectedWord: WordEntry?
-        if vocabularyManager.wordEntries.count > 1 {
-            if currentIndex < vocabularyManager.wordEntries.count - 1 {
-                // 选择下一个
-                nextSelectedWord = vocabularyManager.wordEntries[currentIndex + 1]
-            } else if currentIndex > 0 {
-                // 选择上一个
-                nextSelectedWord = vocabularyManager.wordEntries[currentIndex - 1]
-            }
-        }
-        
         // 执行删除
         vocabularyManager.deleteWord(wordToDelete)
-        
-        // 更新选中状态
-        selectedWord = nextSelectedWord
     }
 }
 

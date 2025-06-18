@@ -344,26 +344,9 @@ struct FavoriteView: View {
         deleteSelectedFavorite(selectedFavorite)
     }
     
-    // 删除指定收藏并自动选择下一个
+    // 删除指定收藏
     private func deleteSelectedFavorite(_ favoriteToDelete: FavoriteEntry) {
-        guard let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: favoriteToDelete) else { return }
-        
-        // 删除前确定下一个要选择的收藏
-        var nextSelectedFavorite: FavoriteEntry?
-        if favoriteManager.favoriteEntries.count > 1 {
-            if currentIndex < favoriteManager.favoriteEntries.count - 1 {
-                // 选择下一个
-                nextSelectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
-            } else if currentIndex > 0 {
-                // 选择上一个
-                nextSelectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
-            }
-        }
-        
         // 执行删除
         favoriteManager.deleteFavorite(favoriteToDelete)
-        
-        // 更新选中状态
-        selectedFavorite = nextSelectedFavorite
     }
 }
