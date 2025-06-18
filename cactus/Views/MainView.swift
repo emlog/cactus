@@ -559,6 +559,7 @@ struct MainView: View {
     }
     
     // 调用AI服务
+    // 在performAIAction方法中添加历史记录保存
     private func performAIAction(systemMessage: String) {
         guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
@@ -572,15 +573,22 @@ struct MainView: View {
         DispatchQueue.global(qos: .userInitiated).async {
             Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
                 DispatchQueue.main.async {
-                    // 设置窗口已展开状态，避免重复展开和收起输出窗口导致页面跳动，之前放在输出view的onchage中，这依赖内容是否变更来触发，某些情况输出内容并无变化。
                     isResultViewExpanded = true
                     contentModel.isProcessing = false
+                    
+                    // 保存到历史记录
+                    if let resultText = contentModel.resultText, !resultText.isEmpty {
+                        HistoryManager.shared.addHistory(
+                            inputContent: contentModel.text,
+                            outputContent: resultText
+                        )
+                    }
                 }
             } onError: { errorMessage in
                 DispatchQueue.main.async {
                     self.toastMessage = errorMessage
                     self.showErrorToast = true
-                    contentModel.resultText = errorMessage // 将错误信息显示在主输出区域
+                    contentModel.resultText = errorMessage
                     contentModel.isProcessing = false
                 }
             }

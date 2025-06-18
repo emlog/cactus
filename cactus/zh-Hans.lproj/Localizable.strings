@@ -107,3 +107,6 @@
 "purchase_load_product_failed" = "加载产品信息失败";
 "purchase_pending" = "购买正在处理中，请稍后查看";
 "purchase_not_found" = "未找到购买记录";
+
+"clear_all" = "清空全部";
+"clear_all_history_message" = "确定要清空所有历史记录吗？";

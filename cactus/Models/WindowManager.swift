@@ -224,12 +224,30 @@ class WindowManager: NSObject, NSWindowDelegate {
                     title: NSLocalizedString("history", comment: "历史记录"),
                     toolbarIcon: historyIcon
                 ) {
-                    // 这里需要创建一个历史记录视图
-                    Text("历史记录功能待实现")
-                        .frame(minWidth: 600, minHeight: 400)
+                    HistoryView()
                 }
             ]
         )
+    }
+    
+    // 添加打开历史记录的方法
+    func openHistory() {
+        let historyCount = HistoryManager.shared.historyEntries.count
+        let isPremium = PurchaseManager.shared.isPremiumUser
+        
+        if historyCount > 50 && !isPremium {
+            openPreferences()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.settingsWindowController?.show(pane: .premium)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        } else {
+            openDataManagement()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.dataManagementWindowController?.show(pane: .history)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        }
     }
     
     @objc private func dataManagementWindowWillClose(_ notification: Notification) {

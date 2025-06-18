@@ -5,6 +5,11 @@
         <attribute name="outputContent" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="HistoryEntry" representedClassName="HistoryEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="inputContent" optional="YES" attributeType="String"/>
+        <attribute name="outputContent" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
     <entity name="WordEntry" representedClassName="WordEntry" syncable="YES" codeGenerationType="class">
         <attribute name="definition" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

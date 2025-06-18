@@ -112,6 +112,16 @@ class StatusBarManager: NSObject {
             favoritesMenuItem.target = self
             menu.addItem(favoritesMenuItem)
             
+            // 历史记录
+            let historyMenuItem = NSMenuItem(
+                title: NSLocalizedString("history", comment: "历史记录"),
+                action: #selector(openHistory),
+                keyEquivalent: ""
+            )
+            historyMenuItem.image = NSImage(systemSymbolName: "clock", accessibilityDescription: nil)
+            historyMenuItem.target = self
+            menu.addItem(historyMenuItem)
+            
             menu.addItem(NSMenuItem.separator())
             
             // 偏好设置
@@ -201,5 +211,9 @@ class StatusBarManager: NSObject {
     
     @objc private func openMainScreenshotAction() {
         windowManager?.openMain(action: .screenshotTranslate)
+    }
+    
+    @objc private func openHistory() {
+        windowManager?.openHistory()
     }
 }
