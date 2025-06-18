@@ -121,16 +121,7 @@ struct FavoriteView: View {
                                     
                                     // 删除按钮
                                     Button(action: {
-                                        favoriteManager.deleteFavorite(selectedFavorite)
-                                        if let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: selectedFavorite) {
-                                            if currentIndex < favoriteManager.favoriteEntries.count - 1 {
-                                                self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex + 1]
-                                            } else if !favoriteManager.favoriteEntries.isEmpty && currentIndex > 0 {
-                                                self.selectedFavorite = favoriteManager.favoriteEntries[currentIndex - 1]
-                                            } else {
-                                                self.selectedFavorite = nil
-                                            }
-                                        }
+                                        deleteSelectedFavorite(selectedFavorite)
                                     }) {
                                         Image(systemName: "trash")
                                             .frame(width: 15, height: 15)

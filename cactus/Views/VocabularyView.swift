@@ -90,16 +90,7 @@ struct VocabularyView: View {
                             Spacer()
                             
                             Button(action: {
-                                vocabularyManager.deleteWord(selectedWord)
-                                if let currentIndex = vocabularyManager.wordEntries.firstIndex(of: selectedWord) {
-                                    if currentIndex < vocabularyManager.wordEntries.count - 1 {
-                                        self.selectedWord = vocabularyManager.wordEntries[currentIndex + 1]
-                                    } else if !vocabularyManager.wordEntries.isEmpty && currentIndex > 0 {
-                                        self.selectedWord = vocabularyManager.wordEntries[currentIndex - 1]
-                                    } else {
-                                        self.selectedWord = nil
-                                    }
-                                }
+                                deleteSelectedWord(selectedWord)
                             }) {
                                 Label("delete", systemImage: "trash")
                                     .labelStyle(.iconOnly)

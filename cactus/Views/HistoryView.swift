@@ -150,17 +150,7 @@ struct HistoryView: View {
                                     
                                     // 删除按钮
                                     Button(action: {
-                                        historyManager.deleteHistory(selectedHistory)
-                                        // 删除后重新选择
-                                        if let currentIndex = historyManager.historyEntries.firstIndex(of: selectedHistory) {
-                                            if currentIndex < historyManager.historyEntries.count - 1 {
-                                                self.selectedHistory = historyManager.historyEntries[currentIndex + 1]
-                                            } else if !historyManager.historyEntries.isEmpty && currentIndex > 0 {
-                                                self.selectedHistory = historyManager.historyEntries[currentIndex - 1]
-                                            } else {
-                                                self.selectedHistory = nil
-                                            }
-                                        }
+                                        deleteSelectedHistory(selectedHistory)
                                     }) {
                                         Image(systemName: "trash")
                                             .frame(width: 15, height: 15)
