@@ -198,40 +198,42 @@ class WindowManager: NSObject, NSWindowDelegate {
     }
     
     private func createDataManagementWindowController() {
-        let vocabularyIcon = NSImage(systemSymbolName: "book.pages", accessibilityDescription: "Vocabulary") ?? NSImage()
-        let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
-        let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
-        
-        dataManagementWindowController = SettingsWindowController(
-            panes: [
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.vocabulary,
-                    title: NSLocalizedString("vocabulary", comment: "生词本"),
-                    toolbarIcon: vocabularyIcon
-                ) {
-                    VocabularyView()
-                },
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.favorites,
-                    title: NSLocalizedString("favorites", comment: "收藏夹"),
-                    toolbarIcon: favoritesIcon
-                ) {
-                    FavoriteView()
-                },
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.history,
-                    title: NSLocalizedString("history", comment: "历史记录"),
-                    toolbarIcon: historyIcon
-                ) {
-                    HistoryView()
-                }
-            ]
-        )
-        
-        // 配置窗口支持最大化和最小化到dock栏
-        if let window = dataManagementWindowController?.window {
-            window.styleMask.insert([.miniaturizable, .resizable])
-            window.collectionBehavior = [.fullScreenPrimary]
+        DispatchQueue.main.async {
+            let vocabularyIcon = NSImage(systemSymbolName: "book.pages", accessibilityDescription: "Vocabulary") ?? NSImage()
+            let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
+            let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
+            
+            self.dataManagementWindowController = SettingsWindowController(
+                panes: [
+                    Settings.Pane(
+                        identifier: Settings.PaneIdentifier.vocabulary,
+                        title: NSLocalizedString("vocabulary", comment: "生词本"),
+                        toolbarIcon: vocabularyIcon
+                    ) {
+                        VocabularyView()
+                    },
+                    Settings.Pane(
+                        identifier: Settings.PaneIdentifier.favorites,
+                        title: NSLocalizedString("favorites", comment: "收藏夹"),
+                        toolbarIcon: favoritesIcon
+                    ) {
+                        FavoriteView()
+                    },
+                    Settings.Pane(
+                        identifier: Settings.PaneIdentifier.history,
+                        title: NSLocalizedString("history", comment: "历史记录"),
+                        toolbarIcon: historyIcon
+                    ) {
+                        HistoryView()
+                    }
+                ]
+            )
+            
+            // 配置窗口支持最大化和最小化到dock栏
+            if let window = self.dataManagementWindowController?.window {
+                window.styleMask.insert([.miniaturizable, .resizable])
+                window.collectionBehavior = [.fullScreenPrimary]
+            }
         }
     }
     
