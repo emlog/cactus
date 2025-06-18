@@ -12,6 +12,7 @@ import MarkdownUI
 
 struct HistoryView: View {
     @StateObject private var historyManager = HistoryManager.shared
+    @StateObject private var favoriteManager = FavoriteManager.shared
     @State private var selectedHistory: HistoryEntry?
     @FocusState private var isViewFocused: Bool
     
@@ -49,8 +50,8 @@ struct HistoryView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(
                             RoundedRectangle(cornerRadius: 0)
-                                .fill(selectedHistory?.objectID == historyEntry.objectID 
-                                      ? Color.accentColor.opacity(0.2) 
+                                .fill(selectedHistory?.objectID == historyEntry.objectID
+                                      ? Color.accentColor.opacity(0.2)
                                       : Color.clear)
                                 .padding(.vertical, 0)
                         )
@@ -147,6 +148,17 @@ struct HistoryView: View {
                                     }
                                     .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                                     .animation(.easeInOut, value: showInputCopySuccess)
+                                    
+                                    // 收藏按钮
+                                    Button(action: {
+                                        toggleFavorite(selectedHistory)
+                                    }) {
+                                        Image(systemName: isFavorited(selectedHistory) ? "heart.fill" : "heart")
+                                            .frame(width: 15, height: 15)
+                                            .foregroundColor(isFavorited(selectedHistory) ? .red : .secondary)
+                                    }
+                                    .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                                    .animation(.easeInOut, value: isFavorited(selectedHistory))
                                     
                                     // 删除按钮
                                     Button(action: {
@@ -393,5 +405,32 @@ struct HistoryView: View {
         
         // 更新选中状态
         selectedHistory = nextSelectedHistory
+    }
+    
+    // 检查历史记录是否已收藏
+    private func isFavorited(_ historyEntry: HistoryEntry) -> Bool {
+        return favoriteManager.favoriteEntries.contains { favorite in
+            favorite.inputContent == historyEntry.inputContent &&
+            favorite.outputContent == historyEntry.outputContent
+        }
+    }
+    
+    // 切换收藏状态
+    private func toggleFavorite(_ historyEntry: HistoryEntry) {
+        let inputContent = historyEntry.inputContent ?? ""
+        let outputContent = historyEntry.outputContent ?? ""
+        
+        if isFavorited(historyEntry) {
+            // 取消收藏
+            if let favoriteToRemove = favoriteManager.favoriteEntries.first(where: { favorite in
+                favorite.inputContent == inputContent &&
+                favorite.outputContent == outputContent
+            }) {
+                favoriteManager.deleteFavorite(favoriteToRemove)
+            }
+        } else {
+            // 添加收藏
+            favoriteManager.addFavorite(inputContent: inputContent, outputContent: outputContent)
+        }
     }
 }
