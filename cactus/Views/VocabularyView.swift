@@ -262,11 +262,30 @@ struct VocabularyView: View {
     
     // 删除指定单词
     private func deleteSelectedWord(_ wordToDelete: WordEntry) {
+        // 验证条目是否存在
+        guard vocabularyManager.wordEntries.contains(wordToDelete) else { return }
+        
+        // 记录当前索引以便选择下一个条目
+        let currentIndex = vocabularyManager.wordEntries.firstIndex(of: wordToDelete)
+        
         // 执行删除
         vocabularyManager.deleteWord(wordToDelete)
         
-        // 如果删除的是当前选中的单词，清空选择
-        selectedWord = nil
+        // 智能选择下一个条目
+        DispatchQueue.main.async {
+            if self.vocabularyManager.wordEntries.isEmpty {
+                self.selectedWord = nil
+            } else if let index = currentIndex {
+                // 选择下一个条目，如果是最后一个则选择前一个
+                if index < self.vocabularyManager.wordEntries.count {
+                    self.selectedWord = self.vocabularyManager.wordEntries[index]
+                } else if index > 0 {
+                    self.selectedWord = self.vocabularyManager.wordEntries[index - 1]
+                } else {
+                    self.selectedWord = self.vocabularyManager.wordEntries.first
+                }
+            }
+        }
     }
 }
 

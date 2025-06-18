@@ -375,11 +375,30 @@ struct HistoryView: View {
     
     // 删除指定历史记录
     private func deleteSelectedHistory(_ historyToDelete: HistoryEntry) {
+        // 验证条目是否存在
+        guard historyManager.historyEntries.contains(historyToDelete) else { return }
+        
+        // 记录当前索引以便选择下一个条目
+        let currentIndex = historyManager.historyEntries.firstIndex(of: historyToDelete)
+        
         // 执行删除
         historyManager.deleteHistory(historyToDelete)
         
-        // 如果删除的是当前选中的历史记录，清空选择
-        selectedHistory = nil
+        // 智能选择下一个条目
+        DispatchQueue.main.async {
+            if self.historyManager.historyEntries.isEmpty {
+                self.selectedHistory = nil
+            } else if let index = currentIndex {
+                // 选择下一个条目，如果是最后一个则选择前一个
+                if index < self.historyManager.historyEntries.count {
+                    self.selectedHistory = self.historyManager.historyEntries[index]
+                } else if index > 0 {
+                    self.selectedHistory = self.historyManager.historyEntries[index - 1]
+                } else {
+                    self.selectedHistory = self.historyManager.historyEntries.first
+                }
+            }
+        }
     }
     
     // 检查历史记录是否已收藏

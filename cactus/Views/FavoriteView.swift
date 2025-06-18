@@ -336,10 +336,29 @@ struct FavoriteView: View {
     
     // 删除指定收藏
     private func deleteSelectedFavorite(_ favoriteToDelete: FavoriteEntry) {
+        // 验证条目是否存在
+        guard favoriteManager.favoriteEntries.contains(favoriteToDelete) else { return }
+        
+        // 记录当前索引以便选择下一个条目
+        let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: favoriteToDelete)
+        
         // 执行删除
         favoriteManager.deleteFavorite(favoriteToDelete)
         
-        // 如果删除的是当前选中的收藏，清空选择
-        selectedFavorite = nil
+        // 智能选择下一个条目
+        DispatchQueue.main.async {
+            if self.favoriteManager.favoriteEntries.isEmpty {
+                self.selectedFavorite = nil
+            } else if let index = currentIndex {
+                // 选择下一个条目，如果是最后一个则选择前一个
+                if index < self.favoriteManager.favoriteEntries.count {
+                    self.selectedFavorite = self.favoriteManager.favoriteEntries[index]
+                } else if index > 0 {
+                    self.selectedFavorite = self.favoriteManager.favoriteEntries[index - 1]
+                } else {
+                    self.selectedFavorite = self.favoriteManager.favoriteEntries.first
+                }
+            }
+        }
     }
 }
