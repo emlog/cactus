@@ -14,7 +14,7 @@ enum ActionType {
     case translate
     case summarize
     case dictionary
-    case screenshotTranslate  // 新增截图翻译动作
+    case screenshotTranslate
 }
 
 class ShortcutManager {

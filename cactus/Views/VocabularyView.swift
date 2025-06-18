@@ -27,7 +27,7 @@ struct VocabularyView: View {
                         Text(wordEntry.word ?? "")
                             .font(.system(size: 14, weight: .medium))
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading) // 新增
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     .padding(.vertical, 10)
                     .contentShape(Rectangle())
                     .listRowInsets(EdgeInsets())

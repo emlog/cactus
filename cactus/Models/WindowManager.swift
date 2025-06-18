@@ -4,14 +4,13 @@ import KeyboardShortcuts
 import Settings
 import Foundation
 import ApplicationServices
-import Vision  // 新增 Vision 框架导入
+import Vision
 
 class WindowManager: NSObject, NSWindowDelegate {
     var settingsWindow: NSWindow?
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow?
     var favoriteWindow: NSWindow?
-    // 新增数据管理窗口控制器
     private var dataManagementWindowController: SettingsWindowController?
     private var isMainWindowPinned = false
     private var pinnedWindowOrigin: NSPoint?
@@ -176,7 +175,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    // 新增数据管理窗口方法
+    // 数据管理窗口方法
     func openDataManagement() {
         if let existingController = dataManagementWindowController {
             existingController.window?.close()
@@ -265,7 +264,6 @@ class WindowManager: NSObject, NSWindowDelegate {
         dataManagementWindowController = nil
     }
     
-    // 修改现有的 openVocabulary 和 openFavorites 方法
     func openVocabulary() {
         let wordCount = VocabularyManager.shared.wordEntries.count
         let isPremium = PurchaseManager.shared.isPremiumUser
@@ -406,7 +404,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
     }
     
-    // 新增截图和 OCR 功能
+    // 截图和 OCR
     private func performScreenshotAndOCR(completion: @escaping (Bool) -> Void) {
         // 创建临时文件路径
         let tempDirectory = NSTemporaryDirectory()
