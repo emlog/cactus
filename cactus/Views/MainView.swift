@@ -503,6 +503,14 @@ struct MainView: View {
                     if let definition = contentModel.resultText, !definition.isEmpty {
                         vocabularyManager.addWord(word, definition: definition)
                     }
+
+                    // 保存到历史记录
+                    if let resultText = contentModel.resultText, !resultText.isEmpty {
+                        HistoryManager.shared.addHistory(
+                            inputContent: contentModel.text,
+                            outputContent: resultText
+                        )
+                    }
                 }
             } onError: { errorMessage in
                 DispatchQueue.main.async {
