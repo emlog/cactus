@@ -8,8 +8,6 @@
 "favorites" = "즐겨찾기";
 "history" = "기록";
 "setting" = "환경설정";
-"contact" = "문의하기";
-"rate_app" = "앱 평가하기";
 "quit" = "종료";
 
 // pane
@@ -79,10 +77,11 @@
 "cancel" = "취소";
 
 // about
-"website" = "공식 웹사이트";
 "apptitle" = "선인장 AI 도우미";
 "version" = "버전";
 "report_issue" = "문제 신고";
+"contact" = "문의하기";
+"rate_app" = "앱 평가하기";
 
 // erro
 "error_invalid_config" = "시스템 오류: AI 서비스 설정 오류";

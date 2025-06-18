@@ -43,7 +43,7 @@ class StatusBarManager: NSObject {
             mainMenuItem.setShortcut(for: SettingsModel.aiShortcutMain)
             mainMenuItem.target = self
             menu.addItem(mainMenuItem)
-
+            
             // 选中翻译
             let translateMenuItem = NSMenuItem(
                 title: NSLocalizedString("translate", comment: "选中翻译"),
@@ -133,9 +133,9 @@ class StatusBarManager: NSObject {
             
             menu.addItem(NSMenuItem.separator())
             
-            // 联系我们
+            // 反馈问题
             let contactMenuItem = NSMenuItem(
-                title: NSLocalizedString("contact", comment: "联系我们"),
+                title: NSLocalizedString("report_issue", comment: "反馈问题"),
                 action: #selector(openContact),
                 keyEquivalent: ""
             )

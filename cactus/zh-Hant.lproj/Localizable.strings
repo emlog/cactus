@@ -8,8 +8,6 @@
 "favorites" = "收藏夾";
 "history" = "歷史記錄";
 "setting" = "偏好設定";
-"contact" = "聯絡我們";
-"rate_app" = "給個好評吧";
 "quit" = "結束";
 
 // pane
@@ -79,10 +77,11 @@
 "cancel" = "取消";
 
 // About Window
-"website" = "官方網站";
 "apptitle" = "仙人掌 AI 助手";
 "version" = "版本";
 "report_issue" = "回報問題";
+"contact" = "聯絡我們";
+"rate_app" = "給個好評吧";
 
 // error
 "error_invalid_config" = "系統錯誤，AI 服務設定錯誤";

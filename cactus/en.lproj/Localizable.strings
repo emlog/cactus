@@ -8,8 +8,6 @@
 "favorites" = "Favorites";
 "history" = "History";
 "setting" = "Preferences";
-"contact" = "Contact Us";
-"rate_app" = "Rate This App";
 "quit" = "Quit";
 
 // pane
@@ -79,10 +77,11 @@
 "cancel" = "Cancel";
 
 // about
-"website" = "Website";
 "apptitle" = "Cactus AI Assistant";
 "version" = "Version";
 "report_issue" = "Report Issue";
+"contact" = "Contact Us";
+"rate_app" = "Rate This App";
 
 // error
 "error_invalid_config" = "System error, AI service configuration error";

@@ -8,8 +8,6 @@
 "favorites" = "お気に入り";
 "history" = "履歴";
 "setting" = "環境設定";
-"contact" = "お問い合わせ";
-"rate_app" = "アプリを評価する";
 "quit" = "終了";
 
 // pane
@@ -79,10 +77,11 @@
 "cancel" = "キャンセル";
 
 // about
-"website" = "公式サイト";
 "apptitle" = "Cactus AIアシスタント";
 "version" = "バージョン";
 "report_issue" = "問題を報告";
+"contact" = "お問い合わせ";
+"rate_app" = "アプリを評価する";
 
 // error
 "error_invalid_config" = "システムエラー：AIサービスの設定が正しくありません";
