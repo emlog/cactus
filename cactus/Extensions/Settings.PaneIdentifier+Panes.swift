@@ -12,6 +12,11 @@ extension Settings.PaneIdentifier {
     static let ai = Self("ai")
     static let premium = Self("premium") // 新增高级版标识符
     static let about = Self("about") // 为关于页面添加新的标识符
+    
+    // 新增数据管理相关标识符
+    static let vocabulary = Self("vocabulary")
+    static let favorites = Self("favorites")
+    static let history = Self("history")
 }
 
 

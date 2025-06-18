@@ -11,6 +11,8 @@ class WindowManager: NSObject, NSWindowDelegate {
     var mainWindow: NSWindow?
     var vocabularyWindow: NSWindow?
     var favoriteWindow: NSWindow?
+    // 新增数据管理窗口控制器
+    private var dataManagementWindowController: SettingsWindowController?
     private var isMainWindowPinned = false
     private var pinnedWindowOrigin: NSPoint?
     private var pinButton: NSButton?
@@ -174,6 +176,72 @@ class WindowManager: NSObject, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
     
+    // 新增数据管理窗口方法
+    func openDataManagement() {
+        if let existingController = dataManagementWindowController {
+            existingController.window?.close()
+            dataManagementWindowController = nil
+        }
+        
+        createDataManagementWindowController()
+        
+        if let window = dataManagementWindowController?.window {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(dataManagementWindowWillClose),
+                name: NSWindow.willCloseNotification,
+                object: window
+            )
+        }
+        
+        dataManagementWindowController?.show()
+        dataManagementWindowController?.window?.orderFrontRegardless()
+    }
+    
+    private func createDataManagementWindowController() {
+        let vocabularyIcon = NSImage(systemSymbolName: "book", accessibilityDescription: "Vocabulary") ?? NSImage()
+        let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
+        let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
+        
+        dataManagementWindowController = SettingsWindowController(
+            panes: [
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.vocabulary,
+                    title: NSLocalizedString("vocabulary", comment: "生词本"),
+                    toolbarIcon: vocabularyIcon
+                ) {
+                    VocabularyView()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.favorites,
+                    title: NSLocalizedString("favorites", comment: "收藏夹"),
+                    toolbarIcon: favoritesIcon
+                ) {
+                    FavoriteView()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.history,
+                    title: NSLocalizedString("history", comment: "历史记录"),
+                    toolbarIcon: historyIcon
+                ) {
+                    // 这里需要创建一个历史记录视图
+                    Text("历史记录功能待实现")
+                        .frame(minWidth: 600, minHeight: 400)
+                }
+            ]
+        )
+    }
+    
+    @objc private func dataManagementWindowWillClose(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSWindow.willCloseNotification,
+            object: notification.object
+        )
+        dataManagementWindowController = nil
+    }
+    
+    // 修改现有的 openVocabulary 和 openFavorites 方法
     func openVocabulary() {
         let wordCount = VocabularyManager.shared.wordEntries.count
         let isPremium = PurchaseManager.shared.isPremiumUser
@@ -185,10 +253,11 @@ class WindowManager: NSObject, NSWindowDelegate {
                 NSApp.activate(ignoringOtherApps: true)
             }
         } else {
-            vocabularyWindow?.center()
-            vocabularyWindow?.makeKeyAndOrderFront(nil)
-            vocabularyWindow?.orderFrontRegardless()
-            NSApp.activate(ignoringOtherApps: true)
+            openDataManagement()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.dataManagementWindowController?.show(pane: .vocabulary)
+                NSApp.activate(ignoringOtherApps: true)
+            }
         }
     }
     
@@ -203,10 +272,11 @@ class WindowManager: NSObject, NSWindowDelegate {
                 NSApp.activate(ignoringOtherApps: true)
             }
         } else {
-            favoriteWindow?.center()
-            favoriteWindow?.makeKeyAndOrderFront(nil)
-            favoriteWindow?.orderFrontRegardless()
-            NSApp.activate(ignoringOtherApps: true)
+            openDataManagement()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.dataManagementWindowController?.show(pane: .favorites)
+                NSApp.activate(ignoringOtherApps: true)
+            }
         }
     }
     
