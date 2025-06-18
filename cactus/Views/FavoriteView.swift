@@ -268,16 +268,6 @@ struct FavoriteView: View {
             // 设置焦点以接收键盘事件
             isViewFocused = true
         }
-        .onChange(of: favoriteManager.favoriteEntries) { newEntries in
-            // 当收藏列表更新时，如果没有选中的收藏且列表不为空，则选择第一个
-            if selectedFavorite == nil && !newEntries.isEmpty {
-                selectedFavorite = newEntries.first
-            }
-            // 如果当前选中的收藏不在新列表中，则重新选择第一个
-            if let selected = selectedFavorite, !newEntries.contains(selected) {
-                selectedFavorite = newEntries.first
-            }
-        }
     }
     
     // 获取预览文本（前50个字符）

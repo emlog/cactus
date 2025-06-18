@@ -200,16 +200,6 @@ struct VocabularyView: View {
             // 窗口关闭时停止朗读
             stopSpeaking()
         }
-        .onChange(of: vocabularyManager.wordEntries) { newEntries in
-            // 当单词列表更新时，如果没有选中的单词且列表不为空，则选择第一个
-            if selectedWord == nil && !newEntries.isEmpty {
-                selectedWord = newEntries.first
-            }
-            // 如果当前选中的单词不在新列表中，则重新选择第一个
-            if let selected = selectedWord, !newEntries.contains(selected) {
-                selectedWord = newEntries.first
-            }
-        }
     }
     
     // 添加朗读功能

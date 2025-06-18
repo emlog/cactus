@@ -307,16 +307,6 @@ struct HistoryView: View {
             // 设置焦点以接收键盘事件
             isViewFocused = true
         }
-        .onChange(of: historyManager.historyEntries) { newEntries in
-            // 当历史记录列表更新时，如果没有选中的记录且列表不为空，则选择第一个
-            if selectedHistory == nil && !newEntries.isEmpty {
-                selectedHistory = newEntries.first
-            }
-            // 如果当前选中的记录不在新列表中，则重新选择第一个
-            if let selected = selectedHistory, !newEntries.contains(selected) {
-                selectedHistory = newEntries.first
-            }
-        }
     }
     
     // 获取预览文本（前50个字符）
