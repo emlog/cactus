@@ -67,84 +67,85 @@ struct VocabularyView: View {
             // 右侧单词详情 - 占比约80%
             VStack(spacing: 0) {
                 if let selectedWord = selectedWord {
-                    // 头部区域
-                    VStack(alignment: .leading, spacing: 12) {
-                        // 单词标题
-                        Text(selectedWord.word ?? "")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .textSelection(.enabled)
-                            .foregroundColor(.primary)
-                        // 操作按钮区域
-                        HStack(spacing: 12) {
-                            Button(action: {
-                                speakWord(selectedWord.word ?? "")
-                            }) {
-                                Label("", systemImage: "speaker.wave.2")
-                                    .labelStyle(.iconOnly)
-                                    .foregroundColor(.accentColor)
+                    // 内容区域
+                    VStack(alignment: .leading, spacing: 8) {
+                        ZStack(alignment: .topTrailing) {
+                            ScrollView {
+                                VStack(alignment: .leading, spacing: 16) {
+                                    // 单词定义
+                                    Markdown(selectedWord.definition ?? "")
+                                        .markdownTheme(.gitHub)
+                                        .markdownTextStyle(\.text) {
+                                            FontSize(.em(0.95))
+                                            ForegroundColor(.primary)
+                                        }
+                                        .markdownTextStyle(\.code) {
+                                            FontFamilyVariant(.monospaced)
+                                            FontSize(.em(0.85))
+                                            ForegroundColor(.purple)
+                                            BackgroundColor(.purple.opacity(0.1))
+                                        }
+                                        .markdownBlockStyle(\.codeBlock) { configuration in
+                                            configuration.label
+                                                .padding()
+                                                .background(Color(.controlBackgroundColor))
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        }
+                                        .markdownBlockStyle(\.blockquote) { configuration in
+                                            configuration.label
+                                                .padding()
+                                                .overlay(alignment: .leading) {
+                                                    Rectangle()
+                                                        .fill(Color.blue)
+                                                        .frame(width: 4)
+                                                }
+                                                .background(Color.blue.opacity(0.1))
+                                        }
+                                        .textSelection(.enabled)
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.top, 12)
+                                .padding(.bottom, 20)
                             }
-                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                            .disabled((selectedWord.word ?? "").isEmpty)
+                            .background(Color(.textBackgroundColor))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color(.separatorColor), lineWidth: 1)
+                            )
                             
-                            Spacer()
-                            
-                            Button(action: {
-                                deleteSelectedWord(selectedWord)
-                            }) {
-                                Label("delete", systemImage: "trash")
-                                    .labelStyle(.iconOnly)
-                                    .foregroundColor(.secondary)
+                            // 操作按钮 - 右上角
+                            HStack(spacing: 8) {
+                                Button(action: {
+                                    speakWord(selectedWord.word ?? "")
+                                }) {
+                                    Image(systemName: "speaker.wave.2")
+                                        .frame(width: 15, height: 15)
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
+                                .disabled((selectedWord.word ?? "").isEmpty)
+                                
+                                // 删除按钮
+                                Button(action: {
+                                    deleteSelectedWord(selectedWord)
+                                }) {
+                                    Image(systemName: "trash")
+                                        .frame(width: 15, height: 15)
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(HoverButtonStyle(horizontalPadding: 4, verticalPadding: 4))
                             }
-                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color(.textBackgroundColor).opacity(1.0))
+                                    .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                            )
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 5)
                         }
                     }
                     .padding()
-                    // 细微的分隔线
-                    Rectangle()
-                        .fill(Color(NSColor.separatorColor).opacity(0.5))
-                        .frame(height: 0.5)
-                    ScrollView {
-                        Markdown(selectedWord.definition ?? "")
-                            .markdownTheme(.gitHub)
-                            .markdownTextStyle(\.text) {
-                                FontSize(.em(0.95))
-                                ForegroundColor(.primary)
-                            }
-                            .markdownTextStyle(\.code) {
-                                FontFamilyVariant(.monospaced)
-                                FontSize(.em(0.85))
-                                ForegroundColor(.purple)
-                                BackgroundColor(.purple.opacity(0.1))
-                            }
-                            .markdownBlockStyle(\.codeBlock) { configuration in
-                                configuration.label
-                                    .padding()
-                                    .background(Color(.controlBackgroundColor))
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            .markdownBlockStyle(\.blockquote) { configuration in
-                                configuration.label
-                                    .padding()
-                                    .overlay(alignment: .leading) {
-                                        Rectangle()
-                                            .fill(Color.blue)
-                                            .frame(width: 4)
-                                    }
-                                    .background(Color.blue.opacity(0.1))
-                            }
-                            .textSelection(.enabled)
-                            .padding(.horizontal, 12)
-                            .padding(.top, 10)
-                            .padding(.bottom, 30) // 增加底部内边距，为按钮留出空间
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .background(Color(.textBackgroundColor))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color(.separatorColor), lineWidth: 1)
-                    )
                     
                 } else {
                     // 空状态
