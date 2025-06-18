@@ -47,29 +47,14 @@ class HistoryManager: ObservableObject {
     }
     
     func addHistory(inputContent: String, outputContent: String) {
-        // 检查是否已存在相同的输入内容
-        let request: NSFetchRequest<HistoryEntry> = HistoryEntry.fetchRequest()
-        request.predicate = NSPredicate(format: "inputContent == %@", inputContent)
+        // 直接创建新条目，不检查重复
+        let newEntry = HistoryEntry(context: context)
+        newEntry.inputContent = inputContent
+        newEntry.outputContent = outputContent
+        newEntry.timestamp = Date()
         
-        do {
-            let existingEntries = try context.fetch(request)
-            if !existingEntries.isEmpty {
-                // 如果已存在，更新时间戳和输出内容
-                existingEntries.first?.timestamp = Date()
-                existingEntries.first?.outputContent = outputContent
-            } else {
-                // 创建新条目
-                let newEntry = HistoryEntry(context: context)
-                newEntry.inputContent = inputContent
-                newEntry.outputContent = outputContent
-                newEntry.timestamp = Date()
-            }
-            
-            saveContext()
-            fetchHistoryEntries()
-        } catch {
-            print("Add history error: \(error)")
-        }
+        saveContext()
+        fetchHistoryEntries()
     }
     
     func deleteHistory(_ historyEntry: HistoryEntry) {
