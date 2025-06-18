@@ -87,14 +87,12 @@ struct HistoryView: View {
                         .font(.caption)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 4)
-                        .alert("确认清空", isPresented: $showClearAllConfirmation) {
-                            Button("取消", role: .cancel) { }
-                            Button("清空全部", role: .destructive) {
+                        .alert(NSLocalizedString("clear_all_history_message", comment: "确定要清空所有历史记录吗？"), isPresented: $showClearAllConfirmation) {
+                            Button(NSLocalizedString("cancle", comment: "取消"), role: .cancel) { }
+                            Button(NSLocalizedString("confirm", comment: "确定"), role: .destructive) {
                                 historyManager.clearAllHistory()
                                 selectedHistory = nil
                             }
-                        } message: {
-                            Text("确定要清空所有历史记录吗？")
                         }
                     }
                 }

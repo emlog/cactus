@@ -6,6 +6,7 @@
 "ocr_translate" = "スクリーン翻訳";
 "vocabulary" = "単語帳";
 "favorites" = "お気に入り";
+"history" = "履歴";
 "setting" = "環境設定";
 "contact" = "お問い合わせ";
 "rate_app" = "アプリを評価する";
@@ -90,6 +91,9 @@
 // common
 "alert_ok" = "OK";
 "sum" = "合計";
+"clear_all" = "すべてをクリア";
+"cancle" = "キャンセル";
+"confirm" = "確認";
 
 // pro
 "premium_owned" = "Pro版は既に購入済みです";
@@ -107,3 +111,6 @@
 "purchase_load_product_failed" = "商品情報の読み込みに失敗しました";
 "purchase_pending" = "購入処理中です。しばらくしてからご確認ください";
 "purchase_not_found" = "購入記録が見つかりませんでした";
+
+// history
+"clear_all_history_message" = "すべての履歴を削除しますか？";

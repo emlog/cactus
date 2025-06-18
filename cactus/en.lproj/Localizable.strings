@@ -6,6 +6,7 @@
 "ocr_translate" = "Screenshot Translate";
 "vocabulary" = "Vocabulary Notebook";
 "favorites" = "Favorites";
+"history" = "History";
 "setting" = "Preferences";
 "contact" = "Contact Us";
 "rate_app" = "Rate This App";
@@ -90,6 +91,9 @@
 // common
 "alert_ok" = "OK";
 "sum" = "Total";
+"clear_all" = "Clear All";
+"cancle" = "Cancel";
+"confirm" = "Confirm";
 
 // pro
 "premium_owned" = "You already own the Pro version";
@@ -107,3 +111,6 @@
 "purchase_load_product_failed" = "Failed to load product information";
 "purchase_pending" = "Purchase is processing, please check later";
 "purchase_not_found" = "No purchase record found";
+
+// history
+"clear_all_history_message" = "Are you sure you want to clear all history?";

@@ -92,6 +92,8 @@
 "alert_ok" = "好";
 "sum" = "总计";
 "clear_all" = "清空全部";
+"cancle" = "取消";
+"confirm" = "确定";
 
 // pro
 "premium_owned" = "您已拥有高级版，感謝支持";

@@ -6,6 +6,7 @@
 "ocr_translate" = "截圖翻譯";
 "vocabulary" = "單字本";
 "favorites" = "收藏夾";
+"history" = "歷史記錄";
 "setting" = "偏好設定";
 "contact" = "聯絡我們";
 "rate_app" = "給個好評吧";
@@ -90,6 +91,9 @@
 // common
 "alert_ok" = "好";
 "sum" = "總計";
+"clear_all" = "清空全部";
+"cancle" = "取消";
+"confirm" = "確定";
 
 // pro
 "premium_owned" = "您已擁有進階版，感謝支持";
@@ -107,3 +111,6 @@
 "purchase_load_product_failed" = "載入產品資訊失敗";
 "purchase_pending" = "購買處理中，請稍後查看";
 "purchase_not_found" = "未找到購買紀錄";
+
+// history
+"clear_all_history_message" = "確定要清空所有歷史記錄嗎？";

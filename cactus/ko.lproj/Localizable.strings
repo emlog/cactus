@@ -6,6 +6,7 @@
 "ocr_translate" = "스크린샷 번역";
 "vocabulary" = "단어장";
 "favorites" = "즐겨찾기";
+"history" = "기록";
 "setting" = "환경설정";
 "contact" = "문의하기";
 "rate_app" = "앱 평가하기";
@@ -90,6 +91,9 @@
 // common
 "alert_ok" = "확인";
 "sum" = "총";
+"clear_all" = "모두 삭제";
+"cancle" = "취소";
+"confirm" = "확인";
 
 // pro
 "premium_owned" = "Pro 버전을 이미 보유하고 있습니다";
@@ -107,3 +111,6 @@
 "purchase_load_product_failed" = "제품 정보를 불러오지 못했습니다";
 "purchase_pending" = "구매가 처리 중입니다. 잠시 후 확인해주세요";
 "purchase_not_found" = "구매 기록을 찾을 수 없습니다";
+
+// history
+"clear_all_history_message" = "모든 기록을 삭제하시겠습니까?";
