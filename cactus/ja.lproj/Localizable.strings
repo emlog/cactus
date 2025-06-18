@@ -3,7 +3,7 @@
 "translate" = "選択して翻訳";
 "summary" = "要約";
 "dictionary" = "辞書検索";
-"screenshot_translate" = "スクリーン翻訳";
+"ocr_translate" = "スクリーン翻訳";
 "vocabulary" = "単語帳";
 "favorites" = "お気に入り";
 "setting" = "環境設定";
@@ -27,8 +27,8 @@
 "shortcut_summary_description" = "テキストを選択して、ショートカットキーで要約";
 "shortcut_dict" = "辞書検索ショートカットキー";
 "shortcut_dict_description" = "単語を選択してショートカットキーで検索";
-"shortcut_screenshot_translate" = "スクリーン翻訳ショートカット";
-"shortcut_screenshot_translate_description" = "画面の文字領域をキャプチャし、自動でOCRと翻訳を行います。";
+"shortcut_ocr_translate" = "スクリーン翻訳ショートカット";
+"shortcut_ocr_translate_description" = "画面の文字領域をキャプチャし、自動でOCRと翻訳を行います。";
 
 // ai setting
 "select_service" = "AIサービスを選択";

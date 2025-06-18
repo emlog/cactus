@@ -81,7 +81,7 @@ class StatusBarManager: NSObject {
             
             // 截图翻译 - 新增菜单项
             let screenshotMenuItem = NSMenuItem(
-                title: NSLocalizedString("screenshot_translate", comment: "截图翻译"),
+                title: NSLocalizedString("ocr_translate", comment: "截图翻译"),
                 action: #selector(openMainScreenshotAction),
                 keyEquivalent: ""
             )

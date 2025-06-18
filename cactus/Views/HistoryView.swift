@@ -86,7 +86,7 @@ struct HistoryView: View {
                                 selectedHistory = nil
                             }
                         } message: {
-                            Text("确定要清空所有历史记录吗？此操作无法撤销。")
+                            Text("确定要清空所有历史记录吗？")
                         }
                     }
                 }

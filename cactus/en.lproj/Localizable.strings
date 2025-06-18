@@ -3,7 +3,7 @@
 "translate" = "Translate Selected Text";
 "summary" = "Summarize Selected Text";
 "dictionary" = "Dictionary Lookup";
-"screenshot_translate" = "Screenshot Translate";
+"ocr_translate" = "Screenshot Translate";
 "vocabulary" = "Vocabulary Notebook";
 "favorites" = "Favorites";
 "setting" = "Preferences";
@@ -27,8 +27,8 @@
 "shortcut_summary_description" = "Select text and press the shortcut to summarize.";
 "shortcut_dict" = "Dictionary Shortcut Key";
 "shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
-"shortcut_screenshot_translate" = "Screenshot Translate Shortcut";
-"shortcut_screenshot_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
+"shortcut_ocr_translate" = "Screenshot Translate Shortcut";
+"shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
 
 // ai setting
 "select_service" = "Select AI Service";

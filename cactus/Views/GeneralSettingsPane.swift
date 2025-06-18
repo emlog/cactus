@@ -47,9 +47,9 @@ struct GeneralSettingsPane: View {
                     .fixedSize(horizontal: true, vertical: false)
             }
 
-            Settings.Section(label: { Text(NSLocalizedString("shortcut_screenshot_translate", comment: "截屏翻译快捷键")) }) {
+            Settings.Section(label: { Text(NSLocalizedString("shortcut_ocr_translate", comment: "截屏翻译快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutScreenshotTranslate)
-                Text(NSLocalizedString("shortcut_screenshot_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
+                Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
