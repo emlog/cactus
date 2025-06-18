@@ -62,7 +62,7 @@ struct HistoryView: View {
                             Button(action: {
                                 deleteSelectedHistory(historyEntry)
                             }) {
-                                Label("删除", systemImage: "trash")
+                                Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
                             }
                         }
                     }

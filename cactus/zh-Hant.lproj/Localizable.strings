@@ -15,6 +15,7 @@
 "service" = "服務";
 "premium" = "進階版";
 "about" = "關於";
+"delete" = "刪除";
 
 // Setting
 "startup" = "登入時啟動";

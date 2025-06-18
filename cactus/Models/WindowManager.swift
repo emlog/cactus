@@ -233,6 +233,17 @@ class WindowManager: NSObject, NSWindowDelegate {
         if let window = dataManagementWindowController?.window {
             window.styleMask.insert([.miniaturizable, .resizable])
             window.collectionBehavior = [.fullScreenPrimary]
+            
+            // 确保窗口显示在最上层
+            window.level = .floating
+            window.makeKeyAndOrderFront(nil)
+            window.orderFrontRegardless()
+            
+            // 激活应用程序，确保窗口获得焦点
+            NSApp.activate(ignoringOtherApps: true)
+            
+            // 将窗口居中显示
+            window.center()
         }
     }
     

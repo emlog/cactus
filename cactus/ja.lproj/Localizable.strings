@@ -93,6 +93,7 @@
 "clear_all" = "すべてをクリア";
 "cancle" = "キャンセル";
 "confirm" = "確認";
+"delete" = "削除";
 
 // pro
 "premium_owned" = "Pro版は既に購入済みです";

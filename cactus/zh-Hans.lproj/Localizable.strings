@@ -93,6 +93,7 @@
 "clear_all" = "清空全部";
 "cancle" = "取消";
 "confirm" = "确定";
+"delete" = "删除";
 
 // pro
 "premium_owned" = "您已拥有高级版，感謝支持";

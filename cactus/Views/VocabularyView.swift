@@ -45,7 +45,7 @@ struct VocabularyView: View {
                         Button(action: {
                             deleteSelectedWord(wordEntry)
                         }) {
-                            Label("删除", systemImage: "trash")
+                            Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
                         }
                     }
                 }

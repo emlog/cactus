@@ -53,7 +53,7 @@ struct FavoriteView: View {
                         Button(action: {
                             deleteSelectedFavorite(favoriteEntry)
                         }) {
-                            Label("删除", systemImage: "trash")
+                            Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
                         }
                     }
                 }
