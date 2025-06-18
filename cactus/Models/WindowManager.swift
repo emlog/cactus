@@ -199,7 +199,7 @@ class WindowManager: NSObject, NSWindowDelegate {
     }
     
     private func createDataManagementWindowController() {
-        let vocabularyIcon = NSImage(systemSymbolName: "book", accessibilityDescription: "Vocabulary") ?? NSImage()
+        let vocabularyIcon = NSImage(systemSymbolName: "book.pages", accessibilityDescription: "Vocabulary") ?? NSImage()
         let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
         let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
         
