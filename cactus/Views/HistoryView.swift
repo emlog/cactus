@@ -377,6 +377,9 @@ struct HistoryView: View {
     private func deleteSelectedHistory(_ historyToDelete: HistoryEntry) {
         // 执行删除
         historyManager.deleteHistory(historyToDelete)
+        
+        // 如果删除的是当前选中的历史记录，清空选择
+        selectedHistory = nil
     }
     
     // 检查历史记录是否已收藏

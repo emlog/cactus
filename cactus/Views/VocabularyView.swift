@@ -263,6 +263,9 @@ struct VocabularyView: View {
     private func deleteSelectedWord(_ wordToDelete: WordEntry) {
         // 执行删除
         vocabularyManager.deleteWord(wordToDelete)
+        
+        // 如果删除的是当前选中的单词，清空选择
+        selectedWord = nil
     }
 }
 

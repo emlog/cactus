@@ -338,5 +338,8 @@ struct FavoriteView: View {
     private func deleteSelectedFavorite(_ favoriteToDelete: FavoriteEntry) {
         // 执行删除
         favoriteManager.deleteFavorite(favoriteToDelete)
+        
+        // 如果删除的是当前选中的收藏，清空选择
+        selectedFavorite = nil
     }
 }
