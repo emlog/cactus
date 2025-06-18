@@ -43,6 +43,28 @@ class StatusBarManager: NSObject {
             mainMenuItem.setShortcut(for: SettingsModel.aiShortcutMain)
             mainMenuItem.target = self
             menu.addItem(mainMenuItem)
+
+            // 选中翻译
+            let translateMenuItem = NSMenuItem(
+                title: NSLocalizedString("translate", comment: "选中翻译"),
+                action: #selector(openMainTranslateAction),
+                keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
+            )
+            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
+            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
+            translateMenuItem.target = self
+            menu.addItem(translateMenuItem)
+            
+            // 截图翻译 - 新增菜单项
+            let screenshotMenuItem = NSMenuItem(
+                title: NSLocalizedString("ocr_translate", comment: "截图翻译"),
+                action: #selector(openMainScreenshotAction),
+                keyEquivalent: ""
+            )
+            screenshotMenuItem.image = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
+            screenshotMenuItem.setShortcut(for: SettingsModel.aiShortcutScreenshotTranslate)
+            screenshotMenuItem.target = self
+            menu.addItem(screenshotMenuItem)
             
             // 总结摘要
             let summaryMenuItem = NSMenuItem(
@@ -65,30 +87,6 @@ class StatusBarManager: NSObject {
             dictionaryMenuItem.setShortcut(for: SettingsModel.aiShortcutDictionary)
             dictionaryMenuItem.target = self
             menu.addItem(dictionaryMenuItem)
-            
-            menu.addItem(NSMenuItem.separator())
-            
-            // 选中翻译
-            let translateMenuItem = NSMenuItem(
-                title: NSLocalizedString("translate", comment: "选中翻译"),
-                action: #selector(openMainTranslateAction),
-                keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
-            )
-            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
-            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
-            translateMenuItem.target = self
-            menu.addItem(translateMenuItem)
-            
-            // 截图翻译 - 新增菜单项
-            let screenshotMenuItem = NSMenuItem(
-                title: NSLocalizedString("ocr_translate", comment: "截图翻译"),
-                action: #selector(openMainScreenshotAction),
-                keyEquivalent: ""
-            )
-            screenshotMenuItem.image = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
-            screenshotMenuItem.setShortcut(for: SettingsModel.aiShortcutScreenshotTranslate)
-            screenshotMenuItem.target = self
-            menu.addItem(screenshotMenuItem)
             
             menu.addItem(NSMenuItem.separator())
             

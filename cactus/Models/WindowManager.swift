@@ -228,6 +228,12 @@ class WindowManager: NSObject, NSWindowDelegate {
                 }
             ]
         )
+        
+        // 配置窗口支持最大化和最小化到dock栏
+        if let window = dataManagementWindowController?.window {
+            window.styleMask.insert([.miniaturizable, .resizable])
+            window.collectionBehavior = [.fullScreenPrimary]
+        }
     }
     
     // 添加打开历史记录的方法
