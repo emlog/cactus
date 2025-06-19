@@ -12,10 +12,9 @@
 
 // pane
 "general" = "一般";
-"service" = "服務";
-"premium" = "進階版";
+"service" = "AI服務";
+"premium" = "高級版";
 "about" = "關於";
-"delete" = "刪除";
 
 // Setting
 "startup" = "登入時啟動";
@@ -94,6 +93,7 @@
 "clear_all" = "清空全部";
 "cancle" = "取消";
 "confirm" = "確定";
+"delete" = "删除";
 
 // pro
 "premium_owned" = "您已擁有進階版，感謝支持";
