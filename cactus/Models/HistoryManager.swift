@@ -60,7 +60,6 @@ class HistoryManager: ObservableObject {
     func deleteHistory(_ historyEntry: HistoryEntry) {
         context.delete(historyEntry)
         saveContext()
-        fetchHistoryEntries()
     }
     
     func clearAllHistory() {

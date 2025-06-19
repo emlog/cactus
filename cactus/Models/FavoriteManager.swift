@@ -75,7 +75,6 @@ class FavoriteManager: ObservableObject {
     func deleteFavorite(_ favoriteEntry: FavoriteEntry) {
         context.delete(favoriteEntry)
         saveContext()
-        fetchFavoriteEntries()
     }
     
     func fetchFavoriteEntries() {

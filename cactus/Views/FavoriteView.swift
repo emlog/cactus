@@ -342,23 +342,38 @@ struct FavoriteView: View {
         // 记录当前索引以便选择下一个条目
         let currentIndex = favoriteManager.favoriteEntries.firstIndex(of: favoriteToDelete)
         
-        // 执行删除
-        favoriteManager.deleteFavorite(favoriteToDelete)
+        // 异步执行删除操作
+        DispatchQueue.global().async {
+            favoriteManager.deleteFavorite(favoriteToDelete)
+        }
         
+        // 立即在主线程更新UI
+        // 从列表中移除该条目，以便UI立即响应
+        if let index = currentIndex {
+            favoriteManager.favoriteEntries.remove(at: index)
+        }
+
         // 智能选择下一个条目
-        DispatchQueue.main.async {
-            if self.favoriteManager.favoriteEntries.isEmpty {
-                self.selectedFavorite = nil
-            } else if let index = currentIndex {
-                // 选择下一个条目，如果是最后一个则选择前一个
-                if index < self.favoriteManager.favoriteEntries.count {
-                    self.selectedFavorite = self.favoriteManager.favoriteEntries[index]
-                } else if index > 0 {
-                    self.selectedFavorite = self.favoriteManager.favoriteEntries[index - 1]
-                } else {
-                    self.selectedFavorite = self.favoriteManager.favoriteEntries.first
-                }
+        if self.favoriteManager.favoriteEntries.isEmpty {
+            self.selectedFavorite = nil
+        } else if let index = currentIndex {
+            // 如果删除的是最后一个元素，且列表不为空，则选择新的最后一个元素
+            if index >= self.favoriteManager.favoriteEntries.count && !self.favoriteManager.favoriteEntries.isEmpty {
+                self.selectedFavorite = self.favoriteManager.favoriteEntries.last
+            } 
+            // 如果删除的不是最后一个元素，则选择原来的下一个元素（现在是当前索引的元素）
+            else if index < self.favoriteManager.favoriteEntries.count {
+                self.selectedFavorite = self.favoriteManager.favoriteEntries[index]
+            } 
+            // 如果删除了唯一的元素后列表为空，selectedFavorite 已在上面设为 nil
+            // 如果列表不为空，但由于某种原因索引无效（理论上不应发生），则选择第一个
+            else if !self.favoriteManager.favoriteEntries.isEmpty {
+                 self.selectedFavorite = self.favoriteManager.favoriteEntries.first
             }
+        } else if !self.favoriteManager.favoriteEntries.isEmpty {
+            // 如果 currentIndex 为 nil （例如，favoriteToDelete 不在数组中，尽管我们已经检查过），
+            // 并且列表不为空，则选择第一个条目作为回退。
+            self.selectedFavorite = self.favoriteManager.favoriteEntries.first
         }
     }
 }

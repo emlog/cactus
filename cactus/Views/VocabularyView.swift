@@ -268,23 +268,38 @@ struct VocabularyView: View {
         // 记录当前索引以便选择下一个条目
         let currentIndex = vocabularyManager.wordEntries.firstIndex(of: wordToDelete)
         
-        // 执行删除
-        vocabularyManager.deleteWord(wordToDelete)
+        // 异步执行删除操作
+        DispatchQueue.global().async {
+            vocabularyManager.deleteWord(wordToDelete)
+        }
         
+        // 立即在主线程更新UI
+        // 从列表中移除该条目，以便UI立即响应
+        if let index = currentIndex {
+            vocabularyManager.wordEntries.remove(at: index)
+        }
+
         // 智能选择下一个条目
-        DispatchQueue.main.async {
-            if self.vocabularyManager.wordEntries.isEmpty {
-                self.selectedWord = nil
-            } else if let index = currentIndex {
-                // 选择下一个条目，如果是最后一个则选择前一个
-                if index < self.vocabularyManager.wordEntries.count {
-                    self.selectedWord = self.vocabularyManager.wordEntries[index]
-                } else if index > 0 {
-                    self.selectedWord = self.vocabularyManager.wordEntries[index - 1]
-                } else {
-                    self.selectedWord = self.vocabularyManager.wordEntries.first
-                }
+        if self.vocabularyManager.wordEntries.isEmpty {
+            self.selectedWord = nil
+        } else if let index = currentIndex {
+            // 如果删除的是最后一个元素，且列表不为空，则选择新的最后一个元素
+            if index >= self.vocabularyManager.wordEntries.count && !self.vocabularyManager.wordEntries.isEmpty {
+                self.selectedWord = self.vocabularyManager.wordEntries.last
+            } 
+            // 如果删除的不是最后一个元素，则选择原来的下一个元素（现在是当前索引的元素）
+            else if index < self.vocabularyManager.wordEntries.count {
+                self.selectedWord = self.vocabularyManager.wordEntries[index]
+            } 
+            // 如果删除了唯一的元素后列表为空，selectedWord 已在上面设为 nil
+            // 如果列表不为空，但由于某种原因索引无效（理论上不应发生），则选择第一个
+            else if !self.vocabularyManager.wordEntries.isEmpty {
+                 self.selectedWord = self.vocabularyManager.wordEntries.first
             }
+        } else if !self.vocabularyManager.wordEntries.isEmpty {
+            // 如果 currentIndex 为 nil （例如，wordToDelete 不在数组中，尽管我们已经检查过），
+            // 并且列表不为空，则选择第一个条目作为回退。
+            self.selectedWord = self.vocabularyManager.wordEntries.first
         }
     }
 }

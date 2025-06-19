@@ -78,7 +78,6 @@ class VocabularyManager: ObservableObject {
     func deleteWord(_ wordEntry: WordEntry) {
         context.delete(wordEntry)
         saveContext()
-        fetchWordEntries()
     }
     
     func fetchWordEntries() {
