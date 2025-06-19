@@ -159,7 +159,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         let wordCount = VocabularyManager.shared.wordEntries.count
         let isPremium = PurchaseManager.shared.isPremiumUser
         
-        if wordCount > 20 && !isPremium {
+        if wordCount > 50 && !isPremium {
             openPreferences()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.settingsWindowController?.show(pane: .premium)
@@ -178,7 +178,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         let favCount = FavoriteManager.shared.favoriteEntries.count
         let isPremium = PurchaseManager.shared.isPremiumUser
         
-        if favCount > 20 && !isPremium {
+        if favCount > 50 && !isPremium {
             openPreferences()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.settingsWindowController?.show(pane: .premium)
