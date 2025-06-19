@@ -12,7 +12,7 @@
 
 // pane
 "general" = "General";
-"service" = "AI Service"
+"service" = "AI Service";
 "premium" = "Pro";
 "about" = "About";
 
