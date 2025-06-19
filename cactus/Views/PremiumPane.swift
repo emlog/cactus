@@ -7,7 +7,7 @@ struct PremiumPane: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        Settings.Container(contentWidth: 500) {
+        Settings.Container(contentWidth: 800) {
             Settings.Section(title: "", bottomDivider: true) {
                 VStack(spacing: 6) {
                     // 奢华标题部分 (第15-22行)

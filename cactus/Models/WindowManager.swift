@@ -9,9 +9,8 @@ import Vision
 class WindowManager: NSObject, NSWindowDelegate {
     var settingsWindow: NSWindow?
     var mainWindow: NSWindow?
-    var vocabularyWindow: NSWindow?
-    var favoriteWindow: NSWindow?
-    private var dataManagementWindowController: SettingsWindowController?
+    var vocabularyWindow: NSWindow? // 保留此窗口定义，虽然数据管理移到设置，但可能仍有直接打开此独立窗口的逻辑
+    var favoriteWindow: NSWindow? // 保留此窗口定义，理由同上
     private var isMainWindowPinned = false
     private var pinnedWindowOrigin: NSPoint?
     private var pinButton: NSButton?
@@ -19,8 +18,6 @@ class WindowManager: NSObject, NSWindowDelegate {
     
     func initializeWindows() {
         initializeMainWindow()
-        initializeVocabularyWindow()
-        initializeFavoriteWindow()
     }
     
     private func initializeMainWindow() {
@@ -62,40 +59,6 @@ class WindowManager: NSObject, NSWindowDelegate {
         setupPinButton()
     }
     
-    private func initializeVocabularyWindow() {
-        // 初始化生词本窗口
-        vocabularyWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
-            backing: .buffered,
-            defer: false
-        )
-        
-        let vocabularyView = VocabularyView()
-        let vocabularyHostingController = NSHostingController(rootView: vocabularyView)
-        vocabularyWindow?.contentViewController = vocabularyHostingController
-        vocabularyWindow?.title = NSLocalizedString("vocabulary", comment: "生词本")
-        vocabularyWindow?.isReleasedWhenClosed = false
-        vocabularyWindow?.collectionBehavior = [.fullScreenPrimary]
-    }
-    
-    private func initializeFavoriteWindow() {
-        // 初始化收藏夹窗口
-        favoriteWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView],
-            backing: .buffered,
-            defer: false
-        )
-        
-        let favoriteView = FavoriteView()
-        let favoriteHostingController = NSHostingController(rootView: favoriteView)
-        favoriteWindow?.contentViewController = favoriteHostingController
-        favoriteWindow?.title = NSLocalizedString("favorites", comment: "收藏夹")
-        favoriteWindow?.isReleasedWhenClosed = false
-        favoriteWindow?.collectionBehavior = [.fullScreenPrimary]
-    }
-    
     private func setupPinButton() {
         // 添加 Pin 按钮到标题栏
         let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
@@ -116,7 +79,6 @@ class WindowManager: NSObject, NSWindowDelegate {
         mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
     }
     
-    // MARK: - Window Management
     @objc private func adjustWindowSize() {
         guard let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
             return
@@ -134,7 +96,6 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
     }
     
-    // MARK: - Window Opening Methods
     func openMain(action: ActionType = .translate) {
         // 根据操作类型先执行主任务
         if action == .screenshotTranslate {
@@ -174,70 +135,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         window.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
-    
-    // 数据管理窗口方法
-    func openDataManagement() {
-        if let existingController = dataManagementWindowController {
-            existingController.window?.close()
-            dataManagementWindowController = nil
-        }
-        
-        createDataManagementWindowController()
-        
-        if let window = dataManagementWindowController?.window {
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(dataManagementWindowWillClose),
-                name: NSWindow.willCloseNotification,
-                object: window
-            )
-        }
-        
-        dataManagementWindowController?.show()
-        dataManagementWindowController?.window?.orderFrontRegardless()
-    }
-    
-    private func createDataManagementWindowController() {
-        DispatchQueue.main.async {
-            let vocabularyIcon = NSImage(systemSymbolName: "book.pages", accessibilityDescription: "Vocabulary") ?? NSImage()
-            let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
-            let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
-            
-            self.dataManagementWindowController = SettingsWindowController(
-                panes: [
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.vocabulary,
-                        title: NSLocalizedString("vocabulary", comment: "生词本"),
-                        toolbarIcon: vocabularyIcon
-                    ) {
-                        VocabularyView()
-                    },
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.favorites,
-                        title: NSLocalizedString("favorites", comment: "收藏夹"),
-                        toolbarIcon: favoritesIcon
-                    ) {
-                        FavoriteView()
-                    },
-                    Settings.Pane(
-                        identifier: Settings.PaneIdentifier.history,
-                        title: NSLocalizedString("history", comment: "历史记录"),
-                        toolbarIcon: historyIcon
-                    ) {
-                        HistoryView()
-                    }
-                ]
-            )
-            
-            // 配置窗口支持最大化和最小化到dock栏
-            if let window = self.dataManagementWindowController?.window {
-                window.styleMask.insert([.miniaturizable, .resizable])
-                window.collectionBehavior = [.fullScreenPrimary]
-            }
-        }
-    }
-    
-    // 添加打开历史记录的方法
+
     func openHistory() {
         let historyCount = HistoryManager.shared.historyEntries.count
         let isPremium = PurchaseManager.shared.isPremiumUser
@@ -249,21 +147,12 @@ class WindowManager: NSObject, NSWindowDelegate {
                 NSApp.activate(ignoringOtherApps: true)
             }
         } else {
-            openDataManagement()
+            openPreferences()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.dataManagementWindowController?.show(pane: .history)
+                self.settingsWindowController?.show(pane: .history)
                 NSApp.activate(ignoringOtherApps: true)
             }
         }
-    }
-    
-    @objc private func dataManagementWindowWillClose(_ notification: Notification) {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: NSWindow.willCloseNotification,
-            object: notification.object
-        )
-        dataManagementWindowController = nil
     }
     
     func openVocabulary() {
@@ -277,9 +166,9 @@ class WindowManager: NSObject, NSWindowDelegate {
                 NSApp.activate(ignoringOtherApps: true)
             }
         } else {
-            openDataManagement()
+            openPreferences()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.dataManagementWindowController?.show(pane: .vocabulary)
+                self.settingsWindowController?.show(pane: .vocabulary)
                 NSApp.activate(ignoringOtherApps: true)
             }
         }
@@ -296,9 +185,9 @@ class WindowManager: NSObject, NSWindowDelegate {
                 NSApp.activate(ignoringOtherApps: true)
             }
         } else {
-            openDataManagement()
+            openPreferences()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.dataManagementWindowController?.show(pane: .favorites)
+                self.settingsWindowController?.show(pane: .favorites)
                 NSApp.activate(ignoringOtherApps: true)
             }
         }
@@ -330,6 +219,10 @@ class WindowManager: NSObject, NSWindowDelegate {
         let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
         let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage()
         let aboutIcon = NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About Settings") ?? NSImage()
+        // 添加数据管理相关的图标
+        let vocabularyIcon = NSImage(systemSymbolName: "book.pages", accessibilityDescription: "Vocabulary") ?? NSImage()
+        let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
+        let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
         
         settingsWindowController = SettingsWindowController(
             panes: [
@@ -347,6 +240,28 @@ class WindowManager: NSObject, NSWindowDelegate {
                 ) {
                     GeneralAiPane()
                 },
+                // 添加数据管理相关的窗格
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.vocabulary,
+                    title: NSLocalizedString("vocabulary", comment: "生词本"),
+                    toolbarIcon: vocabularyIcon
+                ) {
+                    VocabularyView()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.favorites,
+                    title: NSLocalizedString("favorites", comment: "收藏夹"),
+                    toolbarIcon: favoritesIcon
+                ) {
+                    FavoriteView()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.history,
+                    title: NSLocalizedString("history", comment: "历史记录"),
+                    toolbarIcon: historyIcon
+                ) {
+                    HistoryView()
+                },
                 Settings.Pane(
                     identifier: Settings.PaneIdentifier.premium,
                     title: NSLocalizedString("premium", comment: "高级版"),
@@ -363,6 +278,10 @@ class WindowManager: NSObject, NSWindowDelegate {
                 }
             ]
         )
+        // 配置窗口支持最小化到dock栏
+        if let window = self.settingsWindowController?.window {
+            window.styleMask.insert([.miniaturizable, .resizable])
+        }
     }
     
     @objc private func settingsWindowWillClose(_ notification: Notification) {

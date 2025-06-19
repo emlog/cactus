@@ -98,7 +98,7 @@ struct HistoryView: View {
                 }
                 .background(Color(NSColor.controlBackgroundColor))
             }
-            .frame(minWidth: 180, idealWidth: 220, maxWidth: 280)
+            .frame(minWidth: 120, idealWidth: 120, maxWidth: 190)
             
             // 右侧历史记录详情 - 占比约70%
             VStack(spacing: 0) {
@@ -270,7 +270,7 @@ struct HistoryView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .frame(minWidth: 1000, minHeight: 800)
+        .frame(minWidth: 800, minHeight: 800)
         .focusable()
         .focused($isViewFocused)
         .overlay(
