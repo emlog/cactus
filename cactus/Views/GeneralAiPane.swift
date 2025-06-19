@@ -13,7 +13,7 @@ struct GeneralAiPane: View {
     }
     
     var body: some View {
-        Settings.Container(contentWidth: 800) {
+        Settings.Container(contentWidth: 600) {
             Settings.Section(label: { Text(NSLocalizedString("select_service", comment: "选择提供商")) }) {
                 Picker(selection: $settingsModel.selectedProvider, label: EmptyView()) {
                     providerOptions

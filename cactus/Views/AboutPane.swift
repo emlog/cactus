@@ -3,7 +3,7 @@ import Settings
 
 struct AboutPane: View {
     var body: some View {
-        Settings.Container(contentWidth: 800) {
+        Settings.Container(contentWidth: 600) {
             Settings.Section(title: "", bottomDivider: true) {
                 VStack(spacing: 10) {
                     if let appIcon = NSImage(named: "AppIcon") {
