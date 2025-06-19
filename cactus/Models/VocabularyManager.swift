@@ -50,6 +50,8 @@ class VocabularyManager: ObservableObject {
     }
     
     func addWord(_ word: String, definition: String) {
+        let isPremium = PurchaseManager.shared.isPremiumUser
+        
         // 检查是否已存在
         let request: NSFetchRequest<WordEntry> = WordEntry.fetchRequest()
         request.predicate = NSPredicate(format: "word == %@", word)
@@ -61,6 +63,16 @@ class VocabularyManager: ObservableObject {
                 existingEntries.first?.timestamp = Date()
                 existingEntries.first?.definition = definition
             } else {
+                // 检查非高级用户的条目数量限制
+                if !isPremium {
+                    let countRequest: NSFetchRequest<WordEntry> = WordEntry.fetchRequest()
+                    let currentCount = try context.count(for: countRequest)
+                    if currentCount >= 50 {
+                        print("Non-premium users can only save up to 50 vocabulary entries")
+                        return
+                    }
+                }
+                
                 // 创建新条目
                 let newEntry = WordEntry(context: context)
                 newEntry.word = word

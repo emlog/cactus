@@ -135,61 +135,28 @@ class WindowManager: NSObject, NSWindowDelegate {
         window.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
-
+    
     func openHistory() {
-        let historyCount = HistoryManager.shared.historyEntries.count
-        let isPremium = PurchaseManager.shared.isPremiumUser
-        
-        if historyCount > 50 && !isPremium {
-            openPreferences()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .premium)
-                NSApp.activate(ignoringOtherApps: true)
-            }
-        } else {
-            openPreferences()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .history)
-                NSApp.activate(ignoringOtherApps: true)
-            }
+        openPreferences()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.settingsWindowController?.show(pane: .history)
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
     
     func openVocabulary() {
-        let wordCount = VocabularyManager.shared.wordEntries.count
-        let isPremium = PurchaseManager.shared.isPremiumUser
-        
-        if wordCount > 50 && !isPremium {
-            openPreferences()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .premium)
-                NSApp.activate(ignoringOtherApps: true)
-            }
-        } else {
-            openPreferences()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .vocabulary)
-                NSApp.activate(ignoringOtherApps: true)
-            }
+        openPreferences()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.settingsWindowController?.show(pane: .vocabulary)
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
     
     func openFavorites() {
-        let favCount = FavoriteManager.shared.favoriteEntries.count
-        let isPremium = PurchaseManager.shared.isPremiumUser
-        
-        if favCount > 50 && !isPremium {
-            openPreferences()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .premium)
-                NSApp.activate(ignoringOtherApps: true)
-            }
-        } else {
-            openPreferences()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.settingsWindowController?.show(pane: .favorites)
-                NSApp.activate(ignoringOtherApps: true)
-            }
+        openPreferences()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.settingsWindowController?.show(pane: .favorites)
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
     
