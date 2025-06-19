@@ -17,6 +17,11 @@ struct VocabularyView: View {
     // 添加语音朗读相关状态
     @State private var isSpeakingWord = false
     private let speechService = SpeechService.shared
+
+    // 获取高级用户状态
+    private var isPremiumUser: Bool {
+        PurchaseManager.shared.isPremiumUser
+    }
     
     var body: some View {
         HSplitView {
@@ -67,8 +72,17 @@ struct VocabularyView: View {
             // 右侧单词详情 - 占比约80%
             VStack(spacing: 0) {
                 if let selectedWord = selectedWord {
-                    // 内容区域
                     VStack(alignment: .leading, spacing: 8) {
+                        if !isPremiumUser && vocabularyManager.wordEntries.count >= 50 {
+                            Text(NSLocalizedString("upgrade_to_premium", comment: "已达到用量上限，请升级高级版"))
+                                .font(.body)
+                                .foregroundColor(.orange)
+                                .padding(.horizontal, 0)
+                                .padding(.vertical, 4)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.bottom, 8)
+                        }
+                        
                         ZStack(alignment: .topTrailing) {
                             ScrollView {
                                 VStack(alignment: .leading, spacing: 16) {

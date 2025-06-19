@@ -111,6 +111,7 @@
 "purchase_load_product_failed" = "Failed to load product information";
 "purchase_pending" = "Purchase is processing, please check later";
 "purchase_not_found" = "No purchase record found";
+"upgrade_to_premium" = "Usage limit reached. Please upgrade to Premium.";
 
 // history
 "clear_all_history_message" = "Are you sure you want to clear all history?";

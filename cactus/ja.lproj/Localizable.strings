@@ -111,6 +111,7 @@
 "purchase_load_product_failed" = "商品情報の読み込みに失敗しました";
 "purchase_pending" = "購入処理中です。しばらくしてからご確認ください";
 "purchase_not_found" = "購入記録が見つかりませんでした";
+"upgrade_to_premium" = "利用上限に達しました。プレミアム版にアップグレードしてください";
 
 // history
 "clear_all_history_message" = "すべての履歴を削除しますか？";

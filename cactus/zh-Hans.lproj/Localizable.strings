@@ -111,6 +111,8 @@
 "purchase_load_product_failed" = "加载产品信息失败";
 "purchase_pending" = "购买正在处理中，请稍后查看";
 "purchase_not_found" = "未找到购买记录";
+"upgrade_to_premium" = "已达到用量上限，请升级高级版";
+
 
 // history
 "clear_all_history_message" = "确定要清空所有历史记录吗？";

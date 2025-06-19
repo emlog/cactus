@@ -111,6 +111,7 @@
 "purchase_load_product_failed" = "載入產品資訊失敗";
 "purchase_pending" = "購買處理中，請稍後查看";
 "purchase_not_found" = "未找到購買紀錄";
+"upgrade_to_premium" = "已達到使用上限，請升級為高級版";
 
 // history
 "clear_all_history_message" = "確定要清空所有歷史記錄嗎？";

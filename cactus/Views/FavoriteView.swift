@@ -19,6 +19,11 @@ struct FavoriteView: View {
     @State private var showInputCopySuccess = false
     @State private var showOutputCopySuccess = false
     
+    // 获取高级用户状态
+    private var isPremiumUser: Bool {
+        PurchaseManager.shared.isPremiumUser
+    }
+    
     var body: some View {
         HSplitView {
             // 左侧收藏列表 - 占比约30%
@@ -76,6 +81,15 @@ struct FavoriteView: View {
             VStack(spacing: 0) {
                 if let selectedFavorite = selectedFavorite {
                     VStack(spacing: 12) {
+                        if !isPremiumUser && favoriteManager.favoriteEntries.count >= 50 {
+                            Text(NSLocalizedString("upgrade_to_premium", comment: "已达到用量上限，请升级高级版"))
+                                .font(.body)
+                                .foregroundColor(.orange)
+                                .padding(.horizontal, 0)
+                                .padding(.vertical, 4)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.bottom, 8)
+                        }
                         // 输入内容区域
                         VStack(alignment: .leading, spacing: 8) {
                             ZStack(alignment: .bottomTrailing) {
