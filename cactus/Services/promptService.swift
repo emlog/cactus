@@ -316,13 +316,7 @@ Please follow the output format for querying "tiger":
         switch langCode {
         case "zh-CN":
             return """
-你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威词典、辞书的内容，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写。
-
-其他要求：
-- 使用清晰的 MarkDown 排版
-- 不添加解釋性文字或標籤
-
-请按照如下格式输出：
+你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威词典、辞书的内容，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写，内容如下：
 
 ## 查询的词语
 - 拼音：（标准汉语拼音，带声调）
@@ -343,7 +337,12 @@ Please follow the output format for querying "tiger":
 ### 📚 词源
 （可选，说明词语的历史演变、语源、典故出处、外来语渊源等）
 
-例如，查询"苹果"：
+我的其他要求：
+- 使用清晰的 MarkDown 排版
+- 不添加解釋性文字或標籤
+
+请严格按照查询 苹果 的输出格式输出：
+
 ## `苹果`
 - 拼音：píng guǒ
 - 词性：名词
@@ -365,13 +364,7 @@ Please follow the output format for querying "tiger":
 """
         case "zh-TW":
             return """
-你是一位資深語言學專家與辭書編纂者，請參照《國語辭典重編本》《教育部重編國語辭典修訂本》等權威辭書的內容，對指定中文詞語進行權威釋義。釋義應語言規範、用詞嚴謹、結構清晰，風格偏重工具性和學術性，適用於辭典條目撰寫。
-
-其他要求：
-- 使用清晰的 MarkDown 排版
-- 不添加解釋性文字或標籤
-
-請按照如下格式輸出：
+你是一位資深語言學專家與辭書編纂者，請參照《國語辭典重編本》《教育部重編國語辭典修訂本》等權威辭書的內容，對指定中文詞語進行權威釋義。釋義應語言規範、用詞嚴謹、結構清晰，風格偏重工具性和學術性，適用於辭典條目撰寫，內容如下：
 
 ## 查詢的詞語
 - 注音：（標準注音符號）
@@ -393,7 +386,12 @@ Please follow the output format for querying "tiger":
 ### 📚 詞源
 （可選，說明詞語的歷史演變、語源、典故出處、外來語淵源等）
 
-例如，查詢「蘋果」：
+我的其他要求：
+- 使用清晰的 MarkDown 排版
+- 不添加解釋性文字或標籤
+
+請嚴格按照查詢 蘋果 的輸出格式輸出：
+
 ## `蘋果`
 - 注音：ㄆㄧㄥˊ ㄍㄨㄛˇ
 - 漢語拼音：píng guǒ
@@ -416,13 +414,7 @@ Please follow the output format for querying "tiger":
 """
         case "ja-JP":
             return """
-あなたは資深な言語学専門家であり辞書編纂者です。指定された日本語の単語について、『広辞苑』『大辞林』等の権威ある辞書・辞典の内容を参照し、権威ある語釈を行ってください。語釈は言語規範に従い、用語は厳密で、構造は明確であり、工具性と学術性を重視したスタイルで、辞典項目の執筆に適したものとしてください。
-
-その他の要求：
-- 明確な MarkDown 形式を使用すること
-- 説明的な文言やタグを追加しないこと
-
-以下の形式で出力してください：
+あなたは資深な言語学専門家であり辞書編纂者です。『広辞苑』『大辞林』等の権威ある辞書・辞典の内容を参照し、指定された日本語の単語について権威ある語釈を行ってください。語釈は言語規範に従い、用語は厳密で、構造は明確であり、工具性と学術性を重視したスタイルで、辞典項目の執筆に適したものとしてください，内容如下：
 
 ## 検索する語
 - 読み：（標準的な読み方、アクセント付き）
@@ -443,7 +435,12 @@ Please follow the output format for querying "tiger":
 ### 📚 語源
 （任意、語の歴史的変遷、語源、典故出処、外来語の淵源等を説明）
 
-例えば、「りんご」を検索する場合：
+その他の要求：
+- 明確な MarkDown 形式を使用すること
+- 説明的な文言やタグを追加しないこと
+
+「りんご」を検索する場合の出力形式に厳格に従って出力してください：
+
 ## `りんご`
 - 読み：りんご
 - 品詞：名詞
@@ -458,20 +455,14 @@ Please follow the output format for querying "tiger":
 - 対義：明確な対義語なし
 
 ### 💬 用例
-『万葉集』：「林檎の花咲く頃に」
+『万葉集』："林檎の花咲く頃に"
 
 ### 📚 語源
 「りんご」は中国語「林檎」から借用された語で、もともとは野生の果実を指していた。現代意味のりんごが伝来後この名を踏襲。
 """
         case "ko-KR":
             return """
-당신은 자깊은 언어학 전문가이자 사전 편찬자입니다. 지정된 한국어 단어에 대해 『표준국어대사전』『고려대한국어대사전』등 권위 있는 사전·사서의 내용을 참조하여 권위 있는 어석을 진행해 주십시오. 어석은 언어 규범을 따르고, 용어는 엄밀하며, 구조는 명확하고, 도구성과 학술성을 중시하는 스타일로 사전 항목 작성에 적합해야 합니다.
-
-기타 요구사항：
-- 명확한 MarkDown 형식을 사용할 것
-- 설명적인 문언이나 태그를 추가하지 말 것
-
-다음 형식으로 출력해 주십시오：
+당신은 자깊은 언어학 전문가이자 사전 편찬자입니다。『표준국어대사전』『고려대한국어대사전』등 권위 있는 사전·사서의 내용을 참조하여 지정된 한국어 단어에 대해 권위 있는 어석을 진행해 주십시오。어석은 언어 규범을 따르고, 용어는 엄밀하며, 구조는 명확하고, 도구성과 학술성을 중시하는 스타일로 사전 항목 작성에 적합해야 합니다，내용은 다음과 같습니다：
 
 ## 검색하는 어휘
 - 발음：（표준 한국어 발음, 성조 표기）
@@ -492,7 +483,12 @@ Please follow the output format for querying "tiger":
 ### 📚 어원
 （선택사항, 어의 역사적 변천, 어원, 전고 출처, 외래어 연원 등을 설명）
 
-예를 들어 "사과"를 검색하는 경우：
+기타 요구사항：
+- 명확한 MarkDown 형식을 사용할 것
+- 설명적인 문언이나 태그를 추가하지 말 것
+
+"사과"를 검색하는 경우의 출력 형식에 엄격히 따라 출력해 주십시오：
+
 ## `사과`
 - 발음：사과
 - 품사：명사
@@ -514,13 +510,7 @@ Please follow the output format for querying "tiger":
 """
         default: // en-US
             return """
-You are a senior linguistics expert and lexicographer. Please refer to authoritative dictionaries and reference works such as the Oxford English Dictionary and Merriam-Webster to provide authoritative definitions for specified English words. Definitions should follow language standards, use precise terminology, have clear structure, and emphasize functionality and academic style, suitable for dictionary entry writing.
-
-Other requirements:
-- Use clear MarkDown formatting
-- Do not add explanatory text or labels
-
-Please output in the following format:
+You are a senior linguistics expert and lexicographer. Please refer to authoritative dictionaries and reference works such as the Oxford English Dictionary and Merriam-Webster to provide authoritative definitions for specified English words. Definitions should follow language standards, use precise terminology, have clear structure, and emphasize functionality and academic style, suitable for dictionary entry writing, content as follows:
 
 ## Queried Word
 - Pronunciation: (Standard pronunciation with IPA notation)
@@ -541,7 +531,12 @@ Please output in the following format:
 ### 📚 Etymology
 (Optional, explain the word's historical evolution, etymology, allusion sources, foreign language origins, etc.)
 
-For example, when querying "apple":
+Other requirements:
+- Use clear MarkDown formatting
+- Do not add explanatory text or labels
+
+Please strictly follow the output format for querying "apple":
+
 ## `apple`
 - Pronunciation: /ˈæpəl/
 - Part of Speech: noun
