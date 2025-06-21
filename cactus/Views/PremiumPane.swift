@@ -9,7 +9,7 @@ struct PremiumPane: View {
     var body: some View {
         Settings.Container(contentWidth: 600) {
             Settings.Section(title: "", bottomDivider: true) {
-                VStack(spacing: 20) { // 使用固定间距，类似 AboutPane
+                VStack(spacing: 12) { // 使用固定间距，类似 AboutPane
                     // 奢华标题部分
                     Text(NSLocalizedString("premium_features", comment: "Premium Features"))
                         .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -207,7 +207,7 @@ struct FeatureRow: View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .foregroundColor(accentColor)
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: 15, weight: .bold))
             
             Text(text)
                 .font(.system(size: 15, weight: .medium))
@@ -216,7 +216,7 @@ struct FeatureRow: View {
             Spacer()
             
             Image(systemName: "checkmark")
-                .font(.system(size: 14, weight: .bold))
+                .font(.system(size: 15, weight: .bold))
                 .foregroundColor(accentColor)
         }
         .padding(.vertical, 8)
