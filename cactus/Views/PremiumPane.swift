@@ -9,8 +9,8 @@ struct PremiumPane: View {
     var body: some View {
         Settings.Container(contentWidth: 600) {
             Settings.Section(title: "", bottomDivider: true) {
-                VStack(spacing: 6) {
-                    // 奢华标题部分 (第15-22行)
+                VStack(spacing: 20) { // 使用固定间距，类似 AboutPane
+                    // 奢华标题部分
                     Text(NSLocalizedString("premium_features", comment: "Premium Features"))
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundStyle(
@@ -23,28 +23,26 @@ struct PremiumPane: View {
                                 endPoint: .trailing
                             )
                         )
-                    .padding(.top, 16)
-                    .padding(.bottom, 16)
+                        .padding(.top, 16)
+                        .padding(.bottom, 16)
                     
                     // 特性列表
                     VStack(spacing: 8) {
                         FeatureRow(icon: "infinity.circle.fill",
                                    text: NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"),
-                                   accentColor: Color(red: 0.0, green: 0.48, blue: 1.0)) // 现代蓝色 - iOS系统蓝
+                                   accentColor: Color(red: 0.0, green: 0.48, blue: 1.0))
                         FeatureRow(icon: "book.circle.fill",
                                    text: NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"),
-                                   accentColor: Color(red: 0.34, green: 0.34, blue: 0.84)) // 现代紫色 - 更柔和的紫
+                                   accentColor: Color(red: 0.34, green: 0.34, blue: 0.84))
                         FeatureRow(icon: "bolt.circle.fill",
                                    text: NSLocalizedString("premium_feature_custom_model", comment: "解锁更多自定义AI模型"),
-                                   accentColor: Color(red: 1.0, green: 0.45, blue: 0.0)) // 现代橙色 - 活力橙
+                                   accentColor: Color(red: 1.0, green: 0.45, blue: 0.0))
                     }
                     .padding(.horizontal, 0)
                     
-                    Spacer()
-                    
-                    // 购买状态和按钮
+                    // 购买状态和按钮 - 移除 Spacer()，直接放在这里
                     if purchaseManager.isPremiumUser {
-                        // 已购买状态 - 奢华风格
+                        // 已购买状态
                         VStack(spacing: 12) {
                             HStack {
                                 Image(systemName: "checkmark.circle.fill")
@@ -83,7 +81,7 @@ struct PremiumPane: View {
                             .cornerRadius(16)
                         }
                     } else {
-                        // 未购买状态 - 奢华风格
+                        // 未购买状态
                         VStack(spacing: 12) {
                             // 购买按钮
                             Button(action: {
@@ -169,9 +167,8 @@ struct PremiumPane: View {
                             .padding(.top, 8)
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.horizontal)
-                .padding(.bottom, 0)
+                .frame(maxWidth: .infinity) // 参考 AboutPane 的居中方式
+                .padding() // 参考 AboutPane 的 padding 方式
             }
         }
         .onAppear {
