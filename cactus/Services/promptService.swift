@@ -49,8 +49,11 @@ class promptService {
 - 词性（标注完整词性，如 n.名词、v.动词、adj.形容词等）
 - 词根/词缀分析
 - 同义词
+- 时态（可选，标注动词的现在分词、过去式、过去分词）
+- 复数（可选，标注单词的复数形式）
 
-## 词源
+## 词组/短语
+常用词组或习惯用语
 
 ## 例句
 包含该单词的例句  
@@ -59,7 +62,6 @@ class promptService {
 其他要求：
 - 输出内容必须基于权威词典资料
 - 音标使用标准IPA符号
-- 词源信息需追溯到最早可考证的来源
 - 例句应体现单词的核心含义和常见用法
 - 使用清晰的 MarkDown 排版
 - 不添加解释性文字或标签
@@ -72,11 +74,11 @@ class promptService {
 - 词性：名词（n.）  
 - 词根：tig-（猛兽，老虎）
 - 近义词：panther（豹），lion（狮子）
+- 复数：tigers
 
-### 📚 词源  
-- 中世纪英语 teigere* 
-- 来自古英语 tegor
-- 追溯至古印欧语 tigris
+### 📚 词组/短语
+- tiger woods n. 老虎·伍兹（世界著名高尔夫球手）
+- paper tiger 纸老虎
 
 ### ✏️ 例句
 
@@ -96,8 +98,11 @@ class promptService {
 - 詞性（標註完整詞性，如 n.名詞、v.動詞、adj.形容詞等）
 - 詞根/詞綴分析
 - 同義詞
+- 時態（可選，標註動詞的現在分詞、過去式、過去分詞）
+- 複數（可選，標註單詞的複數形式）
 
-## 詞源
+## 詞組/短語
+常用詞組或習慣用語
 
 ## 例句
 包含該單詞的例句  
@@ -106,7 +111,6 @@ class promptService {
 其他要求：
 - 輸出內容必須基於權威詞典資料
 - 音標使用標準IPA符號
-- 詞源資訊需追溯到最早可考證的來源
 - 例句應體現單詞的核心含義和常見用法
 - 使用清晰的 MarkDown 排版
 - 不添加解釋性文字或標籤
@@ -119,11 +123,11 @@ class promptService {
 - 詞性：名詞（n.）  
 - 詞根：tig-（猛獸，老虎）
 - 近義詞：panther（豹），lion（獅子）
+- 複數：tigers
 
-### 📚 詞源  
-- 中世紀英語 teigere* 
-- 來自古英語 tegor
-- 追溯至古印歐語 tigris
+### 📚 詞組/短語
+- tiger woods n. 老虎·伍茲（世界著名高爾夫球手）
+- paper tiger 紙老虎
 
 ### ✏️ 例句
 
@@ -143,8 +147,11 @@ class promptService {
 - 品詞（完全な品詞を明記、例：n.名詞、v.動詞、adj.形容詞など）
 - 語根・接辞分析
 - 類義語
+- 時制（任意、動詞の現在分詞、過去形、過去分詞を明記）
+- 複数形（任意、単語の複数形を明記）
 
-## 語源
+## 熟語・句
+常用熟語や慣用表現
 
 ## 例文
 その単語を含む例文
@@ -153,7 +160,6 @@ class promptService {
 その他の要件：
 - 出力内容は権威ある辞書資料に基づくこと
 - 発音記号は標準IPA記号を使用すること
-- 語源情報は検証可能な最も古い起源まで遡ること
 - 例文は単語の中核的な意味と一般的な用法を反映すること
 - 明確なMarkDown形式で記述すること
 - 説明的な語句やタグは追加しないこと
@@ -166,11 +172,11 @@ tigerの検索出力例に従って出力してください：
 - 品詞：名詞（n.）
 - 語根：tig-（猛獣、トラ）
 - 類義語：panther（ヒョウ），lion（ライオン）
+- 複数形：tigers
 
-### 📚 語源
-- 中英語 teigere*
-- 古英語 tegor より
-- 古インド・ヨーロッパ語 tigris に遡る
+### 📚 熟語・句
+- tiger woods n. タイガー・ウッズ（世界的に有名なゴルファー）
+- paper tiger 張り子の虎
 
 ### ✏️ 例文
 
@@ -190,8 +196,11 @@ tigerの検索出力例に従って出力してください：
 - 품사 (전체 품사 명시, 예: n. 명사, v. 동사, adj. 형용사 등)
 - 어근/접사 분석
 - 유의어
+- 시제 (선택사항, 동사의 현재분사, 과거형, 과거분사 명시)
+- 복수형 (선택사항, 단어의 복수형 명시)
 
-## 어원
+## 구/어구
+상용 구문이나 관용 표현
 
 ## 예문
 해당 단어를 포함하는 예문
@@ -200,7 +209,6 @@ tigerの検索出力例に従って出力してください：
 기타 요구 사항:
 - 출력 내용은 권위 있는 사전 자료를 기반으로 해야 합니다
 - 음성 기호는 표준 IPA 기호를 사용해야 합니다
-- 어원 정보는 검증 가능한 가장 오래된 출처까지 추적해야 합니다
 - 예문은 단어의 핵심 의미와 일반적인 용법을 반영해야 합니다
 - 명확한 MarkDown 형식으로 작성해야 합니다
 - 설명적인 문구나 태그를 추가하지 마십시오
@@ -213,19 +221,19 @@ tiger 검색 출력 예에 따라 출력하십시오:
 - 품사：명사（n.）
 - 어근：tig-（맹수，호랑이）
 - 유의어：panther（표범），lion（사자）
+- 복수형：tigers
 
-### 📚 어원
-- 중세 영어 teigere*
-- 고대 영어 tegor에서 유래
-- 고대 인도유럽어 tigris로 소급
+### 📚 구/어구
+- tiger woods n. 타이거 우즈（세계적으로 유명한 골프 선수）
+- paper tiger 종이호랑이
 
 ### ✏️ 예문
 
 1. He took a photo of the tiger in the wild.
-   그는 야생에서 호랑이 사진을 찍었습니다。
+   그는 야생에서 호랑이 사진을 찍었습니다.
 
 2. The tiger roars in the danger of the jungle.
-   호랑이는 정글의 위험 속에서 포효합니다。
+   호랑이는 정글의 위험 속에서 포효합니다.
 """
         default:
             return """
@@ -237,8 +245,11 @@ You are a multifunctional English dictionary. Search for the English word entere
 - Part of Speech (specify the full part of speech, e.g., n. noun, v. verb, adj. adjective, etc.)
 - Root/Affix Analysis
 - Synonyms
+- Tense (optional, specify verb present participle, past tense, past participle)
+- Plural (optional, specify the plural form of the word)
 
-## Etymology
+## Phrases/Expressions
+Common phrases or idiomatic expressions
 
 ## Example Sentences
 Example sentences containing the word
@@ -247,12 +258,11 @@ Corresponding translations (if applicable)
 Other requirements:
 - Output must be based on authoritative dictionary sources
 - Use standard IPA symbols for pronunciation
-- Etymological information should trace back to the earliest verifiable source
 - Example sentences should reflect the core meaning and common usage of the word
 - Use clear MarkDown formatting
 - Do not add explanatory text or labels
 
-Please follow the output format for querying "tiger":
+Please follow the output format for querying \"tiger\":
 
 ## `tiger`
 - [ˈtaɪɡər]
@@ -260,11 +270,11 @@ Please follow the output format for querying "tiger":
 - Part of Speech: noun (n.)
 - Root: tig- (wild beast, tiger)
 - Synonyms: panther, lion
+- Plural: tigers
 
-### 📚 Etymology
-- Middle English teigere*
-- From Old English tegor
-- Tracing back to Old Indo-European tigris
+### 📚 Phrases/Expressions
+- tiger woods n. Tiger Woods (world-famous golfer)
+- paper tiger paper tiger
 
 ### ✏️ Example Sentences
 
