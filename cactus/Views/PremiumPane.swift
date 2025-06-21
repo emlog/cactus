@@ -28,15 +28,86 @@ struct PremiumPane: View {
                     
                     // 特性列表
                     VStack(spacing: 8) {
-                        FeatureRow(icon: "infinity.circle.fill",
-                                   text: NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"),
-                                   accentColor: Color(red: 0.0, green: 0.48, blue: 1.0))
-                        FeatureRow(icon: "book.circle.fill",
-                                   text: NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"),
-                                   accentColor: Color(red: 0.34, green: 0.34, blue: 0.84))
-                        FeatureRow(icon: "bolt.circle.fill",
-                                   text: NSLocalizedString("premium_feature_custom_model", comment: "解锁更多自定义AI模型"),
-                                   accentColor: Color(red: 1.0, green: 0.45, blue: 0.0))
+                        // 第一个特性：无限使用
+                        HStack(spacing: 12) {
+                            Image(systemName: "infinity.circle.fill")
+                                .foregroundColor(Color(red: 0.0, green: 0.48, blue: 1.0))
+                                .font(.system(size: 20, weight: .bold))
+                            
+                            Text(NSLocalizedString("premium_feature_unlimited_usage", comment: "Unlimited usage"))
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(Color(red: 0.0, green: 0.48, blue: 1.0))
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.primary.opacity(0.03))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color(red: 0.0, green: 0.48, blue: 1.0).opacity(0.2), lineWidth: 1)
+                                )
+                        )
+                        
+                        // 第二个特性：无限词汇本
+                        HStack(spacing: 12) {
+                            Image(systemName: "book.circle.fill")
+                                .foregroundColor(Color(red: 0.34, green: 0.34, blue: 0.84))
+                                .font(.system(size: 20, weight: .bold))
+                            
+                            Text(NSLocalizedString("premium_feature_unlimited_vocabulary", comment: "Unlimited vocabulary book"))
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(Color(red: 0.34, green: 0.34, blue: 0.84))
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.primary.opacity(0.03))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color(red: 0.34, green: 0.34, blue: 0.84).opacity(0.2), lineWidth: 1)
+                                )
+                        )
+                        
+                        // 第三个特性：自定义AI模型
+                        HStack(spacing: 12) {
+                            Image(systemName: "bolt.circle.fill")
+                                .foregroundColor(Color(red: 1.0, green: 0.45, blue: 0.0))
+                                .font(.system(size: 20, weight: .bold))
+                            
+                            Text(NSLocalizedString("premium_feature_custom_model", comment: "解锁更多自定义AI模型"))
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(Color(red: 1.0, green: 0.45, blue: 0.0))
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.primary.opacity(0.03))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color(red: 1.0, green: 0.45, blue: 0.0).opacity(0.2), lineWidth: 1)
+                                )
+                        )
                     }
                     .padding(.horizontal, 0)
                     
@@ -189,45 +260,5 @@ struct PremiumPane: View {
         } message: {
             Text(alertMessage)
         }
-    }
-}
-
-struct FeatureRow: View {
-    let icon: String
-    let text: String
-    let accentColor: Color
-    
-    init(icon: String, text: String, accentColor: Color = Color.accentColor) {
-        self.icon = icon
-        self.text = text
-        self.accentColor = accentColor
-    }
-    
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .foregroundColor(accentColor)
-                .font(.system(size: 20, weight: .bold))
-            
-            Text(text)
-                .font(.system(size: 15, weight: .medium))
-                .foregroundColor(.primary)
-            
-            Spacer()
-            
-            Image(systemName: "checkmark")
-                .font(.system(size: 14, weight: .bold))
-                .foregroundColor(accentColor)
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 6)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.primary.opacity(0.03))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(accentColor.opacity(0.2), lineWidth: 1)
-                )
-        )
     }
 }
