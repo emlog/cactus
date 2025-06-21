@@ -87,9 +87,11 @@
 "contact" = "Contact Us";
 "rate_app" = "Rate This App";
 
-// error
+// ai error
 "error_invalid_config" = "System error, AI service configuration error";
 "error_request_failed" = "Request failed, switch to another AI model or check the network.";
+"error_empty_api_key" = "Please enter the API key for the current AI service";
+"error_empty_model" = "Please select a model for the current AI service";
 
 // common
 "alert_ok" = "OK";

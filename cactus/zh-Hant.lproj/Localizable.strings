@@ -87,9 +87,11 @@
 "contact" = "聯絡我們";
 "rate_app" = "給個好評吧";
 
-// error
+// ai error
 "error_invalid_config" = "系統錯誤，AI 服務設定錯誤";
 "error_request_failed" = "請求失敗，請切換其他 AI 模型或檢查網路";
+"error_empty_api_key" = "請填寫目前 AI 服務的金鑰";
+"error_empty_model" = "請為目前 AI 服務選擇模型";
 
 // common
 "alert_ok" = "好";

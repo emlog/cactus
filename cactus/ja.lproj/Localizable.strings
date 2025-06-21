@@ -87,9 +87,11 @@
 "contact" = "お問い合わせ";
 "rate_app" = "アプリを評価する";
 
-// error
+// ai error
 "error_invalid_config" = "システムエラー：AIサービスの設定が正しくありません";
 "error_request_failed" = "リクエストに失敗しました。別のAIモデルに切り替えるか、ネットワークを確認してください";
+"error_empty_api_key" = "現在のAIサービスのAPIキーを入力してください";
+"error_empty_model" = "現在のAIサービスに使用するモデルを選択してください";
 
 // common
 "alert_ok" = "OK";

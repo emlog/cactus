@@ -5,6 +5,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var buffer = Data()
     private var completionHandler: (() -> Void)?
     private var errorHandler: ((String) -> Void)? // 错误处理回调
+    private var hasReceivedValidResponse = false // 添加标志来跟踪是否收到有效响应
     
     static let shared = AiService()
     
@@ -17,6 +18,26 @@ class AiService: NSObject, URLSessionDataDelegate {
             DispatchQueue.main.async {
                 onError?(errorMessage) // 在主线程调用错误回调
                 completion?() // 确保完成回调也被调用
+            }
+            return
+        }
+        
+        // 检查 API Key 是否为空
+        guard !providerSettings.apiKey.isEmpty else {
+            let errorMessage = NSLocalizedString("error_empty_api_key", comment: "API Key 不能为空")
+            DispatchQueue.main.async {
+                onError?(errorMessage)
+                completion?()
+            }
+            return
+        }
+        
+        // 检查 model 是否为空
+        guard !providerSettings.model.isEmpty else {
+            let errorMessage = NSLocalizedString("error_empty_model", comment: "模型名称不能为空")
+            DispatchQueue.main.async {
+                onError?(errorMessage)
+                completion?()
             }
             return
         }
@@ -69,8 +90,93 @@ class AiService: NSObject, URLSessionDataDelegate {
         task.resume()
     }
     
+    /**
+     * URLSession Delegate 方法 1: 处理 HTTP 响应头
+     * 
+     * 用途：
+     * - 接收并验证服务器返回的 HTTP 响应状态码
+     * - 判断请求是否成功（状态码 < 400 为成功）
+     * - 设置全局标志位来标记响应的有效性
+     * 
+     * 工作机制：
+     * - 在接收到响应头时首先被调用
+     * - 检查 HTTP 状态码，如果 >= 400 则标记为错误响应
+     * - 通过 completionHandler(.allow) 决定是否继续接收数据
+     * - 为后续的数据处理方法提供响应状态信息
+     */
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        if let httpResponse = response as? HTTPURLResponse {
+            print("HTTP Status Code: \(httpResponse.statusCode)")
+            
+            // 检查是否为错误状态码
+            if httpResponse.statusCode >= 400 {
+                hasReceivedValidResponse = false
+                // 继续接收数据以获取错误信息
+                completionHandler(.allow)
+                return
+            } else {
+                hasReceivedValidResponse = true
+            }
+        }
+        completionHandler(.allow)
+    }
+    
+    /**
+     * URLSession Delegate 方法 2: 处理流式数据接收
+     * 
+     * 用途：
+     * - 接收并解析 AI 服务返回的流式数据（Server-Sent Events 格式）
+     * - 实时处理 JSON 数据块，提取 AI 生成的文本内容
+     * - 处理错误响应的解析和显示
+     * - 实时更新 UI 界面显示 AI 回复内容
+     * 
+     * 工作机制：
+     * - 将接收到的数据追加到缓冲区（buffer）
+     * - 按行解析缓冲区数据，查找以 "data:" 开头的 SSE 格式数据
+     * - 对每行 JSON 数据进行解码，提取 AI 回复的文本片段
+     * - 累积文本内容并实时更新到 TextContentModel.shared.resultText
+     * - 如果是错误响应，解析错误信息并通过 errorHandler 回调
+     * - 处理流式传输结束标记 "[DONE]"
+     */
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         buffer.append(data)
+        
+        // 如果收到的是错误响应，尝试解析错误信息
+        if !hasReceivedValidResponse {
+            // 尝试将整个buffer解析为错误JSON
+            if let errorString = String(data: buffer, encoding: .utf8) {
+                do {
+                    if let errorData = errorString.data(using: .utf8),
+                       let errorJson = try JSONSerialization.jsonObject(with: errorData) as? [String: Any] {
+                        
+                        var errorMessage: String = ""
+                        
+                        // 解析错误信息
+                        if let error = errorJson["error"] as? [String: Any] {
+                            if let message = error["message"] as? String {
+                                errorMessage = message
+                            }
+                            if let type = error["type"] as? String {
+                                errorMessage = "\(type): \(errorMessage)"
+                            }
+                        }
+                        
+                        DispatchQueue.main.async {
+                            // 将错误信息显示在用户输出窗口
+                            TextContentModel.shared.resultText = "\(NSLocalizedString("error_request_failed", comment: "请求失败")): \(errorMessage)"
+                        }
+                        return
+                    }
+                } catch {
+                    // JSON解析失败，显示原始错误信息
+                    DispatchQueue.main.async {
+                        TextContentModel.shared.resultText = "\(NSLocalizedString("error_request_failed", comment: "请求失败")): \(errorString)"
+                    }
+                    return
+                }
+            }
+            return
+        }
         
         // 持续处理缓冲区中的完整行
         while let range = buffer.firstRange(of: Data("\n".utf8)) {
@@ -133,12 +239,29 @@ class AiService: NSObject, URLSessionDataDelegate {
         // 循环结束后，buffer 中可能剩下不完整的最后一行数据，等待下一次 didReceive data
     }
     
+    /**
+     * URLSession Delegate 方法 3: 处理请求完成
+     * 
+     * 用途：
+     * - 处理网络请求的最终完成状态（成功或失败）
+     * - 执行清理工作，防止内存泄漏
+     * - 调用完成回调通知调用方请求结束
+     * - 处理网络错误并提供用户友好的错误信息
+     * 
+     * 工作机制：
+     * - 在请求完全结束时被调用（无论成功还是失败）
+     * - 检查是否有网络错误，如果有则调用 errorHandler 回调
+     * - 调用 completionHandler 通知调用方请求完成
+     * - 清除回调引用（completionHandler 和 errorHandler）防止循环引用
+     * - 清空缓冲区中的残留数据
+     * - 确保所有操作在主线程执行，保证 UI 更新的线程安全
+     */
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         DispatchQueue.main.async { // 确保在主线程执行 UI 相关操作和回调
             if let error = error {
                 print("请求错误: \(error.localizedDescription)")
                 // 调用错误回调，传递友好的错误信息
-                let friendlyErrorMessage = NSLocalizedString("error_request_failed", comment: "请求失败，请切换其他AI模型或检查网络")
+                let friendlyErrorMessage = NSLocalizedString("error_request_failed", comment: "请求失败")
                 self.errorHandler?(friendlyErrorMessage)
             }
             
