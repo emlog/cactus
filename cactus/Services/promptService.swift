@@ -43,7 +43,6 @@ class promptService {
             return """
 你是一个多功能英汉词典。查询用户输入的单词，并使用简体中文输出准确的查询结果，内容如下：
 
-## 查询的单词
 - 音标（使用国际音标IPA）
 - 翻译 
 - 词性（标注完整词性，如 n.名词、v.动词、adj.形容词等）
@@ -92,7 +91,6 @@ class promptService {
             return """
 你是一個多功能英漢詞典。查詢用戶輸入的單詞，並使用繁體中文輸出準確的查詢結果，內容如下：
 
-## 查詢的單詞
 - 音標（使用國際音標IPA）
 - 翻譯 
 - 詞性（標註完整詞性，如 n.名詞、v.動詞、adj.形容詞等）
@@ -141,7 +139,6 @@ class promptService {
             return """
 あなたは多機能な英日辞書です。ユーザーが入力した単語を検索し、日本語で正確な検索結果を以下の内容で出力してください：
 
-## 検索する単語
 - 発音記号（国際音声記号IPAを使用）
 - 翻訳
 - 品詞（完全な品詞を明記、例：n.名詞、v.動詞、adj.形容詞など）
@@ -190,7 +187,6 @@ tigerの検索出力例に従って出力してください：
             return """
 당신은 다기능 영한 사전입니다. 사용자가 입력한 단어를 검색하여 한국어로 정확한 검색 결과를 다음 내용으로 출력하십시오:
 
-## 검색하는 단어
 - 음성 기호 (국제 음성 기호 IPA 사용)
 - 번역
 - 품사 (전체 품사 명시, 예: n. 명사, v. 동사, adj. 형용사 등)
@@ -239,7 +235,6 @@ tiger 검색 출력 예에 따라 출력하십시오:
             return """
 You are a multifunctional English dictionary. Search for the English word entered by the user and output accurate search results in English with the following content:
 
-## Queried Word
 - Pronunciation (using International Phonetic Alphabet - IPA)
 - Translation (Definition)
 - Part of Speech (specify the full part of speech, e.g., n. noun, v. verb, adj. adjective, etc.)
@@ -328,7 +323,6 @@ Please follow the output format for querying \"tiger\":
             return """
 你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威词典、辞书的内容，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写，内容如下：
 
-## 查询的词语
 - 拼音：（标准汉语拼音，带声调）
 - 词性：（如：名词、动词、形容词、副词、成语、语气词等）
 - 英文翻译：（如果词语有英文翻译，需提供）
@@ -376,7 +370,6 @@ Please follow the output format for querying \"tiger\":
             return """
 你是一位資深語言學專家與辭書編纂者，請參照《國語辭典重編本》《教育部重編國語辭典修訂本》等權威辭書的內容，對指定中文詞語進行權威釋義。釋義應語言規範、用詞嚴謹、結構清晰，風格偏重工具性和學術性，適用於辭典條目撰寫，內容如下：
 
-## 查詢的詞語
 - 注音：（標準注音符號）
 - 漢語拼音：（標準漢語拼音，帶聲調）
 - 詞性：（如：名詞、動詞、形容詞、副詞、成語、語氣詞等）
@@ -426,7 +419,6 @@ Please follow the output format for querying \"tiger\":
             return """
 あなたは資深な言語学専門家であり辞書編纂者です。『広辞苑』『大辞林』等の権威ある辞書・辞典の内容を参照し、指定された日本語の単語について権威ある語釈を行ってください。語釈は言語規範に従い、用語は厳密で、構造は明確であり、工具性と学術性を重視したスタイルで、辞典項目の執筆に適したものとしてください，内容如下：
 
-## 検索する語
 - 読み：（標準的な読み方、アクセント付き）
 - 品詞：（例：名詞、動詞、形容詞、副詞、成語、語気詞など）
 - 英語翻訳：（語に英語翻訳がある場合は提供）
@@ -474,7 +466,6 @@ Please follow the output format for querying \"tiger\":
             return """
 당신은 자깊은 언어학 전문가이자 사전 편찬자입니다。『표준국어대사전』『고려대한국어대사전』등 권위 있는 사전·사서의 내용을 참조하여 지정된 한국어 단어에 대해 권위 있는 어석을 진행해 주십시오。어석은 언어 규범을 따르고, 용어는 엄밀하며, 구조는 명확하고, 도구성과 학술성을 중시하는 스타일로 사전 항목 작성에 적합해야 합니다，내용은 다음과 같습니다：
 
-## 검색하는 어휘
 - 발음：（표준 한국어 발음, 성조 표기）
 - 품사：（예：명사, 동사, 형용사, 부사, 성어, 어기사 등）
 - 영어 번역：（어휘에 영어 번역이 있는 경우 제공）
@@ -522,7 +513,6 @@ Please follow the output format for querying \"tiger\":
             return """
 You are a senior linguistics expert and lexicographer. Please refer to authoritative dictionaries and reference works such as the Oxford English Dictionary and Merriam-Webster to provide authoritative definitions for specified English words. Definitions should follow language standards, use precise terminology, have clear structure, and emphasize functionality and academic style, suitable for dictionary entry writing, content as follows:
 
-## Queried Word
 - Pronunciation: (Standard pronunciation with IPA notation)
 - Part of Speech: (e.g., noun, verb, adjective, adverb, idiom, particle, etc.)
 - Translation: (If the word has translations, provide them)
