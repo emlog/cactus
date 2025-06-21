@@ -9,7 +9,7 @@ struct PremiumPane: View {
     var body: some View {
         Settings.Container(contentWidth: 600) {
             Settings.Section(title: "", bottomDivider: true) {
-                VStack(spacing: 12) { // 使用固定间距，类似 AboutPane
+                VStack(spacing: 12) {
                     // 奢华标题部分
                     Text(NSLocalizedString("premium_features", comment: "Premium Features"))
                         .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -23,8 +23,7 @@ struct PremiumPane: View {
                                 endPoint: .trailing
                             )
                         )
-                        .padding(.top, 16)
-                        .padding(.bottom, 16)
+                        .padding(.bottom, 10)
                     
                     // 特性列表
                     VStack(spacing: 8) {
@@ -39,8 +38,9 @@ struct PremiumPane: View {
                                    accentColor: Color(red: 1.0, green: 0.45, blue: 0.0))
                     }
                     .padding(.horizontal, 0)
+                    .padding(.bottom, 10)
                     
-                    // 购买状态和按钮 - 移除 Spacer()，直接放在这里
+                    // 购买状态和按钮
                     if purchaseManager.isPremiumUser {
                         // 已购买状态
                         VStack(spacing: 12) {
@@ -83,7 +83,6 @@ struct PremiumPane: View {
                     } else {
                         // 未购买状态
                         VStack(spacing: 12) {
-                            // 购买按钮
                             Button(action: {
                                 purchaseManager.purchase()
                             }) {
@@ -167,14 +166,13 @@ struct PremiumPane: View {
                             .padding(.top, 8)
                     }
                 }
-                .frame(maxWidth: .infinity) // 参考 AboutPane 的居中方式
-                .padding() // 参考 AboutPane 的 padding 方式
+                .frame(maxWidth: .infinity)
+                .padding()
             }
         }
         .onAppear {
             purchaseManager.checkPurchaseStatus()
-            // 如果产品信息还没加载，主动重新加载
-            purchaseManager.reloadProductIfNeeded()
+            purchaseManager.reloadProductIfNeeded()// 如果产品信息还没加载，主动重新加载
         }
         .onChange(of: purchaseManager.errorMessage) { errorMessage in
             if let message = errorMessage, !message.isEmpty {
