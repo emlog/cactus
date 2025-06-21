@@ -245,7 +245,7 @@ struct FavoriteView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .frame(minWidth: 800, minHeight: 800)
+        .frame(minWidth: 800, minHeight: 600)
         .focusable()
         .focused($isViewFocused)
         .overlay(
