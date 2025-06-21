@@ -31,12 +31,6 @@
 
 // ai setting
 "select_service" = "选择AI服务";
-"openai_config" = "OpenAI配置";
-"siliconflow_config" = "硅基流动配置";
-"google_gemini_config" = "Google Gemini 配置";
-"claude_config" = "Anthropic Claude 配置";
-"deepseek_config" = "Deepseek 配置";
-"volcengine_config" = "火山引擎配置，请先开通模型";
 "enter_api_key" = "请输入密钥(API KEY)";
 "api_key" = "密钥";
 "model" = "模型";
@@ -49,6 +43,16 @@
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "火山引擎";
+"model_zhipu" = "智谱";
+
+// ai config
+"openai_config" = "OpenAI配置";
+"siliconflow_config" = "硅基流动配置";
+"google_gemini_config" = "Google Gemini 配置";
+"claude_config" = "Anthropic Claude 配置";
+"deepseek_config" = "Deepseek 配置";
+"volcengine_config" = "火山引擎配置，请先开通模型";
+"zhipu_config" = "智谱配置";
 
 // main
 "pop_text_empty" = "没有可复制的内容";
@@ -112,7 +116,6 @@
 "purchase_pending" = "购买正在处理中，请稍后查看";
 "purchase_not_found" = "未找到购买记录";
 "upgrade_to_premium" = "已达到用量上限，请升级高级版";
-
 
 // history
 "clear_all_history_message" = "确定要清空所有历史记录吗？";

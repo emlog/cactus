@@ -42,17 +42,18 @@ class SettingsModel: ObservableObject {
             apiKey: "sk-xxx",
             model: "internlm/internlm2_5-7b-chat"
         ),
-        "openai": ProviderSettings(
-            title: NSLocalizedString("model_openai", comment: "openai"),
-            baseURL: "https://api.openai.com/v1/chat/completions",
+        "zhipu": ProviderSettings(
+            title: NSLocalizedString("model_zhipu", comment: "zhipu"),
+            baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
             apiKey: "",
             model: "",
-            helpUrl: "https://platform.openai.com/api-keys",
+            helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
-                "gpt-4.1-2025-04-14": "GPT-4.1",
-                "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
-                "gpt-4o-mini-2024-07-18": "GPT-4o mini"
+                "glm-4-flash-250414": "GLM-4-flash-free",
+                "glm-4v-flash": "GLM-4v-flash-free",
+                "glm-4-plus": "GLM-4-plus",
+                "glm-4v-plus": "GLM-4v-plus"
             ]
         ),
         "siliconflow": ProviderSettings(
@@ -94,6 +95,19 @@ class SettingsModel: ObservableObject {
                 "deepseek-v3-250324": "DeepSeek-V3"
             ]
         ),
+        "openai": ProviderSettings(
+            title: NSLocalizedString("model_openai", comment: "openai"),
+            baseURL: "https://api.openai.com/v1/chat/completions",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://platform.openai.com/api-keys",
+            requiresCustomConfig: true,
+            availableModels: [
+                "gpt-4.1-2025-04-14": "GPT-4.1",
+                "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
+                "gpt-4o-mini-2024-07-18": "GPT-4o mini"
+            ]
+        ),
         "google_gemini": ProviderSettings(
             title: NSLocalizedString("model_google_gemini", comment: "Google Gemini"),
             baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
@@ -126,6 +140,7 @@ class SettingsModel: ObservableObject {
         "model_zhipu_glm4",
         "model_qwen3",
         "model_cactusai_mix",
+        "zhipu",
         "siliconflow",
         "deepseek",
         "volcengine",
@@ -133,6 +148,21 @@ class SettingsModel: ObservableObject {
         "google_gemini",
         "claude"
     ]
+    
+    // zhipu 用户配置
+    @Published var zhipuApiKey: String {
+        didSet {
+            UserDefaults.standard.set(zhipuApiKey, forKey: "zhipuApiKey")
+            updateZhipuConfig()
+        }
+    }
+    
+    @Published var selectedZhipuModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedZhipuModel, forKey: "selectedZhipuModel")
+            updateZhipuConfig()
+        }
+    }
     
     // OpenAI 用户配置
     @Published var openaiApiKey: String {
@@ -251,14 +281,29 @@ class SettingsModel: ObservableObject {
         self.volcengineApiKey = UserDefaults.standard.string(forKey: "volcengineApiKey") ?? ""
         self.selectedVolcengineModel = UserDefaults.standard.string(forKey: "selectedVolcengineModel") ?? ""
         
+        self.zhipuApiKey = UserDefaults.standard.string(forKey: "zhipuApiKey") ?? ""
+        self.selectedZhipuModel = UserDefaults.standard.string(forKey: "selectedZhipuModel") ?? ""
+        
         updateOpenAIConfig()
         updateSiliconflowConfig()
         updateGoogleGeminiConfig()
         updateClaudeConfig()
         updateDeepseekConfig()
         updateVolcengineConfig()
+        updateZhipuConfig()
     }
     
+    private func updateZhipuConfig() {
+        if var zhipuProvider = defaultProviders["zhipu"] {
+            zhipuProvider.apiKey = zhipuApiKey
+            zhipuProvider.model = selectedZhipuModel
+            defaultProviders["zhipu"] = zhipuProvider
+        }
+    }
+
+
+
+
     private func updateOpenAIConfig() {
         if var openaiProvider = defaultProviders["openai"] {
             openaiProvider.apiKey = openaiApiKey

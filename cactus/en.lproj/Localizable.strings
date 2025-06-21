@@ -31,12 +31,6 @@
 
 // ai setting
 "select_service" = "Select AI Service";
-"openai_config" = "OpenAI Setting";
-"siliconflow_config" = "Siliconflow Setting";
-"google_gemini_config" = "Google Gemini Setting";
-"claude_config" = "Anthropic Claude Setting";
-"deepseek_config" = "Deepseek Setting";
-"volcengine_config" = "Volcengine Setting";
 "enter_api_key" = "Please Enter API KEY";
 "api_key" = "API KEY";
 "model" = "Model";
@@ -49,6 +43,16 @@
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
+"model_zhipu" = "Zhipu";
+
+// ai config
+"openai_config" = "OpenAI Setting";
+"siliconflow_config" = "Siliconflow Setting";
+"google_gemini_config" = "Google Gemini Setting";
+"claude_config" = "Anthropic Claude Setting";
+"deepseek_config" = "Deepseek Setting";
+"volcengine_config" = "Volcengine Setting";
+"zhipu_config" = "Zhipu Setting";
 
 // main
 "pop_text_empty" = "No text available to copy.";

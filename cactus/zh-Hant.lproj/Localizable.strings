@@ -31,12 +31,6 @@
 
 // ai setting
 "select_service" = "選擇 AI 服務";
-"openai_config" = "OpenAI 設定";
-"siliconflow_config" = "SiliconFlow 設定";
-"google_gemini_config" = "Google Gemini 設定";
-"claude_config" = "Anthropic Claude 設定";
-"deepseek_config" = "Deepseek 設定";
-"volcengine_config" = "火山引擎設定";
 "enter_api_key" = "請輸入密鑰（API KEY）";
 "api_key" = "密鑰";
 "model" = "模型";
@@ -49,6 +43,16 @@
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "火山引擎";
+"model_zhipu" = "智谱";
+
+// ai config
+"openai_config" = "OpenAI 設定";
+"siliconflow_config" = "SiliconFlow 設定";
+"google_gemini_config" = "Google Gemini 設定";
+"claude_config" = "Anthropic Claude 設定";
+"deepseek_config" = "Deepseek 設定";
+"volcengine_config" = "火山引擎設定";
+"zhipu_config" = "智谱設定";
 
 // Main Window Popups & Helpers
 "pop_text_empty" = "沒有可拷貝的內容";
