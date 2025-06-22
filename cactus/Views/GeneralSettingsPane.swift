@@ -18,7 +18,7 @@ struct GeneralSettingsPane: View {
             Settings.Section(label: { Text(NSLocalizedString("shortcut_openmain", comment: "打开主窗口快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutMain)
                 Text(NSLocalizedString("shortcut_openmain_description", comment: "打开主窗口，并将选中的文字填充到输入框内"))
-                    .font(.callout)
+                    .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
@@ -26,7 +26,7 @@ struct GeneralSettingsPane: View {
             Settings.Section(label: { Text(NSLocalizedString("shortcut_translate", comment: "选中翻译快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcut)
                 Text(NSLocalizedString("shortcut_translate_description", comment: "选中要翻译的文字，按下快捷键快速翻译"))
-                    .font(.callout)
+                    .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
@@ -34,7 +34,7 @@ struct GeneralSettingsPane: View {
             Settings.Section(label: { Text(NSLocalizedString("shortcut_summary", comment: "总结摘要快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutSummary)
                 Text(NSLocalizedString("shortcut_summary_description", comment: "选中要总结的内容，按下快捷键总结摘要"))
-                    .font(.callout)
+                    .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
@@ -42,7 +42,7 @@ struct GeneralSettingsPane: View {
             Settings.Section(label: { Text(NSLocalizedString("shortcut_dict", comment: "字典查询快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutDictionary)
                 Text(NSLocalizedString("shortcut_dict_description", comment: "选中要查询的字词，按下快捷键查询"))
-                    .font(.callout)
+                    .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
@@ -50,7 +50,7 @@ struct GeneralSettingsPane: View {
             Settings.Section(label: { Text(NSLocalizedString("shortcut_ocr_translate", comment: "截屏翻译快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutScreenshotTranslate)
                 Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
-                    .font(.callout)
+                    .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
