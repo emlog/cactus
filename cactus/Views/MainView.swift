@@ -19,6 +19,8 @@ struct MainView: View {
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
     @State private var showResultCopySuccess = false
+    // 添加收藏成功状态
+    @State private var showFavoriteSuccess = false
     
     // 默认尺寸
     private let minInputTextHeight: CGFloat = 100
@@ -77,12 +79,13 @@ struct MainView: View {
                         Button(action: {
                             addToFavorites()
                         }) {
-                            Label("", systemImage: "heart")
+                            Label("", systemImage: showFavoriteSuccess ? "heart.fill" : "heart")
                                 .labelStyle(.iconOnly)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(showFavoriteSuccess ? .red : .secondary)
                         }
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .help(NSLocalizedString("help_favorite", comment: "收藏"))
+                        .animation(.easeInOut, value: showFavoriteSuccess) // 添加动画效果
                         .disabled(contentModel.text.isEmpty)
                         
                         // 语音朗读（输入）
@@ -633,5 +636,16 @@ struct MainView: View {
         
         toastMessage = NSLocalizedString("pop_favorite_added", comment: "已添加到收藏夹")
         showCompleteToast = true
+        
+        // 触发收藏成功动画
+        withAnimation {
+            showFavoriteSuccess = true
+        }
+        // 1.5秒后恢复图标
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                showFavoriteSuccess = false
+            }
+        }
     }
 }
