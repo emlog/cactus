@@ -231,33 +231,7 @@ struct MainView: View {
                     ZStack(alignment: .bottomTrailing) {
                         ScrollView {
                             Markdown(resultText)
-                                .markdownTheme(.gitHub)
-                                .markdownTextStyle(\.text) {
-                                    FontSize(.em(0.95))
-                                    ForegroundColor(.primary)
-                                }
-                                .markdownTextStyle(\.code) {
-                                    FontFamilyVariant(.monospaced)
-                                    FontSize(.em(0.85))
-                                    ForegroundColor(.purple)
-                                    BackgroundColor(.purple.opacity(0.1))
-                                }
-                                .markdownBlockStyle(\.codeBlock) { configuration in
-                                    configuration.label
-                                        .padding()
-                                        .background(Color(.controlBackgroundColor))
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                                }
-                                .markdownBlockStyle(\.blockquote) { configuration in
-                                    configuration.label
-                                        .padding()
-                                        .overlay(alignment: .leading) {
-                                            Rectangle()
-                                                .fill(Color.blue)
-                                                .frame(width: 4)
-                                        }
-                                        .background(Color.blue.opacity(0.1))
-                                }
+                                .markdownTheme(.cactusMD)
                                 .textSelection(.enabled)
                                 .padding(.horizontal, 12)
                                 .padding(.top, 10)
