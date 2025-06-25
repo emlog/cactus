@@ -436,9 +436,6 @@ struct MainView: View {
     
     // 翻译
     func translateText() {
-        // 清空对话历史
-        chatHistory = []
-        
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
@@ -511,9 +508,6 @@ struct MainView: View {
     
     // 总结
     func summaryText() {
-        // 清空对话历史
-        chatHistory = []
-        
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
@@ -526,9 +520,6 @@ struct MainView: View {
     
     // 字典
     func dictionaryText() {
-        // 清空对话历史
-        chatHistory = []
-        
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
