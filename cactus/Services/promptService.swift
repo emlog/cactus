@@ -347,7 +347,7 @@ Please follow the output format for querying \"tiger\":
 
 请严格按照查询 苹果 的输出格式输出：
 
-## `苹果`
+## 苹果
 - 拼音：píng guǒ
 - 词性：名词
 - 英文翻译：apple
@@ -364,7 +364,7 @@ Please follow the output format for querying \"tiger\":
 《诗经·卫风·木瓜》："投我以木瓜，报之以琼琚。"
 
 ### 📚 词源
-"苹果"一词最早见于《广雅》，原指一种野生果实。现代意义的苹果传入中国后沿用此名。
+`苹果`一词最早见于《广雅》，原指一种野生果实。现代意义的苹果传入中国后沿用此名。
 """
         case "zh-TW":
             return """
@@ -395,7 +395,7 @@ Please follow the output format for querying \"tiger\":
 
 請嚴格按照查詢 蘋果 的輸出格式輸出：
 
-## `蘋果`
+## 蘋果
 - 注音：ㄆㄧㄥˊ ㄍㄨㄛˇ
 - 漢語拼音：píng guǒ
 - 詞性：名詞
@@ -413,7 +413,7 @@ Please follow the output format for querying \"tiger\":
 《詩經·衛風·木瓜》："投我以木瓜，報之以瓊琚。"
 
 ### 📚 詞源
-"蘋果"一詞最早見於《廣雅》，原指一種野生果實。現代意義的蘋果傳入中國後沿用此名。
+`蘋果`一詞最早見於《廣雅》，原指一種野生果實。現代意義的蘋果傳入中國後沿用此名。
 """
         case "ja-JP":
             return """
@@ -443,7 +443,7 @@ Please follow the output format for querying \"tiger\":
 
 「りんご」を検索する場合の出力形式に厳格に従って出力してください：
 
-## `りんご`
+## りんご
 - 読み：りんご
 - 品詞：名詞
 - 英語翻訳：apple
@@ -460,7 +460,7 @@ Please follow the output format for querying \"tiger\":
 『万葉集』："林檎の花咲く頃に"
 
 ### 📚 語源
-「りんご」は中国語「林檎」から借用された語で、もともとは野生の果実を指していた。現代意味のりんごが伝来後この名を踏襲。
+`りんご`は中国語「林檎」から借用された語で、もともとは野生の果実を指していた。現代意味のりんごが伝来後この名を踏襲。
 """
         case "ko-KR":
             return """
@@ -490,7 +490,7 @@ Please follow the output format for querying \"tiger\":
 
 "사과"를 검색하는 경우의 출력 형식에 엄격히 따라 출력해 주십시오：
 
-## `사과`
+## 사과
 - 발음：사과
 - 품사：명사
 - 영어 번역：apple
@@ -507,7 +507,7 @@ Please follow the output format for querying \"tiger\":
 『삼국사기』："사과나무 꽃이 피는 때"
 
 ### 📚 어원
-"사과"는 중국어 "沙果"에서 유래된 말로, 원래는 야생 과실을 가리켰다. 현대 의미의 사과가 전래된 후 이 이름을 답습.
+`사과`는 중국어 "沙果"에서 유래된 말로, 원래는 야생 과실을 가리켰다. 현대 의미의 사과가 전래된 후 이 이름을 답습.
 """
         default: // en-US
             return """
@@ -537,7 +537,7 @@ Other requirements:
 
 Please strictly follow the output format for querying "apple":
 
-## `apple`
+## apple
 - Pronunciation: /ˈæpəl/
 - Part of Speech: noun
 - Translation: 苹果 (Chinese), りんご (Japanese), 사과 (Korean)
@@ -554,7 +554,7 @@ Please strictly follow the output format for querying "apple":
 "An apple a day keeps the doctor away." - Traditional proverb
 
 ### 📚 Etymology
-"Apple" first appeared in Old English as "æppel", originally referring to a wild fruit. The modern meaning of apple adopted this name after its introduction.
+`Apple` first appeared in Old English as "æppel", originally referring to a wild fruit. The modern meaning of apple adopted this name after its introduction.
 """
         }
     }
