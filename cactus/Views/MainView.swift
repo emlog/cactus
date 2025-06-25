@@ -307,6 +307,7 @@ struct MainView: View {
             // 监听窗口关闭通知
             NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil, queue: .main) { _ in
                 stopSpeaking()
+                self.chatHistory = []
             }
         }
         .onDisappear {
