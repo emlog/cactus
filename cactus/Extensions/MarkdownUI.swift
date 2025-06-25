@@ -12,7 +12,7 @@ extension Theme {
     public static let cactusMD = Theme()
         .text {
             ForegroundColor(.text)
-            FontSize(16)
+            FontSize(15)
         }
         .code {
             FontFamilyVariant(.monospaced)
@@ -33,7 +33,7 @@ extension Theme {
                     .markdownMargin(top: 24, bottom: 16)
                     .markdownTextStyle {
                         FontWeight(.semibold)
-                        FontSize(.em(2))
+                        FontSize(.em(1.75))
                     }
                 Divider().overlay(Color.divider)
             }

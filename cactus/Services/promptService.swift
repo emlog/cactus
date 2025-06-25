@@ -67,7 +67,7 @@ class promptService {
 
 请按照查询 tiger 的输出格式输出：
 
-## tiger
+### tiger
 - [ˈtaɪɡər]  
 - 老虎  
 - 词性：名词（n.）  
@@ -115,7 +115,7 @@ class promptService {
 
 請按照查詢 tiger 的輸出格式輸出：
 
-## tiger
+### tiger
 - [ˈtaɪɡər]  
 - 老虎  
 - 詞性：名詞（n.）  
@@ -163,7 +163,7 @@ class promptService {
 
 tigerの検索出力例に従って出力してください：
 
-## tiger
+### tiger
 - [ˈtaɪɡər]
 - トラ
 - 品詞：名詞（n.）
@@ -211,7 +211,7 @@ tigerの検索出力例に従って出力してください：
 
 tiger 검색 출력 예에 따라 출력하십시오:
 
-## tiger
+### tiger
 - [ˈtaɪɡər]
 - 호랑이
 - 품사：명사（n.）
@@ -259,7 +259,7 @@ Other requirements:
 
 Please follow the output format for querying \"tiger\":
 
-## tiger
+### tiger
 - [ˈtaɪɡər]
 - A large carnivorous feline mammal (Panthera tigris) of Asia, having a tawny coat with transverse black stripes
 - Part of Speech: noun (n.)
@@ -347,7 +347,7 @@ Please follow the output format for querying \"tiger\":
 
 请严格按照查询 苹果 的输出格式输出：
 
-## 苹果
+### 苹果
 - 拼音：píng guǒ
 - 词性：名词
 - 英文翻译：apple
@@ -395,7 +395,7 @@ Please follow the output format for querying \"tiger\":
 
 請嚴格按照查詢 蘋果 的輸出格式輸出：
 
-## 蘋果
+### 蘋果
 - 注音：ㄆㄧㄥˊ ㄍㄨㄛˇ
 - 漢語拼音：píng guǒ
 - 詞性：名詞
@@ -443,7 +443,7 @@ Please follow the output format for querying \"tiger\":
 
 「りんご」を検索する場合の出力形式に厳格に従って出力してください：
 
-## りんご
+### りんご
 - 読み：りんご
 - 品詞：名詞
 - 英語翻訳：apple
@@ -490,7 +490,7 @@ Please follow the output format for querying \"tiger\":
 
 "사과"를 검색하는 경우의 출력 형식에 엄격히 따라 출력해 주십시오：
 
-## 사과
+### 사과
 - 발음：사과
 - 품사：명사
 - 영어 번역：apple
@@ -537,7 +537,7 @@ Other requirements:
 
 Please strictly follow the output format for querying "apple":
 
-## apple
+### apple
 - Pronunciation: /ˈæpəl/
 - Part of Speech: noun
 - Translation: 苹果 (Chinese), りんご (Japanese), 사과 (Korean)
