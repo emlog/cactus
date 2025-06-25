@@ -456,55 +456,13 @@ struct MainView: View {
         } else if Lang.isSentence(inputText) == false {
             // 单词翻译
             systemMessage = Prompt.getSystemMessageForTranslateWord()
-            // 保存到生词本
-            performAIActionWithVocabulary(systemMessage: systemMessage, word: inputText)
+            performAIAction(systemMessage: systemMessage, actionType: .vocabulary(word: inputText))
             return
         } else {
             // 句子翻译
             systemMessage = Prompt.getSystemMessageForTranslate()
         }
         performAIAction(systemMessage: systemMessage)
-    }
-    
-    // 带生词本保存功能的AI调用
-    private func performAIActionWithVocabulary(systemMessage: String, word: String) {
-        guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
-            toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
-            showErrorToast = true
-            return
-        }
-        
-        contentModel.isProcessing = true
-        contentModel.resultText = ""
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
-                DispatchQueue.main.async {
-                    isResultViewExpanded = true
-                    contentModel.isProcessing = false
-                    
-                    // 保存到生词本
-                    if let definition = contentModel.resultText, !definition.isEmpty {
-                        vocabularyManager.addWord(word, definition: definition)
-                    }
-                    
-                    // 保存到历史记录
-                    if let resultText = contentModel.resultText, !resultText.isEmpty {
-                        HistoryManager.shared.addHistory(
-                            inputContent: contentModel.text,
-                            outputContent: resultText
-                        )
-                    }
-                }
-            } onError: { errorMessage in
-                DispatchQueue.main.async {
-                    self.toastMessage = errorMessage
-                    self.showErrorToast = true
-                    contentModel.resultText = errorMessage
-                    contentModel.isProcessing = false
-                }
-            }
-        }
     }
     
     // 总结
@@ -546,59 +504,13 @@ struct MainView: View {
         
         // 保存当前输入文本用于历史记录
         let currentInput = contentModel.text
-        
-        // 清空输入框
-        DispatchQueue.main.async {
-            self.contentModel.text = ""
-            self.inputTextHeight = self.minInputTextHeight
-            // 通知窗口调整大小
-            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-        }
-        
-        performChatAction(systemMessage: systemMessage, chatHistory: chatHistory, originalInput: currentInput)
+        performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: chatHistory, originalInput: currentInput))
     }
     
     // 只做一些清理窗口的动作
     func noactionText() {
         contentModel.resultText = nil
         isResultViewExpanded = false
-    }
-    
-    // 调用AI服务
-    // 在performAIAction方法中添加历史记录保存
-    private func performAIAction(systemMessage: String) {
-        guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
-            toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
-            showErrorToast = true
-            return
-        }
-        
-        contentModel.isProcessing = true
-        contentModel.resultText = ""
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
-                DispatchQueue.main.async {
-                    isResultViewExpanded = true
-                    contentModel.isProcessing = false
-                    
-                    // 保存到历史记录
-                    if let resultText = contentModel.resultText, !resultText.isEmpty {
-                        HistoryManager.shared.addHistory(
-                            inputContent: contentModel.text,
-                            outputContent: resultText
-                        )
-                    }
-                }
-            } onError: { errorMessage in
-                DispatchQueue.main.async {
-                    self.toastMessage = errorMessage
-                    self.showErrorToast = true
-                    contentModel.resultText = errorMessage
-                    contentModel.isProcessing = false
-                }
-            }
-        }
     }
     
     // 语音朗读
@@ -644,8 +556,14 @@ struct MainView: View {
         }
     }
     
-    // 执行对话AI调用
-    private func performChatAction(systemMessage: String, chatHistory: [[String: String]], originalInput: String) {
+    
+    enum AIActionType {
+        case basic
+        case vocabulary(word: String)
+        case chat(chatHistory: [[String: String]], originalInput: String)
+    }
+    
+    private func performAIAction(systemMessage: String, actionType: AIActionType = .basic) {
         guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
             showErrorToast = true
@@ -656,29 +574,70 @@ struct MainView: View {
         contentModel.resultText = ""
         
         DispatchQueue.global(qos: .userInitiated).async {
-            Ai.chat(chatHistory: chatHistory, systemMessage: systemMessage) {
-                DispatchQueue.main.async {
-                    isResultViewExpanded = true
-                    contentModel.isProcessing = false
-                    
-                    if let resultText = contentModel.resultText, !resultText.isEmpty {
-                        // 保存到历史记录
-                        HistoryManager.shared.addHistory(
-                            inputContent: originalInput,
-                            outputContent: resultText
-                        )
-                        // 将完整的对话结果添加到对话历史中
-                        self.chatHistory.append(["role": "assistant", "content": resultText])
+            // 根据actionType选择不同的AI调用方式
+            switch actionType {
+            case .basic, .vocabulary:
+                Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
+                    DispatchQueue.main.async {
+                        self.handleAIResponse(actionType: actionType)
+                    }
+                } onError: { errorMessage in
+                    DispatchQueue.main.async {
+                        self.handleAIError(errorMessage: errorMessage)
                     }
                 }
-            } onError: { errorMessage in
-                DispatchQueue.main.async {
-                    self.toastMessage = errorMessage
-                    self.showErrorToast = true
-                    contentModel.resultText = errorMessage
-                    contentModel.isProcessing = false
+                
+            case .chat(let chatHistory, _):
+                Ai.chat(chatHistory: chatHistory, systemMessage: systemMessage) {
+                    DispatchQueue.main.async {
+                        self.handleAIResponse(actionType: actionType)
+                    }
+                } onError: { errorMessage in
+                    DispatchQueue.main.async {
+                        self.handleAIError(errorMessage: errorMessage)
+                    }
                 }
             }
         }
+    }
+    
+    private func handleAIResponse(actionType: AIActionType) {
+        isResultViewExpanded = true
+        contentModel.isProcessing = false
+        
+        guard let resultText = contentModel.resultText, !resultText.isEmpty else { return }
+        
+        // 根据actionType处理不同的后续操作
+        switch actionType {
+        case .basic:
+            // 只保存历史记录
+            HistoryManager.shared.addHistory(
+                inputContent: contentModel.text,
+                outputContent: resultText
+            )
+            
+        case .vocabulary(let word):
+            // 保存到生词本 + 保存历史记录
+            vocabularyManager.addWord(word, definition: resultText)
+            HistoryManager.shared.addHistory(
+                inputContent: contentModel.text,
+                outputContent: resultText
+            )
+            
+        case .chat(_, let originalInput):
+            // 保存历史记录 + 更新对话历史
+            HistoryManager.shared.addHistory(
+                inputContent: originalInput,
+                outputContent: resultText
+            )
+            self.chatHistory.append(["role": "assistant", "content": resultText])
+        }
+    }
+    
+    private func handleAIError(errorMessage: String) {
+        self.toastMessage = errorMessage
+        self.showErrorToast = true
+        contentModel.resultText = errorMessage
+        contentModel.isProcessing = false
     }
 }
