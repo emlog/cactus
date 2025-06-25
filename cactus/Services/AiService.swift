@@ -1,5 +1,11 @@
 import Foundation
 
+enum AIActionType {
+    case basic
+    case vocabulary(word: String)
+    case chat(chatHistory: [[String: String]], originalInput: String)
+}
+
 class AiService: NSObject, URLSessionDataDelegate {
     private var fullContent = ""
     private var buffer = Data()

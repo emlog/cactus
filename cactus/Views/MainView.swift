@@ -526,7 +526,7 @@ struct MainView: View {
         speechService.stopSpeaking()
     }
     
-    // 添加收藏功能方法
+    // 添加收藏
     func addToFavorites() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         let resultText = contentModel.resultText ?? ""
@@ -556,13 +556,7 @@ struct MainView: View {
         }
     }
     
-    
-    enum AIActionType {
-        case basic
-        case vocabulary(word: String)
-        case chat(chatHistory: [[String: String]], originalInput: String)
-    }
-    
+    // 发起AI请求
     private func performAIAction(systemMessage: String, actionType: AIActionType = .basic) {
         guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
