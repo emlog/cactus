@@ -158,33 +158,7 @@ struct FavoriteView: View {
                             ZStack(alignment: .bottomTrailing) {
                                 ScrollView {
                                     Markdown(selectedFavorite.outputContent ?? "")
-                                        .markdownTheme(.gitHub)
-                                        .markdownTextStyle(\.text) {
-                                            FontSize(.em(0.95))
-                                            ForegroundColor(.primary)
-                                        }
-                                        .markdownTextStyle(\.code) {
-                                            FontFamilyVariant(.monospaced)
-                                            FontSize(.em(0.85))
-                                            ForegroundColor(.purple)
-                                            BackgroundColor(.purple.opacity(0.1))
-                                        }
-                                        .markdownBlockStyle(\.codeBlock) { configuration in
-                                            configuration.label
-                                                .padding()
-                                                .background(Color(.controlBackgroundColor))
-                                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                        }
-                                        .markdownBlockStyle(\.blockquote) { configuration in
-                                            configuration.label
-                                                .padding()
-                                                .overlay(alignment: .leading) {
-                                                    Rectangle()
-                                                        .fill(Color.blue)
-                                                        .frame(width: 4)
-                                                }
-                                                .background(Color.blue.opacity(0.1))
-                                        }
+                                        .markdownTheme(.cactusMD)
                                         .textSelection(.enabled)
                                         .padding(.horizontal, 12)
                                         .padding(.top, 10)
@@ -366,7 +340,7 @@ struct FavoriteView: View {
         if let index = currentIndex {
             favoriteManager.favoriteEntries.remove(at: index)
         }
-
+        
         // 智能选择下一个条目
         if self.favoriteManager.favoriteEntries.isEmpty {
             self.selectedFavorite = nil
@@ -382,7 +356,7 @@ struct FavoriteView: View {
             // 如果删除了唯一的元素后列表为空，selectedFavorite 已在上面设为 nil
             // 如果列表不为空，但由于某种原因索引无效（理论上不应发生），则选择第一个
             else if !self.favoriteManager.favoriteEntries.isEmpty {
-                 self.selectedFavorite = self.favoriteManager.favoriteEntries.first
+                self.selectedFavorite = self.favoriteManager.favoriteEntries.first
             }
         } else if !self.favoriteManager.favoriteEntries.isEmpty {
             // 如果 currentIndex 为 nil （例如，favoriteToDelete 不在数组中，尽管我们已经检查过），

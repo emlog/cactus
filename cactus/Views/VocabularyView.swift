@@ -17,7 +17,7 @@ struct VocabularyView: View {
     // 添加语音朗读相关状态
     @State private var isSpeakingWord = false
     private let speechService = SpeechService.shared
-
+    
     // 获取高级用户状态
     private var isPremiumUser: Bool {
         PurchaseManager.shared.isPremiumUser
@@ -38,8 +38,8 @@ struct VocabularyView: View {
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 0)
-                            .fill(selectedWord?.objectID == wordEntry.objectID 
-                                  ? Color.accentColor.opacity(0.2) 
+                            .fill(selectedWord?.objectID == wordEntry.objectID
+                                  ? Color.accentColor.opacity(0.2)
                                   : Color.clear)
                             .padding(.vertical, 0)
                     )
@@ -84,39 +84,14 @@ struct VocabularyView: View {
                         }
                         
                         ZStack(alignment: .topTrailing) {
-                            ScrollView {
-                                VStack(alignment: .leading, spacing: 16) {
+                            ZStack(alignment: .bottomTrailing) {
+                                ScrollView {
                                     // 单词定义
                                     Markdown(selectedWord.definition ?? "")
-                                        .markdownTheme(.gitHub)
-                                        .markdownTextStyle(\.text) {
-                                            FontSize(.em(0.95))
-                                            ForegroundColor(.primary)
-                                        }
-                                        .markdownTextStyle(\.code) {
-                                            FontFamilyVariant(.monospaced)
-                                            FontSize(.em(0.85))
-                                            ForegroundColor(.purple)
-                                            BackgroundColor(.purple.opacity(0.1))
-                                        }
-                                        .markdownBlockStyle(\.codeBlock) { configuration in
-                                            configuration.label
-                                                .padding()
-                                                .background(Color(.controlBackgroundColor))
-                                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                        }
-                                        .markdownBlockStyle(\.blockquote) { configuration in
-                                            configuration.label
-                                                .padding()
-                                                .overlay(alignment: .leading) {
-                                                    Rectangle()
-                                                        .fill(Color.blue)
-                                                        .frame(width: 4)
-                                                }
-                                                .background(Color.blue.opacity(0.1))
-                                        }
+                                        .markdownTheme(.cactusMD)
                                         .textSelection(.enabled)
                                 }
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 .padding(.horizontal, 12)
                                 .padding(.top, 12)
                                 .padding(.bottom, 20)
@@ -292,7 +267,7 @@ struct VocabularyView: View {
         if let index = currentIndex {
             vocabularyManager.wordEntries.remove(at: index)
         }
-
+        
         // 智能选择下一个条目
         if self.vocabularyManager.wordEntries.isEmpty {
             self.selectedWord = nil
@@ -300,15 +275,15 @@ struct VocabularyView: View {
             // 如果删除的是最后一个元素，且列表不为空，则选择新的最后一个元素
             if index >= self.vocabularyManager.wordEntries.count && !self.vocabularyManager.wordEntries.isEmpty {
                 self.selectedWord = self.vocabularyManager.wordEntries.last
-            } 
+            }
             // 如果删除的不是最后一个元素，则选择原来的下一个元素（现在是当前索引的元素）
             else if index < self.vocabularyManager.wordEntries.count {
                 self.selectedWord = self.vocabularyManager.wordEntries[index]
-            } 
+            }
             // 如果删除了唯一的元素后列表为空，selectedWord 已在上面设为 nil
             // 如果列表不为空，但由于某种原因索引无效（理论上不应发生），则选择第一个
             else if !self.vocabularyManager.wordEntries.isEmpty {
-                 self.selectedWord = self.vocabularyManager.wordEntries.first
+                self.selectedWord = self.vocabularyManager.wordEntries.first
             }
         } else if !self.vocabularyManager.wordEntries.isEmpty {
             // 如果 currentIndex 为 nil （例如，wordToDelete 不在数组中，尽管我们已经检查过），

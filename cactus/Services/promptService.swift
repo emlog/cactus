@@ -67,7 +67,7 @@ class promptService {
 
 请按照查询 tiger 的输出格式输出：
 
-## `tiger`
+## tiger
 - [ˈtaɪɡər]  
 - 老虎  
 - 词性：名词（n.）  
@@ -81,10 +81,10 @@ class promptService {
 
 ### ✏️ 例句
 
-1. He took a photo of the tiger in the wild.
+1. He took a photo of the `tiger` in the wild.
    他在野外拍摄了老虎的照片。
 
-2. The tiger roars in the danger of the jungle.
+2. The `tiger` roars in the danger of the jungle.
    老虎在丛林的危险中发出咆哮。
 """
         case "zh-TW":
@@ -115,7 +115,7 @@ class promptService {
 
 請按照查詢 tiger 的輸出格式輸出：
 
-## `tiger`
+## tiger
 - [ˈtaɪɡər]  
 - 老虎  
 - 詞性：名詞（n.）  
@@ -129,10 +129,10 @@ class promptService {
 
 ### ✏️ 例句
 
-1. He took a photo of the tiger in the wild.
+1. He took a photo of the `tiger` in the wild.
    他在野外拍攝了老虎的照片。
 
-2. The tiger roars in the danger of the jungle.
+2. The `tiger` roars in the danger of the jungle.
    老虎在叢林的危險中發出咆哮。
 """
         case "ja-JP":
@@ -163,7 +163,7 @@ class promptService {
 
 tigerの検索出力例に従って出力してください：
 
-## `tiger`
+## tiger
 - [ˈtaɪɡər]
 - トラ
 - 品詞：名詞（n.）
@@ -177,10 +177,10 @@ tigerの検索出力例に従って出力してください：
 
 ### ✏️ 例文
 
-1. He took a photo of the tiger in the wild.
+1. He took a photo of the `tiger` in the wild.
    彼は野生のトラの写真を撮った。
 
-2. The tiger roars in the danger of the jungle.
+2. The `tiger` roars in the danger of the jungle.
    トラはジャングルの危険の中で咆哮する。
 """
         case "ko-KR":
@@ -211,7 +211,7 @@ tigerの検索出力例に従って出力してください：
 
 tiger 검색 출력 예에 따라 출력하십시오:
 
-## `tiger`
+## tiger
 - [ˈtaɪɡər]
 - 호랑이
 - 품사：명사（n.）
@@ -225,10 +225,10 @@ tiger 검색 출력 예에 따라 출력하십시오:
 
 ### ✏️ 예문
 
-1. He took a photo of the tiger in the wild.
+1. He took a photo of the `tiger` in the wild.
    그는 야생에서 호랑이 사진을 찍었습니다.
 
-2. The tiger roars in the danger of the jungle.
+2. the `tiger` roars in the danger of the jungle.
    호랑이는 정글의 위험 속에서 포효합니다.
 """
         default:
@@ -259,7 +259,7 @@ Other requirements:
 
 Please follow the output format for querying \"tiger\":
 
-## `tiger`
+## tiger
 - [ˈtaɪɡər]
 - A large carnivorous feline mammal (Panthera tigris) of Asia, having a tawny coat with transverse black stripes
 - Part of Speech: noun (n.)
@@ -273,9 +273,9 @@ Please follow the output format for querying \"tiger\":
 
 ### ✏️ Example Sentences
 
-1. He took a photo of the tiger in the wild.
+1. He took a photo of the `tiger` in the wild.
 
-2. The tiger roars in the danger of the jungle.
+2. the `tiger` roars in the danger of the jungle.
 """
         }
     }
