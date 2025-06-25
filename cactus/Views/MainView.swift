@@ -656,7 +656,7 @@ struct MainView: View {
         contentModel.resultText = ""
         
         DispatchQueue.global(qos: .userInitiated).async {
-            Ai.chatWithHistory(chatHistory: chatHistory, systemMessage: systemMessage) {
+            Ai.chat(chatHistory: chatHistory, systemMessage: systemMessage) {
                 DispatchQueue.main.async {
                     isResultViewExpanded = true
                     contentModel.isProcessing = false
