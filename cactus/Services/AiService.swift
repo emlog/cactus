@@ -277,6 +277,85 @@ class AiService: NSObject, URLSessionDataDelegate {
             buffer.removeAll() // 清空残留数据
         }
     }
+    
+    // 新增支持对话历史的聊天方法
+    func chatWithHistory(chatHistory: [[String: String]], systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
+        let settings = SettingsModel.shared
+        guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
+              let url = URL(string: providerSettings.baseURL) else {
+            let errorMessage = NSLocalizedString("error_invalid_config", comment: "AI 服务配置无效")
+            DispatchQueue.main.async {
+                onError?(errorMessage)
+                completion?()
+            }
+            return
+        }
+        
+        // 检查 API Key 是否为空
+        guard !providerSettings.apiKey.isEmpty else {
+            let errorMessage = NSLocalizedString("error_empty_api_key", comment: "API Key 不能为空")
+            DispatchQueue.main.async {
+                onError?(errorMessage)
+                completion?()
+            }
+            return
+        }
+        
+        // 检查 model 是否为空
+        guard !providerSettings.model.isEmpty else {
+            let errorMessage = NSLocalizedString("error_empty_model", comment: "模型名称不能为空")
+            DispatchQueue.main.async {
+                onError?(errorMessage)
+                completion?()
+            }
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 300
+        request.setValue("Bearer \(providerSettings.apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        var messages: [[String: String]] = []
+        
+        // 如果 systemMessage 存在且不为空，则添加到 messages 数组
+        if let systemContent = systemMessage, !systemContent.isEmpty {
+            messages.append(["role": "system", "content": systemContent])
+        }
+        
+        // 添加对话历史，只取最近10次对话
+        let recentHistory = Array(chatHistory.suffix(10))
+        messages.append(contentsOf: recentHistory)
+        
+        let body: [String: Any] = [
+            "model": providerSettings.model,
+            "messages": messages,
+            "max_tokens": 1000,
+            "stream": true
+        ]
+        
+        if let httpBody = try? JSONSerialization.data(withJSONObject: body) {
+            request.httpBody = httpBody
+            if let bodyString = String(data: httpBody, encoding: .utf8) {
+                print("Request Body: \(bodyString)")
+            }
+        }
+        
+        DispatchQueue.main.async {
+            TextContentModel.shared.resultText = ""
+        }
+        fullContent = ""
+        buffer = Data()
+        
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+        let task = session.dataTask(with: request)
+        
+        self.completionHandler = completion
+        self.errorHandler = onError
+        
+        task.resume()
+    }
 }
 
 // 流式响应的解码结构

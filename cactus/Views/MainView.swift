@@ -11,6 +11,10 @@ struct MainView: View {
     @State private var Ai = AiService.shared
     @State private var Lang = LangService.shared
     @State private var Prompt = promptService.shared
+    
+    // 对话历史状态
+    @State private var chatHistory: [[String: String]] = []
+    
     // 吐司提示
     @State private var showCompleteToast = false
     @State private var showErrorToast = false
@@ -19,7 +23,7 @@ struct MainView: View {
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
     @State private var showResultCopySuccess = false
-    // 添加收藏成功状态
+    // 收藏成功状态
     @State private var showFavoriteSuccess = false
     
     // 默认尺寸
@@ -363,7 +367,9 @@ struct MainView: View {
         
         DispatchQueue.main.async {
             self.contentModel.text = ""
-            self.contentModel.resultText = nil // 将结果设置为空
+            self.contentModel.resultText = nil
+            // 清空对话历史
+            self.chatHistory = []
             // 重置输入和输出区域的高度为默认值
             self.inputTextHeight = minInputTextHeight
             self.resultTextHeight = minResultTextHeight
@@ -430,6 +436,9 @@ struct MainView: View {
     
     // 翻译
     func translateText() {
+        // 清空对话历史
+        chatHistory = []
+        
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
@@ -480,7 +489,7 @@ struct MainView: View {
                     if let definition = contentModel.resultText, !definition.isEmpty {
                         vocabularyManager.addWord(word, definition: definition)
                     }
-
+                    
                     // 保存到历史记录
                     if let resultText = contentModel.resultText, !resultText.isEmpty {
                         HistoryManager.shared.addHistory(
@@ -502,6 +511,9 @@ struct MainView: View {
     
     // 总结
     func summaryText() {
+        // 清空对话历史
+        chatHistory = []
+        
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
@@ -514,6 +526,9 @@ struct MainView: View {
     
     // 字典
     func dictionaryText() {
+        // 清空对话历史
+        chatHistory = []
+        
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
@@ -534,7 +549,21 @@ struct MainView: View {
         }
         let systemMessage = Prompt.getSystemMessageForChat()
         
-        performAIAction(systemMessage: systemMessage)
+        // 添加当前用户输入到历史
+        chatHistory.append(["role": "user", "content": inputText])
+        
+        // 保存当前输入文本用于历史记录
+        let currentInput = contentModel.text
+        
+        // 清空输入框
+        DispatchQueue.main.async {
+            self.contentModel.text = ""
+            self.inputTextHeight = self.minInputTextHeight
+            // 通知窗口调整大小
+            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+        }
+        
+        performChatAction(systemMessage: systemMessage, chatHistory: chatHistory, originalInput: currentInput)
     }
     
     // 只做一些清理窗口的动作
@@ -619,6 +648,44 @@ struct MainView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             withAnimation {
                 showFavoriteSuccess = false
+            }
+        }
+    }
+    
+    // 执行对话AI调用
+    private func performChatAction(systemMessage: String, chatHistory: [[String: String]], originalInput: String) {
+        guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
+            toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
+            showErrorToast = true
+            return
+        }
+        
+        contentModel.isProcessing = true
+        contentModel.resultText = ""
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            Ai.chatWithHistory(chatHistory: chatHistory, systemMessage: systemMessage) {
+                DispatchQueue.main.async {
+                    isResultViewExpanded = true
+                    contentModel.isProcessing = false
+                    
+                    if let resultText = contentModel.resultText, !resultText.isEmpty {
+                        // 保存到历史记录
+                        HistoryManager.shared.addHistory(
+                            inputContent: originalInput,
+                            outputContent: resultText
+                        )
+                        // 将完整的对话结果添加到对话历史中
+                        self.chatHistory.append(["role": "assistant", "content": resultText])
+                    }
+                }
+            } onError: { errorMessage in
+                DispatchQueue.main.async {
+                    self.toastMessage = errorMessage
+                    self.showErrorToast = true
+                    contentModel.resultText = errorMessage
+                    contentModel.isProcessing = false
+                }
             }
         }
     }
