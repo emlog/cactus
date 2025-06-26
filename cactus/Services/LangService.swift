@@ -6,77 +6,68 @@
 //
 
 import SwiftUI
+import NaturalLanguage
 
 class LangService {
     static let shared = LangService()
     private init() {}
     
-    // 通过正则表达式识别文本语言类型，返回对应的语言代码
+    // 使用NaturalLanguage框架准确识别文本语言类型，返回对应的语言代码
     public func detectLanguageCode(for text: String) -> String {
-        // 日文假名 Unicode 范围
-        let hiraganaRange = "\u{3040}"..."\u{309F}"
-        let katakanaRange = "\u{30A0}"..."\u{30FF}"
-        // 中文汉字 Unicode 范围
-        let chineseRange = "\u{4E00}"..."\u{9FFF}"
-        // 韩文
-        let koreanRegex = "[\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7AF]"
-        // 英文
-        let englishRegex = "[A-Za-z]"
+        // 如果文本为空，返回默认语言
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "en"
+        }
         
-        var hiraganaCount = 0
-        var katakanaCount = 0
-        var chineseCount = 0
-        var koreanCount = 0
-        var englishCount = 0
+        let recognizer = NLLanguageRecognizer()
+        recognizer.processString(text)
         
-        // 统计各种语言字符的数量
-        for scalar in text.unicodeScalars {
-            let scalarString = String(scalar)
-            
-            if hiraganaRange.contains(scalarString) {
-                hiraganaCount += 1
-            } else if katakanaRange.contains(scalarString) {
-                katakanaCount += 1
-            } else if chineseRange.contains(scalarString) {
-                chineseCount += 1
-            } else if scalarString.range(of: koreanRegex, options: .regularExpression) != nil {
-                koreanCount += 1
-            } else if scalarString.range(of: englishRegex, options: .regularExpression) != nil {
-                englishCount += 1
+        guard let dominantLanguage = recognizer.dominantLanguage else {
+            return "en"  // 如果无法识别，返回英语
+        }
+        
+        // 将NLLanguage转换为我们需要的语言代码格式
+        switch dominantLanguage {
+        case .simplifiedChinese:
+            return "zh-Hans"
+        case .traditionalChinese:
+            return "zh-Hant"
+        case .japanese:
+            return "ja"
+        case .korean:
+            return "ko"
+        case .english:
+            return "en"
+        case .french:
+            return "fr"
+        case .spanish:
+            return "es"
+        case .german:
+            return "de"
+        default:
+            // 对于其他语言，检查原始值是否是我们支持的语言
+            let rawValue = dominantLanguage.rawValue
+            switch rawValue {
+            case "zh-Hans":
+                return "zh-Hans"
+            case "zh-Hant":
+                return "zh-Hant"
+            case "ja":
+                return "ja"
+            case "ko":
+                return "ko"
+            case "en":
+                return "en"
+            case "fr":
+                return "fr"
+            case "es":
+                return "es"
+            case "de":
+                return "de"
+            default:
+                return "en"  // 不支持的语言返回英语
             }
         }
-        
-        let totalCharacters = text.count
-        let halfThreshold = Double(totalCharacters) / 2.0
-        
-        // 如果文本为空，返回默认语言
-        if totalCharacters == 0 {
-            return "en"
-        }
-        
-        // 检查日文：假名字符超过一半
-        let japaneseCount = hiraganaCount + katakanaCount
-        if Double(japaneseCount) > halfThreshold {
-            return "ja"
-        }
-        
-        // 检查中文：汉字字符超过一半且没有假名
-        if Double(chineseCount) > halfThreshold && hiraganaCount == 0 && katakanaCount == 0 {
-            return "zh-Hans"
-        }
-        
-        // 检查韩文：韩文字符超过一半
-        if Double(koreanCount) > halfThreshold {
-            return "ko"
-        }
-        
-        // 检查英文：英文字符超过一半
-        if Double(englishCount) > halfThreshold {
-            return "en"
-        }
-        
-        // 如果没有任何语言的字符超过一半，返回默认语言
-        return "en"
     }
     
     // 判断文本是句子还是单词
