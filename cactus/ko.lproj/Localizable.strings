@@ -29,6 +29,17 @@
 "shortcut_ocr_translate" = "스크린샷 번역 단축키";
 "shortcut_ocr_translate_description" = "화면의 문자 영역을 캡처하고 자동으로 OCR 및 번역합니다";
 
+// Language setting
+"preferred_language" = "자주 사용하는 언어";
+"common_foreign_language" = "자주 사용하는 외국어";
+"preferred_language_description" = "번역의 대상 언어 (보통 모국어)";
+"common_foreign_language_description" = "현재 사용 중이거나 학습 중인 제1외국어";
+"language_zh_hans" = "간체중국어";
+"language_zh_hant" = "번체중국어";
+"language_ja" = "일본어";
+"language_ko" = "한국어";
+"language_en" = "영어";
+
 // ai setting
 "select_service" = "AI 서비스 선택";
 "enter_api_key" = "API 키를 입력하세요";

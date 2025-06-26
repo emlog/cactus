@@ -29,6 +29,17 @@
 "shortcut_ocr_translate" = "スクリーン翻訳ショートカット";
 "shortcut_ocr_translate_description" = "画面の文字領域をキャプチャし、自動でOCRと翻訳を行います。";
 
+// Language setting
+"preferred_language" = "よく使う言語";
+"common_foreign_language" = "よく使う外国語";
+"preferred_language_description" = "翻訳の対象言語（通常は母語）";
+"common_foreign_language_description" = "現在使っている、または学習中の第一外国語";
+"language_zh_hans" = "簡体字中国語";
+"language_zh_hant" = "繁体字中国語";
+"language_ja" = "日本語";
+"language_ko" = "韓国語";
+"language_en" = "英語";
+
 // ai setting
 "select_service" = "AIサービスを選択";
 "enter_api_key" = "APIキーを入力してください";

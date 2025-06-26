@@ -29,6 +29,17 @@
 "shortcut_ocr_translate" = "Screenshot Translate Shortcut";
 "shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
 
+// Language setting
+"preferred_language" = "Preferred Language";
+"common_foreign_language" = "Common Foreign Language";
+"preferred_language_description" = "Target language for translation, usually your native language";
+"common_foreign_language_description" = "The first foreign language you are using or learning";
+"language_zh_hans" = "Simplified Chinese";
+"language_zh_hant" = "Traditional Chinese";
+"language_ja" = "Japanese";
+"language_ko" = "Korean";
+"language_en" = "English";
+
 // ai setting
 "select_service" = "Select AI Service";
 "enter_api_key" = "Please Enter API KEY";
