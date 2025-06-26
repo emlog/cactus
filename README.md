@@ -6,6 +6,10 @@
 Cactus AI Assistant
 仙人掌AI助手
 
+德语：Kaktus KI-Assistent
+法语：Assistant IA Cactus
+西班牙语：Asistente de IA Cactus
+
 ## 副标题：
 
 快捷翻译、总结、查字典、支持截图OCR
@@ -13,6 +17,10 @@ Cactus AI Assistant
 빠른 번역, 요약, 사전, OCR 스캔 지원
 Translate,Summarize,OCR
 快速翻譯、總結、查字典，支援截圖OCR
+
+德语：Übersetzen, OCR
+法语：Traduire, Résumer, OCR
+西班牙语：Traducir, Resumir, OCR
 
 ## 关键词
 
@@ -22,7 +30,11 @@ Translate,Summarize,OCR
 Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Productivity,OCR
 翻譯,總結,AI助手,文字工具,內容提煉,快速翻譯,macOS工具,詞典,生字本,效率工具,閱讀助手,寫作助手,OCR
 
-### 简体中文介绍
+德语：Übersetzen, Zusammenfassen, Wörterbuch, KI-Assistent, Produktivität, OCR
+法语：Traduire, Résumer, Dictionnaire, Assistant IA, Productivité, OCR
+西班牙语：Traducir, Resumir, Diccionario, Asistente IA, Productividad, OCR
+
+### 简体中文介绍 🇨🇳
 
 仙人掌AI助手是一款基于大语言模型的智能文字助手，选中文字快速翻译、总结、查询字词。
 
@@ -40,7 +52,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 使用条款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 隐私策略：https://cactusai.cc/privacy-policy
 
-### 英文介绍
+### 英文介绍 🇺🇸
 
 Cactus AI Assistant is a smart text assistant powered by a large language model, enabling quick translation, summarization, and word lookup from selected text.
 
@@ -58,7 +70,7 @@ Ideal for foreign language learning, document reading, knowledge organization, w
 Terms of Use：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Privacy Policy：https://cactusai.cc/privacy-policy-en
 
-### 繁体中文介绍
+### 繁体中文介绍 🇨🇳
 
 仙人掌AI助手是一款基於大語言模型的智慧文字助手，選取文字即可快速翻譯、總結、查詢字詞。
 
@@ -76,7 +88,7 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 使用條款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 隱私政策：https://cactusai.cc/privacy-policy-en
 
-### 日语
+### 日语 🇯🇵
 
 カクタスAIアシスタントは、大規模言語モデルを基盤としたスマートテキストアシスタントです。テキストを選択するだけで、素早く翻訳、要約、単語検索ができます。
 
@@ -94,7 +106,7 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 利用規約：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 プライバシーポリシー：https://cactusai.cc/privacy-policy-en
 
-### 한국어 소개
+### 한국어 소개 🇰🇷
 
 선인장 AI 어시스턴트는 대규모 언어 모델 기반의 스마트 텍스트 어시스턴트입니다. 텍스트를 선택하여 빠르게 번역, 요약, 단어 검색을 할 수 있습니다.
 
@@ -111,6 +123,61 @@ Privacy Policy：https://cactusai.cc/privacy-policy-en
 
 이용약관: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 개인정보 처리방침: https://cactusai.cc/privacy-policy-en
+
+## 德语 🇩🇪
+
+Cactus AI Assistant ist ein intelligenter Textassistent auf Basis großer Sprachmodelle. Markieren Sie Text, um ihn sofort zu übersetzen, zusammenzufassen oder nachzuschlagen.
+
+Hauptfunktionen:
+- Schnellübersetzung: Text markieren und mit der Tastenkombination (Standard ⌥ + X) sofort übersetzen
+- Intelligente Zusammenfassung: Kernaussagen extrahieren, Inhalte auf einen Blick erfassen
+- Wörterbuchsuche: Bedeutung, Herkunft und Anwendungsbeispiele von Wörtern anzeigen
+- Screenshot-OCR: Texterkennung aus Screenshots zur Steigerung der Effizienz
+- Elegantes Layout: Markdown-Unterstützung für schöne Formatierung
+
+Ideal für Sprachlernen, Literaturrecherche, Wissensorganisation und Schreibunterstützung.
+
+------
+
+Nutzungsbedingungen: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Datenschutzrichtlinie: https://cactusai.cc/privacy-policy
+
+## 法语 🇫🇷
+
+Cactus AI Assistant est un assistant intelligent basé sur un grand modèle de langage. Sélectionnez du texte pour le traduire, le résumer ou consulter sa définition en un clic.
+
+Fonctionnalités principales :
+- Traduction rapide : sélectionnez un texte et appuyez sur un raccourci (par défaut ⌥ + X) pour le traduire immédiatement
+- Résumé intelligent : extrayez les idées principales d’un contenu d’un seul coup d’œil
+- Dictionnaire : consultez les définitions, origines et exemples d’utilisation des mots
+- OCR par capture d’écran : reconnaît le texte d’une image pour un traitement plus rapide
+- Mise en page élégante : prise en charge de Markdown pour un rendu plus soigné
+
+Parfait pour l’apprentissage des langues, la lecture, la prise de notes et l’assistance à l’écriture.
+
+------
+
+Conditions d’utilisation : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Politique de confidentialité : https://cactusai.cc/privacy-policy
+
+
+## 西班牙语 🇪🇸
+
+Cactus AI Assistant es un asistente inteligente de texto basado en un modelo de lenguaje avanzado. Selecciona texto para traducir, resumir o consultar su significado al instante.
+
+Funciones principales:
+- Traducción rápida: selecciona texto y presiona el atajo (⌥ + X por defecto) para traducir al instante
+- Resumen inteligente: extrae las ideas clave del contenido de forma clara
+- Consulta en diccionario: muestra definiciones, etimología y ejemplos de uso
+- OCR de capturas: reconoce texto en capturas de pantalla para mayor eficiencia
+- Formato elegante: soporte para Markdown con diseño atractivo
+
+Ideal para el aprendizaje de idiomas, lectura, organización de ideas y ayuda para escribir.
+
+------
+
+Términos de uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Política de privacidad: https://cactusai.cc/privacy-policy
 
 ## 审核备注
 
