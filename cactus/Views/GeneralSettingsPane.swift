@@ -62,7 +62,7 @@ struct GeneralSettingsPane: View {
                 }
                 .pickerStyle(MenuPickerStyle())
                 .frame(width: 200, alignment: .leading)
-                Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
+                Text(NSLocalizedString("preferred_language_description", comment: "翻译的目标语言，一般为母语"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
@@ -77,7 +77,7 @@ struct GeneralSettingsPane: View {
                 }
                 .pickerStyle(MenuPickerStyle())
                 .frame(width: 200, alignment: .leading)
-                Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
+                Text(NSLocalizedString("common_foreign_language_description", comment: "正在学习和使用的第一外语"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
