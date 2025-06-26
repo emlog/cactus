@@ -288,7 +288,7 @@ class SettingsModel: ObservableObject {
     
     init() {
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
-        self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? "zh-Hans"
+        self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? ""
         self.commonForeignLanguage = UserDefaults.standard.string(forKey: "commonForeignLanguage") ?? "en"
         self.openaiApiKey = UserDefaults.standard.string(forKey: "openaiApiKey") ?? ""
         self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? ""
@@ -327,9 +327,6 @@ class SettingsModel: ObservableObject {
             defaultProviders["zhipu"] = zhipuProvider
         }
     }
-
-
-
 
     private func updateOpenAIConfig() {
         if var openaiProvider = defaultProviders["openai"] {

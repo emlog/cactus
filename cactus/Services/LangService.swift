@@ -117,6 +117,16 @@ class LangService {
     }
     
     public func getSystemLanguageCode() -> String {
+        // 优先使用用户设置的首选语言
+        let userPreferredLanguage = SettingsModel.shared.preferredLanguage
+        
+        // 验证用户设置的语言是否有效
+        let supportedLanguages = ["zh-Hans", "zh-Hant", "ja", "ko", "en"]
+        if supportedLanguages.contains(userPreferredLanguage) {
+            return userPreferredLanguage
+        }
+        
+        // 如果用户设置无效，回退到系统语言
         let preferredLanguage = Locale.preferredLanguages.first ?? "en-US"
         if preferredLanguage.starts(with: "zh-Hans") {
             return "zh-Hans"
