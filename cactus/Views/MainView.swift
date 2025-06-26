@@ -465,13 +465,9 @@ struct MainView: View {
         
         let systemMessage: String
         
-        // 如果是自己系统语言（中文、韩文、日文、繁体中文）
+        // 如果是常用语言，翻译为常用外语
         if Lang.isTextInPreferredLanguage(inputText) {
-            if Lang.isSentence(inputText) == false{ // 若果是字词，查字典
-                systemMessage = Prompt.getSystemMessageForDict()
-            } else {
-                systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage() //  翻译为常用外语
-            }
+            systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage()
         } else if Lang.isSentence(inputText) == false {
             // 单词翻译
             systemMessage = Prompt.getSystemMessageForTranslateWord()
