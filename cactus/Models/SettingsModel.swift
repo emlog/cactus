@@ -34,7 +34,7 @@ class SettingsModel: ObservableObject {
         "es": NSLocalizedString("language_es", comment: "西班牙语")
     ]
     
-    let languageKeys = ["zh-Hans", "ja", "ko", "en", "zh-Hant", "fr", "de", "es"]
+    let languageKeys = ["zh-Hans", "zh-Hant", "en", "ja", "ko", "fr", "de", "es"]
     
     // 常用语言
     @Published var preferredLanguage: String {

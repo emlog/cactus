@@ -66,7 +66,3 @@ struct ModelSelectionMenuView: View {
         .frame(maxWidth: 20, alignment: .trailing)
     }
 }
-
-#Preview {
-    ModelSelectionMenuView()
-}
