@@ -24,7 +24,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         // 初始化主窗口
         mainWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 690, height: 600),
-            styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
+            styleMask: [.titled],
             backing: .buffered,
             defer: false
         )
@@ -64,8 +64,11 @@ class WindowManager: NSObject, NSWindowDelegate {
         let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
         titlebarAccessoryViewController.layoutAttribute = .trailing
         
+        // 创建容器视图，增加高度来提供上边距
+        let containerView = NSView(frame: NSRect(x: 0, y: 0, width: 40, height: 50))
+        
         pinButton = NSButton()
-        pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
+        pinButton?.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
         pinButton?.bezelStyle = .texturedRounded
         pinButton?.isBordered = false
         pinButton?.imageScaling = .scaleProportionallyDown
@@ -73,9 +76,11 @@ class WindowManager: NSObject, NSWindowDelegate {
         pinButton?.action = #selector(pinButtonTapped)
         pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
         pinButton?.sendAction(on: .leftMouseDown)
-        pinButton?.frame = NSRect(x: 0, y: 0, width: 30, height: 24)
+        // 将按钮向下偏移，距离上边框更远
+        pinButton?.frame = NSRect(x: 0, y: -6, width: 35, height: 35)
         
-        titlebarAccessoryViewController.view = pinButton!
+        containerView.addSubview(pinButton!)
+        titlebarAccessoryViewController.view = containerView
         mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
     }
     
@@ -519,7 +524,7 @@ class WindowManager: NSObject, NSWindowDelegate {
             window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .fullScreenPrimary]
             pinnedWindowOrigin = nil
             
-            pinButton?.image = NSImage(systemSymbolName: "pin", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
+            pinButton?.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
             pinButton?.contentTintColor = nil
             pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
             
