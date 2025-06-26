@@ -1,134 +1,124 @@
-// Status Bar Menu
-"openmain" = "打开窗口";
-"translate" = "选中翻译";
-"summary" = "总结摘要";
-"dictionary" = "字典查询";
-"ocr_translate" = "截屏翻译";
-"vocabulary" = "生词本";
-"favorites" = "收藏夹";
-"history" = "历史记录";
-"setting" = "偏好设置";
-"quit" = "退出";
+"openmain" = "Abrir ventana";
+"translate" = "Traducir selección";
+"summary" = "Resumen";
+"dictionary" = "Diccionario";
+"ocr_translate" = "Traducir captura";
+"vocabulary" = "Vocabulario";
+"favorites" = "Favoritos";
+"history" = "Historial";
+"setting" = "Preferencias";
+"quit" = "Salir";
 
-// pane
-"general" = "通用";
-"service" = "AI服务";
-"premium" = "高级版";
-"about" = "关于";
+"general" = "General";
+"service" = "Servicio de IA";
+"premium" = "Pro";
+"about" = "Acerca de";
 
-// setting
-"startup" = "开机自动启动";
-"shortcut_openmain" = "打开窗口快捷键";
-"shortcut_openmain_description" = "打开窗口，并将选中的文字填充到输入框内";
-"shortcut_translate" = "选中翻译快捷键";
-"shortcut_translate_description" = "选中文字内容，按下快捷键快速翻译";
-"shortcut_summary" = "总结摘要快捷键";
-"shortcut_summary_description" = "选中文字内容，按下快捷键总结摘要";
-"shortcut_dict" = "字典查询快捷键";
-"shortcut_dict_description" = "选中字词，按下快捷键查询";
-"shortcut_ocr_translate" = "截屏翻译快捷键";
-"shortcut_ocr_translate_description" = "截取屏幕上的文字区域，自动OCR识别并翻译";
+"startup" = "Iniciar al encender";
+"shortcut_openmain" = "Atajo: Abrir ventana";
+"shortcut_openmain_description" = "Abre la ventana e inserta el texto seleccionado";
+"shortcut_translate" = "Atajo: Traducir";
+"shortcut_translate_description" = "Traduce rápidamente el texto seleccionado";
+"shortcut_summary" = "Atajo: Resumen";
+"shortcut_summary_description" = "Genera un resumen del texto seleccionado";
+"shortcut_dict" = "Atajo: Diccionario";
+"shortcut_dict_description" = "Consulta la palabra seleccionada";
+"shortcut_ocr_translate" = "Atajo: Traducir captura";
+"shortcut_ocr_translate_description" = "Captura parte de la pantalla, realiza OCR y traduce";
 
-// Language setting
-"preferred_language" = "常用语言";
-"common_foreign_language" = "第一外语";
-"preferred_language_description" = "外语翻译为该语言，一般是母语";
-"common_foreign_language_description" = "常用语言翻译为该语言，正在使用或学习的第一外语";
-"language_zh_hans" = "简体中文";
-"language_zh_hant" = "繁体中文";
-"language_ja" = "日语";
-"language_ko" = "韩语";
-"language_en" = "英语(English)";
+"preferred_language" = "Idioma preferido";
+"common_foreign_language" = "Idioma extranjero";
+"preferred_language_description" = "Traduce otros idiomas a este (tu lengua materna)";
+"common_foreign_language_description" = "Traduce a este idioma que estás aprendiendo o usando";
+"language_zh_hans" = "Chino simplificado";
+"language_zh_hant" = "Chino tradicional";
+"language_ja" = "Japonés";
+"language_ko" = "Coreano";
+"language_en" = "Inglés";
+"language_fr" = "Francés";
+"language_de" = "Alemán";
+"language_es" = "Español";
 
-// ai setting
-"select_service" = "选择AI服务";
-"enter_api_key" = "请输入密钥(API KEY)";
-"api_key" = "密钥";
-"model" = "模型";
-"model_zhipu_glm4" = "Zhipu-GLM-4-9B (推荐)";
-"model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3-8B";
+"select_service" = "Seleccionar servicio de IA";
+"enter_api_key" = "Introduce la clave API";
+"api_key" = "Clave";
+"model" = "Modelo";
+"model_zhipu_glm4" = "Zhipu‑GLM‑4‑9B";
+"model_cactusai_mix" = "CactusAI‑Mix";
+"model_qwen3" = "OpenRouter‑Qwen3‑8B (recomendado)";
 "model_openai" = "OpenAI";
-"model_siliconflow" = "硅基流动";
+"model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
-"model_volcengine" = "火山引擎";
-"model_zhipu" = "智谱";
+"model_volcengine" = "Volcengine";
+"model_zhipu" = "Zhipu";
 
-// ai config
-"openai_config" = "OpenAI配置";
-"siliconflow_config" = "硅基流动配置";
-"google_gemini_config" = "Google Gemini 配置";
-"claude_config" = "Anthropic Claude 配置";
-"deepseek_config" = "Deepseek 配置";
-"volcengine_config" = "火山引擎配置，请先开通模型";
-"zhipu_config" = "智谱配置";
+"openai_config" = "Configuración de OpenAI";
+"siliconflow_config" = "Configuración de SiliconFlow";
+"google_gemini_config" = "Configuración de Google Gemini";
+"claude_config" = "Configuración de Claude";
+"deepseek_config" = "Configuración de DeepSeek";
+"volcengine_config" = "Configuración de Volcengine (requiere activación)";
+"zhipu_config" = "Configuración de Zhipu";
 
-// main
-"pop_text_empty" = "没有可复制的内容";
-"pop_translate_text_empty" = "请输入要翻译的文字";
-"pop_summary_text_empty" = "请输入要总结的内容";
-"pop_dict_text_empty" = "请输入要查询的字词";
-"pop_chat_text_empty" = "请输入要解答的问题";
-"pop_copy_success" = "复制成功";
-"pop_already_cleared" = "已清空内容";
-"pop_favorite_added" = "已添加到收藏夹";
-"pop_select_model_first" = "请在偏好设置中选择AI模型";
-"help_translate" = "翻译文本 (%@)";
-"help_summary" = "总结摘要 (%@)";
-"help_dict" = "字典查询";
-"help_chat" = "发送消息(Enter)";
-"help_clear" = "清空";
-"help_favorite" = "收藏";
-"help_speak" = "朗读";
-"help_copy" = "复制";
-"help_pin" = "钉住窗口";
-"help_unpin" = "取消钉住";
-"help_clear" = "清除内容";
-"accessibility_permission_title" = "需要辅助功能权限";
-"accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便翻译总结选中文字。";
-"open_settings" = "打开设置";
-"cancel" = "取消";
+"pop_text_empty" = "No hay texto para copiar";
+"pop_translate_text_empty" = "Introduce el texto a traducir";
+"pop_summary_text_empty" = "Introduce el texto para resumir";
+"pop_dict_text_empty" = "Introduce la palabra a consultar";
+"pop_chat_text_empty" = "Introduce tu pregunta";
+"pop_copy_success" = "Copiado con éxito";
+"pop_already_cleared" = "Contenido ya borrado";
+"pop_favorite_added" = "Añadido a favoritos";
+"pop_select_model_first" = "Selecciona primero un modelo en preferencias";
+"help_translate" = "Traducir texto (%@)";
+"help_summary" = "Crear resumen (%@)";
+"help_dict" = "Diccionario";
+"help_chat" = "Enviar mensaje (Enter)";
+"help_clear" = "Limpiar contenido";
+"help_favorite" = "Favorito";
+"help_speak" = "Leer en voz alta";
+"help_copy" = "Copiar";
+"help_pin" = "Fijar ventana";
+"help_unpin" = "Desfijar ventana";
+"help_clear" = "Borrar";
+"accessibility_permission_title" = "Se requiere permiso de accesibilidad";
+"accessibility_permission_message" = "Activa el permiso en Preferencias del sistema para traducir o resumir texto seleccionado.";
+"open_settings" = "Abrir preferencias";
+"cancel" = "Cancelar";
 
-// about
-"apptitle" = "仙人掌AI助手";
-"version" = "版本";
-"report_issue" = "反馈问题";
-"contact" = "联系我们";
-"rate_app" = "给个好评吧";
+"apptitle" = "Asistente AI Cactus";
+"version" = "Versión";
+"report_issue" = "Informar un problema";
+"contact" = "Contacto";
+"rate_app" = "Valorar la app";
 
-// ai error
-"error_invalid_config" = "系统错误，AI服务配置错误";
-"error_request_failed" = "请求失败，请切换其他AI模型或检查网络";
-"error_empty_api_key" = "请填写当前AI服务的密钥";
-"error_empty_model" = "请为当前AI服务选择模型";
+"error_invalid_config" = "Error del sistema: configuración incorrecta del servicio de IA";
+"error_request_failed" = "Fallo en la solicitud. Cambia el modelo o revisa tu conexión";
+"error_empty_api_key" = "Introduce la clave del servicio de IA";
+"error_empty_model" = "Selecciona un modelo para este servicio";
 
-// common
-"alert_ok" = "好";
-"sum" = "总计";
-"clear_all" = "清空全部";
-"cancle" = "取消";
-"confirm" = "确定";
-"delete" = "删除";
+"alert_ok" = "Aceptar";
+"sum" = "Total";
+"clear_all" = "Borrar todo";
+"cancle" = "Cancelar";
+"confirm" = "Confirmar";
+"delete" = "Eliminar";
 
-// pro
-"premium_owned" = "您已拥有高级版，感謝支持";
-"premium_processing" = "处理中...";
-"premium_unlock" = "解锁高级版";
-"premium_restore" = "恢复购买";
-"premium_features" = "高级版功能";
-"premium_feature_unlimited_usage" = "无限量的翻译总结次数";
-"premium_feature_unlimited_vocabulary" = "无限制的生词本和收藏夹使用";
-"premium_feature_custom_model" = "解锁 GPT4、Gemini、DeepSeek、豆包等AI模型";
-"terms_of_use" = "使用条款";
-"privacy_policy" = "隐私策略";
+"premium_owned" = "Ya tienes Pro. ¡Gracias por tu apoyo!";
+"premium_processing" = "Procesando...";
+"premium_unlock" = "Desbloquear Pro";
+"premium_restore" = "Restaurar compra";
+"premium_features" = "Funciones de Pro";
+"premium_feature_unlimited_usage" = "Traducciones y resúmenes ilimitados";
+"premium_feature_unlimited_vocabulary" = "Uso ilimitado de vocabulario y favoritos";
+"premium_feature_custom_model" = "Acceso a modelos GPT‑4, Gemini, DeepSeek, etc.";
+"terms_of_use" = "Términos de uso";
+"privacy_policy" = "Política de privacidad";
 
-// Purchase Manager
-"purchase_load_product_failed" = "加载产品信息失败";
-"purchase_pending" = "购买正在处理中，请稍后查看";
-"purchase_not_found" = "未找到购买记录";
-"upgrade_to_premium" = "已达到用量上限，请升级高级版";
+"purchase_load_product_failed" = "Error al cargar el producto";
+"purchase_pending" = "Compra en proceso, por favor espera";
+"purchase_not_found" = "No se encontró ninguna compra";
+"upgrade_to_premium" = "Se alcanzó el límite. Actualiza a Pro";
 
-// history
-"clear_all_history_message" = "确定要清空所有历史记录吗？";
+"clear_all_history_message" = "¿Seguro que deseas borrar todo el historial?";

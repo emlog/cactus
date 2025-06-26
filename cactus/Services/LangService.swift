@@ -126,16 +126,25 @@ class LangService {
         case _ where systemLanguage.hasPrefix("ko"):
             return "ko"
             
+        case _ where systemLanguage.hasPrefix("fr"):
+            return "fr"
+            
+        case _ where systemLanguage.hasPrefix("de"):
+            return "de"
+            
+        case _ where systemLanguage.hasPrefix("es"):
+            return "es"
+            
         default:
             return "en"
         }
     }
     
-    // 判断文本是否为系统首选语言,只支持 zh-Hans, zh-Hant, ja, ko, en
+    // 判断文本是否为系统首选语言,支持 zh-Hans, zh-Hant, ja, ko, en, fr, de, es
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
         let preferredLanguage = SettingsModel.shared.preferredLanguage
         let textLang = detectLanguageCode(for: text)
-        let supported = ["zh-Hans", "zh-Hant", "ja", "ko", "en"]
+        let supported = ["zh-Hans", "zh-Hant", "ja", "ko", "en", "fr", "de", "es"]
         if supported.contains(preferredLanguage) {
             return preferredLanguage == textLang
         }
@@ -155,6 +164,12 @@ class LangService {
             return "ko-KR"
         case "en":
             return "en-US"
+        case "fr":
+            return "fr-FR"
+        case "de":
+            return "de-DE"
+        case "es":
+            return "es-ES"
         default:
             return "en-US"
         }

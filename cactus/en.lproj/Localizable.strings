@@ -39,6 +39,9 @@
 "language_ja" = "Japanese";
 "language_ko" = "Korean";
 "language_en" = "English";
+"language_fr" = "French";
+"language_de" = "German";
+"language_es" = "Spanish";
 
 // ai setting
 "select_service" = "Select AI Service";

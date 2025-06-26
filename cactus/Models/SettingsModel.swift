@@ -28,10 +28,13 @@ class SettingsModel: ObservableObject {
         "zh-Hant": NSLocalizedString("language_zh_hant", comment: "繁体中文"),
         "ja": NSLocalizedString("language_ja", comment: "日语"),
         "ko": NSLocalizedString("language_ko", comment: "韩语"),
-        "en": NSLocalizedString("language_en", comment: "英语")
+        "en": NSLocalizedString("language_en", comment: "英语"),
+        "fr": NSLocalizedString("language_fr", comment: "法语"),
+        "de": NSLocalizedString("language_de", comment: "德语"),
+        "es": NSLocalizedString("language_es", comment: "西班牙语")
     ]
     
-    let languageKeys = ["zh-Hans", "ja", "ko", "en", "zh-Hant"]
+    let languageKeys = ["zh-Hans", "ja", "ko", "en", "zh-Hant", "fr", "de", "es"]
     
     // 常用语言
     @Published var preferredLanguage: String {

@@ -39,6 +39,9 @@
 "language_ja" = "日語";
 "language_ko" = "韓語";
 "language_en" = "英語 (English)";
+"language_fr" = "法語";
+"language_de" = "德語";
+"language_es" = "西班牙語";
 
 // ai setting
 "select_service" = "選擇 AI 服務";
