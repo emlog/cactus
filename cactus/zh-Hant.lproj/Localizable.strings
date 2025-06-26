@@ -31,14 +31,14 @@
 
 // Language setting
 "preferred_language" = "常用語言";
-"common_foreign_language" = "常用外語";
-"preferred_language_description" = "翻譯的目標語言，通常為母語";
-"common_foreign_language_description" = "正在使用或學習的第一外語";
+"common_foreign_language" = "第一外語";
+"preferred_language_description" = "將外語翻譯成此語言，通常是母語";
+"common_foreign_language_description" = "將常用語言翻譯成此語言，為正在使用或學習的第一外語";
 "language_zh_hans" = "簡體中文";
 "language_zh_hant" = "繁體中文";
 "language_ja" = "日語";
 "language_ko" = "韓語";
-"language_en" = "英語";
+"language_en" = "英語 (English)";
 
 // ai setting
 "select_service" = "選擇 AI 服務";

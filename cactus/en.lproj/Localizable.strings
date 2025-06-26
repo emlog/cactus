@@ -31,9 +31,9 @@
 
 // Language setting
 "preferred_language" = "Preferred Language";
-"common_foreign_language" = "Common Foreign Language";
-"preferred_language_description" = "Target language for translation, usually your native language";
-"common_foreign_language_description" = "The first foreign language you are using or learning";
+"common_foreign_language" = "Primary Foreign Language";
+"preferred_language_description" = "Translate foreign text into this language (usually native)";
+"common_foreign_language_description" = "Translate common text into this language (your first foreign language)";
 "language_zh_hans" = "Simplified Chinese";
 "language_zh_hant" = "Traditional Chinese";
 "language_ja" = "Japanese";

@@ -31,14 +31,14 @@
 
 // Language setting
 "preferred_language" = "よく使う言語";
-"common_foreign_language" = "よく使う外国語";
-"preferred_language_description" = "翻訳の対象言語（通常は母語）";
-"common_foreign_language_description" = "現在使っている、または学習中の第一外国語";
+"common_foreign_language" = "第一外国語";
+"preferred_language_description" = "外国語をこの言語に翻訳します（通常は母語）";
+"common_foreign_language_description" = "よく使う言語をこの言語に翻訳します（現在使用中または学習中の第一外国語）";
 "language_zh_hans" = "簡体字中国語";
 "language_zh_hant" = "繁体字中国語";
 "language_ja" = "日本語";
 "language_ko" = "韓国語";
-"language_en" = "英語";
+"language_en" = "英語 (English)";
 
 // ai setting
 "select_service" = "AIサービスを選択";

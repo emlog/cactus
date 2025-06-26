@@ -187,7 +187,7 @@ struct MainView: View {
                     
                     // Model selection menu button
                     Menu {
-                        Menu(NSLocalizedString("select_service", comment: "AI服务")) {
+                        Menu(NSLocalizedString("service", comment: "AI服务")) {
                             ForEach(settings.providerKeys, id: \.self) { key in
                                 if let provider = settings.defaultProviders[key] {
                                     if (provider.model.isEmpty || provider.apiKey.isEmpty) {
