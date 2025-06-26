@@ -121,3 +121,13 @@
 
 // history
 "clear_all_history_message" = "确定要清空所有历史记录吗？";
+
+"preferred_language" = "首选语言";
+"common_foreign_language" = "常用外语";
+
+// Language names
+"language_zh_hans" = "简体中文";
+"language_zh_hant" = "繁体中文";
+"language_ja" = "日语";
+"language_ko" = "韩语";
+"language_en" = "英语";

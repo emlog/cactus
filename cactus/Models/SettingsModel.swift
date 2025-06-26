@@ -22,6 +22,31 @@ class SettingsModel: ObservableObject {
     static let aiShortcutDictionary = KeyboardShortcuts.Name("aiShortcutDictionary", default: .init(.z, modifiers: [.option]))
     static let aiShortcutScreenshotTranslate = KeyboardShortcuts.Name("aiShortcutScreenshotTranslate", default: .init(.a, modifiers: [.option]))
     
+    // 语言选项
+    let availableLanguages = [
+        "zh-Hans": NSLocalizedString("language_zh_hans", comment: "简体中文"),
+        "zh-Hant": NSLocalizedString("language_zh_hant", comment: "繁体中文"),
+        "ja": NSLocalizedString("language_ja", comment: "日语"),
+        "ko": NSLocalizedString("language_ko", comment: "韩语"),
+        "en": NSLocalizedString("language_en", comment: "英语")
+    ]
+    
+    let languageKeys = ["zh-Hans", "ja", "ko", "en", "zh-Hant"]
+    
+    // 首选语言
+    @Published var preferredLanguage: String {
+        didSet {
+            UserDefaults.standard.set(preferredLanguage, forKey: "preferredLanguage")
+        }
+    }
+    
+    // 常用外语
+    @Published var commonForeignLanguage: String {
+        didSet {
+            UserDefaults.standard.set(commonForeignLanguage, forKey: "commonForeignLanguage")
+        }
+    }
+    
     // 内置的AI服务 + OpenAI选项
     public var defaultProviders: [String: ProviderSettings] = [
         "model_zhipu_glm4": ProviderSettings(
@@ -263,6 +288,8 @@ class SettingsModel: ObservableObject {
     
     init() {
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
+        self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? "zh-Hans"
+        self.commonForeignLanguage = UserDefaults.standard.string(forKey: "commonForeignLanguage") ?? "en"
         self.openaiApiKey = UserDefaults.standard.string(forKey: "openaiApiKey") ?? ""
         self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? ""
         

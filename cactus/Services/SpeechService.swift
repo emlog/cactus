@@ -1,6 +1,5 @@
 import AVFoundation
 
-
 final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     static let shared = SpeechService()
     private var isSpeaking = false
@@ -14,12 +13,12 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
         speechSynthesizer.delegate = self
     }
     
-    public func speak(_ text: String, langCode: String) {
+    public func speak(_ text: String, speechLanguageCode: String) {
         stopSpeaking()
         guard !text.isEmpty else { return }
-        
+        print("speak lang: " + speechLanguageCode)
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: langCode)
+        utterance.voice = AVSpeechSynthesisVoice(language: speechLanguageCode)
         utterance.rate = 0.5
         utterance.volume = 1.0
         utterance.pitchMultiplier = 1.0

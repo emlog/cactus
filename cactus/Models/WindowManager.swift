@@ -373,13 +373,13 @@ class WindowManager: NSObject, NSWindowDelegate {
         // 按优先级排序：日语优先，然后是韩语、简体中文、繁体中文、英语
         let systemLangCode = LangService.shared.getSystemLanguageCode()
         switch systemLangCode {
-        case "zh-CN":
+        case "zh-Hans":
             request.recognitionLanguages = ["zh-Hans", "en"]
-        case "zh-TW":
+        case "zh-Hant":
             request.recognitionLanguages = ["zh-Hant", "en"]
-        case "ja-JP":
+        case "ja":
             request.recognitionLanguages = ["ja", "en"]
-        case "ko-KR":
+        case "ko":
             request.recognitionLanguages = ["ko", "en"]
         default:
             request.recognitionLanguages = ["zh-Hans", "en"]

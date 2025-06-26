@@ -51,32 +51,32 @@ class LangService {
         
         // 如果文本为空，返回默认语言
         if totalCharacters == 0 {
-            return "en-US"
+            return "en"
         }
         
         // 检查日文：假名字符超过一半
         let japaneseCount = hiraganaCount + katakanaCount
         if Double(japaneseCount) > halfThreshold {
-            return "ja-JP"
+            return "ja"
         }
         
         // 检查中文：汉字字符超过一半且没有假名
         if Double(chineseCount) > halfThreshold && hiraganaCount == 0 && katakanaCount == 0 {
-            return "zh-CN"
+            return "zh-Hans"
         }
         
         // 检查韩文：韩文字符超过一半
         if Double(koreanCount) > halfThreshold {
-            return "ko-KR"
+            return "ko"
         }
         
         // 检查英文：英文字符超过一半
         if Double(englishCount) > halfThreshold {
-            return "en-US"
+            return "en"
         }
         
         // 如果没有任何语言的字符超过一半，返回默认语言
-        return "en-US"
+        return "en"
     }
     
     // 判断文本是句子还是单词
@@ -116,21 +116,20 @@ class LangService {
         return preferredLanguageName
     }
     
-    // Added new function to get system language code
     public func getSystemLanguageCode() -> String {
         let preferredLanguage = Locale.preferredLanguages.first ?? "en-US"
         if preferredLanguage.starts(with: "zh-Hans") {
-            return "zh-CN"
+            return "zh-Hans"
         } else if preferredLanguage.starts(with: "zh-Hant") {
-            return "zh-TW"
+            return "zh-Hant"
         } else if preferredLanguage.starts(with: "ja") {
-            return "ja-JP"
+            return "ja"
         } else if preferredLanguage.starts(with: "ko") {
-            return "ko-KR"
+            return "ko"
         } else if preferredLanguage.starts(with: "en") {
-            return "en-US"
+            return "en"
         } else {
-            return "en-US" // Default to English for other languages
+            return "en" // Default to English for other languages
         }
     }
     
@@ -138,11 +137,29 @@ class LangService {
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
         let systemLang = getSystemLanguageCode()
         let textLang = detectLanguageCode(for: text)
-        // 只支持 zh-CN, zh-TW, ja-JP, ko-KR
-        let supported = ["zh-CN", "zh-TW", "ja-JP", "ko-KR"]
+        // 只支持 zh-Hans, zh-Hant, ja, ko
+        let supported = ["zh-Hans", "zh-Hant", "ja", "ko"]
         if supported.contains(systemLang) {
             return systemLang == textLang
         }
         return false
+    }
+
+    // 将语言代码转换为AVSpeechSynthesisVoice的languageCode
+    public func convertToSpeechLanguageCode(_ languageCode: String) -> String {
+        switch languageCode {
+        case "zh-Hans":
+            return "zh-CN"
+        case "zh-Hant":
+            return "zh-TW"
+        case "ja":
+            return "ja-JP"
+        case "ko":
+            return "ko-KR"
+        case "en":
+            return "en-US"
+        default:
+            return "en-US"
+        }
     }
 }

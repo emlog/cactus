@@ -20,15 +20,15 @@ class promptService {
     public func getSystemMessageForTranslate() -> String {
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
-        case "zh-CN":
+        case "zh-Hans":
             return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
-        case "zh-TW":
+        case "zh-Hant":
             return "你是一名專業的翻譯助手。請將使用者輸入的內容準確翻譯為繁體中文，只輸出翻譯後的內容，不包含原文、解釋或任何多餘資訊。"
-        case "ja-JP":
+        case "ja":
             return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
-        case "ko-KR":
+        case "ko":
             return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
-        default: // en-US
+        default: // en
             return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
         }
     }
@@ -39,7 +39,7 @@ class promptService {
         let langCode = LangService.shared.getSystemLanguageCode()
         
         switch langCode {
-        case "zh-CN":
+        case "zh-Hans":
             return """
 你是一个多功能英汉词典。查询用户输入的单词，并使用简体中文输出准确的查询结果，内容如下：
 
@@ -87,7 +87,7 @@ class promptService {
 2. The `tiger` roars in the danger of the jungle.
    老虎在丛林的危险中发出咆哮。
 """
-        case "zh-TW":
+        case "zh-Hant":
             return """
 你是一個多功能英漢詞典。查詢用戶輸入的單詞，並使用繁體中文輸出準確的查詢結果，內容如下：
 
@@ -133,9 +133,9 @@ class promptService {
    他在野外拍攝了老虎的照片。
 
 2. The `tiger` roars in the danger of the jungle.
-   老虎在叢林的危險中發出咆哮。
+   老虎在丛林的危险中发出咆哮。
 """
-        case "ja-JP":
+        case "ja":
             return """
 あなたは多機能な英日辞書です。ユーザーが入力した単語を検索し、日本語で正確な検索結果を以下の内容で出力してください：
 
@@ -183,7 +183,7 @@ tigerの検索出力例に従って出力してください：
 2. The `tiger` roars in the danger of the jungle.
    トラはジャングルの危険の中で咆哮する。
 """
-        case "ko-KR":
+        case "ko":
             return """
 당신은 다기능 영한 사전입니다. 사용자가 입력한 단어를 검색하여 한국어로 정확한 검색 결과를 다음 내용으로 출력하십시오:
 
@@ -284,13 +284,13 @@ Please follow the output format for querying \"tiger\":
     public func getSystemMessageForSummary() -> String {
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
-        case "zh-CN":
+        case "zh-Hans":
             return "你是我的内容摘要助手。请用简洁的简体中文总结我输入文本的核心要点，输出应尽可能简短，仅保留最关键信息。禁止输出原文、解释或引导性语言。"
-        case "zh-TW":
+        case "zh-Hant":
             return "你是我的內容摘要助手。請用簡潔的繁體中文總結我輸入文本的核心要點，輸出應盡可能簡短，僅保留最關鍵資訊。禁止輸出原文、解釋或引導性語言。"
-        case "ja-JP":
+        case "ja":
             return "あなたは私のコンテンツ要約アシスタントです。入力されたテキストの核心的な要点を簡潔な日本語で要約してください。出力はできるだけ短く、最も重要な情報のみを残してください。原文、説明、または誘導的な言葉を出力することは禁止します。"
-        case "ko-KR":
+        case "ko":
             return "당신은 저의 콘텐츠 요약 도우미입니다. 제가 입력한 텍스트의 핵심 요점을 간결한 한국어로 요약해 주세요. 출력은 최대한 짧아야 하며 가장 중요한 정보만 남겨야 합니다. 원본 텍스트, 설명 또는 유도적인 언어를 출력하는 것은 금지됩니다。"
         default:
             return "You are my content summarization assistant. Please summarize the core points of the text I input in concise English. The output should be as short as possible, retaining only the most critical information. Do not output the original text, explanations, or guiding language."
@@ -301,13 +301,13 @@ Please follow the output format for querying \"tiger\":
     public func getSystemMessageForChat() -> String {
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
-        case "zh-CN":
+        case "zh-Hans":
             return "你是我的智能私人助理，请始终用清晰专业的简体中文回应我的问题或指令。"
-        case "zh-TW":
+        case "zh-Hant":
             return "你是我的智慧私人助理，請始終以清晰專業的繁體中文回應我的問題或指令。"
-        case "ja-JP":
+        case "ja":
             return "あなたは私のスマートパーソナルアシスタントです。常に明確で専門的な日本語で私の質問や指示に答えてください。"
-        case "ko-KR":
+        case "ko":
             return "당신은 나의 스마트 개인 비서입니다. 항상 명확하고 전문적인 한국어로 제 질문이나 지시에 답변해 주세요."
         default: // en-US
             return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English."
@@ -319,7 +319,7 @@ Please follow the output format for querying \"tiger\":
     public func getSystemMessageForDict() -> String {
         let langCode = LangService.shared.getSystemLanguageCode()
         switch langCode {
-        case "zh-CN":
+        case "zh-Hans":
             return """
 你是一位资深语言学专家与辞书编纂者，请参照《现代汉语词典》《辞海》等权威词典、辞书的内容，对指定中文词语进行权威释义。释义应语言规范、用词严谨、结构清晰，风格偏重工具性和学术性，适用于辞典条目撰写，内容如下：
 
@@ -366,7 +366,7 @@ Please follow the output format for querying \"tiger\":
 ### 📚 词源
 `苹果`一词最早见于《广雅》，原指一种野生果实。现代意义的苹果传入中国后沿用此名。
 """
-        case "zh-TW":
+        case "zh-Hant":
             return """
 你是一位資深語言學專家與辭書編纂者，請參照《國語辭典重編本》《教育部重編國語辭典修訂本》等權威辭書的內容，對指定中文詞語進行權威釋義。釋義應語言規範、用詞嚴謹、結構清晰，風格偏重工具性和學術性，適用於辭典條目撰寫，內容如下：
 
@@ -415,7 +415,7 @@ Please follow the output format for querying \"tiger\":
 ### 📚 詞源
 `蘋果`一詞最早見於《廣雅》，原指一種野生果實。現代意義的蘋果傳入中國後沿用此名。
 """
-        case "ja-JP":
+        case "ja":
             return """
 あなたは資深な言語学専門家であり辞書編纂者です。『広辞苑』『大辞林』等の権威ある辞書・辞典の内容を参照し、指定された日本語の単語について権威ある語釈を行ってください。語釈は言語規範に従い、用語は厳密で、構造は明確であり、工具性と学術性を重視したスタイルで、辞典項目の執筆に適したものとしてください，内容如下：
 
@@ -462,7 +462,7 @@ Please follow the output format for querying \"tiger\":
 ### 📚 語源
 `りんご`は中国語「林檎」から借用された語で、もともとは野生の果実を指していた。現代意味のりんごが伝来後この名を踏襲。
 """
-        case "ko-KR":
+        case "ko":
             return """
 당신은 자깊은 언어학 전문가이자 사전 편찬자입니다。『표준국어대사전』『고려대한국어대사전』등 권위 있는 사전·사서의 내용을 참조하여 지정된 한국어 단어에 대해 권위 있는 어석을 진행해 주십시오。어석은 언어 규범을 따르고, 용어는 엄밀하며, 구조는 명확하고, 도구성과 학술성을 중시하는 스타일로 사전 항목 작성에 적합해야 합니다，내용은 다음과 같습니다：
 

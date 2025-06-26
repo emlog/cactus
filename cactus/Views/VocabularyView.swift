@@ -195,7 +195,7 @@ struct VocabularyView: View {
     // 添加朗读功能
     private func speakWord(_ word: String) {
         guard !word.isEmpty else { return }
-        speechService.speak(word, langCode: "en-US")
+        speechService.speak(word, speechLanguageCode: "en-US")
     }
     
     private func stopSpeaking() {

@@ -9,10 +9,8 @@ struct GeneralSettingsPane: View {
     
     var body: some View {
         Settings.Container(contentWidth: 600) {
-            Settings.Section(title: "", bottomDivider: true) {
-                LaunchAtLogin.Toggle {
-                    Text(NSLocalizedString("startup", comment: "开机自启动"))
-                }
+            Settings.Section(bottomDivider: true, label: {Text(NSLocalizedString("startup", comment: "开机自启动"))}) {
+                LaunchAtLogin.Toggle{}
             }
             
             Settings.Section(label: { Text(NSLocalizedString("shortcut_openmain", comment: "打开主窗口快捷键")) }) {
@@ -47,8 +45,38 @@ struct GeneralSettingsPane: View {
                     .fixedSize(horizontal: true, vertical: false)
             }
 
-            Settings.Section(label: { Text(NSLocalizedString("shortcut_ocr_translate", comment: "截屏翻译快捷键")) }) {
+            Settings.Section(bottomDivider: true, label: { Text(NSLocalizedString("shortcut_ocr_translate", comment: "截屏翻译快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutScreenshotTranslate)
+                Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+
+            Settings.Section(label: { Text(NSLocalizedString("preferred_language", comment: "首选语言")) }) {
+                Picker("", selection: $settingsModel.preferredLanguage) {
+                    ForEach(settingsModel.languageKeys, id: \.self) { key in
+                        Text(settingsModel.availableLanguages[key] ?? key)
+                            .tag(key)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .frame(width: 200, alignment: .leading)
+                Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+            
+            Settings.Section(label: { Text(NSLocalizedString("common_foreign_language", comment: "常用外语")) }) {
+                Picker("", selection: $settingsModel.commonForeignLanguage) {
+                    ForEach(settingsModel.languageKeys, id: \.self) { key in
+                        Text(settingsModel.availableLanguages[key] ?? key)
+                            .tag(key)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .frame(width: 200, alignment: .leading)
                 Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
                     .font(.body)
                     .foregroundColor(.secondary)

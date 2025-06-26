@@ -519,8 +519,8 @@ struct MainView: View {
         guard !text.isEmpty else { return }
         
         let langCode = Lang.detectLanguageCode(for: text)
-        print("lang: " + langCode)
-        speechService.speak(text, langCode: langCode)
+        let speechLanguageCode = Lang.convertToSpeechLanguageCode(langCode)
+        speechService.speak(text, speechLanguageCode: speechLanguageCode)
     }
     
     private func stopSpeaking() {
