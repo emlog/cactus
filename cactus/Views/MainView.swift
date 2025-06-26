@@ -452,7 +452,7 @@ struct MainView: View {
             if Lang.isSentence(inputText) == false{ // 若果是字词，查字典
                 systemMessage = Prompt.getSystemMessageForDict()
             } else {
-                systemMessage = Prompt.getSystemMessageForTranslateToEnglish() //  英文翻译
+                systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage() //  翻译为常用外语
             }
         } else if Lang.isSentence(inputText) == false {
             // 单词翻译
