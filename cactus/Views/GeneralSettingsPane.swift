@@ -5,7 +5,7 @@ import Settings
 
 struct GeneralSettingsPane: View {
     
-    @StateObject private var settingsModel = SettingsModel()
+    @ObservedObject private var settingsModel = SettingsModel.shared
     
     var body: some View {
         Settings.Container(contentWidth: 600) {

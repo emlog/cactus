@@ -116,20 +116,6 @@ class LangService {
         return preferredLanguageName
     }
     
-    public func getPreferredLanguage() -> String {
-        // 优先使用用户设置的首选语言
-        let userPreferredLanguage = SettingsModel.shared.preferredLanguage
-        
-        // 验证用户设置的语言是否有效
-        let supportedLanguages = ["zh-Hans", "zh-Hant", "ja", "ko", "en"]
-        if supportedLanguages.contains(userPreferredLanguage) {
-            return userPreferredLanguage
-        }
-        
-        // 如果用户设置无效，回退到系统语言
-        return self.getSystemLanguage()
-    }
-    
     public func getSystemLanguage() -> String {
         let systemLanguage = Locale.preferredLanguages.first ?? "en"
         
@@ -156,12 +142,12 @@ class LangService {
     
     // 判断文本是否为系统首选语言（支持中、日、韩、繁体中文）
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
-        let systemLang = getPreferredLanguage()
+        let preferredLanguage = SettingsModel.shared.preferredLanguage
         let textLang = detectLanguageCode(for: text)
         // 只支持 zh-Hans, zh-Hant, ja, ko
         let supported = ["zh-Hans", "zh-Hant", "ja", "ko"]
-        if supported.contains(systemLang) {
-            return systemLang == textLang
+        if supported.contains(preferredLanguage) {
+            return preferredLanguage == textLang
         }
         return false
     }
