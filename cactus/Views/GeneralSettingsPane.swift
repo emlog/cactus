@@ -44,7 +44,7 @@ struct GeneralSettingsPane: View {
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
-
+            
             Settings.Section(bottomDivider: true, label: { Text(NSLocalizedString("shortcut_ocr_translate", comment: "截屏翻译快捷键")) }) {
                 KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutScreenshotTranslate)
                 Text(NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译"))
@@ -52,8 +52,8 @@ struct GeneralSettingsPane: View {
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: true, vertical: false)
             }
-
-            Settings.Section(label: { Text(NSLocalizedString("preferred_language", comment: "首选语言")) }) {
+            
+            Settings.Section(label: { Text(NSLocalizedString("preferred_language", comment: "常用语言")) }) {
                 Picker("", selection: $settingsModel.preferredLanguage) {
                     ForEach(settingsModel.languageKeys, id: \.self) { key in
                         Text(settingsModel.availableLanguages[key] ?? key)

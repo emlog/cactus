@@ -33,7 +33,7 @@ class SettingsModel: ObservableObject {
     
     let languageKeys = ["zh-Hans", "ja", "ko", "en", "zh-Hant"]
     
-    // 首选语言
+    // 常用语言
     @Published var preferredLanguage: String {
         didSet {
             UserDefaults.standard.set(preferredLanguage, forKey: "preferredLanguage")
@@ -288,7 +288,11 @@ class SettingsModel: ObservableObject {
     
     init() {
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
-        self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? ""
+        
+        // 使用 LangService 获取系统语言作为默认值
+        let defaultLanguage = LangService.shared.getSystemLanguage()
+        
+        self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? defaultLanguage
         self.commonForeignLanguage = UserDefaults.standard.string(forKey: "commonForeignLanguage") ?? "en"
         self.openaiApiKey = UserDefaults.standard.string(forKey: "openaiApiKey") ?? ""
         self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? ""
@@ -327,7 +331,7 @@ class SettingsModel: ObservableObject {
             defaultProviders["zhipu"] = zhipuProvider
         }
     }
-
+    
     private func updateOpenAIConfig() {
         if var openaiProvider = defaultProviders["openai"] {
             openaiProvider.apiKey = openaiApiKey

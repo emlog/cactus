@@ -116,7 +116,7 @@ class LangService {
         return preferredLanguageName
     }
     
-    public func getSystemLanguageCode() -> String {
+    public func getPreferredLanguage() -> String {
         // 优先使用用户设置的首选语言
         let userPreferredLanguage = SettingsModel.shared.preferredLanguage
         
@@ -127,25 +127,36 @@ class LangService {
         }
         
         // 如果用户设置无效，回退到系统语言
-        let preferredLanguage = Locale.preferredLanguages.first ?? "en-US"
-        if preferredLanguage.starts(with: "zh-Hans") {
+        return self.getSystemLanguage()
+    }
+    
+    public func getSystemLanguage() -> String {
+        let systemLanguage = Locale.preferredLanguages.first ?? "en"
+        
+        switch systemLanguage {
+        case _ where systemLanguage.hasPrefix("zh-Hans"),
+            _ where systemLanguage.hasPrefix("zh-CN"):
             return "zh-Hans"
-        } else if preferredLanguage.starts(with: "zh-Hant") {
+            
+        case _ where systemLanguage.hasPrefix("zh-Hant"),
+            _ where systemLanguage.hasPrefix("zh-TW"),
+            _ where systemLanguage.hasPrefix("zh-HK"):
             return "zh-Hant"
-        } else if preferredLanguage.starts(with: "ja") {
+            
+        case _ where systemLanguage.hasPrefix("ja"):
             return "ja"
-        } else if preferredLanguage.starts(with: "ko") {
+            
+        case _ where systemLanguage.hasPrefix("ko"):
             return "ko"
-        } else if preferredLanguage.starts(with: "en") {
+            
+        default:
             return "en"
-        } else {
-            return "en" // Default to English for other languages
         }
     }
     
     // 判断文本是否为系统首选语言（支持中、日、韩、繁体中文）
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
-        let systemLang = getSystemLanguageCode()
+        let systemLang = getPreferredLanguage()
         let textLang = detectLanguageCode(for: text)
         // 只支持 zh-Hans, zh-Hant, ja, ko
         let supported = ["zh-Hans", "zh-Hant", "ja", "ko"]
@@ -154,7 +165,7 @@ class LangService {
         }
         return false
     }
-
+    
     // 将语言代码转换为AVSpeechSynthesisVoice的languageCode
     public func convertToSpeechLanguageCode(_ languageCode: String) -> String {
         switch languageCode {
