@@ -168,7 +168,7 @@ struct MainView: View {
                     Button(action: {
                         chatText()
                     }) {
-                        Image(systemName: "paperplane")
+                        Image(systemName: "arrow.up")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
