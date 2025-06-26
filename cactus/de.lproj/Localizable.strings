@@ -1,3 +1,4 @@
+// Status Bar Menu
 "openmain" = "Fenster öffnen";
 "translate" = "Markierung übersetzen";
 "summary" = "Zusammenfassung";
@@ -9,11 +10,13 @@
 "setting" = "Einstellungen";
 "quit" = "Beenden";
 
+// pane
 "general" = "Allgemein";
 "service" = "AI‑Dienst";
 "premium" = "Pro";
 "about" = "Über";
 
+// setting
 "startup" = "Beim Start öffnen";
 "shortcut_openmain" = "Tastenkürzel: Fenster öffnen";
 "shortcut_openmain_description" = "Fenster öffnen und markierten Text einfügen";
@@ -26,6 +29,7 @@
 "shortcut_ocr_translate" = "Tastenkürzel: Screenshot‑Übersetzen";
 "shortcut_ocr_translate_description" = "Bildschirmbereich erfassen, OCR und Übersetzung";
 
+// Language setting
 "preferred_language" = "Bevorzugte Sprache";
 "common_foreign_language" = "Fremdsprache";
 "preferred_language_description" = "Übersetzungen in diese Sprache (Muttersprache)";
@@ -39,6 +43,7 @@
 "language_de" = "Deutsch";
 "language_es" = "Spanisch";
 
+// ai setting
 "select_service" = "AI‑Dienst wählen";
 "enter_api_key" = "API‑Schlüssel eingeben";
 "api_key" = "Schlüssel";
@@ -54,6 +59,7 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 
+// ai config
 "openai_config" = "OpenAI‑Konfiguration";
 "siliconflow_config" = "SiliconFlow‑Konfiguration";
 "google_gemini_config" = "Google Gemini‑Konfiguration";
@@ -62,6 +68,7 @@
 "volcengine_config" = "Volcengine‑Konfiguration (vor Nutzung freischalten)";
 "zhipu_config" = "Zhipu‑Konfiguration";
 
+// main
 "pop_text_empty" = "Kein Text zum Kopieren";
 "pop_translate_text_empty" = "Bitte Text zum Übersetzen eingeben";
 "pop_summary_text_empty" = "Bitte Text zum Zusammenfassen eingeben";
@@ -87,17 +94,20 @@
 "open_settings" = "Einstellungen öffnen";
 "cancel" = "Abbrechen";
 
+// about
 "apptitle" = "Kaktus‑AI‑Assistent";
 "version" = "Version";
 "report_issue" = "Problem melden";
 "contact" = "Kontakt";
 "rate_app" = "App bewerten";
 
+// ai error
 "error_invalid_config" = "Systemfehler: Konfiguration ungültig";
 "error_request_failed" = "Anfrage fehlgeschlagen, Modell wechseln oder Netzwerk prüfen";
 "error_empty_api_key" = "Bitte API‑Schlüssel eingeben";
 "error_empty_model" = "Bitte ein Modell auswählen";
 
+// common
 "alert_ok" = "OK";
 "sum" = "Gesamt";
 "clear_all" = "Alles löschen";
@@ -105,6 +115,7 @@
 "confirm" = "Bestätigen";
 "delete" = "Löschen";
 
+// pro
 "premium_owned" = "Sie haben Pro bereits freigeschaltet. Vielen Dank!";
 "premium_processing" = "Wird verarbeitet…";
 "premium_unlock" = "Pro freischalten";
@@ -116,9 +127,11 @@
 "terms_of_use" = "Nutzungsbedingungen";
 "privacy_policy" = "Datenschutzrichtlinie";
 
+// Purchase Manager
 "purchase_load_product_failed" = "Produkt konnte nicht geladen werden";
 "purchase_pending" = "Kauf wird verarbeitet, bitte warten";
 "purchase_not_found" = "Kein Kauf gefunden";
 "upgrade_to_premium" = "Nutzungsgrenze erreicht – bitte auf Pro upgraden";
 
+// history
 "clear_all_history_message" = "Möchten Sie wirklich den gesamten Verlauf löschen?";

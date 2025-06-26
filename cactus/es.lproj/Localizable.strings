@@ -1,3 +1,4 @@
+// Status Bar Menu
 "openmain" = "Abrir ventana";
 "translate" = "Traducir selección";
 "summary" = "Resumen";
@@ -9,11 +10,13 @@
 "setting" = "Preferencias";
 "quit" = "Salir";
 
+// pane
 "general" = "General";
 "service" = "Servicio de IA";
 "premium" = "Pro";
 "about" = "Acerca de";
 
+// setting
 "startup" = "Iniciar al encender";
 "shortcut_openmain" = "Atajo: Abrir ventana";
 "shortcut_openmain_description" = "Abre la ventana e inserta el texto seleccionado";
@@ -26,6 +29,7 @@
 "shortcut_ocr_translate" = "Atajo: Traducir captura";
 "shortcut_ocr_translate_description" = "Captura parte de la pantalla, realiza OCR y traduce";
 
+// Language setting
 "preferred_language" = "Idioma preferido";
 "common_foreign_language" = "Idioma extranjero";
 "preferred_language_description" = "Traduce otros idiomas a este (tu lengua materna)";
@@ -39,6 +43,7 @@
 "language_de" = "Alemán";
 "language_es" = "Español";
 
+// ai setting
 "select_service" = "Seleccionar servicio de IA";
 "enter_api_key" = "Introduce la clave API";
 "api_key" = "Clave";
@@ -54,6 +59,7 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 
+// ai config
 "openai_config" = "Configuración de OpenAI";
 "siliconflow_config" = "Configuración de SiliconFlow";
 "google_gemini_config" = "Configuración de Google Gemini";
@@ -62,6 +68,7 @@
 "volcengine_config" = "Configuración de Volcengine (requiere activación)";
 "zhipu_config" = "Configuración de Zhipu";
 
+// main
 "pop_text_empty" = "No hay texto para copiar";
 "pop_translate_text_empty" = "Introduce el texto a traducir";
 "pop_summary_text_empty" = "Introduce el texto para resumir";
@@ -87,17 +94,20 @@
 "open_settings" = "Abrir preferencias";
 "cancel" = "Cancelar";
 
+// about
 "apptitle" = "Asistente AI Cactus";
 "version" = "Versión";
 "report_issue" = "Informar un problema";
 "contact" = "Contacto";
 "rate_app" = "Valorar la app";
 
+// ai error
 "error_invalid_config" = "Error del sistema: configuración incorrecta del servicio de IA";
 "error_request_failed" = "Fallo en la solicitud. Cambia el modelo o revisa tu conexión";
 "error_empty_api_key" = "Introduce la clave del servicio de IA";
 "error_empty_model" = "Selecciona un modelo para este servicio";
 
+// common
 "alert_ok" = "Aceptar";
 "sum" = "Total";
 "clear_all" = "Borrar todo";
@@ -105,6 +115,7 @@
 "confirm" = "Confirmar";
 "delete" = "Eliminar";
 
+// pro
 "premium_owned" = "Ya tienes Pro. ¡Gracias por tu apoyo!";
 "premium_processing" = "Procesando...";
 "premium_unlock" = "Desbloquear Pro";
@@ -116,9 +127,11 @@
 "terms_of_use" = "Términos de uso";
 "privacy_policy" = "Política de privacidad";
 
+// Purchase Manager
 "purchase_load_product_failed" = "Error al cargar el producto";
 "purchase_pending" = "Compra en proceso, por favor espera";
 "purchase_not_found" = "No se encontró ninguna compra";
 "upgrade_to_premium" = "Se alcanzó el límite. Actualiza a Pro";
 
+// history
 "clear_all_history_message" = "¿Seguro que deseas borrar todo el historial?";

@@ -1,3 +1,4 @@
+// Status Bar Menu
 "openmain" = "Ouvrir la fenêtre";
 "translate" = "Traduire la sélection";
 "summary" = "Résumé";
@@ -9,11 +10,13 @@
 "setting" = "Préférences";
 "quit" = "Quitter";
 
+// pane
 "general" = "Général";
 "service" = "Service IA";
 "premium" = "Pro";
 "about" = "À propos";
 
+// setting
 "startup" = "Lancer au démarrage";
 "shortcut_openmain" = "Raccourci : Ouvrir la fenêtre";
 "shortcut_openmain_description" = "Ouvre la fenêtre et insère le texte sélectionné";
@@ -26,6 +29,7 @@
 "shortcut_ocr_translate" = "Raccourci : Traduire une capture";
 "shortcut_ocr_translate_description" = "Capturer une zone de l'écran, faire l’OCR et traduire";
 
+// Language setting
 "preferred_language" = "Langue préférée";
 "common_foreign_language" = "Langue étrangère principale";
 "preferred_language_description" = "Traduire dans cette langue (langue maternelle)";
@@ -39,6 +43,7 @@
 "language_de" = "Allemand";
 "language_es" = "Espagnol";
 
+// ai setting
 "select_service" = "Choisir un service IA";
 "enter_api_key" = "Saisir la clé API";
 "api_key" = "Clé";
@@ -54,6 +59,7 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 
+// ai config
 "openai_config" = "Configuration OpenAI";
 "siliconflow_config" = "Configuration SiliconFlow";
 "google_gemini_config" = "Configuration Google Gemini";
@@ -62,6 +68,7 @@
 "volcengine_config" = "Configuration Volcengine (activation requise)";
 "zhipu_config" = "Configuration Zhipu";
 
+// main
 "pop_text_empty" = "Aucun texte à copier";
 "pop_translate_text_empty" = "Veuillez saisir le texte à traduire";
 "pop_summary_text_empty" = "Veuillez saisir le texte à résumer";
@@ -87,17 +94,20 @@
 "open_settings" = "Ouvrir les préférences";
 "cancel" = "Annuler";
 
+// about
 "apptitle" = "Assistant IA Cactus";
 "version" = "Version";
 "report_issue" = "Signaler un problème";
 "contact" = "Nous contacter";
 "rate_app" = "Évaluer l’application";
 
+// ai error
 "error_invalid_config" = "Erreur système : configuration du service IA invalide";
 "error_request_failed" = "Échec de la requête, changez de modèle ou vérifiez la connexion";
 "error_empty_api_key" = "Veuillez saisir la clé API";
 "error_empty_model" = "Veuillez sélectionner un modèle pour ce service";
 
+// common
 "alert_ok" = "OK";
 "sum" = "Total";
 "clear_all" = "Tout effacer";
@@ -105,6 +115,7 @@
 "confirm" = "Confirmer";
 "delete" = "Supprimer";
 
+// pro
 "premium_owned" = "Vous possédez déjà Pro. Merci pour votre soutien !";
 "premium_processing" = "Traitement en cours...";
 "premium_unlock" = "Déverrouiller Pro";
@@ -116,9 +127,11 @@
 "terms_of_use" = "Conditions d’utilisation";
 "privacy_policy" = "Politique de confidentialité";
 
+// Purchase Manager
 "purchase_load_product_failed" = "Échec du chargement du produit";
 "purchase_pending" = "Achat en cours, veuillez patienter";
 "purchase_not_found" = "Aucun achat trouvé";
 "upgrade_to_premium" = "Limite atteinte – veuillez passer à Pro";
 
+// history
 "clear_all_history_message" = "Voulez-vous vraiment effacer tout l’historique ?";
