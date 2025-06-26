@@ -209,6 +209,22 @@ struct MainView: View {
                             }
                         }
                         Divider()
+                        Menu(NSLocalizedString("preferred_language", comment: "常用语言")) {
+                            ForEach(settings.languageKeys, id: \.self) { languageKey in
+                                Button(action: {
+                                    settings.preferredLanguage = languageKey
+                                }) {
+                                    HStack {
+                                        Text(settings.availableLanguages[languageKey] ?? languageKey)
+                                        Spacer()
+                                        if settings.preferredLanguage == languageKey {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Divider()
                         Menu(NSLocalizedString("common_foreign_language", comment: "常用外语")) {
                             ForEach(settings.languageKeys, id: \.self) { languageKey in
                                 Button(action: {
