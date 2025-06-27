@@ -20,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 创建并初始化窗口管理器
         windowManager = WindowManager()
         windowManager?.initializeWindows()
+        windowManager?.checkAccessibilityAndShowAlert()
         
         // 创建并设置状态栏管理器
         statusBarManager = StatusBarManager(windowManager: windowManager!)

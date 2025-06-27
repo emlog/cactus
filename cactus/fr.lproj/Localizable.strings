@@ -89,8 +89,10 @@
 "help_pin" = "Épingler la fenêtre";
 "help_unpin" = "Désépingler";
 "help_clear" = "Effacer";
-"accessibility_permission_title" = "Autorisation d’accessibilité requise";
-"accessibility_permission_message" = "Veuillez activer les autorisations d’accessibilité dans les Préférences Système pour traduire ou résumer du texte sélectionné.";
+
+// alert
+"accessibility_permission_message" = "Autorisation d’accessibilité requise. Veuillez l’activer dans les Préférences Système pour traduire le texte sélectionné.";
+"app_in_menubar_info" = "L’application est lancée, l’icône 🌵 s’affiche dans la barre de menu";
 "open_settings" = "Ouvrir les préférences";
 "cancel" = "Annuler";
 

@@ -89,8 +89,10 @@
 "help_pin" = "钉住窗口";
 "help_unpin" = "取消钉住";
 "help_clear" = "清除内容";
-"accessibility_permission_title" = "需要辅助功能权限";
-"accessibility_permission_message" = "请在系统偏好设置中启用辅助功能权限，以便翻译总结选中文字。";
+
+// alert
+"accessibility_permission_message" = "需要辅助功能权限，请在系统偏好设置中开启辅助功能权限，以便翻译选中文字。";
+"app_in_menubar_info" = "应用已启动，在状态栏中显示🌵图标";
 "open_settings" = "打开设置";
 "cancel" = "取消";
 

@@ -89,8 +89,10 @@
 "help_pin" = "Pin Window";
 "help_unpin" = "Unpin Window";
 "help_clear" = "Clear Text";
-"accessibility_permission_title" = "Accessibility Access Required";
-"accessibility_permission_message" = "Please grant Accessibility access in System Settings > Privacy & Security to enable translating and summarizing selected text.";
+
+// alert
+"accessibility_permission_message" = "Accessibility permission is required. Please enable it in System Settings to translate selected text.";
+"app_in_menubar_info" = "The app is running and the 🌵 icon appears in the menu bar";
 "open_settings" = "Open System Settings";
 "cancel" = "Cancel";
 

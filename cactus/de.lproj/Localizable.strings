@@ -89,8 +89,10 @@
 "help_pin" = "Fenster anheften";
 "help_unpin" = "Anheften lösen";
 "help_clear" = "Löschen";
-"accessibility_permission_title" = "Zugriff auf Bedienungshilfen erforderlich";
-"accessibility_permission_message" = "Bitte aktivieren Sie den Zugriff in den Systemeinstellungen, um markierten Text zu übersetzen oder zusammenzufassen.";
+
+// alert
+"accessibility_permission_message" = "Zugriff auf Bedienungshilfen erforderlich. Bitte aktiviere die entsprechenden Rechte in den Systemeinstellungen, um markierten Text zu übersetzen.";
+"app_in_menubar_info" = "App wurde gestartet, 🌵-Symbol erscheint in der Menüleiste";
 "open_settings" = "Einstellungen öffnen";
 "cancel" = "Abbrechen";
 

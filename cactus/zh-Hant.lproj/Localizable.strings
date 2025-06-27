@@ -89,8 +89,10 @@
 "help_pin" = "釘選視窗";
 "help_unpin" = "取消釘選";
 "help_clear" = "清除內容";
-"accessibility_permission_title" = "需要輔助使用權限";
-"accessibility_permission_message" = "請在「系統偏好設定」中啟用輔助使用權限，以便翻譯與製作所選文字的摘要。";
+
+// alert
+"accessibility_permission_message" = "需要輔助使用權限，請至系統偏好設定中開啟輔助使用功能，以便翻譯選取的文字。";
+"app_in_menubar_info" = "應用程式已啟動，🌵 圖示已顯示於狀態列中";
 "open_settings" = "打開設定";
 "cancel" = "取消";
 

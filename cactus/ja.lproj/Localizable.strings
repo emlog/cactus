@@ -89,8 +89,10 @@
 "help_pin" = "ウィンドウを固定";
 "help_unpin" = "固定を解除";
 "help_clear" = "内容をクリア";
-"accessibility_permission_title" = "アクセシビリティの許可が必要です";
-"accessibility_permission_message" = "テキストの選択・翻訳・要約を行うには、システム環境設定でアクセシビリティ権限を有効にしてください。";
+
+// alert
+"accessibility_permission_message" = "選択したテキストを翻訳するには、システム設定でアクセシビリティの権限を有効にしてください。";
+"app_in_menubar_info" = "アプリが起動しました。メニューバーに🌵アイコンが表示されます";
 "open_settings" = "設定を開く";
 "cancel" = "キャンセル";
 

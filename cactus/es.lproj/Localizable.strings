@@ -89,8 +89,10 @@
 "help_pin" = "Fijar ventana";
 "help_unpin" = "Desfijar ventana";
 "help_clear" = "Borrar";
-"accessibility_permission_title" = "Se requiere permiso de accesibilidad";
-"accessibility_permission_message" = "Activa el permiso en Preferencias del sistema para traducir o resumir texto seleccionado.";
+
+// alert
+"accessibility_permission_message" = "Se requieren permisos de accesibilidad. Actívalos en las Preferencias del Sistema para traducir el texto seleccionado.";
+"app_in_menubar_info" = "La aplicación se ha iniciado y el icono 🌵 aparece en la barra de menús";
 "open_settings" = "Abrir preferencias";
 "cancel" = "Cancelar";
 

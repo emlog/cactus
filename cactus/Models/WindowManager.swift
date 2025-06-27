@@ -15,6 +15,41 @@ class WindowManager: NSObject, NSWindowDelegate {
     private var pinnedWindowOrigin: NSPoint?
     private var pinButton: NSButton?
     private var settingsWindowController: SettingsWindowController?
+    var accessibilityWindow: NSWindow?
+    
+    func checkAccessibilityAndShowAlert() {
+        let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
+        let options = [checkOptPrompt: false]
+        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
+
+        if !accessEnabled {
+            showAccessibilityWindow()
+        }
+    }
+    
+    // 权限请求窗口
+    private func showAccessibilityWindow() {
+        if accessibilityWindow == nil {
+            accessibilityWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 450, height: 400),
+                styleMask: [.titled, .closable],
+                backing: .buffered,
+                defer: false
+            )
+            
+            accessibilityWindow?.center()
+            accessibilityWindow?.titlebarAppearsTransparent = true
+            accessibilityWindow?.titleVisibility = .hidden
+            accessibilityWindow?.isReleasedWhenClosed = false
+            
+            let accessibilityView = AccessibilityRequestView()
+            let hostingController = NSHostingController(rootView: accessibilityView)
+            accessibilityWindow?.contentViewController = hostingController
+        }
+        
+        accessibilityWindow?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
     
     func initializeWindows() {
         initializeMainWindow()
@@ -269,7 +304,7 @@ class WindowManager: NSObject, NSWindowDelegate {
     func checkAccessibilityPermissionAndGetClipboard(action: ActionType = .nothing, completion: @escaping (Bool) -> Void) {
         // 检查辅助功能权限
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
-        let options = [checkOptPrompt: true]
+        let options = [checkOptPrompt: false]
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
         
         if accessEnabled {
@@ -278,22 +313,9 @@ class WindowManager: NSObject, NSWindowDelegate {
                 completion(true)
             }
         } else {
-            // 显示权限提示
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("accessibility_permission_title", comment: "需要辅助功能权限")
-            alert.informativeText = NSLocalizedString("accessibility_permission_message", comment: "请在系统偏好设置中启用辅助功能权限")
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: NSLocalizedString("open_settings", comment: "打开设置"))
-            alert.addButton(withTitle: NSLocalizedString("cancel", comment: "取消"))
-            
-            DispatchQueue.main.async {
-                let response = alert.runModal()
-                if response == .alertFirstButtonReturn {
-                    NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
-                } else {
-                    completion(false)
-                }
-            }
+            // 使用统一的权限请求窗口
+            showAccessibilityWindow()
+            completion(false)
         }
     }
     
