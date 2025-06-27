@@ -59,7 +59,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         // 初始化主窗口
         mainWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 690, height: 600),
-            styleMask: [.titled],
+            styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
         )
