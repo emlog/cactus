@@ -37,10 +37,13 @@ class WindowManager: NSObject, NSWindowDelegate {
                 defer: false
             )
             
+            accessibilityWindow?.level = .floating
             accessibilityWindow?.center()
             accessibilityWindow?.titlebarAppearsTransparent = true
             accessibilityWindow?.titleVisibility = .hidden
             accessibilityWindow?.isReleasedWhenClosed = false
+            accessibilityWindow?.collectionBehavior = [.canJoinAllSpaces]
+            accessibilityWindow?.hidesOnDeactivate = false
             
             let accessibilityView = AccessibilityRequestView()
             let hostingController = NSHostingController(rootView: accessibilityView)
