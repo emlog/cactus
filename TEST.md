@@ -70,4 +70,8 @@ The US government specifically alleged that Google controls the market for publi
 
 我是一名大学生，我假期想去美国旧金山旅游，请给我制定一个3天的旅行计划。
 
+## 可能被识别为日语的汉语
+
+岩石 菊石 社会 会社  少女
+
 

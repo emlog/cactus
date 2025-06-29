@@ -27,47 +27,116 @@ class LangService {
         }
         
         // 将NLLanguage转换为我们需要的语言代码格式
+        var detectedLanguage: String
         switch dominantLanguage {
         case .simplifiedChinese:
-            return "zh-Hans"
+            detectedLanguage = "zh-Hans"
         case .traditionalChinese:
-            return "zh-Hant"
+            detectedLanguage = "zh-Hant"
         case .japanese:
-            return "ja"
+            detectedLanguage = "ja"
         case .korean:
-            return "ko"
+            detectedLanguage = "ko"
         case .english:
-            return "en"
+            detectedLanguage = "en"
         case .french:
-            return "fr"
+            detectedLanguage = "fr"
         case .spanish:
-            return "es"
+            detectedLanguage = "es"
         case .german:
-            return "de"
+            detectedLanguage = "de"
         default:
             // 对于其他语言，检查原始值是否是我们支持的语言
             let rawValue = dominantLanguage.rawValue
             switch rawValue {
             case "zh-Hans":
-                return "zh-Hans"
+                detectedLanguage = "zh-Hans"
             case "zh-Hant":
-                return "zh-Hant"
+                detectedLanguage = "zh-Hant"
             case "ja":
-                return "ja"
+                detectedLanguage = "ja"
             case "ko":
-                return "ko"
+                detectedLanguage = "ko"
             case "en":
-                return "en"
+                detectedLanguage = "en"
             case "fr":
-                return "fr"
+                detectedLanguage = "fr"
             case "es":
-                return "es"
+                detectedLanguage = "es"
             case "de":
-                return "de"
+                detectedLanguage = "de"
             default:
-                return "en"  // 不支持的语言返回英语
+                detectedLanguage = "en"  // 不支持的语言返回英语
             }
         }
+        
+        // 如果识别为日语，使用正则表达式方法进行重复验证
+        if detectedLanguage == "ja" {
+            let regexResult = detectLanguageCodeByRegx(for: text)
+            // 如果正则表达式验证结果也是日语，则确认为日语
+            // 否则返回正则表达式的验证结果
+            return regexResult == "ja" ? "ja" : regexResult
+        }
+        
+        return detectedLanguage
+    }
+    
+    // 通过正则表达式识别文本语言类型，返回对应的语言代码，主要针对中文、日文、韩文
+    public func detectLanguageCodeByRegx(for text: String) -> String {
+        // 日文假名 Unicode 范围
+        let hiraganaRange = "\u{3040}"..."\u{309F}"
+        let katakanaRange = "\u{30A0}"..."\u{30FF}"
+        // 中文汉字 Unicode 范围
+        let chineseRange = "\u{4E00}"..."\u{9FFF}"
+        // 韩文
+        let koreanRegex = "[\\u1100-\\u11FF\\u3130-\\u318F\\uAC00-\\uD7AF]"
+        
+        var hiraganaCount = 0
+        var katakanaCount = 0
+        var chineseCount = 0
+        var koreanCount = 0
+        
+        // 统计各种语言字符的数量
+        for scalar in text.unicodeScalars {
+            let scalarString = String(scalar)
+            
+            if hiraganaRange.contains(scalarString) {
+                hiraganaCount += 1
+            } else if katakanaRange.contains(scalarString) {
+                katakanaCount += 1
+            } else if chineseRange.contains(scalarString) {
+                chineseCount += 1
+            } else if scalarString.range(of: koreanRegex, options: .regularExpression) != nil {
+                koreanCount += 1
+            }
+        }
+        
+        let totalCharacters = text.count
+        let halfThreshold = Double(totalCharacters) / 2.0
+        
+        // 如果文本为空，返回默认语言
+        if totalCharacters == 0 {
+            return "zh-Hans"
+        }
+        
+        // 检查日文：假名字符超过一半
+        let japaneseCount = hiraganaCount + katakanaCount
+        if Double(japaneseCount) > halfThreshold {
+            return "ja"
+        }
+        
+        // 检查中文：汉字字符超过一半且没有假名
+        if Double(chineseCount) > halfThreshold && hiraganaCount == 0 && katakanaCount == 0 {
+            return "zh-Hans"
+        }
+        
+        // 检查韩文：韩文字符超过一半
+        if Double(koreanCount) > halfThreshold {
+            return "ko"
+        }
+
+        // 如果没有任何语言的字符超过一半，返回默认语言
+        return "zh-Hans"
     }
     
     // 判断文本是句子还是单词
@@ -144,9 +213,24 @@ class LangService {
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
         let preferredLanguage = SettingsModel.shared.preferredLanguage
         let textLang = detectLanguageCode(for: text)
+        
+        print("prefer lang: \(preferredLanguage)， textLang:  \(textLang)\n")
+        
         let supported = ["zh-Hans", "zh-Hant", "ja", "ko", "en", "fr", "de", "es"]
         if supported.contains(preferredLanguage) {
-            return preferredLanguage == textLang
+            // 应对某些简体中文词语会被识别为繁体中文，无法精确
+            // 如果首选语言是繁体中文，则简体中文和繁体中文都认为是相等的
+            // 如果首选语言是简体中文，则简体中文和繁体中文都认为是相等的
+            if preferredLanguage == "zh-Hans" {
+                return textLang == "zh-Hans" || textLang == "zh-Hant"
+            } else if preferredLanguage == "zh-Hant" {
+                return textLang == "zh-Hans" || textLang == "zh-Hant"
+            }
+            
+            // 其他语言保持原有的精确匹配
+            else {
+                return preferredLanguage == textLang
+            }
         }
         return false
     }

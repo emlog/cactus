@@ -422,16 +422,18 @@ struct MainView: View {
         
         let systemMessage: String
         
-        // 如果是常用语言，翻译为常用外语
+        // 翻译规则：
+        // 1、如果是常用语言，翻译为第一外语
+        // 2、如果不是常用语言，翻译为常用语言（母语）
         if Lang.isTextInPreferredLanguage(inputText) {
-            systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage()
+            systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage() // 翻译为第一外语
         } else if Lang.isSentence(inputText) == false {
-            // 单词翻译
+            // 翻译为常用语言：单词翻译
             systemMessage = Prompt.getSystemMessageForTranslateWord()
             performAIAction(systemMessage: systemMessage, actionType: .vocabulary(word: inputText))
             return
         } else {
-            // 句子翻译
+            // 翻译为常用语言：句子翻译
             systemMessage = Prompt.getSystemMessageForTranslate()
         }
         performAIAction(systemMessage: systemMessage)
