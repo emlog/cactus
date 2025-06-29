@@ -113,7 +113,7 @@
 "alert_ok" = "OK";
 "sum" = "合計";
 "clear_all" = "すべてをクリア";
-"cancle" = "キャンセル";
+"cancel" = "キャンセル";
 "confirm" = "確認";
 "delete" = "削除";
 

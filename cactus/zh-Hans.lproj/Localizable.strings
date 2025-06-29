@@ -113,7 +113,7 @@
 "alert_ok" = "好";
 "sum" = "总计";
 "clear_all" = "清空全部";
-"cancle" = "取消";
+"cancel" = "取消";
 "confirm" = "确定";
 "delete" = "删除";
 

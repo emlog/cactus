@@ -113,7 +113,7 @@
 "alert_ok" = "Aceptar";
 "sum" = "Total";
 "clear_all" = "Borrar todo";
-"cancle" = "Cancelar";
+"cancel" = "Cancelar";
 "confirm" = "Confirmar";
 "delete" = "Eliminar";
 

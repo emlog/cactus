@@ -113,7 +113,7 @@
 "alert_ok" = "확인";
 "sum" = "총";
 "clear_all" = "모두 삭제";
-"cancle" = "취소";
+"cancel" = "취소";
 "confirm" = "확인";
 "delete" = "삭제";
 
