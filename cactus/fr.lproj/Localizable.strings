@@ -72,7 +72,7 @@
 "pop_text_empty" = "Aucun texte à copier";
 "pop_translate_text_empty" = "Veuillez saisir le texte à traduire";
 "pop_summary_text_empty" = "Veuillez saisir le texte à résumer";
-"pop_dict_text_empty" = "Veuillez saisir un mot à rechercher";
+"pop_dict_text_empty" = "Veuillez saisir un seul mot à rechercher";
 "pop_chat_text_empty" = "Veuillez saisir votre question";
 "pop_copy_success" = "Copié avec succès";
 "pop_already_cleared" = "Déjà effacé";

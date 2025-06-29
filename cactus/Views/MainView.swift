@@ -453,13 +453,23 @@ struct MainView: View {
     
     // 字典
     func dictionaryText() {
+        let systemMessage: String
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
             toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
             showErrorToast = true
             return
         }
-        let systemMessage = Prompt.getSystemMessageForDict()
+        if Lang.isSentence(inputText) == true {
+            toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
+            showErrorToast = true
+            return
+        }
+        if Lang.isTextInPreferredLanguage(inputText) {
+            systemMessage = Prompt.getSystemMessageForDict() // 查母语字典
+        } else {
+            systemMessage = Prompt.getSystemMessageForTranslateWord() // 单词翻译
+        }
         performAIAction(systemMessage: systemMessage)
     }
     

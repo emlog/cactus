@@ -72,7 +72,7 @@
 "pop_text_empty" = "コピーできる内容がありません";
 "pop_translate_text_empty" = "翻訳するテキストを入力してください";
 "pop_summary_text_empty" = "要約する内容を入力してください";
-"pop_dict_text_empty" = "説明する内容を入力してください";
+"pop_dict_text_empty" = "単語を1つ入力してください";
 "pop_chat_text_empty" = "質問内容を入力してください";
 "pop_copy_success" = "コピーしました";
 "pop_already_cleared" = "内容はすでにクリアされています";

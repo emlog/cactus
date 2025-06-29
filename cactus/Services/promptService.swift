@@ -73,7 +73,7 @@ class promptService {
 - 时态（可选，标注动词的现在分词、过去式、过去分词）
 - 复数（可选，标注单词的复数形式）
 
-## 词组/短语
+## 词组
 常用词组或习惯用语
 
 ## 例句
@@ -97,17 +97,14 @@ class promptService {
 - 近义词：panther（豹），lion（狮子）
 - 复数：tigers
 
-### 📚 词组/短语
+### 📚 词组
 - tiger woods n. 老虎·伍兹（世界著名高尔夫球手）
 - paper tiger 纸老虎
 
 ### ✏️ 例句
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    他在野外拍摄了老虎的照片。
-
-2. The `tiger` roars in the danger of the jungle.
-   老虎在丛林的危险中发出咆哮。
 """
         case "zh-Hant":
             return """
@@ -151,11 +148,8 @@ class promptService {
 
 ### ✏️ 例句
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    他在野外拍攝了老虎的照片。
-
-2. The `tiger` roars in the danger of the jungle.
-   老虎在丛林的危险中发出咆哮。
 """
         case "ja":
             return """
@@ -199,11 +193,8 @@ tigerの検索出力例に従って出力してください：
 
 ### ✏️ 例文
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    彼は野生のトラの写真を撮った。
-
-2. The `tiger` roars in the danger of the jungle.
-   トラはジャングルの危険の中で咆哮する。
 """
         case "ko":
             return """
@@ -247,11 +238,8 @@ tiger 검색 출력 예에 따라 출력하십시오:
 
 ### ✏️ 예문
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    그는 야생에서 호랑이 사진을 찍었습니다.
-
-2. the `tiger` roars in the danger of the jungle.
-   호랑이는 정글의 위험 속에서 포효합니다.
 """
         case "fr":
             return """
@@ -295,11 +283,8 @@ Veuillez suivre le format de sortie pour la recherche de "tiger" :
 
 ### ✏️ Phrases d'exemple
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    Il a pris une photo du tigre dans la nature.
-
-2. The `tiger` roars in the danger of the jungle.
-   Le tigre rugit dans le danger de la jungle.
 """
         case "de":
             return """
@@ -343,11 +328,8 @@ Bitte folgen Sie dem Ausgabeformat für die Suche nach "tiger":
 
 ### ✏️ Beispielsätze
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    Er machte ein Foto vom Tiger in der Wildnis.
-
-2. The `tiger` roars in the danger of the jungle.
-   Der Tiger brüllt in der Gefahr des Dschungels.
 """
         case "es":
             return """
@@ -391,11 +373,8 @@ Por favor sigue el formato de salida para buscar "tiger":
 
 ### ✏️ Oraciones de ejemplo
 
-1. He took a photo of the `tiger` in the wild.
+- He took a photo of the `tiger` in the wild.
    Él tomó una foto del tigre en la naturaleza.
-
-2. The `tiger` roars in the danger of the jungle.
-   El tigre ruge en el peligro de la jungla.
 """
         default:
             return """
@@ -439,9 +418,7 @@ Please follow the output format for querying \"tiger\":
 
 ### ✏️ Example Sentences
 
-1. He took a photo of the `tiger` in the wild.
-
-2. the `tiger` roars in the danger of the jungle.
+- He took a photo of the `tiger` in the wild.
 """
         }
     }

@@ -72,7 +72,7 @@
 "pop_text_empty" = "沒有可拷貝的內容";
 "pop_translate_text_empty" = "請輸入要翻譯的文字";
 "pop_summary_text_empty" = "請輸入要製作摘要的內容";
-"pop_dict_text_empty" = "請輸入要解釋的內容";
+"pop_dict_text_empty" = "請輸入單個字詞查詢";
 "pop_chat_text_empty" = "請輸入您的問題";
 "pop_copy_success" = "已拷貝";
 "pop_already_cleared" = "已清除內容";

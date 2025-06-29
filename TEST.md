@@ -75,3 +75,8 @@ The US government specifically alleged that Google controls the market for publi
 岩石 菊石 社会 会社  少女
 
 
+## 常用提示词
+
+- 我开发了一款支持多种语言的macOS 应用，请将我提供的语言包，翻译为：繁体中文、日语、韩语、英语、法语、西班牙语、德语
+
+
