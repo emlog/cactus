@@ -13,17 +13,24 @@ struct GeneralAiPane: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                // 选择提供商
-                SettingRow(
-                    label: NSLocalizedString("select_service", comment: "选择提供商")
-                ) {
-                    Picker(selection: $settingsModel.selectedProvider, label: EmptyView()) {
-                        providerOptions
+            VStack(spacing: 0) {
+                VStack{
+                    // 选择提供商
+                    SettingRow(
+                        label: NSLocalizedString("select_service", comment: "选择提供商")
+                    ) {
+                        Picker(selection: $settingsModel.selectedProvider, label: EmptyView()) {
+                            providerOptions
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .frame(width: 300, alignment: .leading)
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .frame(width: 300, alignment: .leading)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
                 }
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(12)
+                .padding(20)
                 
                 // 通用配置界面 - 适用于需要自定义配置的提供商
                 if settingsModel.currentProviderRequiresConfig && isPremiumUser {
@@ -32,14 +39,13 @@ struct GeneralAiPane: View {
                     providerConfigurationView
                 }
             }
-            .padding(20)
         }
-        .frame(width: 800, height: 200)
+        .frame(width: 800, height: 230)
     }
     
     // 通用的提供商配置视图
     private var providerConfigurationView: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
             // 配置标题和帮助按钮
             HStack {
                 Text(providerConfigTitle)
@@ -58,6 +64,11 @@ struct GeneralAiPane: View {
                 }
                 .buttonStyle(PlainButtonStyle())
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
             
             // API密钥设置
             SettingRow(
@@ -67,6 +78,11 @@ struct GeneralAiPane: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
             
             // 模型选择
             SettingRow(
@@ -80,7 +96,13 @@ struct GeneralAiPane: View {
                 .pickerStyle(MenuPickerStyle())
                 .frame(width: 300, alignment: .leading)
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
         }
+        .background(Color(NSColor.controlBackgroundColor))
+        .cornerRadius(12)
+        .padding(20)
+        
     }
     
     // 计算属性：配置标题
