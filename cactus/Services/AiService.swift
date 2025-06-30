@@ -159,106 +159,65 @@ class AiService: NSObject, URLSessionDataDelegate {
      * - 累积文本内容并实时更新到 TextContentModel.shared.resultText
      * - 如果是错误响应，解析错误信息并通过 errorHandler 回调
      * - 处理流式传输结束标记 "[DONE]"
+     *
+     * 流式数据处理方法
+     * - 使用专门的SSE解析器处理数据
+     * - 自动过滤SSE注释和控制信息
      */
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         buffer.append(data)
         
-        // 如果收到的是错误响应，尝试解析错误信息
+        // 处理错误响应
         if !hasReceivedValidResponse {
-            // 尝试将整个buffer解析为错误JSON
-            if let errorString = String(data: buffer, encoding: .utf8) {
-                do {
-                    if let errorData = errorString.data(using: .utf8),
-                       let errorJson = try JSONSerialization.jsonObject(with: errorData) as? [String: Any] {
-                        
-                        var errorMessage: String = ""
-                        
-                        // 解析错误信息
-                        if let error = errorJson["error"] as? [String: Any] {
-                            if let message = error["message"] as? String {
-                                errorMessage = message
-                            }
-                            if let type = error["type"] as? String {
-                                errorMessage = "\(type): \(errorMessage)"
-                            }
-                        }
-                        
-                        DispatchQueue.main.async {
-                            // 将错误信息显示在用户输出窗口
-                            TextContentModel.shared.resultText = "\(NSLocalizedString("error_request_failed", comment: "请求失败")): \(errorMessage)"
-                        }
-                        return
-                    }
-                } catch {
-                    // JSON解析失败，显示原始错误信息
-                    DispatchQueue.main.async {
-                        TextContentModel.shared.resultText = "\(NSLocalizedString("error_request_failed", comment: "请求失败")): \(errorString)"
-                    }
-                    return
-                }
-            }
+            handleErrorResponse()
             return
         }
         
-        // 持续处理缓冲区中的完整行
-        while let range = buffer.firstRange(of: Data("\n".utf8)) {
-            let lineData = buffer.subdata(in: 0..<range.lowerBound) // 获取一行的数据 (不包含 \n)
-            buffer.removeSubrange(0..<range.upperBound) // 从缓冲区移除这一行和 \n
-            
-            // 将行数据转换为字符串进行处理
-            if let line = String(data: lineData, encoding: .utf8) {
-                let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-                if trimmedLine.isEmpty {
-                    continue // 跳过空行
-                }
+        // 处理完整的数据行
+        processCompleteLines()
+    }
+    
+    private func handleErrorResponse() {
+        guard let errorString = String(data: buffer, encoding: .utf8) else { return }
+        
+        do {
+            if let errorData = errorString.data(using: .utf8),
+               let errorJson = try JSONSerialization.jsonObject(with: errorData) as? [String: Any],
+               let error = errorJson["error"] as? [String: Any] {
                 
-                if trimmedLine.hasPrefix("data: ") {
-                    let dataContent = trimmedLine.dropFirst(6) // 移除 "data: " 前缀
-                    
-                    if dataContent == "[DONE]" {
-                        print("流式输出完成")
-                        continue // 继续处理缓冲区中的下一行
-                    }
-                    
-                    if let jsonData = String(dataContent).data(using: .utf8) {
-                        do {
-                            let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
-                            if let content = streamResponse.choices.first?.delta.content {
-                                fullContent += content
-                                
-                                DispatchQueue.main.async {
-                                    // 确保 TextContentModel.shared 实例存在且属性可访问
-                                    // 在更新 UI 前，修剪 fullContent 的首尾空白
-                                    TextContentModel.shared.resultText = self.fullContent.trimmingCharacters(in: .whitespacesAndNewlines)
-                                }
-                            }
-                        } catch {
-                            // 打印原始 JSON 字符串以便调试
-                            print("JSON解析错误: \(error.localizedDescription), Raw JSON: \(String(dataContent))")
-                            // 通过 errorHandler 将错误信息传递出去
-                            let parseErrorMessage = String(format: "error: json parsing failed with raw.", String(dataContent))
-                            DispatchQueue.main.async {
-                                self.errorHandler?(parseErrorMessage)
-                            }
-                        }
-                    }
-                } else {
-                    // 可以选择打印非 data: 前缀的行，以供调试
-                    print("Skipping non-data line: \(trimmedLine)")
-                    
-                    // 直接将API返回的内容输出给调用方，不进行JSON解码
-                    fullContent += trimmedLine + "\n"
+                let message = error["message"] as? String ?? "Unknown error"
+                let type = error["type"] as? String ?? ""
+                let errorMessage = type.isEmpty ? message : "\(type): \(message)"
+                
+                DispatchQueue.main.async {
+                    TextContentModel.shared.resultText = "\(NSLocalizedString("error_request_failed", comment: "请求失败")): \(errorMessage)"
+                }
+            }
+        } catch {
+            DispatchQueue.main.async {
+                TextContentModel.shared.resultText = "\(NSLocalizedString("error_request_failed", comment: "请求失败")): \(errorString)"
+            }
+        }
+    }
+    
+    private func processCompleteLines() {
+        while let range = buffer.firstRange(of: Data("\n".utf8)) {
+            let lineData = buffer.subdata(in: 0..<range.lowerBound)
+            buffer.removeSubrange(0..<range.upperBound)
+            
+            // 使用SSE解析器处理数据
+            let jsonStrings = SSEParser.parseSSEData(lineData)
+            
+            for jsonString in jsonStrings {
+                if let content = SSEParser.extractContentFromJSON(jsonString) {
+                    fullContent += content
                     
                     DispatchQueue.main.async {
                         TextContentModel.shared.resultText = self.fullContent.trimmingCharacters(in: .whitespacesAndNewlines)
                     }
                 }
-            } else {
-                print("无法将行数据解码为 UTF-8 字符串")
-                // 这里可以选择如何处理解码失败，例如跳过或记录错误
             }
         }
-        // 循环结束后，buffer 中可能剩下不完整的最后一行数据，等待下一次 didReceive data
     }
     
     /**
@@ -297,6 +256,40 @@ class AiService: NSObject, URLSessionDataDelegate {
         if !buffer.isEmpty {
             print("Warning: Buffer not empty after task completion. Remaining data: \(String(data: buffer, encoding: .utf8) ?? "Non-UTF8 data")")
             buffer.removeAll() // 清空残留数据
+        }
+    }
+}
+
+// SSE 数据解析器
+struct SSEParser {
+    static func parseSSEData(_ data: Data) -> [String] {
+        guard let content = String(data: data, encoding: .utf8) else {
+            return []
+        }
+        
+        return content.components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .compactMap { line in
+                // 只处理 data: 开头的行，过滤掉注释和其他SSE元数据
+                if line.hasPrefix("data: ") {
+                    let dataContent = String(line.dropFirst(6))
+                    return dataContent == "[DONE]" ? nil : dataContent
+                }
+                // 过滤掉注释行（以 : 开头）和其他SSE控制信息
+                return nil
+            }
+    }
+    
+    static func extractContentFromJSON(_ jsonString: String) -> String? {
+        guard let jsonData = jsonString.data(using: .utf8) else { return nil }
+        
+        do {
+            let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
+            return streamResponse.choices.first?.delta.content
+        } catch {
+            print("JSON解析错误: \(error.localizedDescription), Raw JSON: \(jsonString)")
+            return nil
         }
     }
 }

@@ -107,3 +107,6 @@ xcrun stapler staple Cactus.dmg
 - 参考文档：https://fatbobman.com/zh/posts/coredatawithcloudkit-2/
 - 在线查看数据：https://icloud.developer.apple.com/dashboard/database/teams/MYB38L5YW9/containers/iCloud.dawei-snow.cactus/environments/DEVELOPMENT/records?database=private&using=fetchChanges&zone=_com.apple.coredata.cloudkit.zone%3A_1d454d06bfdc3e9def95aca801f39fcf%3AREGULAR_CUSTOM_ZONE&sortOrder=newest
 
+## 学习资料
+
+- 关于SSE：https://www.ruanyifeng.com/blog/2017/05/server-sent_events.html
