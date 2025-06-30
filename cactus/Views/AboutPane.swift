@@ -1,10 +1,9 @@
 import SwiftUI
-import Settings
 
 struct AboutPane: View {
     var body: some View {
-        Settings.Container(contentWidth: 600) {
-            Settings.Section(title: "", bottomDivider: true) {
+        ScrollView {
+            VStack(spacing: 20) {
                 VStack(spacing: 10) {
                     if let appIcon = NSImage(named: "AppIcon") {
                         Image(nsImage: appIcon)
@@ -49,20 +48,20 @@ struct AboutPane: View {
                     }
                     .padding(.top, 10)
                 }
-                .frame(maxWidth: .infinity) // 添加这行实现水平居中
-                .padding()
-                .contentShape(Rectangle()) // 让整个 VStack 区域都能响应手势
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
                 .gesture(
-                    TapGesture(count: 2) // 检测双击
+                    TapGesture(count: 2)
                         .onEnded {
 #if DEBUG
-                            // 仅在调试环境中执行清理操作
                             clearUserDefaults()
 #endif
                         }
                 )
             }
+            .padding(20)
         }
+        .frame(width: 800, height: 350)
     }
     
     // 联系我们

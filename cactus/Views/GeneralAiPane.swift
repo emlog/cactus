@@ -34,7 +34,7 @@ struct GeneralAiPane: View {
             }
             .padding(20)
         }
-        .frame(width: 660, height: 200)
+        .frame(width: 800, height: 200)
     }
     
     // 通用的提供商配置视图

@@ -1,5 +1,4 @@
 import SwiftUI
-import Settings
 
 struct PremiumPane: View {
     @StateObject private var purchaseManager = PurchaseManager.shared
@@ -7,8 +6,8 @@ struct PremiumPane: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        Settings.Container(contentWidth: 600) {
-            Settings.Section(title: "", bottomDivider: true) {
+        ScrollView {
+            VStack(spacing: 20) {
                 VStack(spacing: 12) {
                     // 奢华标题部分
                     Text(NSLocalizedString("premium_features", comment: "Premium Features"))
@@ -167,9 +166,10 @@ struct PremiumPane: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding()
             }
+            .padding(20)
         }
+        .frame(width: 800, height: 350)
         .onAppear {
             purchaseManager.checkPurchaseStatus()
             purchaseManager.reloadProductIfNeeded()// 如果产品信息还没加载，主动重新加载
