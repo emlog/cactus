@@ -34,8 +34,6 @@ struct GeneralAiPane: View {
                 
                 // 通用配置界面 - 适用于需要自定义配置的提供商
                 if settingsModel.currentProviderRequiresConfig && isPremiumUser {
-                    Divider()
-                    
                     providerConfigurationView
                 }
             }
