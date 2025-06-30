@@ -28,7 +28,7 @@ struct GeneralAiPane: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
                 }
-                .background(Color(NSColor.controlBackgroundColor))
+                .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
                 .padding(20)
                 
@@ -97,7 +97,7 @@ struct GeneralAiPane: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
         }
-        .background(Color(NSColor.controlBackgroundColor))
+        .background(Color(NSColor.gridColor))
         .cornerRadius(12)
         .padding(20)
         

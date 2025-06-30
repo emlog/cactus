@@ -59,7 +59,7 @@ struct AboutPane: View {
                         }
                 )
             }
-            .padding(20)
+            .padding(50)
         }
         .frame(width: 800, height: 350)
     }

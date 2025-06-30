@@ -167,7 +167,7 @@ struct PremiumPane: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-            .padding(20)
+            .padding(30)
         }
         .frame(width: 800, height: 350)
         .onAppear {

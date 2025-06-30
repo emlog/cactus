@@ -17,7 +17,7 @@ struct SettingRow<Content: View>: View {
             HStack {
                 // 左对齐的标签
                 Text(label)
-                    .font(.headline)
+                    .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 // 右对齐的设置内容
