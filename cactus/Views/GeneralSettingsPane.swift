@@ -92,6 +92,6 @@ struct GeneralSettingsPane: View {
             }
             .padding(20)
         }
-        .frame(width: 660)
+        .frame(width: 660, height: 600)
     }
 }
