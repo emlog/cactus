@@ -1,7 +1,6 @@
-import SwiftUI
 import KeyboardShortcuts
 import LaunchAtLogin
-import Settings
+import SwiftUI
 
 struct GeneralAiPane: View {
     
@@ -13,60 +12,75 @@ struct GeneralAiPane: View {
     }
     
     var body: some View {
-        Settings.Container(contentWidth: 600) {
-            Settings.Section(label: { Text(NSLocalizedString("select_service", comment: "选择提供商")) }) {
-                Picker(selection: $settingsModel.selectedProvider, label: EmptyView()) {
-                    providerOptions
+        ScrollView {
+            VStack(spacing: 20) {
+                // 选择提供商
+                SettingRow(
+                    label: NSLocalizedString("select_service", comment: "选择提供商")
+                ) {
+                    Picker(selection: $settingsModel.selectedProvider, label: EmptyView()) {
+                        providerOptions
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .frame(width: 300, alignment: .leading)
                 }
-                .pickerStyle(MenuPickerStyle())
-                .frame(width: 400)
+                
+                // 通用配置界面 - 适用于需要自定义配置的提供商
+                if settingsModel.currentProviderRequiresConfig && isPremiumUser {
+                    Divider()
+                    
+                    providerConfigurationView
+                }
             }
+            .padding(20)
         }
-        
-        // 通用配置界面 - 适用于需要自定义配置的提供商
-        if settingsModel.currentProviderRequiresConfig && isPremiumUser {
-            providerConfigurationView
-        }
+        .frame(width: 660, height: 200)
     }
     
     // 通用的提供商配置视图
     private var providerConfigurationView: some View {
-        Settings.Container(contentWidth: 400) {
-            Settings.Section(title: "", bottomDivider: true) {
-                HStack {
-                    Text(providerConfigTitle)
-                    Button(action: {
-                        if let helpUrl = settingsModel.defaultProviders[settingsModel.selectedProvider]?.helpUrl,
-                           let url = URL(string: helpUrl) {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }) {
-                        Image(systemName: "questionmark.circle")
-                            .foregroundColor(.blue)
-                            .font(.system(size: 14))
+        VStack(spacing: 20) {
+            // 配置标题和帮助按钮
+            HStack {
+                Text(providerConfigTitle)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button(action: {
+                    if let helpUrl = settingsModel.defaultProviders[settingsModel.selectedProvider]?.helpUrl,
+                       let url = URL(string: helpUrl) {
+                        NSWorkspace.shared.open(url)
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    Spacer()
+                }) {
+                    Image(systemName: "questionmark.circle")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 14))
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             
-            Settings.Section(label: { Text(NSLocalizedString("api_key", comment: "密钥")) }) {
+            // API密钥设置
+            SettingRow(
+                label: NSLocalizedString("api_key", comment: "密钥")
+            ) {
                 SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: apiKeyBinding)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
             
-            Settings.Section(label: { Text(NSLocalizedString("model", comment: "模型")) }) {
+            // 模型选择
+            SettingRow(
+                label: NSLocalizedString("model", comment: "模型")
+            ) {
                 Picker(selection: modelBinding, label: EmptyView()) {
                     ForEach(availableModelKeys, id: \.self) { key in
                         Text(availableModelDisplayName(for: key)).tag(key)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                .frame(width: 300)
+                .frame(width: 300, alignment: .leading)
             }
         }
-        .padding(.leading, 30)
     }
     
     // 计算属性：配置标题
