@@ -134,7 +134,7 @@ class LangService {
         if Double(koreanCount) > halfThreshold {
             return "ko"
         }
-
+        
         // 如果没有任何语言的字符超过一半，返回默认语言
         return "zh-Hans"
     }
@@ -257,5 +257,25 @@ class LangService {
         default:
             return "en-US"
         }
+    }
+    
+    // 检查输入的单词是否属于英语、法语、西班牙语、德语中的一种
+    public func isWordInSupportedLanguages(_ word: String) -> Bool {
+        // 去除首尾空格
+        let trimmedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // 如果文本为空，返回false
+        if trimmedWord.isEmpty {
+            return false
+        }
+        
+        // 检测单词的语言
+        let detectedLanguage = detectLanguageCode(for: trimmedWord)
+        
+        // 支持的语言列表：英语、法语、西班牙语、德语
+        let supportedLanguages = ["en", "fr", "es", "de"]
+        
+        // 判断检测到的语言是否在支持的语言列表中
+        return supportedLanguages.contains(detectedLanguage)
     }
 }

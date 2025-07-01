@@ -426,17 +426,18 @@ struct MainView: View {
         // 1、如果是常用语言，翻译为第一外语
         // 2、如果不是常用语言，翻译为常用语言（母语）
         if Lang.isTextInPreferredLanguage(inputText) {
-            systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage() // 翻译为第一外语
-        } else if Lang.isSentence(inputText) == false {
-            // 翻译为常用语言：单词翻译
+            systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage() // 常用语言翻译为第一外语
+            performAIAction(systemMessage: systemMessage)
+        } else if Lang.isSentence(inputText) == false && Lang.isWordInSupportedLanguages(inputText) {
+            // 翻译为常用语言：单词翻译（只支持英语、法语、西班牙语、德语）
             systemMessage = Prompt.getSystemMessageForTranslateWord()
             performAIAction(systemMessage: systemMessage, actionType: .vocabulary(word: inputText))
             return
         } else {
             // 翻译为常用语言：句子翻译
             systemMessage = Prompt.getSystemMessageForTranslate()
+            performAIAction(systemMessage: systemMessage)
         }
-        performAIAction(systemMessage: systemMessage)
     }
     
     // 总结
@@ -451,7 +452,7 @@ struct MainView: View {
         performAIAction(systemMessage: systemMessage)
     }
     
-    // 字典
+    // 字典（主要查询母语词语）
     func dictionaryText() {
         let systemMessage: String
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)

@@ -9,6 +9,14 @@
 ### 繁体中文
 有一天，一隻小貓在公園裡迷路了。開始下雨了，貓在樹下顫抖著。這時，一位溫柔的少女走了過來，問道：「沒事吧？」少女把自己的傘遞給了貓，並帶著牠回家。從那天起，他們就一直一起生活。貓在新家裡幸福地生活著，成為了少女最好的朋友。
 
+### 韩语 🇰🇷
+
+어느 날, 아기 고양이가 공원에서 길을 잃었어요. 비가 내리기 시작했고, 고양이는 나무 아래에서 떨고 있었어요.
+그때 한 다정한 소녀가 다가와서 말했어요. “괜찮니?”
+소녀는 고양이에게 우산을 씌워주고 집으로 데려갔어요.
+그날 이후로, 둘은 함께 살게 되었어요.
+고양이는 새로운 집에서 행복하게 지내며 소녀의 가장 친한 친구가 되었어요.
+
 ### 英语 🇬🇧
 One day, a kitten got lost in a park. It started to rain, and the cat shivered under a tree. Then a gentle girl came over and asked, "Are you okay?" The girl gave the cat her umbrella and took it home. From that day on, they lived together. The cat lived happily in his new home and became the girl's best friend.
 
@@ -19,13 +27,8 @@ Un día, un pequeño gato se perdió en el parque. Comenzó a llover, y el gato,
 ### 法语 🇫🇷
 Un jour, un chaton s’est perdu dans un parc. Il s’est mis à pleuvoir, et le chaton grelottait sous un arbre. Puis une gentille fille s’est approchée et a demandé : « Ça va ? » La fille a donné son parapluie au chaton et l’a emmené chez elle. Depuis ce jour, ils ont vécu ensemble. Le chaton a vécu heureux dans sa nouvelle maison et est devenu le meilleur ami de la fille.
 
-### 韩语 🇰🇷
-
-어느 날, 아기 고양이가 공원에서 길을 잃었어요. 비가 내리기 시작했고, 고양이는 나무 아래에서 떨고 있었어요.
-그때 한 다정한 소녀가 다가와서 말했어요. “괜찮니?”
-소녀는 고양이에게 우산을 씌워주고 집으로 데려갔어요.
-그날 이후로, 둘은 함께 살게 되었어요.
-고양이는 새로운 집에서 행복하게 지내며 소녀의 가장 친한 친구가 되었어요.
+### 德语 🇩🇪
+Eines Tages verirrte sich ein Kätzchen in einem Park. Es begann zu regnen, und die Katze zitterte unter einem Baum. Da kam ein freundliches Mädchen vorbei und fragte: „Geht es dir gut?“ Das Mädchen gab der Katze ihren Regenschirm und nahm sie mit nach Hause. Von diesem Tag an lebten sie zusammen. Die Katze lebte glücklich in ihrem neuen Zuhause und wurde die beste Freundin des Mädchens.
 
 
 
