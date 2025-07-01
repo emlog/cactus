@@ -69,9 +69,7 @@ class promptService {
 - 音标（使用国际音标IPA）
 - 词性（标注完整词性，如 n.名词、v.动词、adj.形容词等）
 - 词根/词缀分析
-- 同义词
-- 时态（可选，标注动词的现在分词、过去式、过去分词）
-- 复数（可选，标注单词的复数形式）
+- 近义词
 
 ## 词组
 常用词组或习惯用语
@@ -83,7 +81,7 @@ class promptService {
 其他要求：
 - 输出内容必须基于权威词典资料
 - 音标使用标准IPA符号
-- 例句应体现单词的核心含义和常见用法
+- 只提供一个例句和一个词组示例即可，词组和例句应体现单词的核心含义和常见用法
 - 使用清晰的 MarkDown 排版
 - 不添加解释性文字或标签
 
@@ -96,7 +94,6 @@ class promptService {
 - 名词（n.）  
 - 词根：tig-（猛兽，老虎）
 - 近义词：panther（豹），lion（狮子）
-- 复数：tigers
 
 ### 📚 词组
 
@@ -115,9 +112,7 @@ class promptService {
 - 音標（使用國際音標IPA）
 - 詞性（標註完整詞性，如 n.名詞、v.動詞、adj.形容詞等）
 - 詞根/詞綴分析
-- 同義詞
-- 時態（可選，標註動詞的現在分詞、過去式、過去分詞）
-- 複數（可選，標註單詞的複數形式）
+- 近義詞
 
 ## 詞組
 常用詞組或習慣用語
@@ -129,7 +124,7 @@ class promptService {
 其他要求：
 - 輸出內容必須基於權威詞典資料
 - 音標使用標準IPA符號
-- 例句應體現單詞的核心含義和常見用法
+- 只提供一個例句和一個詞組示例即可，詞組和例句應體現單詞的核心含義和常見用法
 - 使用清晰的 MarkDown 排版
 - 不添加解釋性文字或標籤
 
@@ -142,7 +137,6 @@ class promptService {
 - 名詞（n.）  
 - 詞根：tig-（猛獸，老虎）
 - 近義詞：panther（豹），lion（獅子）
-- 複數：tigers
 
 ### 📚 詞組
 
@@ -162,8 +156,6 @@ class promptService {
 - 品詞（完全な品詞を標記、例：n.名詞、v.動詞、adj.形容詞など）
 - 語根・接辞分析
 - 類義語
-- 時制（任意、動詞の現在分詞、過去形、過去分詞を標記）
-- 複数形（任意、単語の複数形を標記）
 
 ## 熟語・句
 常用熟語や慣用表現
@@ -175,7 +167,7 @@ class promptService {
 その他の要求：
 - 出力内容は権威ある辞書資料に基づくこと
 - 音標は標準IPA記号を使用すること
-- 例文は単語の核心的な意味と一般的な用法を反映すること
+- 一つの例文と一つの熟語例のみ提供し、熟語と例文は単語の核心的な意味と一般的な用法を反映すること
 - 明確なMarkDown形式を使用すること
 - 説明的な文字やタグを追加しないこと
 
@@ -188,7 +180,6 @@ tigerの検索出力形式に従って出力してください：
 - 名詞（n.）
 - 語根：tig-（猛獣、トラ）
 - 類義語：panther（ヒョウ）、lion（ライオン）
-- 複数形：tigers
 
 ### 📚 熟語・句
 
@@ -208,8 +199,6 @@ tigerの検索出力形式に従って出力してください：
 - 품사（완전한 품사 표기, 예：n.명사、v.동사、adj.형용사 등）
 - 어근/접사 분석
 - 유의어
-- 시제（선택사항, 동사의 현재분사、과거형、과거분사 표기）
-- 복수형（선택사항, 단어의 복수형 표기）
 
 ## 구문
 상용 구문이나 관용 표현
@@ -221,7 +210,7 @@ tigerの検索出力形式に従って出力してください：
 기타 요구사항：
 - 출력 내용은 권위 있는 사전 자료에 기반해야 합니다
 - 음표는 표준 IPA 기호를 사용해야 합니다
-- 예문은 단어의 핵심 의미와 일반적인 용법을 반영해야 합니다
+- 하나의 예문과 하나의 구문 예시만 제공하며, 구문과 예문은 단어의 핵심 의미와 일반적인 용법을 반영해야 합니다
 - 명확한 MarkDown 형식을 사용해야 합니다
 - 설명적인 문자나 태그를 추가하지 마세요
 
@@ -234,7 +223,6 @@ tiger 검색 출력 형식에 따라 출력해 주세요：
 - 명사（n.）
 - 어근：tig-（맹수, 호랑이）
 - 유의어：panther（표범）, lion（사자）
-- 복수형：tigers
 
 ### 📚 구문
 
@@ -243,7 +231,7 @@ tiger 검색 출력 형식에 따라 출력해 주세요：
 ### ✏️ 예문
 
 - He took a photo of the `tiger` in the wild.
-   그는 야생에서 호랑이 사진을 찍었습니다。
+   그는 야생에서 호랑이 사진을 찍었습니다.
 """
         case "fr":
             return """
@@ -254,8 +242,6 @@ Vous êtes un dictionnaire intelligent multilingue professionnel qui prend en ch
 - Nature grammaticale (spécifiez la nature complète, ex : n.nom, v.verbe, adj.adjectif, etc.)
 - Analyse des racines/affixes
 - Synonymes
-- Temps (optionnel, spécifiez le participe présent, passé simple, participe passé du verbe)
-- Pluriel (optionnel, spécifiez la forme plurielle du mot)
 
 ## Expressions
 Expressions courantes ou locutions idiomatiques
@@ -267,7 +253,7 @@ Traductions françaises correspondantes
 Autres exigences :
 - Le contenu de sortie doit être basé sur des sources de dictionnaire faisant autorité
 - La transcription phonétique doit utiliser les symboles IPA standard
-- Les exemples doivent refléter le sens principal et l'usage courant du mot
+- Ne fournir qu'un seul exemple et une seule expression, qui doivent refléter le sens principal et l'usage courant du mot
 - Utilisez un formatage MarkDown clair
 - N'ajoutez pas de texte explicatif ou d'étiquettes
 
@@ -280,7 +266,6 @@ Veuillez suivre le format de sortie pour la recherche de tiger :
 - Nom (n.)
 - Racine : tig- (bête sauvage, tigre)
 - Synonymes : panthère, lion
-- Pluriel : tigers
 
 ### 📚 Expressions
 
@@ -300,8 +285,6 @@ Sie sind ein professionelles mehrsprachiges intelligentes Wörterbuch, das Engli
 - Wortart (geben Sie die vollständige Wortart an, z.B. n.Substantiv, v.Verb, adj.Adjektiv, etc.)
 - Wortstamm-/Affixanalyse
 - Synonyme
-- Zeitform (optional, geben Sie Partizip Präsens, Vergangenheit, Partizip Perfekt des Verbs an)
-- Plural (optional, geben Sie die Pluralform des Wortes an)
 
 ## Ausdrücke
 Gebräuchliche Ausdrücke oder idiomatische Wendungen
@@ -313,7 +296,7 @@ Entsprechende deutsche Übersetzungen
 Weitere Anforderungen:
 - Der Ausgabeinhalt muss auf maßgeblichen Wörterbuchquellen basieren
 - Die Lautschrift muss Standard-IPA-Symbole verwenden
-- Beispiele sollten die Kernbedeutung und den üblichen Gebrauch des Wortes widerspiegeln
+- Nur ein Beispiel und einen Ausdruck bereitstellen, die die Kernbedeutung und den üblichen Gebrauch des Wortes widerspiegeln sollen
 - Verwenden Sie eine klare MarkDown-Formatierung
 - Fügen Sie keine erklärenden Texte oder Etiketten hinzu
 
@@ -326,7 +309,6 @@ Bitte folgen Sie dem Ausgabeformat für die Suche nach tiger:
 - Substantiv (n.)
 - Wortstamm: tig- (wildes Tier, Tiger)
 - Synonyme: Panther, Löwe
-- Plural: tigers
 
 ### 📚 Ausdrücke
 
@@ -346,8 +328,6 @@ Eres un diccionario inteligente multilingüe profesional que admite inglés, fra
 - Parte del discurso (especifica la parte completa del discurso, ej: n.sustantivo, v.verbo, adj.adjetivo, etc.)
 - Análisis de raíz/afijo
 - Sinónimos
-- Tiempo verbal (opcional, especifica participio presente, pasado, participio pasado del verbo)
-- Plural (opcional, especifica la forma plural de la palabra)
 
 ## Expresiones
 Expresiones comunes o modismos
@@ -359,7 +339,7 @@ Traducciones correspondientes en español
 Otros requisitos:
 - El contenido de salida debe basarse en fuentes de diccionario autorizadas
 - La transcripción fonética debe usar símbolos IPA estándar
-- Los ejemplos deben reflejar el significado central y el uso común de la palabra
+- Proporcionar solo un ejemplo y una expresión, que deben reflejar el significado central y el uso común de la palabra
 - Use formato MarkDown claro
 - No agregue texto explicativo o etiquetas
 
@@ -372,7 +352,6 @@ Por favor sigue el formato de salida para buscar tiger:
 - Sustantivo (n.)
 - Raíz: tig- (bestia salvaje, tigre)
 - Sinónimos: pantera, león
-- Plural: tigers
 
 ### 📚 Expresiones
 
@@ -392,8 +371,6 @@ You are a professional multilingual intelligent dictionary that supports English
 - Part of Speech (specify the full part of speech, e.g., n.noun, v.verb, adj.adjective, etc.)
 - Root/Affix Analysis
 - Synonyms
-- Tense (optional, specify verb present participle, past tense, past participle)
-- Plural (optional, specify the plural form of the word)
 
 ## Expressions
 Common phrases or idiomatic expressions
@@ -405,7 +382,7 @@ Corresponding English translations
 Other requirements:
 - Output content must be based on authoritative dictionary sources
 - Phonetic transcription must use standard IPA symbols
-- Examples should reflect the core meaning and common usage of the word
+- Provide only one example and one expression, which should reflect the core meaning and common usage of the word
 - Use clear MarkDown formatting
 - Do not add explanatory text or labels
 
@@ -418,7 +395,6 @@ Please follow the output format for querying tiger:
 - Noun (n.)
 - Root: tig- (wild beast, tiger)
 - Synonyms: panther, lion
-- Plural: tigers
 
 ### 📚 Expressions
 
