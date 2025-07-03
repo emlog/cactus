@@ -12,11 +12,11 @@ Cactus AI Assistant
 
 ## 副标题：
 
-快捷翻译、总结、查字典、支持截图OCR
-クイック翻訳、要約、辞書検索、スクリーンショットOCR対応で
-빠른 번역, 요약, 사전, OCR 스캔 지원
+选中文字翻译、总结、查字典、截图OCR翻译
+選取文字翻譯、摘要、查字典、截圖OCR翻譯
+翻訳、要約、辞書検索、スクリーンショット翻訳、OCR文字認識
+번역, 요약, 사전 검색, 스크린샷 번역, OCR
 Translate,Summarize,OCR
-快速翻譯、總結、查字典，支援截圖OCR
 
 德语：Übersetzen, OCR
 法语：Traduire, Résumer, OCR
