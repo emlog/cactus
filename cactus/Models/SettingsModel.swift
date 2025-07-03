@@ -78,7 +78,8 @@ class SettingsModel: ObservableObject {
             helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
-                "glm-4-flash-250414": "GLM-4-Flash (Free)",
+                "glm-4-flash-250414": "GLM-4-Flash-250414 (Free)",
+                "glm-4-flash": "GLM-4-Flash (Free)",
                 "glm-4v-flash": "GLM-4v-Flash",
                 "glm-4-plus": "GLM-4-Plus",
                 "glm-4v-plus": "GLM-4v-Plus"
@@ -92,9 +93,9 @@ class SettingsModel: ObservableObject {
             helpUrl: "https://cloud.siliconflow.cn/account/ak",
             requiresCustomConfig: true,
             availableModels: [
-                "THUDM/GLM-4-32B-0414": "GLM-4",
+                "THUDM/GLM-4-32B-0414": "GLM-4-32B-0414",
                 "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
-                "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL"
+                "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
             ]
         ),
         "deepseek": ProviderSettings(
@@ -118,8 +119,8 @@ class SettingsModel: ObservableObject {
             requiresCustomConfig: true,
             availableModels: [
                 "doubao-seed-1-6-250615": "Doubao-Seed-1.6",
-                "doubao-1-5-pro-32k-250115": "Doubao-1.5-pro",
-                "doubao-lite-32k-240828": "Doubao-lite",
+                "doubao-1-5-pro-32k-250115": "Doubao-1.5-Pro",
+                "doubao-lite-32k-240828": "Doubao-Lite",
                 "deepseek-v3-250324": "DeepSeek-V3"
             ]
         ),
