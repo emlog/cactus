@@ -11,6 +11,17 @@ struct GeneralAiPane: View {
         return PurchaseManager.shared.isPremiumUser
     }
     
+    // 计算内容高度
+    private var contentHeight: CGFloat {
+        var height: CGFloat = 100 // 基础高度（提供商选择部分）
+        
+        if settingsModel.currentProviderRequiresConfig && isPremiumUser {
+            height += 140 // 配置界面的高度
+        }
+        
+        return height
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -38,7 +49,7 @@ struct GeneralAiPane: View {
                 }
             }
         }
-        .frame(width: 800, height: 230)
+        .frame(width: 800, height: contentHeight)
     }
     
     // 通用的提供商配置视图
