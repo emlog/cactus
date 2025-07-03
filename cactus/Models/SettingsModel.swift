@@ -78,10 +78,10 @@ class SettingsModel: ObservableObject {
             helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
-                "glm-4-flash-250414": "GLM-4-flash-free",
-                "glm-4v-flash": "GLM-4v-flash-free",
-                "glm-4-plus": "GLM-4-plus",
-                "glm-4v-plus": "GLM-4v-plus"
+                "glm-4-flash-250414": "GLM-4-Flash (Free)",
+                "glm-4v-flash": "GLM-4v-Flash",
+                "glm-4-plus": "GLM-4-Plus",
+                "glm-4v-plus": "GLM-4v-Plus"
             ]
         ),
         "siliconflow": ProviderSettings(
