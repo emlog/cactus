@@ -15,7 +15,7 @@ struct ModelSelectionMenuView: View {
                                 settings.selectedProvider = key
                             }) {
                                 HStack {
-                                    Text(provider.requiresCustomConfig ? "\(provider.title) - \(provider.model.isEmpty ? "NA" : provider.model)" : provider.title)
+                                    Text(provider.requiresCustomConfig ? "\(provider.title) - \(getModelDisplayName(for: provider))" : provider.title)
                                     Spacer()
                                     if settings.selectedProvider == key {
                                         Image(systemName: "checkmark")
@@ -64,5 +64,17 @@ struct ModelSelectionMenuView: View {
         .menuIndicator(.hidden) // Hide the menu indicator arrow
         .menuStyle(BorderlessButtonMenuStyle())
         .frame(maxWidth: 20, alignment: .trailing)
+    }
+    
+    // 获取模型的友好名称
+    private func getModelDisplayName(for provider: ProviderSettings) -> String {
+        if provider.requiresCustomConfig {
+            if provider.model.isEmpty {
+                return "NA"
+            }
+            // 从availableModels中获取友好名称，如果没有找到则使用原始model名称
+            return provider.availableModels[provider.model] ?? provider.model
+        }
+        return provider.title
     }
 }

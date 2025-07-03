@@ -92,9 +92,9 @@ class SettingsModel: ObservableObject {
             helpUrl: "https://cloud.siliconflow.cn/account/ak",
             requiresCustomConfig: true,
             availableModels: [
-                "THUDM/GLM-4-32B-0414": "GLM-4-32B",
+                "THUDM/GLM-4-32B-0414": "GLM-4",
                 "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
-                "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
+                "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL"
             ]
         ),
         "deepseek": ProviderSettings(
@@ -105,8 +105,8 @@ class SettingsModel: ObservableObject {
             helpUrl: "https://platform.deepseek.com/api_keys",
             requiresCustomConfig: true,
             availableModels: [
-                "deepseek-chat": "DeepSeek-V3-0324",
-                "deepseek-reasoner": "DeepSeek-R1-0528"
+                "deepseek-chat": "DeepSeek-V3",
+                "deepseek-reasoner": "DeepSeek-R1"
             ]
         ),
         "volcengine": ProviderSettings(
@@ -118,7 +118,7 @@ class SettingsModel: ObservableObject {
             requiresCustomConfig: true,
             availableModels: [
                 "doubao-seed-1-6-250615": "Doubao-Seed-1.6",
-                "doubao-1-5-pro-32k-250115": "Doubao-1.5-pro-32k",
+                "doubao-1-5-pro-32k-250115": "Doubao-1.5-pro",
                 "doubao-lite-32k-240828": "Doubao-lite",
                 "deepseek-v3-250324": "DeepSeek-V3"
             ]
@@ -156,9 +156,9 @@ class SettingsModel: ObservableObject {
             helpUrl: "https://console.anthropic.com/settings/keys",
             requiresCustomConfig: true,
             availableModels: [
-                "claude-sonnet-4-20250514": "claude-sonnet-4",
-                "claude-3-7-sonnet-20250219": "Claude-Sonnet-3.7",
-                "claude-3-5-sonnet-20241022": "Claude-Sonnet-3.5"
+                "claude-sonnet-4-20250514": "claude-4-Sonnet",
+                "claude-3-7-sonnet-20250219": "Claude-3.7-Sonnet",
+                "claude-3-5-sonnet-20241022": "Claude-3.5-Sonnet"
             ]
         )
     ]
