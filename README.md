@@ -191,5 +191,5 @@ Thanks for your review work.
 
 ## 更新内容
 
-修复已知问题，优化用户体验
-Fix some issues, optimize user experience
+- 修复已知问题，优化用户体验
+- Fix some issues, optimize user experience
