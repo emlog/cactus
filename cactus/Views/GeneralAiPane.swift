@@ -4,7 +4,7 @@ import SwiftUI
 
 struct GeneralAiPane: View {
     
-    @ObservedObject private var settingsModel = SettingsModel.shared
+    @ObservedObject private var preferences = PreferencesModel.shared
     
     // 检查是否为高级用户
     var isPremiumUser: Bool {
@@ -15,7 +15,7 @@ struct GeneralAiPane: View {
     private var contentHeight: CGFloat {
         var height: CGFloat = 100 // 基础高度（提供商选择部分）
         
-        if settingsModel.currentProviderRequiresConfig && isPremiumUser {
+        if preferences.currentProviderRequiresConfig && isPremiumUser {
             height += 140 // 配置界面的高度
         }
         
@@ -30,7 +30,7 @@ struct GeneralAiPane: View {
                     SettingRow(
                         label: NSLocalizedString("select_service", comment: "选择提供商")
                     ) {
-                        Picker(selection: $settingsModel.selectedProvider, label: EmptyView()) {
+                        Picker(selection: $preferences.selectedProvider, label: EmptyView()) {
                             providerOptions
                         }
                         .pickerStyle(MenuPickerStyle())
@@ -44,7 +44,7 @@ struct GeneralAiPane: View {
                 .padding(20)
                 
                 // 通用配置界面 - 适用于需要自定义配置的提供商
-                if settingsModel.currentProviderRequiresConfig && isPremiumUser {
+                if preferences.currentProviderRequiresConfig && isPremiumUser {
                     providerConfigurationView
                 }
             }
@@ -62,7 +62,7 @@ struct GeneralAiPane: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Button(action: {
-                    if let helpUrl = settingsModel.defaultProviders[settingsModel.selectedProvider]?.helpUrl,
+                    if let helpUrl = preferences.defaultProviders[preferences.selectedProvider]?.helpUrl,
                        let url = URL(string: helpUrl) {
                         NSWorkspace.shared.open(url)
                     }
@@ -116,7 +116,7 @@ struct GeneralAiPane: View {
     
     // 计算属性：配置标题
     private var providerConfigTitle: String {
-        switch settingsModel.selectedProvider {
+        switch preferences.selectedProvider {
         case "zhipu":
             return NSLocalizedString("zhipu_config", comment: "智谱配置")
         case "deepseek":
@@ -138,21 +138,21 @@ struct GeneralAiPane: View {
     
     // 计算属性：API密钥绑定
     private var apiKeyBinding: Binding<String> {
-        switch settingsModel.selectedProvider {
+        switch preferences.selectedProvider {
         case "zhipu":
-            return $settingsModel.zhipuApiKey
+            return $preferences.zhipuApiKey
         case "deepseek":
-            return $settingsModel.deepseekApiKey
+            return $preferences.deepseekApiKey
         case "volcengine":
-            return $settingsModel.volcengineApiKey
+            return $preferences.volcengineApiKey
         case "siliconflow":
-            return $settingsModel.siliconflowApiKey
+            return $preferences.siliconflowApiKey
         case "openai":
-            return $settingsModel.openaiApiKey
+            return $preferences.openaiApiKey
         case "google_gemini":
-            return $settingsModel.googleGeminiApiKey
+            return $preferences.googleGeminiApiKey
         case "claude":
-            return $settingsModel.claudeApiKey
+            return $preferences.claudeApiKey
         default:
             return .constant("")
         }
@@ -160,21 +160,21 @@ struct GeneralAiPane: View {
     
     // 计算属性：模型选择绑定
     private var modelBinding: Binding<String> {
-        switch settingsModel.selectedProvider {
+        switch preferences.selectedProvider {
         case "zhipu":
-            return $settingsModel.selectedZhipuModel
+            return $preferences.selectedZhipuModel
         case "deepseek":
-            return $settingsModel.selectedDeepseekModel
+            return $preferences.selectedDeepseekModel
         case "volcengine":
-            return $settingsModel.selectedVolcengineModel
+            return $preferences.selectedVolcengineModel
         case "siliconflow":
-            return $settingsModel.selectedSiliconflowModel
+            return $preferences.selectedSiliconflowModel
         case "openai":
-            return $settingsModel.selectedOpenAIModel
+            return $preferences.selectedOpenAIModel
         case "google_gemini":
-            return $settingsModel.selectedGoogleGeminiModel
+            return $preferences.selectedGoogleGeminiModel
         case "claude":
-            return $settingsModel.selectedClaudeModel
+            return $preferences.selectedClaudeModel
         default:
             return .constant("")
         }
@@ -182,16 +182,16 @@ struct GeneralAiPane: View {
     
     // 计算属性：可用模型键列表
     private var availableModelKeys: [String] {
-        return Array(settingsModel.defaultProviders[settingsModel.selectedProvider]?.availableModels.keys.sorted() ?? [])
+        return Array(preferences.defaultProviders[preferences.selectedProvider]?.availableModels.keys.sorted() ?? [])
     }
     
     // 获取模型显示名称
     private func availableModelDisplayName(for key: String) -> String {
-        return settingsModel.defaultProviders[settingsModel.selectedProvider]?.availableModels[key] ?? key
+        return preferences.defaultProviders[preferences.selectedProvider]?.availableModels[key] ?? key
     }
     
     private var providerOptions: some View {
-        ForEach(settingsModel.providerKeys, id: \.self) { key in
+        ForEach(preferences.providerKeys, id: \.self) { key in
             // 高级版可以看到更多模型
             if (key == "zhipu" || key == "siliconflow" || key == "deepseek" || key == "volcengine" || key == "claude" || key == "openai" || key == "google_gemini") && !isPremiumUser {
                 EmptyView()
@@ -202,7 +202,7 @@ struct GeneralAiPane: View {
     }
     
     private func providerDisplayText(for key: String) -> String {
-        guard let provider = settingsModel.defaultProviders[key] else {
+        guard let provider = preferences.defaultProviders[key] else {
             return key
         }
         return provider.title

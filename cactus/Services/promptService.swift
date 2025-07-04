@@ -11,7 +11,7 @@ class promptService {
     
     // 提示词：翻译句子到常用外语
     public func getSystemMessageForTranslateToCommonForeignLanguage() -> String {
-        let commonForeignLanguage = SettingsModel.shared.commonForeignLanguage
+        let commonForeignLanguage = PreferencesModel.shared.commonForeignLanguage
         switch commonForeignLanguage {
         case "zh-Hans":
             return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
@@ -34,7 +34,7 @@ class promptService {
     
     // 提示词：翻译句子到常用语言（母语）
     public func getSystemMessageForTranslate() -> String {
-        let langCode = SettingsModel.shared.preferredLanguage
+        let langCode = PreferencesModel.shared.preferredLanguage
         switch langCode {
         case "zh-Hans":
             return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
@@ -58,7 +58,7 @@ class promptService {
     // 提示词：翻译单词到目标语言
     // 请优化 getSystemMessageForTranslateWord 提示词，参考 简体中文 的提示词，按照简体中文的格式 更新其他语言的提示词。
     public func getSystemMessageForTranslateWord() -> String {
-        let langCode = SettingsModel.shared.preferredLanguage
+        let langCode = PreferencesModel.shared.preferredLanguage
         
         switch langCode {
         case "zh-Hans":
@@ -409,7 +409,7 @@ Please follow the output format for querying tiger:
     
     // 提示词： 总结
     public func getSystemMessageForSummary() -> String {
-        let langCode = SettingsModel.shared.preferredLanguage
+        let langCode = PreferencesModel.shared.preferredLanguage
         switch langCode {
         case "zh-Hans":
             return "你是我的内容摘要助手。请用简洁的简体中文总结我输入文本的核心要点，输出应尽可能简短，仅保留最关键信息。禁止输出原文、解释或引导性语言。"
@@ -432,7 +432,7 @@ Please follow the output format for querying tiger:
     
     // 提示词： 对话
     public func getSystemMessageForChat() -> String {
-        let langCode = SettingsModel.shared.preferredLanguage
+        let langCode = PreferencesModel.shared.preferredLanguage
         switch langCode {
         case "zh-Hans":
             return "你是我的智能私人助理，请始终用清晰专业的简体中文回应我的问题或指令。"
@@ -456,7 +456,7 @@ Please follow the output format for querying tiger:
     // 提示词：字典
     // 请优化 getSystemMessageForDict 提示词，参考 简体中文 的提示词，按照简体中文的格式 更新其他语言的提示词。
     public func getSystemMessageForDict() -> String {
-        let langCode = SettingsModel.shared.preferredLanguage
+        let langCode = PreferencesModel.shared.preferredLanguage
         switch langCode {
         case "zh-Hans":
             return """

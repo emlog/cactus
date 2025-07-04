@@ -40,7 +40,7 @@ class StatusBarManager: NSObject {
                 keyEquivalent: ""
             )
             mainMenuItem.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
-            mainMenuItem.setShortcut(for: SettingsModel.aiShortcutMain)
+            mainMenuItem.setShortcut(for: PreferencesModel.aiShortcutMain)
             mainMenuItem.target = self
             menu.addItem(mainMenuItem)
             
@@ -51,7 +51,7 @@ class StatusBarManager: NSObject {
                 keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
             )
             translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
-            translateMenuItem.setShortcut(for: SettingsModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
+            translateMenuItem.setShortcut(for: PreferencesModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
             translateMenuItem.target = self
             menu.addItem(translateMenuItem)
             
@@ -62,7 +62,7 @@ class StatusBarManager: NSObject {
                 keyEquivalent: ""
             )
             screenshotMenuItem.image = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
-            screenshotMenuItem.setShortcut(for: SettingsModel.aiShortcutScreenshotTranslate)
+            screenshotMenuItem.setShortcut(for: PreferencesModel.aiShortcutScreenshotTranslate)
             screenshotMenuItem.target = self
             menu.addItem(screenshotMenuItem)
             
@@ -73,7 +73,7 @@ class StatusBarManager: NSObject {
                 keyEquivalent: ""
             )
             summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
-            summaryMenuItem.setShortcut(for: SettingsModel.aiShortcutSummary)
+            summaryMenuItem.setShortcut(for: PreferencesModel.aiShortcutSummary)
             summaryMenuItem.target = self
             menu.addItem(summaryMenuItem)
             
@@ -84,7 +84,7 @@ class StatusBarManager: NSObject {
                 keyEquivalent: ""
             )
             dictionaryMenuItem.image = NSImage(systemSymbolName: "books.vertical", accessibilityDescription: nil)
-            dictionaryMenuItem.setShortcut(for: SettingsModel.aiShortcutDictionary)
+            dictionaryMenuItem.setShortcut(for: PreferencesModel.aiShortcutDictionary)
             dictionaryMenuItem.target = self
             menu.addItem(dictionaryMenuItem)
             

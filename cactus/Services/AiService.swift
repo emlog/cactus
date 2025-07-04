@@ -17,8 +17,8 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     // 合并后的聊天方法
     func chat(text: String? = nil, chatHistory: [[String: String]]? = nil, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
-        let settings = SettingsModel.shared
-        guard let providerSettings = settings.defaultProviders[settings.selectedProvider],
+        let Preferences = PreferencesModel.shared
+        guard let providerSettings = Preferences.defaultProviders[Preferences.selectedProvider],
               let url = URL(string: providerSettings.baseURL) else {
             // 如果 URL 或配置无效，也应该触发错误回调
             let errorMessage = NSLocalizedString("error_invalid_config", comment: "AI 服务配置无效")

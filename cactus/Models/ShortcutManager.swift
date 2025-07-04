@@ -27,35 +27,35 @@ class ShortcutManager {
     // 设置全局快捷键
     func setupGlobalShortcuts() {
         // 注册主窗口快捷键
-        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutMain) { [weak self] in
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutMain) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .nothing)
             }
         }
         
         // 注册翻译快捷键
-        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcut) { [weak self] in
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcut) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .translate)
             }
         }
         
         // 注册总结快捷键
-        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutSummary) { [weak self] in
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutSummary) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .summarize)
             }
         }
         
         // 注册字典快捷键
-        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutDictionary) { [weak self] in
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutDictionary) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .dictionary)
             }
         }
         
         // 注册截屏翻译快捷键
-        KeyboardShortcuts.onKeyDown(for: SettingsModel.aiShortcutScreenshotTranslate) { [weak self] in
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutScreenshotTranslate) { [weak self] in
             DispatchQueue.main.async {
                 self?.openMain(action: .screenshotTranslate)
             }

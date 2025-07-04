@@ -11,9 +11,9 @@ struct ProviderSettings: Codable {
     var availableModels: [String: String] = [:]
 }
 
-class SettingsModel: ObservableObject {
+class PreferencesModel: ObservableObject {
     
-    static let shared = SettingsModel()
+    static let shared = PreferencesModel()
     
     // 快捷键
     static let aiShortcut = KeyboardShortcuts.Name("aiShortcut", default: .init(.x, modifiers: [.option]))

@@ -211,7 +211,7 @@ class LangService {
     
     // 判断文本是否为系统首选语言,支持 zh-Hans, zh-Hant, ja, ko, en, fr, de, es
     public func isTextInPreferredLanguage(_ text: String) -> Bool {
-        let preferredLanguage = SettingsModel.shared.preferredLanguage
+        let preferredLanguage = PreferencesModel.shared.preferredLanguage
         let textLang = detectLanguageCode(for: text)
         
         print("prefer lang: \(preferredLanguage)， textLang:  \(textLang)\n")

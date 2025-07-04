@@ -4,7 +4,7 @@ import SwiftUI
 
 struct GeneralSettingsPane: View {
     
-    @ObservedObject private var settingsModel = SettingsModel.shared
+    @ObservedObject private var preferences = PreferencesModel.shared
     
     var body: some View {
         ScrollView {
@@ -29,7 +29,7 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("shortcut_openmain", comment: "打开主窗口快捷键"),
                         description: NSLocalizedString("shortcut_openmain_description", comment: "打开主窗口，并将选中的文字填充到输入框内")
                     ) {
-                        KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutMain)
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutMain)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
@@ -42,7 +42,7 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("shortcut_translate", comment: "选中翻译快捷键"),
                         description: NSLocalizedString("shortcut_translate_description", comment: "选中要翻译的文字，按下快捷键快速翻译")
                     ) {
-                        KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcut)
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcut)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
@@ -55,7 +55,7 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("shortcut_summary", comment: "总结摘要快捷键"),
                         description: NSLocalizedString("shortcut_summary_description", comment: "选中要总结的内容，按下快捷键总结摘要")
                     ) {
-                        KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutSummary)
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutSummary)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
@@ -68,7 +68,7 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("shortcut_dict", comment: "字典查询快捷键"),
                         description: NSLocalizedString("shortcut_dict_description", comment: "选中要查询的字词，按下快捷键查询")
                     ) {
-                        KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutDictionary)
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutDictionary)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
@@ -81,7 +81,7 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("shortcut_ocr_translate", comment: "截屏翻译快捷键"),
                         description: NSLocalizedString("shortcut_ocr_translate_description", comment: "截取屏幕上的文字区域，自动OCR识别并翻译")
                     ) {
-                        KeyboardShortcuts.Recorder(for: SettingsModel.aiShortcutScreenshotTranslate)
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutScreenshotTranslate)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
@@ -96,9 +96,9 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("preferred_language", comment: "常用语言"),
                         description: NSLocalizedString("preferred_language_description", comment: "翻译的目标语言，一般为母语")
                     ) {
-                        Picker("", selection: $settingsModel.preferredLanguage) {
-                            ForEach(settingsModel.languageKeys, id: \.self) { key in
-                                Text(settingsModel.availableLanguages[key] ?? key)
+                        Picker("", selection: $preferences.preferredLanguage) {
+                            ForEach(preferences.languageKeys, id: \.self) { key in
+                                Text(preferences.availableLanguages[key] ?? key)
                                     .tag(key)
                             }
                         }
@@ -116,9 +116,9 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("common_foreign_language", comment: "常用外语"),
                         description: NSLocalizedString("common_foreign_language_description", comment: "正在学习和使用的第一外语")
                     ) {
-                        Picker("", selection: $settingsModel.commonForeignLanguage) {
-                            ForEach(settingsModel.languageKeys, id: \.self) { key in
-                                Text(settingsModel.availableLanguages[key] ?? key)
+                        Picker("", selection: $preferences.commonForeignLanguage) {
+                            ForEach(preferences.languageKeys, id: \.self) { key in
+                                Text(preferences.availableLanguages[key] ?? key)
                                     .tag(key)
                             }
                         }

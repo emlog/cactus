@@ -402,7 +402,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
         
         // 按照常用语言配置OCR识别语言优先级
-        let preferredLanguage = SettingsModel.shared.preferredLanguage
+        let preferredLanguage = PreferencesModel.shared.preferredLanguage
         switch preferredLanguage {
         case "zh-Hans":
             request.recognitionLanguages = ["zh-Hans", "en"]

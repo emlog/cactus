@@ -6,7 +6,7 @@ import MarkdownUI
 
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
-    @ObservedObject var settings = SettingsModel.shared
+    @ObservedObject var preferences = PreferencesModel.shared
     @ObservedObject private var vocabularyManager = VocabularyManager.shared // 添加这行
     @State private var Ai = AiService.shared
     @State private var Lang = LangService.shared
@@ -134,7 +134,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(String(format: NSLocalizedString("help_translate", comment: "翻译文本 (%@)"), KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcut)?.description ?? ""), delay: 0.5)
+                    .hoverTooltip(String(format: NSLocalizedString("help_translate", comment: "翻译文本 (%@)"), KeyboardShortcuts.getShortcut(for: PreferencesModel.aiShortcut)?.description ?? ""), delay: 0.5)
                     
                     // 摘要按钮
                     Button(action: {
@@ -145,7 +145,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(String(format: NSLocalizedString("help_summary", comment: "总结摘要 (%@)"), KeyboardShortcuts.getShortcut(for: SettingsModel.aiShortcutSummary)?.description ?? ""), delay: 0.5)
+                    .hoverTooltip(String(format: NSLocalizedString("help_summary", comment: "总结摘要 (%@)"), KeyboardShortcuts.getShortcut(for: PreferencesModel.aiShortcutSummary)?.description ?? ""), delay: 0.5)
                     
                     // 字典按钮
                     Button(action: {
@@ -543,7 +543,7 @@ struct MainView: View {
     
     // 发起AI请求
     private func performAIAction(systemMessage: String, actionType: AIActionType = .basic) {
-        guard (settings.defaultProviders[settings.selectedProvider]?.title) != nil else {
+        guard (preferences.defaultProviders[preferences.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
             showErrorToast = true
             return
