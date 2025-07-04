@@ -12,7 +12,6 @@ import MarkdownUI
 struct VocabularyView: View {
     @ObservedObject private var vocabularyManager = VocabularyManager.shared
     @State private var selectedWord: WordEntry?
-    @FocusState private var isViewFocused: Bool
     
     // 添加语音朗读相关状态
     @State private var isSpeakingWord = false
@@ -162,8 +161,6 @@ struct VocabularyView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .frame(minWidth: 800, minHeight: 680)
-        .focusable()
-        .focused($isViewFocused)
         .overlay(
             // 隐藏的按钮用于键盘快捷键
             VStack {
@@ -195,8 +192,6 @@ struct VocabularyView: View {
             if selectedWord == nil && !vocabularyManager.wordEntries.isEmpty {
                 selectedWord = vocabularyManager.wordEntries.first
             }
-            // 设置焦点以接收键盘事件
-            isViewFocused = true
         }
         .onDisappear {
             // 窗口关闭时停止朗读

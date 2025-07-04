@@ -14,7 +14,6 @@ struct HistoryView: View {
     @StateObject private var historyManager = HistoryManager.shared
     @StateObject private var favoriteManager = FavoriteManager.shared
     @State private var selectedHistory: HistoryEntry?
-    @FocusState private var isViewFocused: Bool
     
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
@@ -249,8 +248,6 @@ struct HistoryView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .frame(minWidth: 800, minHeight: 680)
-        .focusable()
-        .focused($isViewFocused)
         .overlay(
             // 隐藏的按钮用于键盘快捷键
             VStack {
@@ -282,8 +279,6 @@ struct HistoryView: View {
             if selectedHistory == nil && !historyManager.historyEntries.isEmpty {
                 selectedHistory = historyManager.historyEntries.first
             }
-            // 设置焦点以接收键盘事件
-            isViewFocused = true
         }
     }
     
