@@ -32,41 +32,45 @@ struct HistoryView: View {
                         Spacer()
                     }
                 } else {
-                    List(historyManager.historyEntries, id: \.objectID) { historyEntry in
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text(getPreviewText(historyEntry.inputContent ?? ""))
-                                .font(.system(size: 14, weight: .medium))
-                                .lineSpacing(4)
-                                .lineLimit(2)
-                            
-                            Text(formatDate(historyEntry.timestamp))
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.top, 2)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                        .padding(.vertical, 10)
-                        .contentShape(Rectangle())
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(
-                            RoundedRectangle(cornerRadius: 0)
-                                .fill(selectedHistory?.objectID == historyEntry.objectID
-                                      ? Color.accentColor.opacity(0.2)
-                                      : Color.clear)
-                                .padding(.vertical, 0)
-                        )
-                        .onTapGesture {
-                            selectedHistory = historyEntry
-                        }
-                        .contextMenu {
-                            Button(action: {
-                                deleteSelectedHistory(historyEntry)
-                            }) {
-                                Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
+                    ScrollView {
+                        // LazyVStack 提供懒加载，性能更好
+                        LazyVStack(spacing: 0) {
+                            ForEach(historyManager.historyEntries, id: \.objectID) { historyEntry in
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text(getPreviewText(historyEntry.inputContent ?? ""))
+                                        .font(.system(size: 14, weight: .medium))
+                                        .lineSpacing(4)
+                                        .lineLimit(2)
+                                    
+                                    Text(formatDate(historyEntry.timestamp))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .padding(.top, 2)
+                                }
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 8)
+                                .contentShape(Rectangle())
+                                .background(
+                                    RoundedRectangle(cornerRadius: 0)
+                                        .fill(selectedHistory?.objectID == historyEntry.objectID
+                                              ? Color.accentColor.opacity(0.2)
+                                              : Color.clear)
+                                )
+                                .onTapGesture {
+                                    selectedHistory = historyEntry
+                                }
+                                .contextMenu {
+                                    Button(action: {
+                                        deleteSelectedHistory(historyEntry)
+                                    }) {
+                                        Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
+                                    }
+                                }
+                                Divider()
                             }
                         }
                     }
-                    .listStyle(PlainListStyle())
                 }
                 
                 // 底部显示总历史记录数量
