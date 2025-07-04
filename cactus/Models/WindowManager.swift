@@ -21,7 +21,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         let checkOptPrompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let options = [checkOptPrompt: false]
         let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-
+        
         if !accessEnabled {
             showAccessibilityWindow()
         }
@@ -179,28 +179,73 @@ class WindowManager: NSObject, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    func openHistory() {
-        openPreferences()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.settingsWindowController?.show(pane: .history)
-            NSApp.activate(ignoringOtherApps: true)
+    func openFavorites() {
+        if let existingController = settingsWindowController {
+            existingController.window?.close()
+            settingsWindowController = nil
         }
+        
+        createSettingsWindowController()
+        
+        if let window = settingsWindowController?.window {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(settingsWindowWillClose),
+                name: NSWindow.willCloseNotification,
+                object: window
+            )
+        }
+        
+        // 直接显示收藏面板，避免闪烁
+        settingsWindowController?.show(pane: .favorites)
+        settingsWindowController?.window?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     func openVocabulary() {
-        openPreferences()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.settingsWindowController?.show(pane: .vocabulary)
-            NSApp.activate(ignoringOtherApps: true)
+        if let existingController = settingsWindowController {
+            existingController.window?.close()
+            settingsWindowController = nil
         }
+        
+        createSettingsWindowController()
+        
+        if let window = settingsWindowController?.window {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(settingsWindowWillClose),
+                name: NSWindow.willCloseNotification,
+                object: window
+            )
+        }
+        
+        // 直接显示生词本面板，避免闪烁
+        settingsWindowController?.show(pane: .vocabulary)
+        settingsWindowController?.window?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
     
-    func openFavorites() {
-        openPreferences()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.settingsWindowController?.show(pane: .favorites)
-            NSApp.activate(ignoringOtherApps: true)
+    func openHistory() {
+        if let existingController = settingsWindowController {
+            existingController.window?.close()
+            settingsWindowController = nil
         }
+        
+        createSettingsWindowController()
+        
+        if let window = settingsWindowController?.window {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(settingsWindowWillClose),
+                name: NSWindow.willCloseNotification,
+                object: window
+            )
+        }
+        
+        // 直接显示历史记录面板，避免闪烁
+        settingsWindowController?.show(pane: .history)
+        settingsWindowController?.window?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     func openPreferences() {
@@ -354,7 +399,6 @@ class WindowManager: NSObject, NSWindowDelegate {
     }
     
     // OCR 文字识别功能
-    // 在 WindowManager 类中添加专门的中文OCR方法
     private func performChineseOCROnImage(at imagePath: String, completion: @escaping (Bool) -> Void) {
         guard let image = NSImage(contentsOfFile: imagePath),
               let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
