@@ -222,6 +222,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         
         settingsWindowController?.show()
         settingsWindowController?.window?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)  // 确保应用获得焦点
     }
     
     private func createSettingsWindowController() {
