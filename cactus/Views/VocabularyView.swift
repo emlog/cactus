@@ -27,34 +27,46 @@ struct VocabularyView: View {
         HSplitView {
             // 左侧单词列表 - 占比约20%
             VStack(spacing: 0) {
-                List(vocabularyManager.wordEntries, id: \.objectID) { wordEntry in
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text(wordEntry.word ?? "")
-                            .font(.system(size: 14, weight: .medium))
+                if vocabularyManager.wordEntries.isEmpty {
+                    VStack {
+                        Spacer()
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.vertical, 10)
-                    .contentShape(Rectangle())
-                    .listRowInsets(EdgeInsets())
-                    .listRowBackground(
-                        RoundedRectangle(cornerRadius: 0)
-                            .fill(selectedWord?.objectID == wordEntry.objectID
-                                  ? Color.accentColor.opacity(0.2)
-                                  : Color.clear)
-                            .padding(.vertical, 0)
-                    )
-                    .onTapGesture {
-                        selectedWord = wordEntry
-                    }
-                    .contextMenu {
-                        Button(action: {
-                            deleteSelectedWord(wordEntry)
-                        }) {
-                            Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
+                } else {
+                    ScrollView {
+                        // LazyVStack 提供懒加载，性能更好
+                        LazyVStack(spacing: 0) {
+                            ForEach(vocabularyManager.wordEntries, id: \.objectID) { wordEntry in
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text(wordEntry.word ?? "")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .lineSpacing(4)
+                                        .lineLimit(2)
+                                }
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 8)
+                                .contentShape(Rectangle())
+                                .background(
+                                    RoundedRectangle(cornerRadius: 0)
+                                        .fill(selectedWord?.objectID == wordEntry.objectID
+                                              ? Color.accentColor.opacity(0.2)
+                                              : Color.clear)
+                                )
+                                .onTapGesture {
+                                    selectedWord = wordEntry
+                                }
+                                .contextMenu {
+                                    Button(action: {
+                                        deleteSelectedWord(wordEntry)
+                                    }) {
+                                        Label(NSLocalizedString("delete", comment: "删除"), systemImage: "trash")
+                                    }
+                                }
+                                Divider()
+                            }
                         }
                     }
                 }
-                .listStyle(.plain)
                 
                 // 底部显示总单词数量
                 HStack {
