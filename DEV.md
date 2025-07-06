@@ -85,7 +85,10 @@ xcrun stapler staple Cactus.dmg
 ## 制作 appicons
 
 - figma 模版（macOS Icon Template）：https://www.figma.com/community/file/857303226040719059/macos-big-sur-icon-template
-
+- 状态栏图标
+  - 尺寸：19x19 and 38x38
+  - 设置为 Template Image
+  - 设备选择：Mac
 
 ## 第三方库
 
