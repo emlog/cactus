@@ -53,7 +53,7 @@ struct MainView: View {
             Section() {
                 ZStack(alignment: .bottomTrailing) {
                     CustomTextEditor(text: $contentModel.text, onCommit: {
-                        chatText()
+                        triggerDefaultMainFunction()
                     }, calculatedHeight: $inputTextHeight) // 传递高度绑定
                     .focused($isInputEditorFocused) // 绑定焦点状态
                     .frame(height: inputTextHeight) // 使用状态变量设置高度
@@ -618,5 +618,21 @@ struct MainView: View {
         self.showErrorToast = true
         contentModel.resultText = errorMessage
         contentModel.isProcessing = false
+    }
+    
+    // 根据设置触发默认主窗口功能
+    func triggerDefaultMainFunction() {
+        switch preferences.defaultMainFunction {
+        case "translate":
+            translateText()
+        case "summary":
+            summaryText()
+        case "dictionary":
+            dictionaryText()
+        case "chat":
+            fallthrough
+        default:
+            chatText()
+        }
     }
 }

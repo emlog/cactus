@@ -81,7 +81,7 @@
 "help_translate" = "テキスト翻訳";
 "help_summary" = "要約";
 "help_dict" = "辞書検索";
-"help_chat" = "メッセージを送信 (Enter)";
+"help_chat" = "メッセージを送信";
 "help_clear" = "クリア";
 "help_favorite" = "お気に入り";
 "help_speak" = "読み上げ";

@@ -10,20 +10,6 @@ struct GeneralSettingsPane: View {
         ScrollView {
             VStack(spacing: 0) {
                 VStack{
-                    // 开机自启动
-                    SettingRow(
-                        label: NSLocalizedString("startup", comment: "开机自启动")
-                    ) {
-                        LaunchAtLogin.Toggle{}
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
-                }
-                .background(Color(NSColor.gridColor))
-                .cornerRadius(12)
-                .padding(20)
-                
-                VStack{
                     // 打开主窗口快捷键
                     SettingRow(
                         label: NSLocalizedString("shortcut_openmain", comment: "打开主窗口快捷键"),
@@ -91,6 +77,41 @@ struct GeneralSettingsPane: View {
                 .padding(20)
                 
                 VStack{
+                    // 开机自启动
+                    SettingRow(
+                        label: NSLocalizedString("startup", comment: "开机自启动")
+                    ) {
+                        LaunchAtLogin.Toggle{}
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
+                    
+                    Divider()
+                        .padding(.horizontal, 10)
+                    
+                    // 默认主窗口功能
+                    SettingRow(
+                        label: NSLocalizedString("default_main_function", comment: "默认主窗口功能"),
+                        description: NSLocalizedString("default_main_function_description", comment: "按下回车键时主窗口默认触发的功能")
+                    ) {
+                        Picker("", selection: $preferences.defaultMainFunction) {
+                            Text(NSLocalizedString("help_translate", comment: "翻译")).tag("translate")
+                            Text(NSLocalizedString("help_summary", comment: "总结")).tag("summary")
+                            Text(NSLocalizedString("help_dict", comment: "字典")).tag("dictionary")
+                            Text(NSLocalizedString("help_chat", comment: "对话")).tag("chat")
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .frame(width: 200, alignment: .leading)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
+                }
+                .background(Color(NSColor.gridColor))
+                .cornerRadius(12)
+                .padding(20)
+                
+                
+                VStack{
                     // 常用语言
                     SettingRow(
                         label: NSLocalizedString("preferred_language", comment: "常用语言"),
@@ -127,6 +148,9 @@ struct GeneralSettingsPane: View {
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
+                    
+                    Divider()
+                        .padding(.horizontal, 10)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)

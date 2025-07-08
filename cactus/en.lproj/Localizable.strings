@@ -81,7 +81,7 @@
 "help_translate" = "Translate Text";
 "help_summary" = "Summarize Text";
 "help_dict" = "Dictionary Lookup";
-"help_chat" = "Send message (Enter)";
+"help_chat" = "Send message";
 "help_clear" = "Clear";
 "help_favorite" = "Favorite";
 "help_speak" = "Speak";

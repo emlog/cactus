@@ -50,6 +50,13 @@ class PreferencesModel: ObservableObject {
         }
     }
     
+    // 默认主窗口功能
+    @Published var defaultMainFunction: String {
+        didSet {
+            UserDefaults.standard.set(defaultMainFunction, forKey: "defaultMainFunction")
+        }
+    }
+    
     // 内置的AI服务 + OpenAI选项
     public var defaultProviders: [String: ProviderSettings] = [
         "model_zhipu_glm4": ProviderSettings(
@@ -318,6 +325,8 @@ class PreferencesModel: ObservableObject {
         
         self.zhipuApiKey = UserDefaults.standard.string(forKey: "zhipuApiKey") ?? ""
         self.selectedZhipuModel = UserDefaults.standard.string(forKey: "selectedZhipuModel") ?? ""
+        
+        self.defaultMainFunction = UserDefaults.standard.string(forKey: "defaultMainFunction") ?? "chat"
         
         updateOpenAIConfig()
         updateSiliconflowConfig()
