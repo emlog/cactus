@@ -78,8 +78,8 @@
 "pop_already_cleared" = "已清除內容";
 "pop_favorite_added" = "已加入收藏夾";
 "pop_select_model_first" = "請先在偏好設定中選取 AI 模型";
-"help_translate" = "翻譯文字 (%@)";
-"help_summary" = "製作摘要 (%@)";
+"help_translate" = "翻譯文字";
+"help_summary" = "製作摘要";
 "help_dict" = "字典查詢";
 "help_chat" = "發送訊息(Enter)";
 "help_clear" = "清除";

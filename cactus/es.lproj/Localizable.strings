@@ -78,8 +78,8 @@
 "pop_already_cleared" = "Contenido ya borrado";
 "pop_favorite_added" = "Añadido a favoritos";
 "pop_select_model_first" = "Selecciona primero un modelo en preferencias";
-"help_translate" = "Traducir texto (%@)";
-"help_summary" = "Crear resumen (%@)";
+"help_translate" = "Traducir texto";
+"help_summary" = "Crear resumen";
 "help_dict" = "Diccionario";
 "help_chat" = "Enviar mensaje (Enter)";
 "help_clear" = "Limpiar contenido";

@@ -78,8 +78,8 @@
 "pop_already_cleared" = "内容はすでにクリアされています";
 "pop_favorite_added" = "お気に入りに追加しました";
 "pop_select_model_first" = "環境設定でAIモデルを選択してください";
-"help_translate" = "テキスト翻訳 (%@)";
-"help_summary" = "要約 (%@)";
+"help_translate" = "テキスト翻訳";
+"help_summary" = "要約";
 "help_dict" = "辞書検索";
 "help_chat" = "メッセージを送信 (Enter)";
 "help_clear" = "クリア";

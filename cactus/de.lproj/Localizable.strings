@@ -78,8 +78,8 @@
 "pop_already_cleared" = "Bereits gelöscht";
 "pop_favorite_added" = "Zu Favoriten hinzugefügt";
 "pop_select_model_first" = "Bitte zuerst ein Modell wählen";
-"help_translate" = "Text übersetzen (%@)";
-"help_summary" = "Zusammenfassung erstellen (%@)";
+"help_translate" = "Text übersetzen";
+"help_summary" = "Zusammenfassung erstellen";
 "help_dict" = "Wörterbuch";
 "help_chat" = "Nachricht senden (Enter)";
 "help_clear" = "Inhalt löschen";

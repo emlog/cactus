@@ -78,8 +78,8 @@
 "pop_already_cleared" = "이미 지워진 내용입니다";
 "pop_favorite_added" = "즐겨찾기에 추가되었습니다";
 "pop_select_model_first" = "환경설정에서 AI 모델을 먼저 선택하세요";
-"help_translate" = "텍스트 번역 (%@)";
-"help_summary" = "요약 (%@)";
+"help_translate" = "텍스트 번역";
+"help_summary" = "요약";
 "help_dict" = "사전 검색";
 "help_chat" = "메시지 보내기 (Enter)";
 "help_clear" = "지우기";

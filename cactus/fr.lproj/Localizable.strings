@@ -78,8 +78,8 @@
 "pop_already_cleared" = "Déjà effacé";
 "pop_favorite_added" = "Ajouté aux favoris";
 "pop_select_model_first" = "Veuillez d'abord sélectionner un modèle dans les préférences";
-"help_translate" = "Traduire le texte (%@)";
-"help_summary" = "Créer un résumé (%@)";
+"help_translate" = "Traduire le texte";
+"help_summary" = "Créer un résumé";
 "help_dict" = "Dictionnaire";
 "help_chat" = "Envoyer le message (Entrée)";
 "help_clear" = "Effacer le contenu";

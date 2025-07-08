@@ -78,8 +78,8 @@
 "pop_already_cleared" = "Text cleared.";
 "pop_favorite_added" = "Added to Favorites.";
 "pop_select_model_first" = "Please select an AI model in Preferences first.";
-"help_translate" = "Translate Text (%@)";
-"help_summary" = "Summarize Text (%@)";
+"help_translate" = "Translate Text";
+"help_summary" = "Summarize Text";
 "help_dict" = "Dictionary Lookup";
 "help_chat" = "Send message (Enter)";
 "help_clear" = "Clear";

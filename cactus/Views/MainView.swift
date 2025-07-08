@@ -134,7 +134,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(String(format: NSLocalizedString("help_translate", comment: "翻译文本 (%@)"), KeyboardShortcuts.getShortcut(for: PreferencesModel.aiShortcut)?.description ?? ""), delay: 0.5)
+                    .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"), delay: 0.5)
                     
                     // 摘要按钮
                     Button(action: {
@@ -145,7 +145,7 @@ struct MainView: View {
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
-                    .hoverTooltip(String(format: NSLocalizedString("help_summary", comment: "总结摘要 (%@)"), KeyboardShortcuts.getShortcut(for: PreferencesModel.aiShortcutSummary)?.description ?? ""), delay: 0.5)
+                    .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"), delay: 0.5)
                     
                     // 字典按钮
                     Button(action: {
