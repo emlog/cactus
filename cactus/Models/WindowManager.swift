@@ -74,7 +74,6 @@ class WindowManager: NSObject, NSWindowDelegate {
         // 设置窗口始终置顶
         mainWindow?.level = .floating
         mainWindow?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        mainWindow?.level = NSWindow.Level.statusBar
         
         let mainView = MainView()
         let hostingController = NSHostingController(rootView: mainView)
