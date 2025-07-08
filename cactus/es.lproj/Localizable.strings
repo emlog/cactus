@@ -28,6 +28,8 @@
 "shortcut_dict_description" = "Consulta la palabra seleccionada";
 "shortcut_ocr_translate" = "Atajo: Traducir captura";
 "shortcut_ocr_translate_description" = "Captura parte de la pantalla, realiza OCR y traduce";
+"default_main_function" = "Función predeterminada";
+"default_main_function_description" = "La función predeterminada que se activa en la ventana principal al presionar la tecla Retorno";
 
 // Language setting
 "preferred_language" = "Idioma preferido";

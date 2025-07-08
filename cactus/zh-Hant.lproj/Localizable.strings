@@ -28,6 +28,8 @@
 "shortcut_dict_description" = "選取詞後按快捷鍵查詢";
 "shortcut_ocr_translate" = "截圖翻譯快捷鍵";
 "shortcut_ocr_translate_description" = "截取畫面上的文字區域，自動進行 OCR 辨識並翻譯。";
+"default_main_function" = "預設功能";
+"default_main_function_description" = "按下返回鍵時主視窗預設觸發的功能";
 
 // Language setting
 "preferred_language" = "常用語言";

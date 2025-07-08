@@ -28,6 +28,8 @@
 "shortcut_dict_description" = "Consulter le mot sélectionné";
 "shortcut_ocr_translate" = "Raccourci : Traduire une capture";
 "shortcut_ocr_translate_description" = "Capturer une zone de l'écran, faire l’OCR et traduire";
+"default_main_function" = "Fonction par défaut";
+"default_main_function_description" = "La fonction par défaut déclenchée dans la fenêtre principale lors de l'appui sur la touche Retour";
 
 // Language setting
 "preferred_language" = "Langue préférée";

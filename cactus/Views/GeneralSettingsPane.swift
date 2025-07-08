@@ -94,11 +94,11 @@ struct GeneralSettingsPane: View {
                         label: NSLocalizedString("default_main_function", comment: "默认主窗口功能"),
                         description: NSLocalizedString("default_main_function_description", comment: "按下回车键时主窗口默认触发的功能")
                     ) {
+                        // 在默认主窗口功能的Picker中
                         Picker("", selection: $preferences.defaultMainFunction) {
-                            Text(NSLocalizedString("help_translate", comment: "翻译")).tag("translate")
-                            Text(NSLocalizedString("help_summary", comment: "总结")).tag("summary")
-                            Text(NSLocalizedString("help_dict", comment: "字典")).tag("dictionary")
-                            Text(NSLocalizedString("help_chat", comment: "对话")).tag("chat")
+                            ForEach(preferences.functionKeys, id: \.self) { functionKey in
+                                Text(preferences.availableFunctions[functionKey] ?? functionKey).tag(functionKey)
+                            }
                         }
                         .pickerStyle(MenuPickerStyle())
                         .frame(width: 200, alignment: .leading)

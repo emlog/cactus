@@ -28,6 +28,8 @@
 "shortcut_dict_description" = "단어를 선택한 후 단축키로 검색";
 "shortcut_ocr_translate" = "스크린샷 번역 단축키";
 "shortcut_ocr_translate_description" = "화면의 문자 영역을 캡처하고 자동으로 OCR 및 번역합니다";
+"default_main_function" = "기본 기능";
+"default_main_function_description" = "리턴 키를 누를 때 메인 창에서 실행되는 기본 기능";
 
 // Language setting
 "preferred_language" = "자주 사용하는 언어";

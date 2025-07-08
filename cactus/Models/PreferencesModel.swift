@@ -50,6 +50,16 @@ class PreferencesModel: ObservableObject {
         }
     }
     
+    // 可复用的功能列表
+    let availableFunctions = [
+        "translate": NSLocalizedString("help_translate", comment: "翻译"),
+        "summary": NSLocalizedString("help_summary", comment: "总结"),
+        "dictionary": NSLocalizedString("help_dict", comment: "字典"),
+        "chat": NSLocalizedString("help_chat", comment: "对话")
+    ]
+    
+    let functionKeys = ["translate", "summary", "dictionary", "chat"]
+    
     // 默认主窗口功能
     @Published var defaultMainFunction: String {
         didSet {
