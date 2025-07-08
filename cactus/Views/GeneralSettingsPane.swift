@@ -18,7 +18,7 @@ struct GeneralSettingsPane: View {
                         KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutMain)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
@@ -31,7 +31,7 @@ struct GeneralSettingsPane: View {
                         KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcut)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
@@ -44,7 +44,7 @@ struct GeneralSettingsPane: View {
                         KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutSummary)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
@@ -57,7 +57,7 @@ struct GeneralSettingsPane: View {
                         KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutDictionary)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
@@ -70,11 +70,11 @@ struct GeneralSettingsPane: View {
                         KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutScreenshotTranslate)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
-                .padding(20)
+                .padding(16)
                 
                 VStack{
                     // 开机自启动
@@ -84,7 +84,7 @@ struct GeneralSettingsPane: View {
                         LaunchAtLogin.Toggle{}
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
@@ -104,12 +104,11 @@ struct GeneralSettingsPane: View {
                         .frame(width: 200, alignment: .leading)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
-                .padding(20)
-                
+                .padding(16)
                 
                 VStack{
                     // 常用语言
@@ -127,7 +126,7 @@ struct GeneralSettingsPane: View {
                         .frame(width: 200, alignment: .leading)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
@@ -147,14 +146,14 @@ struct GeneralSettingsPane: View {
                         .frame(width: 200, alignment: .leading)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                     
                     Divider()
                         .padding(.horizontal, 10)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
-                .padding(20)
+                .padding(16)
             }
         }
         .frame(width: 800, height: 680)

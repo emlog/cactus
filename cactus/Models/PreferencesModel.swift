@@ -326,7 +326,7 @@ class PreferencesModel: ObservableObject {
         self.zhipuApiKey = UserDefaults.standard.string(forKey: "zhipuApiKey") ?? ""
         self.selectedZhipuModel = UserDefaults.standard.string(forKey: "selectedZhipuModel") ?? ""
         
-        self.defaultMainFunction = UserDefaults.standard.string(forKey: "defaultMainFunction") ?? "chat"
+        self.defaultMainFunction = UserDefaults.standard.string(forKey: "defaultMainFunction") ?? "translate"
         
         updateOpenAIConfig()
         updateSiliconflowConfig()

@@ -13,10 +13,10 @@ struct GeneralAiPane: View {
     
     // 计算内容高度
     private var contentHeight: CGFloat {
-        var height: CGFloat = 100 // 基础高度（提供商选择部分）
+        var height: CGFloat = 90 // 基础高度（提供商选择部分）
         
         if preferences.currentProviderRequiresConfig && isPremiumUser {
-            height += 140 // 配置界面的高度
+            height += 110 // 配置界面的高度
         }
         
         return height
@@ -37,11 +37,11 @@ struct GeneralAiPane: View {
                         .frame(width: 300, alignment: .leading)
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
-                .padding(20)
+                .padding(16)
                 
                 // 通用配置界面 - 适用于需要自定义配置的提供商
                 if preferences.currentProviderRequiresConfig && isPremiumUser {
@@ -74,7 +74,7 @@ struct GeneralAiPane: View {
                 .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal, 10)
-            .padding(.vertical, 8)
+            .padding(.vertical, 5)
             
             Divider()
                 .padding(.horizontal, 10)
@@ -110,7 +110,7 @@ struct GeneralAiPane: View {
         }
         .background(Color(NSColor.gridColor))
         .cornerRadius(12)
-        .padding(20)
+        .padding(16)
         
     }
     
