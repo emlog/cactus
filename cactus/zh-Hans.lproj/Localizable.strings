@@ -28,8 +28,8 @@
 "shortcut_dict_description" = "选中字词，按下快捷键查询";
 "shortcut_ocr_translate" = "截屏翻译快捷键";
 "shortcut_ocr_translate_description" = "截取屏幕上的文字区域，自动OCR识别并翻译";
-"default_main_function" = "默认功能";
-"default_main_function_description" = "按下回车键时主窗口默认触发的功能";
+"default_main_function" = "默认操作";
+"default_main_function_description" = "在主窗口按下Return键时触发的默认操作";
 
 // Language setting
 "preferred_language" = "常用语言";

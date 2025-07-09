@@ -28,8 +28,8 @@
 "shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
 "shortcut_ocr_translate" = "Screenshot Translate Shortcut";
 "shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
-"default_main_function" = "Default Function";
-"default_main_function_description" = "The default function triggered in main window when pressing Return key";
+"default_main_function" = "Default Action";
+"default_main_function_description" = "The default Action triggered in main window when pressing Return key";
 
 // Language setting
 "preferred_language" = "Preferred Language";

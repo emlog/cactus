@@ -28,8 +28,8 @@
 "shortcut_dict_description" = "Markiertes Wort schnell nachschlagen";
 "shortcut_ocr_translate" = "Tastenkürzel: Screenshot‑Übersetzen";
 "shortcut_ocr_translate_description" = "Bildschirmbereich erfassen, OCR und Übersetzung";
-"default_main_function" = "Standardfunktion";
-"default_main_function_description" = "Die Standardfunktion, die im Hauptfenster bei Betätigung der Eingabetaste ausgeführt wird";
+"default_main_function" = "Standardaktion";
+"default_main_function_description" = "Die Standardaktion, die im Hauptfenster durch Drücken der Return-Taste ausgelöst wird";
 
 // Language setting
 "preferred_language" = "Bevorzugte Sprache";
