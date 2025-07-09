@@ -7,4 +7,10 @@ class TextContentModel: ObservableObject {
     @Published var text: String = ""
     @Published var resultText: String? = nil
     @Published var isProcessing: Bool = false
+    
+    // Add specific loading states for each function
+    @Published var isTranslating: Bool = false
+    @Published var isSummarizing: Bool = false
+    @Published var isDictionaryLookup: Bool = false
+    @Published var isChatting: Bool = false
 }

@@ -4,6 +4,14 @@ import AVFoundation
 import KeyboardShortcuts
 import MarkdownUI
 
+// Define loading type enum
+enum LoadingType {
+    case translate
+    case summary
+    case dictionary
+    case chat
+}
+
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var preferences = PreferencesModel.shared
@@ -129,8 +137,14 @@ struct MainView: View {
                     Button(action: {
                         translateText()
                     }) {
-                        Image(systemName: "translate")
-                            .frame(width: 20, height: 20)
+                        if contentModel.isTranslating {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "translate")
+                                .frame(width: 20, height: 20)
+                        }
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
@@ -140,8 +154,14 @@ struct MainView: View {
                     Button(action: {
                         summaryText()
                     }) {
-                        Image(systemName: "pencil.and.list.clipboard.rtl")
-                            .frame(width: 20, height: 20)
+                        if contentModel.isSummarizing {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "pencil.and.list.clipboard.rtl")
+                                .frame(width: 20, height: 20)
+                        }
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
@@ -151,8 +171,14 @@ struct MainView: View {
                     Button(action: {
                         dictionaryText()
                     }) {
-                        Image(systemName: "books.vertical")
-                            .frame(width: 20, height: 20)
+                        if contentModel.isDictionaryLookup {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "books.vertical")
+                                .frame(width: 20, height: 20)
+                        }
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
@@ -168,20 +194,18 @@ struct MainView: View {
                     Button(action: {
                         chatText()
                     }) {
-                        Image(systemName: "arrow.up")
-                            .frame(width: 20, height: 20)
+                        if contentModel.isChatting {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "arrow.up")
+                                .frame(width: 20, height: 20)
+                        }
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing)
                     .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
-                    
-                    if contentModel.isProcessing {
-                        // 显示loading动画
-                        ProgressView()
-                            .scaleEffect(0.5)
-                            .frame(height: 20)
-                            .padding(0)
-                    }
                     
                     Spacer()
                     
@@ -427,16 +451,16 @@ struct MainView: View {
         // 2、如果不是常用语言，翻译为常用语言（母语）
         if Lang.isTextInPreferredLanguage(inputText) {
             systemMessage = Prompt.getSystemMessageForTranslateToCommonForeignLanguage() // 常用语言翻译为第一外语
-            performAIAction(systemMessage: systemMessage)
+            performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .translate)
         } else if Lang.isSentence(inputText) == false && Lang.isWordInSupportedLanguages(inputText) {
             // 翻译为常用语言：单词翻译（只支持英语、法语、西班牙语、德语）
             systemMessage = Prompt.getSystemMessageForTranslateWord()
-            performAIAction(systemMessage: systemMessage, actionType: .vocabulary(word: inputText))
+            performAIAction(systemMessage: systemMessage, actionType: .vocabulary(word: inputText), loadingType: .translate)
             return
         } else {
             // 翻译为常用语言：句子翻译
             systemMessage = Prompt.getSystemMessageForTranslate()
-            performAIAction(systemMessage: systemMessage)
+            performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .translate)
         }
     }
     
@@ -449,7 +473,7 @@ struct MainView: View {
             return
         }
         let systemMessage = Prompt.getSystemMessageForSummary()
-        performAIAction(systemMessage: systemMessage)
+        performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .summary)
     }
     
     // 字典（主要查询母语词语）
@@ -471,7 +495,7 @@ struct MainView: View {
         } else {
             systemMessage = Prompt.getSystemMessageForTranslateWord() // 单词翻译
         }
-        performAIAction(systemMessage: systemMessage)
+        performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .dictionary)
     }
     
     // 对话
@@ -489,7 +513,7 @@ struct MainView: View {
         
         // 保存当前输入文本用于历史记录
         let currentInput = contentModel.text
-        performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: chatHistory, originalInput: currentInput))
+        performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: chatHistory, originalInput: currentInput), loadingType: .chat)
     }
     
     // 只做一些清理窗口的动作
@@ -542,13 +566,15 @@ struct MainView: View {
     }
     
     // 发起AI请求
-    private func performAIAction(systemMessage: String, actionType: AIActionType = .basic) {
+    private func performAIAction(systemMessage: String, actionType: AIActionType = .basic, loadingType: LoadingType) {
         guard (preferences.defaultProviders[preferences.selectedProvider]?.title) != nil else {
             toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
             showErrorToast = true
             return
         }
         
+        // 设置对应的loading状态
+        setLoadingState(loadingType, isLoading: true)
         contentModel.isProcessing = true
         contentModel.resultText = ""
         
@@ -558,31 +584,46 @@ struct MainView: View {
             case .basic, .vocabulary:
                 Ai.chat(text: contentModel.text, systemMessage: systemMessage) {
                     DispatchQueue.main.async {
-                        self.handleAIResponse(actionType: actionType)
+                        self.handleAIResponse(actionType: actionType, loadingType: loadingType)
                     }
                 } onError: { errorMessage in
                     DispatchQueue.main.async {
-                        self.handleAIError(errorMessage: errorMessage)
+                        self.handleAIError(errorMessage: errorMessage, loadingType: loadingType)
                     }
                 }
                 
             case .chat(let chatHistory, _):
                 Ai.chat(chatHistory: chatHistory, systemMessage: systemMessage) {
                     DispatchQueue.main.async {
-                        self.handleAIResponse(actionType: actionType)
+                        self.handleAIResponse(actionType: actionType, loadingType: loadingType)
                     }
                 } onError: { errorMessage in
                     DispatchQueue.main.async {
-                        self.handleAIError(errorMessage: errorMessage)
+                        self.handleAIError(errorMessage: errorMessage, loadingType: loadingType)
                     }
                 }
             }
         }
     }
     
-    private func handleAIResponse(actionType: AIActionType) {
+    // 设置loading状态的辅助方法
+    private func setLoadingState(_ loadingType: LoadingType, isLoading: Bool) {
+        switch loadingType {
+        case .translate:
+            contentModel.isTranslating = isLoading
+        case .summary:
+            contentModel.isSummarizing = isLoading
+        case .dictionary:
+            contentModel.isDictionaryLookup = isLoading
+        case .chat:
+            contentModel.isChatting = isLoading
+        }
+    }
+    
+    private func handleAIResponse(actionType: AIActionType, loadingType: LoadingType) {
         isResultViewExpanded = true
         contentModel.isProcessing = false
+        setLoadingState(loadingType, isLoading: false)
         
         guard let resultText = contentModel.resultText, !resultText.isEmpty else { return }
         
@@ -613,11 +654,12 @@ struct MainView: View {
         }
     }
     
-    private func handleAIError(errorMessage: String) {
+    private func handleAIError(errorMessage: String, loadingType: LoadingType) {
         self.toastMessage = errorMessage
         self.showErrorToast = true
         contentModel.resultText = errorMessage
         contentModel.isProcessing = false
+        setLoadingState(loadingType, isLoading: false)
     }
     
     // 根据设置触发默认主窗口功能
