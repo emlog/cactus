@@ -178,6 +178,33 @@ class PreferencesModel: ObservableObject {
                 "claude-3-7-sonnet-20250219": "Claude-3.7-Sonnet",
                 "claude-3-5-sonnet-20241022": "Claude-3.5-Sonnet"
             ]
+        ),
+        "openrouter": ProviderSettings(
+            title: NSLocalizedString("model_openrouter", comment: "OpenRouter"),
+            baseURL: "https://openrouter.ai/api/v1/chat/completions",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://openrouter.ai/keys",
+            requiresCustomConfig: true,
+            availableModels: [
+                "anthropic/claude-sonnet-4": "Claude-4-Sonnet",
+                "anthropic/claude-3.7-sonnet": "Claude-3.7-Sonnet",
+                "anthropic/claude-3.5-sonnet": "Claude-3.5-Sonnet",
+                "openai/gpt-4.1": "GPT-4.1",
+                "openai/gpt-4.1-mini": "GPT-4.1-Mini",
+                "openai/gpt-4o": "GPT-4o",
+                "openai/gpt-4o-mini": "GPT-4o-Mini",
+                "google/gemini-2.5-flash": "Gemini-2.5-Flash",
+                "google/gemini-2.5-pro": "Gemini-2.5-Pro",
+                "x-ai/grok-3-mini": "Grok-3-Mini",
+                "x-ai/grok-3": "Grok-3",
+                "qwen/qwen2.5-vl-32b-instruct:free": "Qwen-2.5-VL-32B-Instruct-Free",
+                "qwen/qwen3-8b:free": "Qwen-3.8B-Free",
+                "qwen/qwen-7b-chat": "Qwen-1.5-7B-Chat",
+                "deepseek/deepseek-chat": "DeepSeek-V3",
+                "deepseek/deepseek-chat:free": "DeepSeek-V3-Free",
+                "thudm/glm-4-32b:free": "GLM-4-32B-Free",
+            ]
         )
     ]
     
@@ -192,7 +219,8 @@ class PreferencesModel: ObservableObject {
         "volcengine",
         "openai",
         "google_gemini",
-        "claude"
+        "claude",
+        "openrouter"
     ]
     
     // zhipu 用户配置
@@ -300,6 +328,21 @@ class PreferencesModel: ObservableObject {
         }
     }
     
+    // openrouter 用户配置
+    @Published var openrouterApiKey: String {
+        didSet {
+            UserDefaults.standard.set(openrouterApiKey, forKey: "openrouterApiKey")
+            updateOpenrouterConfig()
+        }
+    }
+    
+    @Published var selectedOpenrouterModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedOpenrouterModel, forKey: "selectedOpenrouterModel")
+            updateOpenrouterConfig()
+        }
+    }
+    
     // 选中的AI服务
     @Published var selectedProvider: String {
         didSet {
@@ -336,6 +379,9 @@ class PreferencesModel: ObservableObject {
         self.zhipuApiKey = UserDefaults.standard.string(forKey: "zhipuApiKey") ?? ""
         self.selectedZhipuModel = UserDefaults.standard.string(forKey: "selectedZhipuModel") ?? ""
         
+        self.openrouterApiKey = UserDefaults.standard.string(forKey: "openrouterApiKey") ?? ""
+        self.selectedOpenrouterModel = UserDefaults.standard.string(forKey: "selectedOpenrouterModel") ?? ""
+        
         self.defaultMainFunction = UserDefaults.standard.string(forKey: "defaultMainFunction") ?? "translate"
         
         updateOpenAIConfig()
@@ -345,6 +391,7 @@ class PreferencesModel: ObservableObject {
         updateDeepseekConfig()
         updateVolcengineConfig()
         updateZhipuConfig()
+        updateOpenrouterConfig()
     }
     
     private func updateZhipuConfig() {
@@ -400,6 +447,14 @@ class PreferencesModel: ObservableObject {
             volcengineProvider.apiKey = volcengineApiKey
             volcengineProvider.model = selectedVolcengineModel
             defaultProviders["volcengine"] = volcengineProvider
+        }
+    }
+    
+    private func updateOpenrouterConfig() {
+        if var openrouterProvider = defaultProviders["openrouter"] {
+            openrouterProvider.apiKey = openrouterApiKey
+            openrouterProvider.model = selectedOpenrouterModel
+            defaultProviders["openrouter"] = openrouterProvider
         }
     }
     

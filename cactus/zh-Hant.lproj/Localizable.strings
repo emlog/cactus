@@ -60,6 +60,7 @@
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "火山引擎";
 "model_zhipu" = "智谱";
+"model_openrouter" = "OpenRouter";
 
 // ai config
 "openai_config" = "OpenAI 設定";
@@ -69,6 +70,7 @@
 "deepseek_config" = "Deepseek 設定";
 "volcengine_config" = "火山引擎設定";
 "zhipu_config" = "智谱設定";
+"openrouter_config" = "OpenRouter 設定";
 
 // Main Window Popups & Helpers
 "pop_text_empty" = "沒有可拷貝的內容";

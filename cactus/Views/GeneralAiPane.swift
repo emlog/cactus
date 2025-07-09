@@ -131,6 +131,8 @@ struct GeneralAiPane: View {
             return NSLocalizedString("google_gemini_config", comment: "Google Gemini 配置")
         case "claude":
             return NSLocalizedString("claude_config", comment: "Claude 配置")
+        case "openrouter":
+            return NSLocalizedString("openrouter_config", comment: "OpenRouter 配置")
         default:
             return NSLocalizedString("provider_config", comment: "提供商配置")
         }
@@ -153,6 +155,8 @@ struct GeneralAiPane: View {
             return $preferences.googleGeminiApiKey
         case "claude":
             return $preferences.claudeApiKey
+        case "openrouter":
+            return $preferences.openrouterApiKey
         default:
             return .constant("")
         }
@@ -175,6 +179,8 @@ struct GeneralAiPane: View {
             return $preferences.selectedGoogleGeminiModel
         case "claude":
             return $preferences.selectedClaudeModel
+        case "openrouter":
+            return $preferences.selectedOpenrouterModel
         default:
             return .constant("")
         }
@@ -193,7 +199,7 @@ struct GeneralAiPane: View {
     private var providerOptions: some View {
         ForEach(preferences.providerKeys, id: \.self) { key in
             // 高级版可以看到更多模型
-            if (key == "zhipu" || key == "siliconflow" || key == "deepseek" || key == "volcengine" || key == "claude" || key == "openai" || key == "google_gemini") && !isPremiumUser {
+            if (key == "zhipu" || key == "siliconflow" || key == "deepseek" || key == "volcengine" || key == "claude" || key == "openai" || key == "google_gemini" || key == "openrouter") && !isPremiumUser {
                 EmptyView()
             } else {
                 Text(providerDisplayText(for: key)).tag(key)

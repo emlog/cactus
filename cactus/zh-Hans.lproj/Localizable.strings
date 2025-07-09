@@ -60,6 +60,7 @@
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "火山引擎";
 "model_zhipu" = "智谱";
+"model_openrouter" = "OpenRouter";
 
 // ai config
 "openai_config" = "OpenAI配置";
@@ -69,6 +70,7 @@
 "deepseek_config" = "Deepseek 配置";
 "volcengine_config" = "火山引擎配置，请先开通模型";
 "zhipu_config" = "智谱配置";
+"openrouter_config" = "OpenRouter 配置";
 
 // main
 "pop_text_empty" = "没有可复制的内容";

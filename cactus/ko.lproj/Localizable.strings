@@ -60,6 +60,7 @@
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
+"model_openrouter" = "OpenRouter";
 
 // ai config
 "openai_config" = "OpenAI 설정";
@@ -69,6 +70,7 @@
 "deepseek_config" = "Deepseek 설정";
 "volcengine_config" = "Volcengine 설정";
 "zhipu_config" = "Zhipu 설정";
+"openrouter_config" = "OpenRouter 설정";
 
 // main
 "pop_text_empty" = "복사할 수 있는 내용이 없습니다";

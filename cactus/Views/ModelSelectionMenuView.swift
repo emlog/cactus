@@ -27,22 +27,6 @@ struct ModelSelectionMenuView: View {
                 }
             }
             Divider()
-            Menu(NSLocalizedString("default_main_function", comment: "默认主窗口功能")) {
-                ForEach(preferences.functionKeys, id: \.self) { functionKey in
-                    Button(action: {
-                        preferences.defaultMainFunction = functionKey
-                    }) {
-                        HStack {
-                            Text(preferences.availableFunctions[functionKey] ?? functionKey)
-                            Spacer()
-                            if preferences.defaultMainFunction == functionKey {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                }
-            }
-            Divider()
             Menu(NSLocalizedString("preferred_language", comment: "常用语言")) {
                 ForEach(preferences.languageKeys, id: \.self) { languageKey in
                     Button(action: {
@@ -68,6 +52,22 @@ struct ModelSelectionMenuView: View {
                             Text(preferences.availableLanguages[languageKey] ?? languageKey)
                             Spacer()
                             if preferences.commonForeignLanguage == languageKey {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            }
+            Divider()
+            Menu(NSLocalizedString("default_main_function", comment: "默认功能")) {
+                ForEach(preferences.functionKeys, id: \.self) { functionKey in
+                    Button(action: {
+                        preferences.defaultMainFunction = functionKey
+                    }) {
+                        HStack {
+                            Text(preferences.availableFunctions[functionKey] ?? functionKey)
+                            Spacer()
+                            if preferences.defaultMainFunction == functionKey {
                                 Image(systemName: "checkmark")
                             }
                         }

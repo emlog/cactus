@@ -60,15 +60,17 @@
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
+"model_openrouter" = "OpenRouter";
 
 // ai config
-"openai_config" = "OpenAI‑Konfiguration";
-"siliconflow_config" = "SiliconFlow‑Konfiguration";
-"google_gemini_config" = "Google Gemini‑Konfiguration";
-"claude_config" = "Anthropic Claude‑Konfiguration";
-"deepseek_config" = "DeepSeek‑Konfiguration";
-"volcengine_config" = "Volcengine‑Konfiguration (vor Nutzung freischalten)";
-"zhipu_config" = "Zhipu‑Konfiguration";
+"openai_config" = "OpenAI Konfiguration";
+"siliconflow_config" = "SiliconFlow Konfiguration";
+"google_gemini_config" = "Google Gemini Konfiguration";
+"claude_config" = "Anthropic Claude Konfiguration";
+"deepseek_config" = "DeepSeek Konfiguration";
+"volcengine_config" = "Volcengine Konfiguration (vor Nutzung freischalten)";
+"zhipu_config" = "Zhipu Konfiguration";
+"openrouter_config" = "OpenRouter Konfiguration";
 
 // main
 "pop_text_empty" = "Kein Text zum Kopieren";
