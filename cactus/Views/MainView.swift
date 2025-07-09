@@ -138,8 +138,7 @@ struct MainView: View {
                         translateText()
                     }) {
                         if contentModel.isTranslating {
-                            ProgressView()
-                                .scaleEffect(0.8)
+                            MiniLoadingView()
                                 .frame(width: 20, height: 20)
                         } else {
                             Image(systemName: "translate")
@@ -155,8 +154,7 @@ struct MainView: View {
                         summaryText()
                     }) {
                         if contentModel.isSummarizing {
-                            ProgressView()
-                                .scaleEffect(0.8)
+                            MiniLoadingView()
                                 .frame(width: 20, height: 20)
                         } else {
                             Image(systemName: "pencil.and.list.clipboard.rtl")
@@ -172,8 +170,7 @@ struct MainView: View {
                         dictionaryText()
                     }) {
                         if contentModel.isDictionaryLookup {
-                            ProgressView()
-                                .scaleEffect(0.8)
+                            MiniLoadingView()
                                 .frame(width: 20, height: 20)
                         } else {
                             Image(systemName: "books.vertical")
@@ -195,8 +192,7 @@ struct MainView: View {
                         chatText()
                     }) {
                         if contentModel.isChatting {
-                            ProgressView()
-                                .scaleEffect(0.8)
+                            MiniLoadingView()
                                 .frame(width: 20, height: 20)
                         } else {
                             Image(systemName: "arrow.up")
