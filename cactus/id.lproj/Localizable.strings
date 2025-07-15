@@ -1,0 +1,145 @@
+// Status Bar Menu
+"openmain" = "Buka Jendela";
+"translate" = "Terjemahkan Pilihan";
+"summary" = "Ringkasan";
+"dictionary" = "Kamus";
+"ocr_translate" = "Terjemahan Tangkapan Layar";
+"vocabulary" = "Kosakata";
+"favorites" = "Favorit";
+"history" = "Riwayat";
+"setting" = "Preferensi";
+"quit" = "Keluar";
+
+// pane
+"general" = "Umum";
+"service" = "Layanan AI";
+"premium" = "Premium";
+"about" = "Tentang";
+
+// setting
+"startup" = "Mulai saat startup";
+"shortcut_openmain" = "Pintasan Buka Jendela";
+"shortcut_openmain_description" = "Buka jendela dan isi teks yang dipilih ke dalam kolom input";
+"shortcut_translate" = "Pintasan Terjemahan";
+"shortcut_translate_description" = "Pilih teks, lalu tekan pintasan untuk menerjemahkan dengan cepat";
+"shortcut_summary" = "Pintasan Ringkasan";
+"shortcut_summary_description" = "Pilih teks, lalu tekan pintasan untuk meringkas";
+"shortcut_dict" = "Pintasan Kamus";
+"shortcut_dict_description" = "Pilih kata, lalu tekan pintasan untuk mencari arti";
+"shortcut_ocr_translate" = "Pintasan Terjemahan OCR";
+"shortcut_ocr_translate_description" = "Tangkap bagian teks di layar, lalu terjemahkan secara otomatis";
+"default_main_function" = "Tindakan Default";
+"default_main_function_description" = "Tindakan yang dijalankan saat menekan Return di jendela utama";
+
+// Language setting
+"preferred_language" = "Bahasa Utama";
+"common_foreign_language" = "Bahasa Asing Pertama";
+"preferred_language_description" = "Terjemahan bahasa asing ke dalam bahasa ini (biasanya bahasa ibu)";
+"common_foreign_language_description" = "Terjemahan bahasa utama ke dalam bahasa ini, yang sedang dipelajari atau digunakan";
+"language_zh_hans" = "Tionghoa Sederhana";
+"language_zh_hant" = "Tionghoa Tradisional";
+"language_ja" = "Jepang";
+"language_ko" = "Korea";
+"language_en" = "Inggris (English)";
+"language_fr" = "Prancis";
+"language_de" = "Jerman";
+"language_es" = "Spanyol";
+"language_id" = "Indonesia";
+"language_pt" = "Portugis";
+
+// ai setting
+"select_service" = "Pilih Layanan AI";
+"enter_api_key" = "Masukkan API Key";
+"api_key" = "Kunci API";
+"model" = "Model";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B (Direkomendasikan)";
+"model_cactusai_mix" = "CactusAI-Mix";
+"model_qwen3" = "OpenRouter-Qwen3-8B";
+"model_openai" = "OpenAI";
+"model_siliconflow" = "SiliconFlow";
+"model_google_gemini" = "Google Gemini";
+"model_claude" = "Anthropic Claude";
+"model_deepseek" = "DeepSeek";
+"model_volcengine" = "VolcEngine";
+"model_zhipu" = "Zhipu";
+"model_openrouter" = "OpenRouter";
+
+// ai config
+"openai_config" = "Konfigurasi OpenAI";
+"siliconflow_config" = "Konfigurasi SiliconFlow";
+"google_gemini_config" = "Konfigurasi Google Gemini";
+"claude_config" = "Konfigurasi Anthropic Claude";
+"deepseek_config" = "Konfigurasi DeepSeek";
+"volcengine_config" = "Konfigurasi VolcEngine (aktifkan model terlebih dahulu)";
+"zhipu_config" = "Konfigurasi Zhipu";
+"openrouter_config" = "Konfigurasi OpenRouter";
+
+// main
+"pop_text_empty" = "Tidak ada konten untuk disalin";
+"pop_translate_text_empty" = "Masukkan teks untuk diterjemahkan";
+"pop_summary_text_empty" = "Masukkan teks untuk diringkas";
+"pop_dict_text_empty" = "Masukkan satu kata untuk pencarian kamus";
+"pop_chat_text_empty" = "Masukkan pertanyaan Anda";
+"pop_copy_success" = "Disalin berhasil";
+"pop_already_cleared" = "Konten telah dibersihkan";
+"pop_favorite_added" = "Ditambahkan ke Favorit";
+"pop_select_model_first" = "Pilih model AI di pengaturan terlebih dahulu";
+"help_translate" = "Terjemahkan Teks";
+"help_summary" = "Ringkasan";
+"help_dict" = "Cari di Kamus";
+"help_chat" = "Kirim Pesan";
+"help_clear" = "Bersihkan";
+"help_favorite" = "Tambahkan ke Favorit";
+"help_speak" = "Bacakan";
+"help_copy" = "Salin";
+"help_pin" = "Sematkan Jendela";
+"help_unpin" = "Batalkan Sematan";
+"help_clear" = "Hapus Konten";
+
+// alert
+"accessibility_permission_message" = "Izin Aksesibilitas diperlukan. Harap aktifkan di Preferensi Sistem untuk menerjemahkan teks yang dipilih.";
+"app_in_menubar_info" = "Aplikasi telah dimulai, ikon 🌵 muncul di bilah menu";
+"open_settings" = "Buka Pengaturan";
+"cancel" = "Batal";
+
+// about
+"apptitle" = "Asisten AI Kaktus";
+"version" = "Versi";
+"report_issue" = "Laporkan Masalah";
+"contact" = "Hubungi Kami";
+"rate_app" = "Beri Penilaian";
+
+// ai error
+"error_invalid_config" = "Kesalahan sistem, konfigurasi layanan AI salah";
+"error_request_failed" = "Permintaan gagal. Coba ganti model AI atau periksa koneksi internet";
+"error_empty_api_key" = "Masukkan kunci API untuk layanan AI ini";
+"error_empty_model" = "Pilih model untuk layanan AI ini";
+
+// common
+"alert_ok" = "OK";
+"sum" = "Jumlah";
+"clear_all" = "Bersihkan Semua";
+"cancel" = "Batal";
+"confirm" = "Konfirmasi";
+"delete" = "Hapus";
+
+// pro
+"premium_owned" = "Anda sudah memiliki versi Premium, terima kasih atas dukungannya!";
+"premium_processing" = "Sedang diproses...";
+"premium_unlock" = "Buka Versi Premium";
+"premium_restore" = "Pulihkan Pembelian";
+"premium_features" = "Fitur Premium";
+"premium_feature_unlimited_usage" = "Terjemahan dan ringkasan tanpa batas";
+"premium_feature_unlimited_vocabulary" = "Penggunaan Favorit dan Kosakata tanpa batas";
+"premium_feature_custom_model" = "Dapatkan akses ke lebih banyak model AI seperti GPT-4, Gemini, Claude, DeepSeek, dll.";
+"terms_of_use" = "Syarat Penggunaan";
+"privacy_policy" = "Kebijakan Privasi";
+
+// Purchase Manager
+"purchase_load_product_failed" = "Gagal memuat informasi produk";
+"purchase_pending" = "Pembelian sedang diproses, periksa kembali nanti";
+"purchase_not_found" = "Riwayat pembelian tidak ditemukan";
+"upgrade_to_premium" = "Telah mencapai batas penggunaan. Tingkatkan ke versi Premium.";
+
+// history
+"clear_all_history_message" = "Apakah Anda yakin ingin menghapus semua riwayat?";

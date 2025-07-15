@@ -141,7 +141,7 @@
 				};
 			};
 			buildConfigurationList = F292ABA32D6575070089583E /* Build configuration list for PBXProject "cactus" */;
-			developmentRegion = "zh-Hans";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				"zh-Hans",
@@ -153,6 +153,13 @@
 				de,
 				fr,
 				es,
+				id,
+				"pt-BR",
+				"pt-PT",
+				"zh-HK",
+				"es-419",
+				"fr-CA",
+				"es-US",
 			);
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;

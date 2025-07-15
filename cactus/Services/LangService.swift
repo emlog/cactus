@@ -45,6 +45,10 @@ class LangService {
             detectedLanguage = "es"
         case .german:
             detectedLanguage = "de"
+        case .portuguese:
+            detectedLanguage = "pt-PT"
+        case .indonesian:
+            detectedLanguage = "id"
         default:
             // 对于其他语言，检查原始值是否是我们支持的语言
             let rawValue = dominantLanguage.rawValue
@@ -65,6 +69,10 @@ class LangService {
                 detectedLanguage = "es"
             case "de":
                 detectedLanguage = "de"
+            case "pt", "pt-PT", "pt-BR":
+                detectedLanguage = "pt-PT"
+            case "id":
+                detectedLanguage = "id"
             default:
                 detectedLanguage = "en"  // 不支持的语言返回英语
             }
@@ -176,6 +184,7 @@ class LangService {
         return preferredLanguageName
     }
     
+    // 获取系统首选语言
     public func getSystemLanguage() -> String {
         let systemLanguage = Locale.preferredLanguages.first ?? "en"
         
@@ -183,27 +192,31 @@ class LangService {
         case _ where systemLanguage.hasPrefix("zh-Hans"),
             _ where systemLanguage.hasPrefix("zh-CN"):
             return "zh-Hans"
-            
         case _ where systemLanguage.hasPrefix("zh-Hant"),
             _ where systemLanguage.hasPrefix("zh-TW"),
             _ where systemLanguage.hasPrefix("zh-HK"):
             return "zh-Hant"
-            
         case _ where systemLanguage.hasPrefix("ja"):
             return "ja"
-            
         case _ where systemLanguage.hasPrefix("ko"):
             return "ko"
-            
-        case _ where systemLanguage.hasPrefix("fr"):
+        case
+            _ where systemLanguage.hasPrefix("fr"),
+            _ where systemLanguage.hasPrefix("fr-CA"):
             return "fr"
-            
         case _ where systemLanguage.hasPrefix("de"):
             return "de"
-            
-        case _ where systemLanguage.hasPrefix("es"):
+        case
+            _ where systemLanguage.hasPrefix("es"),
+            _ where systemLanguage.hasPrefix("es-US"),
+            _ where systemLanguage.hasPrefix("es-419"):
             return "es"
-            
+        case _ where systemLanguage.hasPrefix("id"):
+            return "id"
+        case _ where systemLanguage.hasPrefix("pt-BR"),
+            _ where systemLanguage.hasPrefix("pt-PT"),
+            _ where systemLanguage.hasPrefix("pt"):
+            return "pt-PT"
         default:
             return "en"
         }
@@ -254,6 +267,10 @@ class LangService {
             return "de-DE"
         case "es":
             return "es-ES"
+        case "pt-PT":
+            return "pt-PT"
+        case "id":
+            return "id-ID"
         default:
             return "en-US"
         }

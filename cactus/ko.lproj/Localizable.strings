@@ -44,6 +44,8 @@
 "language_fr" = "프랑스어";
 "language_de" = "독일어";
 "language_es" = "스페인어";
+"language_id" = "인도네시아어";
+"language_pt" = "포르투갈어";
 
 // ai setting
 "select_service" = "AI 서비스 선택";

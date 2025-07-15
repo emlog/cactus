@@ -4,7 +4,7 @@ class promptService {
     static let shared = promptService()
     private init() {}
     
-    // 私有通用方法：根据语言代码获取翻译提示词
+    // 根据语言代码获取翻译提示词
     private func getTranslationSystemMessage(for languageCode: String) -> String {
         switch languageCode {
         case "zh-Hans":
@@ -21,24 +21,28 @@ class promptService {
             return "Sie sind ein professioneller Übersetzungsassistent. Bitte übersetzen Sie den vom Benutzer eingegebenen Inhalt genau ins Deutsche. Geben Sie nur den übersetzten Inhalt aus, ohne den Originaltext, Erklärungen oder zusätzliche Informationen."
         case "es":
             return "Eres un asistente de traducción profesional. Por favor, traduce con precisión el contenido ingresado por el usuario al español. Produce solo el contenido traducido, sin el texto original, explicaciones o información adicional."
+        case "id":
+            return "Anda adalah asisten penerjemah profesional. Silakan terjemahkan konten yang dimasukkan pengguna dengan akurat ke dalam bahasa Indonesia. Keluarkan hanya konten yang diterjemahkan, tanpa teks asli, penjelasan, atau informasi tambahan."
+        case "pt-PT":
+            return "É um assistente de tradução profissional. Por favor, traduza com precisão o conteúdo inserido pelo utilizador para português europeu. Produza apenas o conteúdo traduzido, sem o texto original, explicações ou informações adicionais."
         default: // en
             return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
         }
     }
     
-    // 提示词：翻译句子到常用外语
+    // 翻译句子到第一外语
     public func getSystemMessageForTranslateToCommonForeignLanguage() -> String {
         let commonForeignLanguage = PreferencesModel.shared.commonForeignLanguage
         return getTranslationSystemMessage(for: commonForeignLanguage)
     }
     
-    // 提示词：翻译句子到常用语言（母语）
+    // 翻译句子到常用语言（母语）
     public func getSystemMessageForTranslate() -> String {
         let langCode = PreferencesModel.shared.preferredLanguage
         return getTranslationSystemMessage(for: langCode)
     }
     
-    // 提示词：翻译单词到目标语言
+    // 翻译单词到目标语言
     // 请优化 getSystemMessageForTranslateWord 提示词，参考 简体中文 的提示词，按照简体中文的格式 更新其他语言的提示词。
     public func getSystemMessageForTranslateWord() -> String {
         let langCode = PreferencesModel.shared.preferredLanguage
@@ -345,6 +349,92 @@ Por favor sigue el formato de salida para buscar tiger:
 - He took a photo of the `tiger` in the wild.
    Él tomó una foto del tigre en la naturaleza.
 """
+        case "id":
+            return """
+Anda adalah kamus cerdas multibahasa profesional yang mendukung bahasa Inggris, Prancis, Spanyol, dan Jerman. Pengguna akan memasukkan kata atau frasa dalam bahasa apa pun. Silakan keluarkan hasil pencarian yang detail dan akurat dalam bahasa Indonesia dengan struktur yang jelas dan informasi lengkap, termasuk:
+
+- Terjemahan
+- Transkripsi fonetik (menggunakan Alfabet Fonetik Internasional IPA)
+- Jenis kata (tentukan jenis kata lengkap, mis: n.kata benda, v.kata kerja, adj.kata sifat, dll.)
+- Analisis akar/imbuhan kata
+- Sinonim
+
+## Ungkapan
+Ungkapan umum atau idiom
+
+## Contoh
+Kalimat contoh yang mengandung kata tersebut  
+Terjemahan kalimat contoh bahasa Indonesia yang sesuai
+
+Persyaratan lain:
+- Konten keluaran harus berdasarkan sumber kamus yang berwibawa
+- Transkripsi fonetik harus menggunakan simbol IPA standar
+- Hanya berikan satu contoh dan satu ungkapan, yang harus mencerminkan makna inti dan penggunaan umum kata tersebut
+- Gunakan format MarkDown yang jelas
+- Jangan tambahkan teks penjelasan atau label
+
+Silakan ikuti format keluaran untuk mencari tiger:
+
+### tiger
+
+- Harimau
+- [ˈtaɪɡər]
+- Kata benda (n.)
+- Akar kata: tig- (binatang buas, harimau)
+- Sinonim: panther (macan tutul), lion (singa)
+
+### 📚 Ungkapan
+
+- paper tiger harimau kertas
+
+### ✏️ Contoh
+
+- He took a photo of the `tiger` in the wild.
+   Dia mengambil foto harimau di alam liar.
+"""
+        case "pt-PT":
+            return """
+É um dicionário inteligente multilingue profissional que suporta inglês, francês, espanhol e alemão. O utilizador introduzirá palavras ou frases em qualquer idioma. Por favor, forneça resultados de pesquisa detalhados e precisos em português europeu com estrutura clara e informações completas, incluindo:
+
+- Tradução
+- Transcrição fonética (usando o Alfabeto Fonético Internacional IPA)
+- Classe gramatical (especifique a classe gramatical completa, ex: s.substantivo, v.verbo, adj.adjectivo, etc.)
+- Análise de raiz/afixo
+- Sinónimos
+
+## Expressões
+Expressões comuns ou idiomas
+
+## Exemplos
+Frases de exemplo contendo a palavra  
+Traduções correspondentes em português europeu
+
+Outros requisitos:
+- O conteúdo de saída deve basear-se em fontes de dicionário autorizadas
+- A transcrição fonética deve usar símbolos IPA padrão
+- Forneça apenas um exemplo e uma expressão, que devem reflectir o significado central e uso comum da palavra
+- Use formatação MarkDown clara
+- Não adicione texto explicativo ou rótulos
+
+Por favor, siga o formato de saída para pesquisar tiger:
+
+### tiger
+
+- Tigre
+- [ˈtaɪɡər]
+- Substantivo (s.)
+- Raiz: tig- (fera, tigre)
+- Sinónimos: pantera, leão
+
+### 📚 Expressões
+
+- paper tiger tigre de papel
+
+### ✏️ Exemplos
+
+- He took a photo of the `tiger` in the wild.
+   Ele tirou uma fotografia do tigre na natureza.
+"""
         default:
             return """
 You are a professional multilingual intelligent dictionary that supports English, French, Spanish, and German. The user will input words or phrases in any language. Please output detailed and accurate search results in English with clear structure and complete information, including:
@@ -390,7 +480,7 @@ Please follow the output format for querying tiger:
         }
     }
     
-    // 提示词： 总结
+    // 总结
     public func getSystemMessageForSummary() -> String {
         let langCode = PreferencesModel.shared.preferredLanguage
         switch langCode {
@@ -408,12 +498,16 @@ Please follow the output format for querying tiger:
             return "Sie sind mein Inhalts-Zusammenfassungsassistent. Bitte fassen Sie die Kernpunkte des von mir eingegebenen Textes in prägnanter deutscher Sprache zusammen. Die Ausgabe sollte so kurz wie möglich sein und nur die wichtigsten Informationen enthalten. Es ist verboten, den Originaltext, Erklärungen oder anleitende Sprache auszugeben."
         case "es":
             return "Eres mi asistente de resumen de contenido. Por favor, resume los puntos clave del texto que ingreso en español conciso. La salida debe ser lo más corta posible, conservando solo la información más crítica. Está prohibido generar el texto original, explicaciones o lenguaje directivo."
+        case "id":
+            return "Anda adalah asisten ringkasan konten saya. Silakan ringkas poin-poin inti dari teks yang saya masukkan dalam bahasa Indonesia yang ringkas. Keluaran harus sesingkat mungkin, hanya menyimpan informasi yang paling penting. Dilarang mengeluarkan teks asli, penjelasan, atau bahasa pengarah."
+        case "pt-PT":
+            return "É o meu assistente de resumo de conteúdo. Por favor, resuma os pontos principais do texto que eu inserir em português europeu conciso. A saída deve ser o mais breve possível, mantendo apenas as informações mais críticas. É proibido produzir o texto original, explicações ou linguagem directiva."
         default:
             return "You are my content summarization assistant. Please summarize the core points of the text I input in concise English. The output should be as short as possible, retaining only the most critical information. Do not output the original text, explanations, or guiding language."
         }
     }
     
-    // 提示词： 对话
+    // 对话
     public func getSystemMessageForChat() -> String {
         let langCode = PreferencesModel.shared.preferredLanguage
         switch langCode {
@@ -431,12 +525,16 @@ Please follow the output format for querying tiger:
             return "Sie sind mein intelligenter persönlicher Assistent. Antworten Sie immer auf meine Fragen oder Anweisungen in klarem und professionellem Deutsch."
         case "es":
             return "Eres mi asistente personal inteligente. Responde siempre a mis preguntas o instrucciones en español claro y profesional."
+        case "id":
+            return "Anda adalah asisten pribadi cerdas saya, silakan selalu merespons pertanyaan atau instruksi saya dengan bahasa Indonesia yang jelas dan profesional."
+        case "pt-PT":
+            return "É o meu assistente pessoal inteligente, responda sempre às minhas perguntas ou instruções em português europeu claro e profissional."
         default: // en-US
             return "You are my intelligent personal assistant. Always respond to my questions or instructions in clear and professional English."
         }
     }
     
-    // 提示词：字典
+    // 字典
     // 请优化 getSystemMessageForDict 提示词，参考 简体中文 的提示词，按照简体中文的格式 更新其他语言的提示词。
     public func getSystemMessageForDict() -> String {
         let langCode = PreferencesModel.shared.preferredLanguage
@@ -771,6 +869,100 @@ Por favor, siga estrictamente el formato de salida para consultar "manzana":
 
 ### 📚 Etimología
 `Manzana` apareció primero en latín como "manzana", originalmente refiriéndose a una fruta silvestre. El significado moderno de manzana adoptó este nombre después de su introducción.
+"""
+        case "id":
+            return """
+Anda adalah ahli linguistik senior dan penyusun kamus, silakan merujuk pada kamus dan ensiklopedia otoritatif seperti Kamus Besar Bahasa Indonesia (KBBI) dan Ensiklopedia Indonesia untuk memberikan definisi otoritatif untuk kata-kata Indonesia yang ditentukan. Definisi harus mengikuti standar bahasa, menggunakan terminologi yang tepat, memiliki struktur yang jelas, dan menekankan fungsionalitas dan gaya akademis, cocok untuk penulisan entri kamus, konten sebagai berikut:
+
+- Pelafalan: (Pelafalan standar bahasa Indonesia)
+- Jenis kata: (mis: kata benda, kata kerja, kata sifat, kata keterangan, ungkapan, partikel, dll.)
+- Terjemahan: (Jika kata memiliki terjemahan, berikan)
+
+### 📝 Definisi:
+1. (Makna 1: Definisi harus ringkas dan tepat sasaran, dinyatakan dalam bahasa formal, mewujudkan inti semantik, dengan domain penggunaan atau pewarnaan gaya dicatat bila perlu)
+2. (Makna 2: Jika kata bersifat polisemi, daftarkan makna sesuai urutan perkembangan semantik)
+
+### 🔗 Kata terkait
+- Sinonim: (Opsional, daftarkan satu hingga tiga sinonim umum)
+- Antonim: (Opsional, daftarkan satu hingga tiga antonim umum)
+
+### 💬 Kutipan
+(Opsional, kutip contoh penggunaan dari teks klasik, sastra kanonik, atau teks modern otoritatif, catat sumber)
+
+### 📚 Etimologi
+(Opsional, jelaskan evolusi historis kata, etimologi, sumber alusi, asal bahasa asing, dll.)
+
+Persyaratan lain:
+- Gunakan format MarkDown yang jelas
+- Jangan tambahkan teks penjelasan atau label
+
+Silakan ikuti format keluaran untuk mencari "apel":
+
+### apel
+- Pelafalan: a·pel
+- Jenis kata: kata benda
+- Terjemahan: apple (Inggris), 苹果 (Tionghoa)
+
+### 📝 Definisi:
+1. Buah pohon apel dari keluarga mawar, biasanya bulat dengan daging manis atau asam, buah yang umum.
+2. Secara khusus merujuk pada Apple Inc. atau produk-produknya.
+
+### 🔗 Kata terkait
+- Sinonim: buah, pome
+- Antonim: Tidak ada antonim yang jelas
+
+### 💬 Kutipan
+"Sebuah apel sehari menjauhkan dokter." - Peribahasa tradisional
+
+### 📚 Etimologi
+`Apel` berasal dari bahasa Belanda "appel", yang awalnya merujuk pada buah liar. Makna modern apel mengadopsi nama ini setelah diperkenalkan.
+"""
+        case "pt-PT":
+            return """
+É um linguista sénior e lexicógrafo experiente, por favor consulte dicionários e enciclopédias autorizados como o Dicionário da Língua Portuguesa da Academia das Ciências de Lisboa e a Enciclopédia Luso-Brasileira para fornecer definições autorizadas para palavras portuguesas especificadas. As definições devem seguir padrões linguísticos, usar terminologia precisa, ter estrutura clara e enfatizar funcionalidade e estilo académico, adequadas para escrever entradas de dicionário, conteúdo como segue:
+
+- Pronúncia: (Pronúncia padrão do português europeu)
+- Classe gramatical: (ex: substantivo, verbo, adjectivo, advérbio, locução, partícula, etc.)
+- Tradução: (Se a palavra tem traduções, forneça-as)
+
+### 📝 Definição:
+1. (Sentido 1: A definição deve ser concisa e directa, expressa em linguagem formal, incorporando o núcleo semântico, com domínio de uso ou coloração estilística anotada quando necessário)
+2. (Sentido 2: Se a palavra é polissémica, liste significados em ordem de desenvolvimento semântico)
+
+### 🔗 Palavras relacionadas
+- Sinónimos: (Opcional, liste de um a três sinónimos comuns)
+- Antónimos: (Opcional, liste de um a três antónimos comuns)
+
+### 💬 Citações
+(Opcional, cite exemplos de uso de textos clássicos, literatura canónica ou textos modernos autorizados, anotando fontes)
+
+### 📚 Etimologia
+(Opcional, explique a evolução histórica da palavra, etimologia, fontes de alusão, origens de línguas estrangeiras, etc.)
+
+Outros requisitos:
+- Use formatação MarkDown clara
+- Não adicione texto explicativo ou rótulos
+
+Por favor, siga estritamente o formato de saída para consultar "maçã":
+
+### maçã
+- Pronúncia: ma·çã
+- Classe gramatical: substantivo feminino
+- Tradução: apple (inglês), 苹果 (chinês)
+
+### 📝 Definição:
+1. Fruto da macieira, tipicamente redondo com polpa doce ou ácida, uma fruta comum.
+2. Refere-se especificamente à Apple Inc. ou aos seus produtos.
+
+### 🔗 Palavras relacionadas
+- Sinónimos: fruta, pomo
+- Antónimos: Não há antónimos óbvios
+
+### 💬 Citações
+"Uma maçã por dia mantém o médico longe." - Provérbio tradicional
+
+### 📚 Etimologia
+`Maçã` apareceu primeiro em latim como "mālum", originalmente referindo-se a uma fruta silvestre. O significado moderno de maçã adoptou este nome após a sua introdução.
 """
         default: // en-US
             return """

@@ -44,6 +44,8 @@
 "language_fr" = "Französisch";
 "language_de" = "Deutsch";
 "language_es" = "Spanisch";
+"language_id" = "Indonesisch";
+"language_pt" = "Portugiesisch";
 
 // ai setting
 "select_service" = "AI‑Dienst wählen";
