@@ -4,55 +4,38 @@ class promptService {
     static let shared = promptService()
     private init() {}
     
-    // 提示词：中文、韩文、日文、繁体中文 => 英文翻译
-    public func getSystemMessageForTranslateToEnglish() -> String {
-        return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the English translation, without the original text or any explanations."
+    // 私有通用方法：根据语言代码获取翻译提示词
+    private func getTranslationSystemMessage(for languageCode: String) -> String {
+        switch languageCode {
+        case "zh-Hans":
+            return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
+        case "zh-Hant":
+            return "你是一名專業的翻譯助手。請將使用者輸入的內容準確翻譯為繁體中文，只輸出翻譯後的內容，不包含原文、解釋或任何多餘資訊。"
+        case "ja":
+            return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
+        case "ko":
+            return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
+        case "fr":
+            return "Vous êtes un assistant de traduction professionnel. Veuillez traduire avec précision le contenu saisi par l'utilisateur en français. Ne produisez que le contenu traduit, sans le texte original, les explications ou toute information supplémentaire."
+        case "de":
+            return "Sie sind ein professioneller Übersetzungsassistent. Bitte übersetzen Sie den vom Benutzer eingegebenen Inhalt genau ins Deutsche. Geben Sie nur den übersetzten Inhalt aus, ohne den Originaltext, Erklärungen oder zusätzliche Informationen."
+        case "es":
+            return "Eres un asistente de traducción profesional. Por favor, traduce con precisión el contenido ingresado por el usuario al español. Produce solo el contenido traducido, sin el texto original, explicaciones o información adicional."
+        default: // en
+            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
+        }
     }
     
     // 提示词：翻译句子到常用外语
     public func getSystemMessageForTranslateToCommonForeignLanguage() -> String {
         let commonForeignLanguage = PreferencesModel.shared.commonForeignLanguage
-        switch commonForeignLanguage {
-        case "zh-Hans":
-            return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
-        case "zh-Hant":
-            return "你是一名專業的翻譯助手。請將使用者輸入的內容準確翻譯為繁體中文，只輸出翻譯後的內容，不包含原文、解釋或任何多餘資訊。"
-        case "ja":
-            return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
-        case "ko":
-            return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
-        case "fr":
-            return "Vous êtes un assistant de traduction professionnel. Veuillez traduire avec précision le contenu saisi par l'utilisateur en français. Ne produisez que le contenu traduit, sans le texte original, les explications ou toute information supplémentaire."
-        case "de":
-            return "Sie sind ein professioneller Übersetzungsassistent. Bitte übersetzen Sie den vom Benutzer eingegebenen Inhalt genau ins Deutsche. Geben Sie nur den übersetzten Inhalt aus, ohne den Originaltext, Erklärungen oder zusätzliche Informationen."
-        case "es":
-            return "Eres un asistente de traducción profesional. Por favor, traduce con precisión el contenido ingresado por el usuario al español. Produce solo el contenido traducido, sin el texto original, explicaciones o información adicional."
-        default: // en
-            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
-        }
+        return getTranslationSystemMessage(for: commonForeignLanguage)
     }
     
     // 提示词：翻译句子到常用语言（母语）
     public func getSystemMessageForTranslate() -> String {
         let langCode = PreferencesModel.shared.preferredLanguage
-        switch langCode {
-        case "zh-Hans":
-            return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
-        case "zh-Hant":
-            return "你是一名專業的翻譯助手。請將使用者輸入的內容準確翻譯為繁體中文，只輸出翻譯後的內容，不包含原文、解釋或任何多餘資訊。"
-        case "ja":
-            return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
-        case "ko":
-            return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
-        case "fr":
-            return "Vous êtes un assistant de traduction professionnel. Veuillez traduire avec précision le contenu saisi par l'utilisateur en français. Ne produisez que le contenu traduit, sans le texte original, les explications ou toute information supplémentaire."
-        case "de":
-            return "Sie sind ein professioneller Übersetzungsassistent. Bitte übersetzen Sie den vom Benutzer eingegebenen Inhalt genau ins Deutsche. Geben Sie nur den übersetzten Inhalt aus, ohne den Originaltext, Erklärungen oder zusätzliche Informationen."
-        case "es":
-            return "Eres un asistente de traducción profesional. Por favor, traduce con precisión el contenido ingresado por el usuario al español. Produce solo el contenido traducido, sin el texto original, explicaciones o información adicional."
-        default: // en
-            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
-        }
+        return getTranslationSystemMessage(for: langCode)
     }
     
     // 提示词：翻译单词到目标语言
