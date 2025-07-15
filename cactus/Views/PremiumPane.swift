@@ -155,14 +155,13 @@ struct PremiumPane: View {
                             .font(.caption)
                             .foregroundColor(.blue)
                     }
-                    .frame(height: 32)
-                    
+                    .padding(.top, 8)
                     // 错误信息
                     if let errorMessage = purchaseManager.errorMessage {
                         Text(errorMessage)
                             .font(.caption)
                             .foregroundColor(.red)
-                            .padding(.top, 8)
+                            .padding(0)
                     }
                 }
                 .frame(maxWidth: .infinity)
