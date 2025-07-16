@@ -14,6 +14,7 @@ class WindowManager: NSObject, NSWindowDelegate {
     private var isMainWindowPinned = false
     private var pinnedWindowOrigin: NSPoint?
     private var pinButton: NSButton?
+    private var historyButton: NSButton?
     private var settingsWindowController: SettingsWindowController?
     var accessibilityWindow: NSWindow?
     
@@ -62,7 +63,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         // 初始化主窗口
         mainWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 690, height: 600),
-            styleMask: [.titled, .closable],
+            styleMask: [.titled],
             backing: .buffered,
             defer: false
         )
@@ -93,17 +94,18 @@ class WindowManager: NSObject, NSWindowDelegate {
             object: nil
         )
         
-        setupPinButton()
+        setupTopBarButton()
     }
     
-    private func setupPinButton() {
-        // 添加 Pin 按钮到标题栏
-        let titlebarAccessoryViewController = NSTitlebarAccessoryViewController()
-        titlebarAccessoryViewController.layoutAttribute = .trailing
+    private func setupTopBarButton() {
+        // 添加左侧按钮到标题栏
+        let leftTitlebarAccessoryViewController = NSTitlebarAccessoryViewController()
+        leftTitlebarAccessoryViewController.layoutAttribute = .leading  // 将按钮放在左侧
         
-        // 创建容器视图，增加高度来提供上边距
-        let containerView = NSView(frame: NSRect(x: 0, y: 0, width: 40, height: 50))
+        // 创建左侧容器视图，调整宽度以容纳三个按钮
+        let leftContainerView = NSView(frame: NSRect(x: 0, y: 0, width: 80, height: 50))
         
+        // Pin 按钮
         pinButton = NSButton()
         pinButton?.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: NSLocalizedString("help_pin", comment: "置顶窗口"))
         pinButton?.bezelStyle = .texturedRounded
@@ -113,12 +115,40 @@ class WindowManager: NSObject, NSWindowDelegate {
         pinButton?.action = #selector(pinButtonTapped)
         pinButton?.toolTip = NSLocalizedString("help_pin", comment: "置顶窗口")
         pinButton?.sendAction(on: .leftMouseDown)
-        // 将按钮向下偏移，距离上边框更远
-        pinButton?.frame = NSRect(x: 0, y: -6, width: 35, height: 35)
+        pinButton?.frame = NSRect(x: 0, y: -5, width: 35, height: 35)
         
-        containerView.addSubview(pinButton!)
-        titlebarAccessoryViewController.view = containerView
-        mainWindow?.addTitlebarAccessoryViewController(titlebarAccessoryViewController)
+        // 历史记录按钮
+        historyButton = NSButton()
+        historyButton?.image = NSImage(systemSymbolName: "clock", accessibilityDescription: NSLocalizedString("history", comment: "历史记录"))
+        historyButton?.bezelStyle = .texturedRounded
+        historyButton?.isBordered = false
+        historyButton?.imageScaling = .scaleProportionallyDown
+        historyButton?.target = self
+        historyButton?.action = #selector(historyButtonTapped)
+        historyButton?.toolTip = NSLocalizedString("history", comment: "历史记录")
+        historyButton?.sendAction(on: .leftMouseDown)
+        historyButton?.frame = NSRect(x: 30, y: -5, width: 35, height: 35)
+        
+        leftContainerView.addSubview(pinButton!)
+        leftContainerView.addSubview(historyButton!)
+        leftTitlebarAccessoryViewController.view = leftContainerView
+        mainWindow?.addTitlebarAccessoryViewController(leftTitlebarAccessoryViewController)
+        
+        // 添加右侧 ModelSelectionMenuView 到标题栏
+        let rightTitlebarAccessoryViewController = NSTitlebarAccessoryViewController()
+        rightTitlebarAccessoryViewController.layoutAttribute = .trailing  // 将按钮放在右侧
+        
+        // 创建 SwiftUI 视图的 NSHostingController
+        let modelSelectionView = ModelSelectionMenuView()
+        let hostingController = NSHostingController(rootView: modelSelectionView)
+        
+        // 设置容器视图大小
+        let rightContainerView = NSView(frame: NSRect(x: 0, y: 0, width: 40, height: 50))
+        hostingController.view.frame = NSRect(x: 0, y: -5, width: 35, height: 35)
+        rightContainerView.addSubview(hostingController.view)
+        
+        rightTitlebarAccessoryViewController.view = rightContainerView
+        mainWindow?.addTitlebarAccessoryViewController(rightTitlebarAccessoryViewController)
     }
     
     @objc private func adjustWindowSize() {
@@ -575,6 +605,14 @@ class WindowManager: NSObject, NSWindowDelegate {
     @objc private func pinButtonTapped() {
         isMainWindowPinned.toggle()
         updatePinState()
+    }
+    
+    @objc private func historyButtonTapped() {
+        openHistory()
+    }
+    
+    @objc private func favoritesButtonTapped() {
+        openFavorites()
     }
     
     private func updatePinState() {

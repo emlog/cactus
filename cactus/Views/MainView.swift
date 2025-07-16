@@ -204,10 +204,7 @@ struct MainView: View {
                     .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
                     
                     Spacer()
-                    
-                    // Model selection menu button
-                    ModelSelectionMenuView()
-                    
+
                     // 隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
