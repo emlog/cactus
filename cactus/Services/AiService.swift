@@ -213,7 +213,10 @@ class AiService: NSObject, URLSessionDataDelegate {
                     fullContent += content
                     
                     DispatchQueue.main.async {
-                        TextContentModel.shared.resultText = self.fullContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                        // 保持换行格式：将\n转换为Markdown硬换行（行末两个空格+换行）
+                        let processedContent = self.fullContent.replacingOccurrences(of: "\n", with: "  \n")
+                        // 移除字符串开头和结尾的空白字符和换行符
+                        TextContentModel.shared.resultText = processedContent.trimmingCharacters(in: .whitespacesAndNewlines)
                     }
                 }
             }
