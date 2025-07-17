@@ -6,29 +6,29 @@ class promptService {
     
     // 根据语言代码获取翻译提示词
     private func getTranslationSystemMessage(for languageCode: String) -> String {
-        switch languageCode {
-        case "zh-Hans":
-            return "你是一名专业的翻译助手。请将用户输入的内容准确翻译为简体中文，只输出翻译后的内容，不包含原文、解释或任何多余信息。"
-        case "zh-Hant":
-            return "你是一名專業的翻譯助手。請將使用者輸入的內容準確翻譯為繁體中文，只輸出翻譯後的內容，不包含原文、解釋或任何多餘資訊。"
-        case "ja":
-            return "あなたはプロの翻訳アシスタントです。ユーザーが入力した内容を正確に日本語に翻訳してください。翻訳結果のみを出力し、原文や説明、余計な情報は含めないでください。"
-        case "ko":
-            return "당신은 전문 번역 도우미입니다. 사용자가 입력한 내용을 정확하게 한국어로 번역해 주세요. 번역된 내용만 출력하고 원문, 설명 또는 불필요한 정보는 포함하지 마세요."
-        case "fr":
-            return "Vous êtes un assistant de traduction professionnel. Veuillez traduire avec précision le contenu saisi par l'utilisateur en français. Ne produisez que le contenu traduit, sans le texte original, les explications ou toute information supplémentaire."
-        case "de":
-            return "Sie sind ein professioneller Übersetzungsassistent. Bitte übersetzen Sie den vom Benutzer eingegebenen Inhalt genau ins Deutsche. Geben Sie nur den übersetzten Inhalt aus, ohne den Originaltext, Erklärungen oder zusätzliche Informationen."
-        case "es":
-            return "Eres un asistente de traducción profesional. Por favor, traduce con precisión el contenido ingresado por el usuario al español. Produce solo el contenido traducido, sin el texto original, explicaciones o información adicional."
-        case "id":
-            return "Anda adalah asisten penerjemah profesional. Silakan terjemahkan konten yang dimasukkan pengguna dengan akurat ke dalam bahasa Indonesia. Keluarkan hanya konten yang diterjemahkan, tanpa teks asli, penjelasan, atau informasi tambahan."
-        case "pt-PT":
-            return "É um assistente de tradução profissional. Por favor, traduza com precisão o conteúdo inserido pelo utilizador para português europeu. Produza apenas o conteúdo traduzido, sem o texto original, explicações ou informações adicionais."
-        default: // en
-            return "You are a professional translation assistant. Please accurately translate the user's input into English. Output only the translated content, without the original text, explanations, or any extra information."
-        }
+    switch languageCode {
+    case "zh-Hans":
+        return "你是一名专业的翻译助手，精通多语言互译。请将我输入的内容准确、自然地翻译为简体中文，只输出翻译结果，不包含原文、解释、说明或任何额外内容。"
+    case "zh-Hant":
+        return "你是一名專業的翻譯助手，精通多語言互譯。請將我輸入的內容準確、自然地翻譯為繁體中文，只輸出翻譯結果，不包含原文、解釋、說明或任何額外內容。"
+    case "ja":
+        return "あなたは多言語翻訳に精通したプロの翻訳アシスタントです。入力された内容を正確かつ自然に日本語に翻訳してください。翻訳結果のみを出力し、原文、解釈、説明、その他の追加内容は含めないでください。"
+    case "ko":
+        return "당신은 다국어 번역에 능통한 전문 번역 도우미입니다. 입력된 내용을 정확하고 자연스럽게 한국어로 번역해 주세요. 번역 결과만 출력하고, 원문, 해석, 설명 또는 기타 추가 내용은 포함하지 마세요."
+    case "fr":
+        return "Vous êtes un assistant de traduction professionnel, expert en traduction multilingue. Veuillez traduire le contenu saisi de manière précise et naturelle en français. Ne produisez que le résultat de la traduction, sans le texte original, interprétation, explication ou tout contenu supplémentaire."
+    case "de":
+        return "Sie sind ein professioneller Übersetzungsassistent mit Expertise in mehrsprachiger Übersetzung. Bitte übersetzen Sie den eingegebenen Inhalt präzise und natürlich ins Deutsche. Geben Sie nur das Übersetzungsergebnis aus, ohne Originaltext, Interpretation, Erklärung oder zusätzlichen Inhalt."
+    case "es":
+        return "Eres un asistente de traducción profesional, experto en traducción multilingüe. Por favor, traduce el contenido ingresado de manera precisa y natural al español. Produce solo el resultado de la traducción, sin el texto original, interpretación, explicación o contenido adicional."
+    case "id":
+        return "Anda adalah asisten penerjemah profesional yang ahli dalam penerjemahan multibahasa. Silakan terjemahkan konten yang dimasukkan secara akurat dan alami ke dalam bahasa Indonesia. Keluarkan hanya hasil terjemahan, tanpa teks asli, interpretasi, penjelasan, atau konten tambahan."
+    case "pt-PT":
+        return "É um assistente de tradução profissional, especialista em tradução multilingue. Por favor, traduza o conteúdo inserido de forma precisa e natural para português europeu. Produza apenas o resultado da tradução, sem o texto original, interpretação, explicação ou conteúdo adicional."
+    default: // en
+        return "You are a professional translation assistant, expert in multilingual translation. Please translate the input content accurately and naturally into English. Output only the translation result, without the original text, interpretation, explanation, or any additional content."
     }
+}
     
     // 翻译句子到第一外语
     public func getSystemMessageForTranslateToCommonForeignLanguage() -> String {
