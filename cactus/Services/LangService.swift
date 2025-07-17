@@ -152,26 +152,22 @@ class LangService {
         // 去除首尾空格
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // 如果文本为空，返回false
-        if trimmedText.isEmpty {
-            return false
-        }
+        guard !trimmedText.isEmpty else { return false }
         
-        // 检查是否包含句子终止符号（句号、问号、感叹号等）
-        let sentenceEndingPunctuation = [".", "?", "!", "。", "？", "！", "…", "、"]
-        let containsEndingPunctuation = sentenceEndingPunctuation.contains { trimmedText.contains($0) }
+        // 定义所有句子相关的标点符号（包括分隔符和终止符）
+        let sentencePunctuation: Set<Character> = [
+            ".", "?", "!", "。", "？", "！", "…",  // 终止符
+            ",", "，", ";", "；", ":", "："        // 分隔符
+        ]
         
-        // 检查是否包含空格（多个单词的特征）
-        let containsSpace = trimmedText.contains(" ")
+        // 检查是否包含句子标点符号
+        let hasPunctuation = trimmedText.contains { sentencePunctuation.contains($0) }
         
-        // 检查长度（通常句子比单个单词长）
-        let isLongEnough = trimmedText.count > 3
+        // 检查是否包含空格（多个单词）
+        let hasMultipleWords = trimmedText.firstMatch(of: /[\s]+/) != nil
         
-        // 综合判断：
-        // 1. 如果包含句子终止符号，很可能是句子
-        // 2. 如果包含空格（多个单词），很可能是句子
-        // 3. 如果文本足够长，更可能是句子而不是单词
-        return containsEndingPunctuation || (containsSpace && isLongEnough)
+        // 句子的判断条件：包含标点符号或包含多个单词
+        return hasPunctuation || hasMultipleWords
     }
     
     // 获取系统首选语言的本地化名称
@@ -234,15 +230,10 @@ class LangService {
             // 应对某些简体中文词语会被识别为繁体中文，无法精确
             // 如果首选语言是繁体中文，则简体中文和繁体中文都认为是相等的
             // 如果首选语言是简体中文，则简体中文和繁体中文都认为是相等的
-            if preferredLanguage == "zh-Hans" {
+            if preferredLanguage == "zh-Hans" || preferredLanguage == "zh-Hant" {
                 return textLang == "zh-Hans" || textLang == "zh-Hant"
-            } else if preferredLanguage == "zh-Hant" {
-                return textLang == "zh-Hans" || textLang == "zh-Hant"
-            }
-            
-            // 其他语言保持原有的精确匹配
-            else {
-                return preferredLanguage == textLang
+            } else {
+                return preferredLanguage == textLang // 其他语言保持原有的精确匹配
             }
         }
         return false
@@ -277,6 +268,7 @@ class LangService {
     }
     
     // 检查输入的单词是否属于英语、法语、西班牙语、德语中的一种
+    // 单词查询考虑到音标、词根等 只适用于英语等语言
     public func isWordInSupportedLanguages(_ word: String) -> Bool {
         // 去除首尾空格
         let trimmedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
