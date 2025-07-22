@@ -135,51 +135,48 @@ struct MainView: View {
                 HStack(spacing: 2) {
                     // 翻译按钮
                     Button(action: {
-                        translateText()
-                    }) {
                         if contentModel.isTranslating {
-                            MiniLoadingView()
-                                .frame(width: 20, height: 20)
+                            stopAIRequest()
                         } else {
-                            Image(systemName: "translate")
-                                .frame(width: 20, height: 20)
+                            translateText()
                         }
+                    }) {
+                        Image(systemName: contentModel.isTranslating ? "stop.fill" : "translate")
+                            .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
-                    .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_translate", comment: "翻译文本"), delay: 0.5)
+                    .disabled(contentModel.isProcessing && !contentModel.isTranslating)
+                    .hoverTooltip(contentModel.isTranslating ? NSLocalizedString("stop", comment: "停止") : NSLocalizedString("help_translate", comment: "翻译文本"), delay: 0.5)
                     
                     // 摘要按钮
                     Button(action: {
-                        summaryText()
-                    }) {
                         if contentModel.isSummarizing {
-                            MiniLoadingView()
-                                .frame(width: 20, height: 20)
+                            stopAIRequest()
                         } else {
-                            Image(systemName: "pencil.and.list.clipboard.rtl")
-                                .frame(width: 20, height: 20)
+                            summaryText()
                         }
+                    }) {
+                        Image(systemName: contentModel.isSummarizing ? "stop.fill" : "list.bullet.rectangle")
+                            .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
-                    .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_summary", comment: "总结摘要"), delay: 0.5)
+                    .disabled(contentModel.isProcessing && !contentModel.isSummarizing)
+                    .hoverTooltip(contentModel.isSummarizing ? NSLocalizedString("stop", comment: "停止") : NSLocalizedString("help_summary", comment: "总结摘要"), delay: 0.5)
                     
                     // 字典按钮
                     Button(action: {
-                        dictionaryText()
-                    }) {
                         if contentModel.isDictionaryLookup {
-                            MiniLoadingView()
-                                .frame(width: 20, height: 20)
+                            stopAIRequest()
                         } else {
-                            Image(systemName: "books.vertical")
-                                .frame(width: 20, height: 20)
+                            dictionaryText()
                         }
+                    }) {
+                        Image(systemName: contentModel.isDictionaryLookup ? "stop.fill" : "book")
+                            .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
-                    .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_dict", comment: "解释说明"), delay: 0.5)
+                    .disabled(contentModel.isProcessing && !contentModel.isDictionaryLookup)
+                    .hoverTooltip(contentModel.isDictionaryLookup ? NSLocalizedString("stop", comment: "停止") : NSLocalizedString("help_dict", comment: "解释说明"), delay: 0.5)
                     
                     // 分隔符
                     Rectangle()
@@ -189,22 +186,27 @@ struct MainView: View {
                     
                     // 对话问答按钮
                     Button(action: {
-                        chatText()
-                    }) {
                         if contentModel.isChatting {
-                            MiniLoadingView()
-                                .frame(width: 20, height: 20)
+                            stopAIRequest()
                         } else {
-                            Image(systemName: "arrow.up")
-                                .frame(width: 20, height: 20)
+                            chatText()
                         }
+                    }) {
+                        Image(systemName: contentModel.isChatting ? "stop.fill" : "arrow.up")
+                            .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
-                    .disabled(contentModel.isProcessing)
-                    .hoverTooltip(NSLocalizedString("help_chat", comment: "对话问答"), delay: 0.5)
+                    .disabled(contentModel.isProcessing && !contentModel.isChatting)
+                    .hoverTooltip(contentModel.isChatting ? NSLocalizedString("stop", comment: "停止") : NSLocalizedString("help_chat", comment: "发送消息"), delay: 0.5)
                     
                     Spacer()
-
+                    
+                    // 将loading动画移到最右端
+                    if contentModel.isProcessing {
+                        MiniLoadingView()
+                            .frame(width: 20, height: 20)
+                    }
+                    
                     // 隐藏的按钮来监听 ESC 键，关闭当前窗口
                     Button("") {
                         NSApplication.shared.keyWindow?.close()
@@ -668,6 +670,20 @@ struct MainView: View {
             fallthrough
         default:
             chatText()
+        }
+    }
+    
+    // 添加停止AI请求的方法
+    private func stopAIRequest() {
+        contentModel.shouldStopRequest = true
+        Ai.stopCurrentRequest()
+        
+        DispatchQueue.main.async {
+            self.contentModel.isProcessing = false
+            self.contentModel.isTranslating = false
+            self.contentModel.isSummarizing = false
+            self.contentModel.isDictionaryLookup = false
+            self.contentModel.isChatting = false
         }
     }
 }

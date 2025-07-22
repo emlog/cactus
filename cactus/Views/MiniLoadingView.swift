@@ -15,21 +15,16 @@ struct MiniLoadingView: View {
             )
             .frame(width: 12, height: 12)
             .rotationEffect(.degrees(isAnimating ? 360 : 0))
-            .animation(
-                Animation.linear(duration: 1)
-                    .repeatForever(autoreverses: false),
-                value: isAnimating
-            )
             .onAppear {
-                isAnimating = true
+                withAnimation(
+                    Animation.linear(duration: 1)
+                        .repeatForever(autoreverses: false)
+                ) {
+                    isAnimating = true
+                }
             }
             .onDisappear {
                 isAnimating = false
             }
     }
-}
-
-#Preview {
-    MiniLoadingView()
-        .padding()
 }

@@ -122,6 +122,7 @@
 "cancel" = "Cancel";
 "confirm" = "Confirm";
 "delete" = "Delete";
+"stop" = "Stop";
 
 // pro
 "premium_owned" = "You already own the Pro version";

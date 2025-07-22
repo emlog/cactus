@@ -122,6 +122,7 @@
 "cancel" = "취소";
 "confirm" = "확인";
 "delete" = "삭제";
+"stop" = "중지";
 
 // pro
 "premium_owned" = "Pro 버전을 이미 보유하고 있습니다";

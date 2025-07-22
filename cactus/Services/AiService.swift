@@ -10,13 +10,44 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var fullContent = ""
     private var buffer = Data()
     private var completionHandler: (() -> Void)?
-    private var errorHandler: ((String) -> Void)? // 错误处理回调
-    private var hasReceivedValidResponse = false // 添加标志来跟踪是否收到有效响应
+    private var errorHandler: ((String) -> Void)?
+    private var hasReceivedValidResponse = false
+    
+    // 添加当前任务引用和手动停止标志
+    private var currentTask: URLSessionDataTask?
+    private var isManualStop = false // 标记是否为手动停止
     
     static let shared = AiService()
     
+    // 修改停止请求的方法
+    func stopCurrentRequest() {
+        isManualStop = true // 设置手动停止标志
+        currentTask?.cancel()
+        currentTask = nil
+        
+        DispatchQueue.main.async {
+            TextContentModel.shared.shouldStopRequest = false
+            TextContentModel.shared.isProcessing = false
+            TextContentModel.shared.isTranslating = false
+            TextContentModel.shared.isSummarizing = false
+            TextContentModel.shared.isDictionaryLookup = false
+            TextContentModel.shared.isChatting = false
+        }
+        
+        // 手动停止时直接调用完成回调，不调用错误回调
+        DispatchQueue.main.async {
+            self.completionHandler?()
+            self.completionHandler = nil
+            self.errorHandler = nil
+            self.isManualStop = false // 重置标志
+        }
+    }
+    
     // 合并后的聊天方法
     func chat(text: String? = nil, chatHistory: [[String: String]]? = nil, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
+        // 重置手动停止标志
+        isManualStop = false
+        
         let Preferences = PreferencesModel.shared
         guard let providerSettings = Preferences.defaultProviders[Preferences.selectedProvider],
               let url = URL(string: providerSettings.baseURL) else {
@@ -106,8 +137,11 @@ class AiService: NSObject, URLSessionDataDelegate {
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         let task = session.dataTask(with: request)
         
+        // 保存当前任务引用
+        self.currentTask = task
+        
         self.completionHandler = completion
-        self.errorHandler = onError // 保存错误回调
+        self.errorHandler = onError
         
         task.resume()
     }
@@ -165,6 +199,12 @@ class AiService: NSObject, URLSessionDataDelegate {
      * - 自动过滤SSE注释和控制信息
      */
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        // 检查是否需要停止请求
+        if TextContentModel.shared.shouldStopRequest {
+            dataTask.cancel()
+            return
+        }
+        
         buffer.append(data)
         
         // 处理错误响应
@@ -241,24 +281,38 @@ class AiService: NSObject, URLSessionDataDelegate {
      * - 确保所有操作在主线程执行，保证 UI 更新的线程安全
      */
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        DispatchQueue.main.async { // 确保在主线程执行 UI 相关操作和回调
+        DispatchQueue.main.async {
             if let error = error {
                 print("请求错误: \(error.localizedDescription)")
-                // 调用错误回调，传递友好的错误信息
-                let friendlyErrorMessage = NSLocalizedString("error_request_failed", comment: "请求失败")
-                self.errorHandler?(friendlyErrorMessage)
+                
+                // 检查是否为手动停止，如果是则不调用错误回调
+                if !self.isManualStop {
+                    // 检查错误类型，如果是取消错误且不是手动停止，则不显示错误
+                    let nsError = error as NSError
+                    if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled {
+                        // 网络取消错误，可能是系统或网络问题导致，不显示错误
+                    } else {
+                        // 其他类型的错误才显示
+                        let friendlyErrorMessage = NSLocalizedString("error_request_failed", comment: "请求失败")
+                        self.errorHandler?(friendlyErrorMessage)
+                    }
+                }
             }
             
-            // 确保完成回调总是被调用，无论成功还是失败
-            self.completionHandler?()
+            // 只有在非手动停止的情况下才调用完成回调
+            if !self.isManualStop {
+                self.completionHandler?()
+            }
+            
             // 清除回调引用，防止循环引用
             self.completionHandler = nil
             self.errorHandler = nil
+            self.isManualStop = false // 重置标志
         }
-        // 可以在这里处理 buffer 中可能残留的最后一部分数据，虽然对于 SSE [DONE] 标记来说通常不需要
+        
+        // 清空残留数据
         if !buffer.isEmpty {
-            print("Warning: Buffer not empty after task completion. Remaining data: \(String(data: buffer, encoding: .utf8) ?? "Non-UTF8 data")")
-            buffer.removeAll() // 清空残留数据
+            buffer.removeAll()
         }
     }
 }

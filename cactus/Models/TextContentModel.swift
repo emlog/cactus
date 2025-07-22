@@ -13,4 +13,7 @@ class TextContentModel: ObservableObject {
     @Published var isSummarizing: Bool = false
     @Published var isDictionaryLookup: Bool = false
     @Published var isChatting: Bool = false
+    
+    // 添加停止状态管理
+    @Published var shouldStopRequest: Bool = false
 }
