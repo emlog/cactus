@@ -72,7 +72,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainSummaryAction),
                 keyEquivalent: ""
             )
-            summaryMenuItem.image = NSImage(systemSymbolName: "pencil.and.list.clipboard.rtl", accessibilityDescription: nil)
+            summaryMenuItem.image = NSImage(systemSymbolName: "list.bullet.rectangle", accessibilityDescription: nil)
             summaryMenuItem.setShortcut(for: PreferencesModel.aiShortcutSummary)
             summaryMenuItem.target = self
             menu.addItem(summaryMenuItem)
@@ -83,7 +83,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainDictionaryAction),
                 keyEquivalent: ""
             )
-            dictionaryMenuItem.image = NSImage(systemSymbolName: "books.vertical", accessibilityDescription: nil)
+            dictionaryMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil)
             dictionaryMenuItem.setShortcut(for: PreferencesModel.aiShortcutDictionary)
             dictionaryMenuItem.target = self
             menu.addItem(dictionaryMenuItem)
