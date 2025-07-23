@@ -63,6 +63,9 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
+"prompt" = "Prompt";
+"prompt_title" = "Titel";
+"prompt_custom_system" = "Benutzerdefinierter System-Prompt";
 
 // ai config
 "openai_config" = "OpenAI Konfiguration";
@@ -123,6 +126,7 @@
 "confirm" = "Bestätigen";
 "delete" = "Löschen";
 "stop" = "Stopp";
+"save" = "Speichern";
 
 // pro
 "premium_owned" = "Sie haben Pro bereits freigeschaltet. Vielen Dank!";

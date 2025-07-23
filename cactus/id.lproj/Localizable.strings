@@ -63,6 +63,9 @@
 "model_volcengine" = "VolcEngine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
+"prompt" = "Prompt";
+"prompt_title" = "Nama";
+"prompt_custom_system" = "Prompt Sistem Khusus";
 
 // ai config
 "openai_config" = "Konfigurasi OpenAI";
@@ -123,6 +126,7 @@
 "confirm" = "Konfirmasi";
 "delete" = "Hapus";
 "stop" = "Berhenti";
+"save" = "Simpan";
 
 // pro
 "premium_owned" = "Anda sudah memiliki versi Premium, terima kasih atas dukungannya!";

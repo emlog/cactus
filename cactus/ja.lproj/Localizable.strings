@@ -63,6 +63,9 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
+"prompt" = "プロンプト";
+"prompt_title" = "名前";
+"prompt_custom_system" = "カスタムシステムプロンプト";
 
 // ai config
 "openai_config" = "OpenAI設定";
@@ -123,6 +126,7 @@
 "confirm" = "確認";
 "delete" = "削除";
 "stop" = "停止";
+"save" = "保存";
 
 // pro
 "premium_owned" = "Pro版は既に購入済みです";

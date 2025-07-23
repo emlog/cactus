@@ -63,6 +63,9 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
+"prompt" = "프롬프트";
+"prompt_title" = "이름";
+"prompt_custom_system" = "사용자 지정 시스템 프롬프트";
 
 // ai config
 "openai_config" = "OpenAI 설정";
@@ -123,6 +126,7 @@
 "confirm" = "확인";
 "delete" = "삭제";
 "stop" = "중지";
+"save" = "저장";
 
 // pro
 "premium_owned" = "Pro 버전을 이미 보유하고 있습니다";
