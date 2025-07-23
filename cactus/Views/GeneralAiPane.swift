@@ -81,7 +81,7 @@ struct GeneralAiPane: View {
             // 标题和添加按钮
             HStack {
                 Text("自定义提示词")
-                    .font(.headline)
+                    .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Button(action: {
@@ -97,16 +97,11 @@ struct GeneralAiPane: View {
                 .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal, 10)
-            .padding(.vertical, 8)
-            
-            Divider()
-                .padding(.horizontal, 10)
+            .padding(.vertical, 10)
             
             // 提示词列表
             if preferences.customPrompts.isEmpty {
-                Text("暂无自定义提示词")
-                    .foregroundColor(.secondary)
-                    .padding(.vertical, 20)
+                EmptyView()
             } else {
                 LazyVStack(spacing: 8) {
                     ForEach(preferences.customPrompts) { prompt in
@@ -146,7 +141,7 @@ struct GeneralAiPane: View {
                     newPromptContent = prompt.content
                     editingPrompt = prompt
                 }) {
-                    Image(systemName: "pencil")
+                    Image(systemName: "square.and.pencil")
                         .foregroundColor(.accentColor)
                         .font(.system(size: 12))
                 }
@@ -169,6 +164,13 @@ struct GeneralAiPane: View {
         .cornerRadius(8)
     }
     
+    // 添加计算属性来检查保存按钮是否应该启用
+    private var isSaveButtonEnabled: Bool {
+        let trimmedName = newPromptName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedContent = newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !trimmedName.isEmpty && !trimmedContent.isEmpty
+    }
+    
     /// 自定义提示词编辑视图
     private var customPromptEditView: some View {
         VStack(spacing: 16) {
@@ -185,7 +187,7 @@ struct GeneralAiPane: View {
                     .font(.system(size: 14, weight: .medium))
                 
                 TextEditor(text: $newPromptContent)
-                    .padding(5)  // 添加内边距，增加文字与边框的距离
+                    .padding(5)
                     .frame(height: 120)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6)
@@ -222,7 +224,7 @@ struct GeneralAiPane: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(newPromptName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .disabled(!isSaveButtonEnabled)
             }
             .padding(.bottom)
         }
@@ -236,7 +238,7 @@ struct GeneralAiPane: View {
             // 配置标题和帮助按钮
             HStack {
                 Text(providerConfigTitle)
-                    .font(.headline)
+                    .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Button(action: {
@@ -253,9 +255,6 @@ struct GeneralAiPane: View {
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
-            
-            Divider()
-                .padding(.horizontal, 10)
             
             // API密钥设置
             SettingRow(
