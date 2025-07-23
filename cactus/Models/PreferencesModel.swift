@@ -542,6 +542,14 @@ class PreferencesModel: ObservableObject {
     
     /// 删除自定义提示词
     func deleteCustomPrompt(id: UUID) {
+        // 检查要删除的提示词是否是当前选中的提示词
+        if let selectedPromptName = selectedCustomPrompt,
+           let promptToDelete = customPrompts.first(where: { $0.id == id }),
+           promptToDelete.name == selectedPromptName {
+            // 如果删除的是当前选中的提示词，将selectedCustomPrompt设置为空
+            selectedCustomPrompt = nil
+        }
+        
         customPrompts.removeAll { $0.id == id }
     }
     
