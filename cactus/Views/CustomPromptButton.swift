@@ -3,8 +3,13 @@ import SwiftUI
 /// 自定义提示词选择按钮组件
 struct CustomPromptButton: View {
     @ObservedObject private var preferences = PreferencesModel.shared
-    @State private var selectedPrompt: String? = nil
+    @Binding var selectedPrompt: String?
     @State private var showPromptMenu = false
+    
+    // 添加初始化方法支持绑定
+    init(selectedPrompt: Binding<String?> = .constant(nil)) {
+        self._selectedPrompt = selectedPrompt
+    }
     
     var body: some View {
         // 如果没有自定义提示词，则不显示按钮
@@ -48,11 +53,5 @@ struct CustomPromptButton: View {
                     .fill(selectedPrompt != nil ? Color.accentColor.opacity(0.1) : Color.clear)
             )
         }
-    }
-    
-    /// 获取当前选中的提示词内容
-    func getSelectedPromptContent() -> String? {
-        guard let selectedPrompt = selectedPrompt else { return nil }
-        return preferences.getCustomPromptContent(by: selectedPrompt)
     }
 }

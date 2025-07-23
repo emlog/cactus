@@ -15,13 +15,16 @@ enum LoadingType {
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var preferences = PreferencesModel.shared
-    @ObservedObject private var vocabularyManager = VocabularyManager.shared // 添加这行
+    @ObservedObject private var vocabularyManager = VocabularyManager.shared
     @State private var Ai = AiService.shared
     @State private var Lang = LangService.shared
     @State private var Prompt = promptService.shared
     
     // 对话历史状态
     @State private var chatHistory: [[String: String]] = []
+    
+    // 添加选中的自定义提示词状态
+    @State private var selectedCustomPrompt: String? = nil
     
     // 吐司提示
     @State private var showCompleteToast = false
@@ -58,6 +61,11 @@ struct MainView: View {
     
     // 添加自定义提示词按钮的引用
     @State private var customPromptButton = CustomPromptButton()
+    
+    // 将计算属性移到这里（MainView结构体的顶层）
+    private var customPromptButtonView: some View {
+        CustomPromptButton(selectedPrompt: $selectedCustomPrompt)
+    }
     
     var body: some View {
         Form {
@@ -203,7 +211,7 @@ struct MainView: View {
                     .hoverTooltip(contentModel.isChatting ? NSLocalizedString("stop", comment: "停止") : NSLocalizedString("help_chat", comment: "发送消息"), delay: 0.5)
                     
                     // 自定义提示词选择按钮
-                    customPromptButton
+                    customPromptButtonView
                     
                     Spacer()
                     
@@ -508,9 +516,10 @@ struct MainView: View {
             return
         }
         
-        // 检查是否有选中的自定义提示词
+        // 检查是否有选中的自定义提示词 - 直接使用 preferences 读取
         var systemMessage: String
-        if let customPromptContent = customPromptButton.getSelectedPromptContent() {
+        if let selectedPromptName = selectedCustomPrompt,
+           let customPromptContent = preferences.getCustomPromptContent(by: selectedPromptName) {
             systemMessage = customPromptContent
         } else {
             systemMessage = Prompt.getSystemMessageForChat()
