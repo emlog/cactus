@@ -14,7 +14,7 @@ struct CustomPromptButton: View {
             Menu {
                 // 清除选择选项
                 if selectedPrompt != nil {
-                    Button("清除选择") {
+                    Button(NSLocalizedString("cancel", comment: "取消")) {
                         selectedPrompt = nil
                     }
                     Divider()
@@ -22,8 +22,19 @@ struct CustomPromptButton: View {
                 
                 // 自定义提示词选项
                 ForEach(preferences.customPrompts) { prompt in
-                    Button(prompt.name) {
+                    Button(action: {
                         selectedPrompt = prompt.name
+                    }) {
+                        HStack {
+                            // 为选中的提示词显示对勾标记
+                            if selectedPrompt == prompt.name {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                                    .font(.system(size: 12, weight: .medium))
+                            }
+                            Text(prompt.name)
+                            Spacer()
+                        }
                     }
                 }
             } label: {

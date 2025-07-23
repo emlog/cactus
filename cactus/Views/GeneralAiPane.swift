@@ -80,7 +80,7 @@ struct GeneralAiPane: View {
         VStack(spacing: 0) {
             // 标题和添加按钮
             HStack {
-                Text("自定义提示词")
+                Text(NSLocalizedString("prompt_custom_system", comment: "自定义系统提示词"))
                     .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -175,7 +175,7 @@ struct GeneralAiPane: View {
     private var customPromptEditView: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("名称")
+                Text(NSLocalizedString("prompt_title", comment: "名称"))
                     .font(.system(size: 14, weight: .medium))
                 
                 TextField("", text: $newPromptName)
@@ -183,7 +183,7 @@ struct GeneralAiPane: View {
             }
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("提示词")
+                Text(NSLocalizedString("prompt", comment: "提示词"))
                     .font(.system(size: 14, weight: .medium))
                 
                 TextEditor(text: $newPromptContent)
@@ -196,13 +196,13 @@ struct GeneralAiPane: View {
             }
             
             HStack(spacing: 12) {
-                Button("取消") {
+                Button(NSLocalizedString("cancel", comment: "取消")) {
                     showingAddPrompt = false
                     editingPrompt = nil
                 }
                 .buttonStyle(PlainButtonStyle())
                 
-                Button("保存") {
+                Button(NSLocalizedString("save", comment: "保存")) {
                     // 过滤空白字符并限制名称长度
                     let trimmedName = newPromptName.trimmingCharacters(in: .whitespacesAndNewlines)
                     let truncatedName = String(trimmedName.prefix(100)) // 限制名称最大长度为100字符

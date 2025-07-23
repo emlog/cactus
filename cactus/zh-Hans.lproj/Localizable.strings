@@ -63,6 +63,9 @@
 "model_volcengine" = "火山引擎";
 "model_zhipu" = "智谱";
 "model_openrouter" = "OpenRouter";
+"prompt" = "提示词";
+"prompt_title" = "名称";
+"prompt_custom_system" = "自定义系统提示词";
 
 // ai config
 "openai_config" = "OpenAI配置";
@@ -123,6 +126,7 @@
 "confirm" = "确定";
 "delete" = "删除";
 "stop" = "停止";
+"save" = "保存";
 
 // pro
 "premium_owned" = "您已拥有高级版，感謝支持";
