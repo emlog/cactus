@@ -14,7 +14,6 @@ class WindowManager: NSObject, NSWindowDelegate {
     private var isMainWindowPinned = false
     private var pinnedWindowOrigin: NSPoint?
     private var pinButton: NSButton?
-    private var historyButton: NSButton?
     private var settingsWindowController: SettingsWindowController?
     var accessibilityWindow: NSWindow?
     
@@ -117,20 +116,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         pinButton?.sendAction(on: .leftMouseDown)
         pinButton?.frame = NSRect(x: 0, y: -5, width: 35, height: 35)
         
-        // 历史记录按钮
-        historyButton = NSButton()
-        historyButton?.image = NSImage(systemSymbolName: "clock", accessibilityDescription: NSLocalizedString("history", comment: "历史记录"))
-        historyButton?.bezelStyle = .texturedRounded
-        historyButton?.isBordered = false
-        historyButton?.imageScaling = .scaleProportionallyDown
-        historyButton?.target = self
-        historyButton?.action = #selector(historyButtonTapped)
-        historyButton?.toolTip = NSLocalizedString("history", comment: "历史记录")
-        historyButton?.sendAction(on: .leftMouseDown)
-        historyButton?.frame = NSRect(x: 30, y: -5, width: 35, height: 35)
-        
         leftContainerView.addSubview(pinButton!)
-        leftContainerView.addSubview(historyButton!)
         leftTitlebarAccessoryViewController.view = leftContainerView
         mainWindow?.addTitlebarAccessoryViewController(leftTitlebarAccessoryViewController)
         
