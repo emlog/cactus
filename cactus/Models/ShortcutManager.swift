@@ -11,6 +11,7 @@ import Foundation
 
 enum ActionType {
     case nothing
+    case chat
     case translate
     case summarize
     case dictionary
@@ -29,7 +30,7 @@ class ShortcutManager {
         // 注册主窗口快捷键
         KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutMain) { [weak self] in
             DispatchQueue.main.async {
-                self?.openMain(action: .nothing)
+                self?.openMain(action: .chat)
             }
         }
         

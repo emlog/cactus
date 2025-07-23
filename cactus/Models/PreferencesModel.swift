@@ -359,6 +359,17 @@ class PreferencesModel: ObservableObject {
         }
     }
     
+    // 选中的自定义提示词
+    @Published var selectedCustomPrompt: String? {
+        didSet {
+            if let selectedCustomPrompt = selectedCustomPrompt {
+                UserDefaults.standard.set(selectedCustomPrompt, forKey: "selectedCustomPrompt")
+            } else {
+                UserDefaults.standard.removeObject(forKey: "selectedCustomPrompt")
+            }
+        }
+    }
+    
     init() {
         self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
         
@@ -367,6 +378,9 @@ class PreferencesModel: ObservableObject {
         
         self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? defaultLanguage
         self.commonForeignLanguage = UserDefaults.standard.string(forKey: "commonForeignLanguage") ?? "en"
+        
+        // 添加这行来初始化 selectedCustomPrompt
+        self.selectedCustomPrompt = UserDefaults.standard.string(forKey: "selectedCustomPrompt")
         self.openaiApiKey = UserDefaults.standard.string(forKey: "openaiApiKey") ?? ""
         self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? ""
         

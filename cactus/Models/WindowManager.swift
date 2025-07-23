@@ -547,6 +547,8 @@ class WindowManager: NSObject, NSWindowDelegate {
                         mainView.summaryText()
                     case .dictionary:
                         mainView.dictionaryText()
+                    case .chat:
+                        mainView.chatText()
                     case .nothing:
                         mainView.noactionText()
                     case .screenshotTranslate:
