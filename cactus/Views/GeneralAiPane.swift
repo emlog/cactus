@@ -25,10 +25,15 @@ struct GeneralAiPane: View {
             height += 110 // 配置界面的高度
         }
         
-        // 自定义提示词部分高度
-        height += 100
+        // 自定义提示词部分高度 - 根据条目数量动态计算
+        let basePromptSectionHeight: CGFloat = 100 // 标题、按钮等基础高度
+        let promptItemHeight: CGFloat = 60 // 每个提示词条目的高度
+        let promptsHeight = basePromptSectionHeight + CGFloat(preferences.customPrompts.count) * promptItemHeight
         
-        return height
+        height += promptsHeight
+        
+        // 限制最大高度为680
+        return min(height, 680)
     }
     
     var body: some View {
@@ -75,7 +80,7 @@ struct GeneralAiPane: View {
         VStack(spacing: 0) {
             // 标题和添加按钮
             HStack {
-                Text("自定义提示词管理")
+                Text("自定义提示词")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -86,7 +91,7 @@ struct GeneralAiPane: View {
                     showingAddPrompt = true
                 }) {
                     Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.blue)
+                        .foregroundColor(.accentColor)
                         .font(.system(size: 16))
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -142,7 +147,7 @@ struct GeneralAiPane: View {
                     editingPrompt = prompt
                 }) {
                     Image(systemName: "pencil")
-                        .foregroundColor(.blue)
+                        .foregroundColor(.accentColor)
                         .font(.system(size: 12))
                 }
                 .buttonStyle(PlainButtonStyle())
@@ -167,23 +172,20 @@ struct GeneralAiPane: View {
     /// 自定义提示词编辑视图
     private var customPromptEditView: some View {
         VStack(spacing: 16) {
-            Text(editingPrompt != nil ? "编辑提示词" : "添加提示词")
-                .font(.headline)
-                .padding(.top)
-            
             VStack(alignment: .leading, spacing: 8) {
-                Text("提示词名称")
+                Text("名称")
                     .font(.system(size: 14, weight: .medium))
                 
-                TextField("请输入提示词名称", text: $newPromptName)
+                TextField("", text: $newPromptName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             }
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("提示词内容")
+                Text("提示词")
                     .font(.system(size: 14, weight: .medium))
                 
                 TextEditor(text: $newPromptContent)
+                    .padding(5)  // 添加内边距，增加文字与边框的距离
                     .frame(height: 120)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6)
@@ -199,28 +201,33 @@ struct GeneralAiPane: View {
                 .buttonStyle(PlainButtonStyle())
                 
                 Button("保存") {
+                    // 过滤空白字符并限制名称长度
+                    let trimmedName = newPromptName.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let truncatedName = String(trimmedName.prefix(100)) // 限制名称最大长度为100字符
+                    let trimmedContent = newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
                     if let editingPrompt = editingPrompt {
                         preferences.updateCustomPrompt(
                             id: editingPrompt.id,
-                            name: newPromptName,
-                            content: newPromptContent
+                            name: truncatedName,
+                            content: trimmedContent
                         )
                         self.editingPrompt = nil
                     } else {
                         preferences.addCustomPrompt(
-                            name: newPromptName,
-                            content: newPromptContent
+                            name: truncatedName,
+                            content: trimmedContent
                         )
                         showingAddPrompt = false
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(newPromptName.isEmpty || newPromptContent.isEmpty)
+                .disabled(newPromptName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
             .padding(.bottom)
         }
         .padding()
-        .frame(width: 400, height: 300)
+        .frame(width: 400, height: 280)
     }
     
     // 通用的提供商配置视图
@@ -239,7 +246,7 @@ struct GeneralAiPane: View {
                     }
                 }) {
                     Image(systemName: "questionmark.circle")
-                        .foregroundColor(.blue)
+                        .foregroundColor(.accentColor)
                         .font(.system(size: 14))
                 }
                 .buttonStyle(PlainButtonStyle())

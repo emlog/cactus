@@ -506,17 +506,23 @@ class PreferencesModel: ObservableObject {
         return prompts
     }
     
-    /// 添加新的自定义提示词
+    /// 添加自定义提示词，自动过滤空白字符并限制名称长度
     func addCustomPrompt(name: String, content: String) {
-        let newPrompt = CustomPrompt(name: name, content: content)
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let truncatedName = String(trimmedName.prefix(100)) // 限制名称最大长度为100字符
+        let trimmedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        let newPrompt = CustomPrompt(name: truncatedName, content: trimmedContent)
         customPrompts.append(newPrompt)
     }
     
-    /// 更新自定义提示词
+    /// 更新自定义提示词，自动过滤空白字符并限制名称长度
     func updateCustomPrompt(id: UUID, name: String, content: String) {
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let truncatedName = String(trimmedName.prefix(100)) // 限制名称最大长度为100字符
+        let trimmedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
         if let index = customPrompts.firstIndex(where: { $0.id == id }) {
-            customPrompts[index].name = name
-            customPrompts[index].content = content
+            customPrompts[index].name = truncatedName
+            customPrompts[index].content = trimmedContent
         }
     }
     
