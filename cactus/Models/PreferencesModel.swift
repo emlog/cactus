@@ -1,6 +1,13 @@
 import Foundation
 import KeyboardShortcuts
 
+/// 自定义提示词数据结构
+struct CustomPrompt: Codable, Identifiable {
+    var id = UUID()
+    var name: String
+    var content: String
+}
+
 struct ProviderSettings: Codable {
     var title: String
     var baseURL: String
@@ -386,6 +393,9 @@ class PreferencesModel: ObservableObject {
         
         self.defaultMainFunction = UserDefaults.standard.string(forKey: "defaultMainFunction") ?? "translate"
         
+        // 移除这行：self.customPrompts = loadCustomPrompts()
+        
+        // 现在所有存储属性都已初始化，可以安全调用实例方法
         updateOpenAIConfig()
         updateSiliconflowConfig()
         updateGoogleGeminiConfig()
@@ -463,5 +473,60 @@ class PreferencesModel: ObservableObject {
     // 检查当前选择的提供商是否需要自定义配置
     var currentProviderRequiresConfig: Bool {
         return defaultProviders[selectedProvider]?.requiresCustomConfig ?? false
+    }
+    
+    // 自定义提示词管理 - 直接在属性声明时初始化
+    @Published var customPrompts: [CustomPrompt] = {
+        guard let data = UserDefaults.standard.data(forKey: "customPrompts"),
+              let prompts = try? JSONDecoder().decode([CustomPrompt].self, from: data) else {
+            return []
+        }
+        return prompts
+    }() {
+        didSet {
+            saveCustomPrompts()
+        }
+    }
+    
+    // MARK: - 自定义提示词管理方法
+    
+    /// 保存自定义提示词到UserDefaults
+    private func saveCustomPrompts() {
+        if let encoded = try? JSONEncoder().encode(customPrompts) {
+            UserDefaults.standard.set(encoded, forKey: "customPrompts")
+        }
+    }
+    
+    /// 从UserDefaults加载自定义提示词
+    private func loadCustomPrompts() -> [CustomPrompt] {
+        guard let data = UserDefaults.standard.data(forKey: "customPrompts"),
+              let prompts = try? JSONDecoder().decode([CustomPrompt].self, from: data) else {
+            return []
+        }
+        return prompts
+    }
+    
+    /// 添加新的自定义提示词
+    func addCustomPrompt(name: String, content: String) {
+        let newPrompt = CustomPrompt(name: name, content: content)
+        customPrompts.append(newPrompt)
+    }
+    
+    /// 更新自定义提示词
+    func updateCustomPrompt(id: UUID, name: String, content: String) {
+        if let index = customPrompts.firstIndex(where: { $0.id == id }) {
+            customPrompts[index].name = name
+            customPrompts[index].content = content
+        }
+    }
+    
+    /// 删除自定义提示词
+    func deleteCustomPrompt(id: UUID) {
+        customPrompts.removeAll { $0.id == id }
+    }
+    
+    /// 根据名称获取提示词内容
+    func getCustomPromptContent(by name: String) -> String? {
+        return customPrompts.first { $0.name == name }?.content
     }
 }

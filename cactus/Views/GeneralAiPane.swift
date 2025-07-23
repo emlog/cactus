@@ -6,6 +6,12 @@ struct GeneralAiPane: View {
     
     @ObservedObject private var preferences = PreferencesModel.shared
     
+    // 自定义提示词编辑状态
+    @State private var showingAddPrompt = false
+    @State private var editingPrompt: CustomPrompt?
+    @State private var newPromptName = ""
+    @State private var newPromptContent = ""
+    
     // 检查是否为高级用户
     var isPremiumUser: Bool {
         return PurchaseManager.shared.isPremiumUser
@@ -18,6 +24,9 @@ struct GeneralAiPane: View {
         if preferences.currentProviderRequiresConfig && isPremiumUser {
             height += 110 // 配置界面的高度
         }
+        
+        // 自定义提示词部分高度
+        height += 100
         
         return height
     }
@@ -47,9 +56,171 @@ struct GeneralAiPane: View {
                 if preferences.currentProviderRequiresConfig && isPremiumUser {
                     providerConfigurationView
                 }
+                
+                // 自定义提示词管理界面
+                customPromptsManagementView
             }
         }
         .frame(width: 800, height: contentHeight)
+        .sheet(isPresented: $showingAddPrompt) {
+            customPromptEditView
+        }
+        .sheet(item: $editingPrompt) { prompt in
+            customPromptEditView
+        }
+    }
+    
+    // 自定义提示词管理视图
+    private var customPromptsManagementView: some View {
+        VStack(spacing: 0) {
+            // 标题和添加按钮
+            HStack {
+                Text("自定义提示词管理")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button(action: {
+                    newPromptName = ""
+                    newPromptContent = ""
+                    editingPrompt = nil
+                    showingAddPrompt = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 16))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
+            
+            // 提示词列表
+            if preferences.customPrompts.isEmpty {
+                Text("暂无自定义提示词")
+                    .foregroundColor(.secondary)
+                    .padding(.vertical, 20)
+            } else {
+                LazyVStack(spacing: 8) {
+                    ForEach(preferences.customPrompts) { prompt in
+                        customPromptRow(prompt: prompt)
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+            }
+        }
+        .background(Color(NSColor.gridColor))
+        .cornerRadius(12)
+        .padding(16)
+    }
+    
+    /// 自定义提示词行视图
+    private func customPromptRow(prompt: CustomPrompt) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(prompt.name)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.primary)
+                
+                Text(prompt.content)
+                    .font(.system(size: 12))
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 8) {
+                // 编辑按钮
+                Button(action: {
+                    newPromptName = prompt.name
+                    newPromptContent = prompt.content
+                    editingPrompt = prompt
+                }) {
+                    Image(systemName: "pencil")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                // 删除按钮
+                Button(action: {
+                    preferences.deleteCustomPrompt(id: prompt.id)
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color(NSColor.controlBackgroundColor))
+        .cornerRadius(8)
+    }
+    
+    /// 自定义提示词编辑视图
+    private var customPromptEditView: some View {
+        VStack(spacing: 16) {
+            Text(editingPrompt != nil ? "编辑提示词" : "添加提示词")
+                .font(.headline)
+                .padding(.top)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("提示词名称")
+                    .font(.system(size: 14, weight: .medium))
+                
+                TextField("请输入提示词名称", text: $newPromptName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("提示词内容")
+                    .font(.system(size: 14, weight: .medium))
+                
+                TextEditor(text: $newPromptContent)
+                    .frame(height: 120)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+            }
+            
+            HStack(spacing: 12) {
+                Button("取消") {
+                    showingAddPrompt = false
+                    editingPrompt = nil
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                Button("保存") {
+                    if let editingPrompt = editingPrompt {
+                        preferences.updateCustomPrompt(
+                            id: editingPrompt.id,
+                            name: newPromptName,
+                            content: newPromptContent
+                        )
+                        self.editingPrompt = nil
+                    } else {
+                        preferences.addCustomPrompt(
+                            name: newPromptName,
+                            content: newPromptContent
+                        )
+                        showingAddPrompt = false
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(newPromptName.isEmpty || newPromptContent.isEmpty)
+            }
+            .padding(.bottom)
+        }
+        .padding()
+        .frame(width: 400, height: 300)
     }
     
     // 通用的提供商配置视图

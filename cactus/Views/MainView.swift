@@ -56,6 +56,9 @@ struct MainView: View {
     // 跟踪输出窗口是否已展开
     @State private var isResultViewExpanded = false
     
+    // 添加自定义提示词按钮的引用
+    @State private var customPromptButton = CustomPromptButton()
+    
     var body: some View {
         Form {
             Section() {
@@ -198,6 +201,9 @@ struct MainView: View {
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
                     .disabled(contentModel.isProcessing && !contentModel.isChatting)
                     .hoverTooltip(contentModel.isChatting ? NSLocalizedString("stop", comment: "停止") : NSLocalizedString("help_chat", comment: "发送消息"), delay: 0.5)
+                    
+                    // 自定义提示词选择按钮
+                    customPromptButton
                     
                     Spacer()
                     
@@ -501,7 +507,14 @@ struct MainView: View {
             showErrorToast = true
             return
         }
-        let systemMessage = Prompt.getSystemMessageForChat()
+        
+        // 检查是否有选中的自定义提示词
+        var systemMessage: String
+        if let customPromptContent = customPromptButton.getSelectedPromptContent() {
+            systemMessage = customPromptContent
+        } else {
+            systemMessage = Prompt.getSystemMessageForChat()
+        }
         
         // 添加当前用户输入到历史
         chatHistory.append(["role": "user", "content": inputText])
