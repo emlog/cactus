@@ -46,6 +46,10 @@
 "language_es" = "西班牙語";
 "language_id" = "印尼語";
 "language_pt" = "葡萄牙語";
+"language_ru" = "俄語";
+"language_it" = "義大利語";
+"language_th" = "泰語";
+"language_vi" = "越南語";
 
 // ai setting
 "select_service" = "選擇 AI 服務";

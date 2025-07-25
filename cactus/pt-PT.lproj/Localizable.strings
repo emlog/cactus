@@ -46,6 +46,10 @@
 "language_es" = "Espanhol";
 "language_id" = "Indonésio";
 "language_pt" = "Português";
+"language_ru" = "Russo";
+"language_it" = "Italiano";
+"language_th" = "Tailandês";
+"language_vi" = "Vietnamita";
 
 // ai setting
 "select_service" = "Selecionar Serviço de IA";

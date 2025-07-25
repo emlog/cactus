@@ -1,150 +1,154 @@
 // Status Bar Menu
-"openmain" = "Open Window";
-"translate" = "Translate Selected Text";
-"summary" = "Summarize Selected Text";
-"dictionary" = "Dictionary Lookup";
-"ocr_translate" = "Screenshot Translate";
-"vocabulary" = "Wordbook";
-"favorites" = "Favorites";
-"history" = "History";
-"setting" = "Preferences";
-"quit" = "Quit";
+"openmain" = "เปิดหน้าต่าง";
+"translate" = "แปลข้อความที่เลือก";
+"summary" = "สรุปเนื้อหา";
+"dictionary" = "พจนานุกรม";
+"ocr_translate" = "แปลจากหน้าจอ";
+"vocabulary" = "คลังคำศัพท์";
+"favorites" = "รายการโปรด";
+"history" = "ประวัติ";
+"setting" = "การตั้งค่า";
+"quit" = "ออกจากแอป";
 
 // pane
-"general" = "General";
-"service" = "AI Service";
-"premium" = "Pro";
-"about" = "About";
+"general" = "ทั่วไป";
+"service" = "บริการ AI";
+"premium" = "พรีเมียม";
+"about" = "เกี่ยวกับ";
 
 // setting
-"startup" = "Open at Login";
-"shortcut_openmain" = "Shortcut to Open Main Window";
-"shortcut_openmain_description" = "Open the main window and fill the selected text into the input box";
-"shortcut_translate" = "Translate Shortcut";
-"shortcut_translate_description" = "Select text and press the shortcut to translate.";
-"shortcut_summary" = "Summarize Shortcut";
-"shortcut_summary_description" = "Select text and press the shortcut to summarize.";
-"shortcut_dict" = "Dictionary Shortcut Key";
-"shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
-"shortcut_ocr_translate" = "Screenshot Translate Shortcut";
-"shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
-"default_main_function" = "Default Action";
-"default_main_function_description" = "The default Action triggered in main window when pressing Return key";
+"startup" = "เริ่มอัตโนมัติเมื่อเปิดเครื่อง";
+"shortcut_openmain" = "คีย์ลัดเปิดหน้าต่าง";
+"shortcut_openmain_description" = "เปิดหน้าต่างและเติมข้อความที่เลือกลงในช่องป้อนข้อมูล";
+"shortcut_translate" = "คีย์ลัดแปลข้อความ";
+"shortcut_translate_description" = "แปลข้อความที่เลือกด้วยคีย์ลัด";
+"shortcut_summary" = "คีย์ลัดสรุปเนื้อหา";
+"shortcut_summary_description" = "สรุปข้อความที่เลือกด้วยคีย์ลัด";
+"shortcut_dict" = "คีย์ลัดค้นหาคำศัพท์";
+"shortcut_dict_description" = "ค้นหาความหมายของคำที่เลือก";
+"shortcut_ocr_translate" = "คีย์ลัดแปลจากหน้าจอ";
+"shortcut_ocr_translate_description" = "เลือกบริเวณหน้าจอเพื่อ OCR และแปลข้อความอัตโนมัติ";
+"default_main_function" = "การดำเนินการเริ่มต้น";
+"default_main_function_description" = "การดำเนินการเมื่อกด Return บนหน้าต่างหลัก";
 
 // Language setting
-"preferred_language" = "Preferred Language";
-"common_foreign_language" = "Primary Foreign Language";
-"preferred_language_description" = "Translate foreign text into this language (usually native)";
-"common_foreign_language_description" = "Translate common text into this language (your first foreign language)";
-"language_zh_hans" = "Simplified Chinese";
-"language_zh_hant" = "Traditional Chinese";
-"language_ja" = "Japanese";
-"language_ko" = "Korean";
-"language_en" = "English";
-"language_fr" = "French";
-"language_de" = "German";
-"language_es" = "Spanish";
-"language_id" = "Indonesian";
-"language_pt" = "Portuguese";
+"preferred_language" = "ภาษาหลักที่ต้องการ";
+"common_foreign_language" = "ภาษาต่างประเทศหลัก";
+"preferred_language_description" = "แปลเป็นภาษานี้โดยทั่วไปจะเป็นภาษาแม่";
+"common_foreign_language_description" = "ภาษาต่างประเทศที่ใช้งานหรือกำลังเรียนอยู่";
+"language_zh_hans" = "จีนตัวย่อ";
+"language_zh_hant" = "จีนตัวเต็ม";
+"language_ja" = "ญี่ปุ่น";
+"language_ko" = "เกาหลี";
+"language_en" = "อังกฤษ (English)";
+"language_fr" = "ฝรั่งเศส";
+"language_de" = "เยอรมัน";
+"language_es" = "สเปน";
+"language_id" = "อินโดนีเซีย";
+"language_pt" = "โปรตุเกส";
+"language_ru" = "ภาษารัสเซีย";
+"language_it" = "ภาษาอิตาลี";
+"language_th" = "ภาษาไทย";
+"language_vi" = "ภาษาเวียดนาม";
 
 // ai setting
-"select_service" = "Select AI Service";
-"enter_api_key" = "Please Enter API KEY";
-"api_key" = "API KEY";
-"model" = "Model";
-"model_zhipu_glm4" = "Zhipu-GLM-4-9B";
+"select_service" = "เลือกบริการ AI";
+"enter_api_key" = "กรุณาใส่รหัส API";
+"api_key" = "API Key";
+"model" = "โมเดล";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B (แนะนำ)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3-8B (Recommended)";
+"model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
-"model_siliconflow" = "Siliconflow";
+"model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
-"model_volcengine" = "Volcengine";
+"model_volcengine" = "VolcEngine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
-"prompt" = "Prompt";
-"prompt_title" = "Title";
-"prompt_custom_system" = "Custom System Prompt";
+"prompt" = "คำสั่ง (Prompt)";
+"prompt_title" = "ชื่อ";
+"prompt_custom_system" = "คำสั่งระบบแบบกำหนดเอง";
 
 // ai config
-"openai_config" = "OpenAI Setting";
-"siliconflow_config" = "Siliconflow Setting";
-"google_gemini_config" = "Google Gemini Setting";
-"claude_config" = "Anthropic Claude Setting";
-"deepseek_config" = "Deepseek Setting";
-"volcengine_config" = "Volcengine Setting";
-"zhipu_config" = "Zhipu Setting";
-"openrouter_config" = "OpenRouter Setting";
+"openai_config" = "การตั้งค่า OpenAI";
+"siliconflow_config" = "การตั้งค่า SiliconFlow";
+"google_gemini_config" = "การตั้งค่า Google Gemini";
+"claude_config" = "การตั้งค่า Claude";
+"deepseek_config" = "การตั้งค่า DeepSeek";
+"volcengine_config" = "การตั้งค่า VolcEngine";
+"zhipu_config" = "การตั้งค่า Zhipu";
+"openrouter_config" = "การตั้งค่า OpenRouter";
 
 // main
-"pop_text_empty" = "No text available to copy.";
-"pop_translate_text_empty" = "Please enter text to translate.";
-"pop_summary_text_empty" = "Please enter text to summarize.";
-"pop_dict_text_empty" = "Please enter a single word to look up";
-"pop_chat_text_empty" = "Enter your question.";
-"pop_copy_success" = "Copied";
-"pop_already_cleared" = "Text cleared.";
-"pop_favorite_added" = "Added to Favorites.";
-"pop_select_model_first" = "Please select an AI model in Preferences first.";
-"help_translate" = "Translate Text";
-"help_summary" = "Summarize Text";
-"help_dict" = "Dictionary Lookup";
-"help_chat" = "Send message";
-"help_clear" = "Clear";
-"help_favorite" = "Favorite";
-"help_speak" = "Speak";
-"help_copy" = "Copy";
-"help_pin" = "Pin Window";
-"help_unpin" = "Unpin Window";
-"help_clear" = "Clear Text";
+"pop_text_empty" = "ไม่มีเนื้อหาให้คัดลอก";
+"pop_translate_text_empty" = "กรุณากรอกข้อความที่ต้องการแปล";
+"pop_summary_text_empty" = "กรุณากรอกเนื้อหาที่ต้องการสรุป";
+"pop_dict_text_empty" = "กรุณากรอกคำศัพท์ที่ต้องการค้นหา";
+"pop_chat_text_empty" = "กรุณากรอกคำถาม";
+"pop_copy_success" = "คัดลอกเรียบร้อยแล้ว";
+"pop_already_cleared" = "ล้างเนื้อหาแล้ว";
+"pop_favorite_added" = "เพิ่มในรายการโปรดแล้ว";
+"pop_select_model_first" = "กรุณาเลือกโมเดล AI ในการตั้งค่า";
+"help_translate" = "แปลข้อความ";
+"help_summary" = "สรุปเนื้อหา";
+"help_dict" = "ค้นหาคำศัพท์";
+"help_chat" = "ส่งข้อความ";
+"help_clear" = "ล้าง";
+"help_favorite" = "เพิ่มรายการโปรด";
+"help_speak" = "อ่านข้อความ";
+"help_copy" = "คัดลอก";
+"help_pin" = "ปักหมุดหน้าต่าง";
+"help_unpin" = "ยกเลิกปักหมุด";
+"help_clear" = "ล้างเนื้อหา";
 
 // alert
-"accessibility_permission_message" = "Accessibility permission is required. Please enable it in System Settings to translate selected text.";
-"app_in_menubar_info" = "The app is running and the 🌵 icon appears in the menu bar";
-"open_settings" = "Open System Settings";
-"cancel" = "Cancel";
+"accessibility_permission_message" = "ต้องการสิทธิ์การเข้าถึง กรุณาเปิดสิทธิ์ในการตั้งค่าระบบ";
+"app_in_menubar_info" = "แอปทำงานแล้ว ไอคอน 🌵 จะแสดงที่แถบเมนู";
+"open_settings" = "เปิดการตั้งค่า";
+"cancel" = "ยกเลิก";
 
 // about
 "apptitle" = "Cactus AI Assistant";
-"version" = "Version";
-"report_issue" = "Report Issue";
-"contact" = "Contact Us";
-"rate_app" = "Rate This App";
+"version" = "เวอร์ชัน";
+"report_issue" = "รายงานปัญหา";
+"contact" = "ติดต่อเรา";
+"rate_app" = "ให้คะแนนแอป";
 
 // ai error
-"error_invalid_config" = "System error, AI service configuration error";
-"error_request_failed" = "Request failed, switch to another AI model or check the network.";
-"error_empty_api_key" = "Please enter the API key for the current AI service";
-"error_empty_model" = "Please select a model for the current AI service";
+"error_invalid_config" = "ข้อผิดพลาดของระบบ การตั้งค่าบริการ AI ไม่ถูกต้อง";
+"error_request_failed" = "คำขอล้มเหลว กรุณาเปลี่ยนโมเดลหรือเชื่อมต่อเครือข่ายใหม่";
+"error_empty_api_key" = "กรุณาใส่ API Key ของบริการ AI";
+"error_empty_model" = "กรุณาเลือกโมเดล AI ที่ต้องการใช้";
 
 // common
-"alert_ok" = "OK";
-"sum" = "Total";
-"clear_all" = "Clear All";
-"cancel" = "Cancel";
-"confirm" = "Confirm";
-"delete" = "Delete";
-"stop" = "Stop";
-"save" = "Save";
+"alert_ok" = "ตกลง";
+"sum" = "รวมทั้งหมด";
+"clear_all" = "ล้างทั้งหมด";
+"cancel" = "ยกเลิก";
+"confirm" = "ยืนยัน";
+"delete" = "ลบ";
+"stop" = "หยุด";
+"save" = "บันทึก";
 
 // pro
-"premium_owned" = "You already own the Pro version";
-"premium_processing" = "Processing...";
-"premium_unlock" = "Unlock Pro";
-"premium_restore" = "Restore Purchase";
-"premium_features" = "Premium Features";
-"premium_feature_unlimited_usage" = "Unlimited translations and summaries";
-"premium_feature_unlimited_vocabulary" = "Unlimited use of wordbook and favorites";
-"premium_feature_custom_model" = "Unlock more AI models like GPT4, Gemini, Claude...";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"premium_owned" = "คุณมีเวอร์ชันพรีเมียมแล้ว ขอบคุณที่สนับสนุน!";
+"premium_processing" = "กำลังดำเนินการ...";
+"premium_unlock" = "ปลดล็อกเวอร์ชันพรีเมียม";
+"premium_restore" = "กู้คืนการซื้อ";
+"premium_features" = "ฟีเจอร์เวอร์ชันพรีเมียม";
+"premium_feature_unlimited_usage" = "ใช้งานแปลและสรุปได้ไม่จำกัด";
+"premium_feature_unlimited_vocabulary" = "ใช้งานคลังคำศัพท์และรายการโปรดได้ไม่จำกัด";
+"premium_feature_custom_model" = "ปลดล็อก GPT-4, Gemini, Claude, DeepSeek และโมเดลอื่นๆ";
+"terms_of_use" = "เงื่อนไขการใช้งาน";
+"privacy_policy" = "นโยบายความเป็นส่วนตัว";
 
 // Purchase Manager
-"purchase_load_product_failed" = "Failed to load product information";
-"purchase_pending" = "Purchase is processing, please check later";
-"purchase_not_found" = "No purchase record found";
-"upgrade_to_premium" = "Usage limit reached. Please upgrade to Pro.";
+"purchase_load_product_failed" = "ไม่สามารถโหลดข้อมูลสินค้า";
+"purchase_pending" = "กำลังดำเนินการซื้อ กรุณาตรวจสอบภายหลัง";
+"purchase_not_found" = "ไม่พบประวัติการซื้อ";
+"upgrade_to_premium" = "ถึงขีดจำกัดการใช้งาน กรุณาอัปเกรดเป็นเวอร์ชันพรีเมียม";
 
 // history
-"clear_all_history_message" = "Are you sure you want to clear all history?";
+"clear_all_history_message" = "คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติทั้งหมด?";

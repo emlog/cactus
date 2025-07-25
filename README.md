@@ -10,6 +10,9 @@
 韩语：선인장 AI 어시스턴트
 葡萄牙语：Assistente de IA Cacto
 印尼语：Asisten AI Kaktus
+俄语：Кактус ИИ Ассистент
+意大利语：Assistente AI Cactus
+泰语：ผู้ช่วย AI กระบองเพชร
 
 ## 副标题：
 
@@ -24,6 +27,10 @@ Translate,Summarize,OCR
 西班牙语：Traducir, Resumir, OCR
 葡萄牙语：Tradução, Resumo, OCR
 印尼语：Terjemahan, Ringkasan, OCR
+俄语：Перевод, Резюме, OCR
+意大利语：Traduzione, Riepilogo, OCR
+泰语：แปลภาษา, สรุป, OCR
+
 
 ## 关键词
 
@@ -38,6 +45,9 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 西班牙语：Traducir, Resumir, Diccionario, Asistente IA, Productividad, OCR
 葡萄牙语：Traduzir, Resumir, Dicionário, Assistente de IA, Produtividade, OCR
 印尼语：Terjemahkan, Ringkas, Kamus, Asisten AI, Produktivitas, OCR
+俄语：Перевести, Резюмировать, Словарь, ИИ-ассистент, Продуктивность, OCR
+意大利语：Tradurre, Riassumere, Dizionario, Assistente IA, Produttività, OCR
+泰语：แปลภาษา, สรุป, พจนานุกรม, ผู้ช่วย AI, ประสิทธิภาพ, OCR
 
 ### 简体中文 🇨🇳
 
@@ -186,6 +196,56 @@ Fitur utama:
 Syarat Penggunaan: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Kebijakan Privasi: https://cactusai.cc/privacy-policy-en
 
+
+## 俄语 🇷🇺
+
+Умный помощник для работы с текстом: перевод, краткое содержание, словарь и распознавание текста с изображений (OCR)
+
+Основные функции:
+- Быстрый перевод: выберите текст, нажмите горячую клавишу (по умолчанию ⌥ + X) — мгновенный перевод
+- Умное резюмирование: выделяет ключевые идеи текста
+- Поиск в словаре: объяснение значений слов, этимологии и примеры использования
+- OCR-снимки: распознавание текста на скриншотах для ускорения обработки
+
+------
+
+Условия использования: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Политика конфиденциальности: https://cactusai.cc/privacy-policy-en
+
+
+## 意大利语 🇮🇹
+
+Un assistente intelligente per il testo: traduzione, riepilogo, dizionario e OCR da screenshot
+
+Funzionalità principali:
+- Traduzione rapida: seleziona il testo, premi la scorciatoia (predefinita ⌥ + X) per tradurre immediatamente
+- Riepilogo intelligente: estrai i punti chiave del contenuto
+- Ricerca nel dizionario: significati, etimologia e esempi d’uso
+- OCR da screenshot: riconoscimento del testo per migliorare l’efficienza
+
+------
+
+Termini di utilizzo: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Informativa sulla privacy: https://cactusai.cc/privacy-policy-en
+
+
+## 泰语 🇹🇭
+
+ผู้ช่วยจัดการข้อความอัจฉริยะ แปลข้อความ สรุปเนื้อหา ค้นหาคำศัพท์ และแปลงข้อความจากภาพ (OCR)
+
+ฟีเจอร์หลัก:
+- แปลด่วน: เลือกข้อความ กดปุ่มลัด (ค่าเริ่มต้น ⌥ + X) เพื่อแปลทันที
+- สรุปอัจฉริยะ: ดึงประเด็นสำคัญจากเนื้อหา
+- ค้นหาคำศัพท์: อธิบายความหมาย รากศัพท์ และตัวอย่างการใช้
+- OCR จากภาพหน้าจอ: แปลงข้อความจากภาพ เพิ่มประสิทธิภาพในการทำงาน
+
+------
+
+ข้อกำหนดในการใช้: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+นโยบายความเป็นส่วนตัว: https://cactusai.cc/privacy-policy-en
+
+
+
 ## 写给审核员
 
 这是一款辅助工具，启动后只出现在右上角状态栏中，一个小仙人掌图标🌵
@@ -203,4 +263,4 @@ Thanks for your review work.
 
 ## 支持的语言
 
-德文、日文、法语、简体中文、繁体中文、英语、西班牙文、韩文、葡萄牙文、印尼文
+德文、日文、法语、简体中文、繁体中文、英语、西班牙文、韩文、葡萄牙文、印尼文、俄语、意大利语、泰语

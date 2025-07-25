@@ -49,6 +49,14 @@ class LangService {
             detectedLanguage = "pt-PT"
         case .indonesian:
             detectedLanguage = "id"
+        case .russian:
+            detectedLanguage = "ru"
+        case .italian:
+            detectedLanguage = "it"
+        case .thai:
+            detectedLanguage = "th"
+        case .vietnamese:
+            detectedLanguage = "vi"
         default:
             // 对于其他语言，检查原始值是否是我们支持的语言
             let rawValue = dominantLanguage.rawValue
@@ -73,6 +81,14 @@ class LangService {
                 detectedLanguage = "pt-PT"
             case "id":
                 detectedLanguage = "id"
+            case "ru":
+                detectedLanguage = "ru"
+            case "it":
+                detectedLanguage = "it"
+            case "th":
+                detectedLanguage = "th"
+            case "vi":
+                detectedLanguage = "vi"
             default:
                 detectedLanguage = "en"  // 不支持的语言返回英语
             }
@@ -213,6 +229,14 @@ class LangService {
             _ where systemLanguage.hasPrefix("pt-PT"),
             _ where systemLanguage.hasPrefix("pt"):
             return "pt-PT"
+        case _ where systemLanguage.hasPrefix("ru"):
+            return "ru"
+        case _ where systemLanguage.hasPrefix("it"):
+            return "it"
+        case _ where systemLanguage.hasPrefix("th"):
+            return "th"
+        case _ where systemLanguage.hasPrefix("vi"):
+            return "vi"
         default:
             return "en"
         }
@@ -262,6 +286,14 @@ class LangService {
             return "pt-PT"
         case "id":
             return "id-ID"
+        case "ru":
+            return "ru-RU"
+        case "it":
+            return "it-IT"
+        case "th":
+            return "th-TH"
+        case "vi":
+            return "vi-VN"
         default:
             return "en-US"
         }

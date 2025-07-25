@@ -1,150 +1,154 @@
 // Status Bar Menu
-"openmain" = "Open Window";
-"translate" = "Translate Selected Text";
-"summary" = "Summarize Selected Text";
-"dictionary" = "Dictionary Lookup";
-"ocr_translate" = "Screenshot Translate";
-"vocabulary" = "Wordbook";
-"favorites" = "Favorites";
-"history" = "History";
-"setting" = "Preferences";
-"quit" = "Quit";
+"openmain" = "Открыть окно";
+"translate" = "Перевести выделенный текст";
+"summary" = "Краткое содержание";
+"dictionary" = "Словарь";
+"ocr_translate" = "Перевод с экрана";
+"vocabulary" = "Словарь новых слов";
+"favorites" = "Избранное";
+"history" = "История";
+"setting" = "Настройки";
+"quit" = "Выйти";
 
 // pane
-"general" = "General";
-"service" = "AI Service";
-"premium" = "Pro";
-"about" = "About";
+"general" = "Общие";
+"service" = "Служба AI";
+"premium" = "Премиум";
+"about" = "О приложении";
 
 // setting
-"startup" = "Open at Login";
-"shortcut_openmain" = "Shortcut to Open Main Window";
-"shortcut_openmain_description" = "Open the main window and fill the selected text into the input box";
-"shortcut_translate" = "Translate Shortcut";
-"shortcut_translate_description" = "Select text and press the shortcut to translate.";
-"shortcut_summary" = "Summarize Shortcut";
-"shortcut_summary_description" = "Select text and press the shortcut to summarize.";
-"shortcut_dict" = "Dictionary Shortcut Key";
-"shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
-"shortcut_ocr_translate" = "Screenshot Translate Shortcut";
-"shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
-"default_main_function" = "Default Action";
-"default_main_function_description" = "The default Action triggered in main window when pressing Return key";
+"startup" = "Запускать при входе в систему";
+"shortcut_openmain" = "Горячая клавиша открытия окна";
+"shortcut_openmain_description" = "Открыть окно и вставить выделенный текст в поле ввода";
+"shortcut_translate" = "Горячая клавиша перевода";
+"shortcut_translate_description" = "Перевод выделенного текста по нажатию клавиш";
+"shortcut_summary" = "Горячая клавиша резюме";
+"shortcut_summary_description" = "Сводка выделенного текста по нажатию клавиш";
+"shortcut_dict" = "Горячая клавиша словаря";
+"shortcut_dict_description" = "Поиск значения выделенного слова";
+"shortcut_ocr_translate" = "Горячая клавиша OCR перевода";
+"shortcut_ocr_translate_description" = "Выделите область экрана, распознаем текст и переведем его";
+"default_main_function" = "Операция по умолчанию";
+"default_main_function_description" = "Действие по умолчанию при нажатии Return в главном окне";
 
 // Language setting
-"preferred_language" = "Preferred Language";
-"common_foreign_language" = "Primary Foreign Language";
-"preferred_language_description" = "Translate foreign text into this language (usually native)";
-"common_foreign_language_description" = "Translate common text into this language (your first foreign language)";
-"language_zh_hans" = "Simplified Chinese";
-"language_zh_hant" = "Traditional Chinese";
-"language_ja" = "Japanese";
-"language_ko" = "Korean";
-"language_en" = "English";
-"language_fr" = "French";
-"language_de" = "German";
-"language_es" = "Spanish";
-"language_id" = "Indonesian";
-"language_pt" = "Portuguese";
+"preferred_language" = "Предпочтительный язык";
+"common_foreign_language" = "Первый иностранный язык";
+"preferred_language_description" = "Перевод на этот язык (обычно родной)";
+"common_foreign_language_description" = "Часто используемый/изучаемый иностранный язык";
+"language_zh_hans" = "Китайский (упрощенный)";
+"language_zh_hant" = "Китайский (традиционный)";
+"language_ja" = "Японский";
+"language_ko" = "Корейский";
+"language_en" = "Английский (English)";
+"language_fr" = "Французский";
+"language_de" = "Немецкий";
+"language_es" = "Испанский";
+"language_id" = "Индонезийский";
+"language_pt" = "Португальский";
+"language_ru" = "Русский";
+"language_it" = "Итальянский";
+"language_th" = "Тайский";
+"language_vi" = "Вьетнамский";
 
 // ai setting
-"select_service" = "Select AI Service";
-"enter_api_key" = "Please Enter API KEY";
-"api_key" = "API KEY";
-"model" = "Model";
-"model_zhipu_glm4" = "Zhipu-GLM-4-9B";
+"select_service" = "Выбрать AI-сервис";
+"enter_api_key" = "Введите API-ключ";
+"api_key" = "API-ключ";
+"model" = "Модель";
+"model_zhipu_glm4" = "Zhipu-GLM-4-9B (рекомендуется)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3-8B (Recommended)";
+"model_qwen3" = "OpenRouter-Qwen3-8B";
 "model_openai" = "OpenAI";
-"model_siliconflow" = "Siliconflow";
+"model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
 "model_deepseek" = "DeepSeek";
-"model_volcengine" = "Volcengine";
+"model_volcengine" = "VolcEngine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
-"prompt" = "Prompt";
-"prompt_title" = "Title";
-"prompt_custom_system" = "Custom System Prompt";
+"prompt" = "Подсказка";
+"prompt_title" = "Название";
+"prompt_custom_system" = "Собственная системная подсказка";
 
 // ai config
-"openai_config" = "OpenAI Setting";
-"siliconflow_config" = "Siliconflow Setting";
-"google_gemini_config" = "Google Gemini Setting";
-"claude_config" = "Anthropic Claude Setting";
-"deepseek_config" = "Deepseek Setting";
-"volcengine_config" = "Volcengine Setting";
-"zhipu_config" = "Zhipu Setting";
-"openrouter_config" = "OpenRouter Setting";
+"openai_config" = "Настройки OpenAI";
+"siliconflow_config" = "Настройки SiliconFlow";
+"google_gemini_config" = "Настройки Google Gemini";
+"claude_config" = "Настройки Claude";
+"deepseek_config" = "Настройки DeepSeek";
+"volcengine_config" = "Настройки VolcEngine";
+"zhipu_config" = "Настройки Zhipu";
+"openrouter_config" = "Настройки OpenRouter";
 
 // main
-"pop_text_empty" = "No text available to copy.";
-"pop_translate_text_empty" = "Please enter text to translate.";
-"pop_summary_text_empty" = "Please enter text to summarize.";
-"pop_dict_text_empty" = "Please enter a single word to look up";
-"pop_chat_text_empty" = "Enter your question.";
-"pop_copy_success" = "Copied";
-"pop_already_cleared" = "Text cleared.";
-"pop_favorite_added" = "Added to Favorites.";
-"pop_select_model_first" = "Please select an AI model in Preferences first.";
-"help_translate" = "Translate Text";
-"help_summary" = "Summarize Text";
-"help_dict" = "Dictionary Lookup";
-"help_chat" = "Send message";
-"help_clear" = "Clear";
-"help_favorite" = "Favorite";
-"help_speak" = "Speak";
-"help_copy" = "Copy";
-"help_pin" = "Pin Window";
-"help_unpin" = "Unpin Window";
-"help_clear" = "Clear Text";
+"pop_text_empty" = "Нет текста для копирования";
+"pop_translate_text_empty" = "Введите текст для перевода";
+"pop_summary_text_empty" = "Введите текст для резюме";
+"pop_dict_text_empty" = "Введите слово для поиска";
+"pop_chat_text_empty" = "Введите вопрос для ответа";
+"pop_copy_success" = "Скопировано";
+"pop_already_cleared" = "Содержимое очищено";
+"pop_favorite_added" = "Добавлено в избранное";
+"pop_select_model_first" = "Пожалуйста, выберите модель AI в настройках";
+"help_translate" = "Перевести текст";
+"help_summary" = "Сводка";
+"help_dict" = "Словарь";
+"help_chat" = "Отправить сообщение";
+"help_clear" = "Очистить";
+"help_favorite" = "Избранное";
+"help_speak" = "Озвучить";
+"help_copy" = "Копировать";
+"help_pin" = "Закрепить окно";
+"help_unpin" = "Открепить";
+"help_clear" = "Очистить";
 
 // alert
-"accessibility_permission_message" = "Accessibility permission is required. Please enable it in System Settings to translate selected text.";
-"app_in_menubar_info" = "The app is running and the 🌵 icon appears in the menu bar";
-"open_settings" = "Open System Settings";
-"cancel" = "Cancel";
+"accessibility_permission_message" = "Требуется разрешение на специальные возможности. Пожалуйста, включите его в системных настройках.";
+"app_in_menubar_info" = "Приложение запущено. Иконка 🌵 отображается в строке меню";
+"open_settings" = "Открыть настройки";
+"cancel" = "Отмена";
 
 // about
 "apptitle" = "Cactus AI Assistant";
-"version" = "Version";
-"report_issue" = "Report Issue";
-"contact" = "Contact Us";
-"rate_app" = "Rate This App";
+"version" = "Версия";
+"report_issue" = "Сообщить о проблеме";
+"contact" = "Связаться с нами";
+"rate_app" = "Оцените приложение";
 
 // ai error
-"error_invalid_config" = "System error, AI service configuration error";
-"error_request_failed" = "Request failed, switch to another AI model or check the network.";
-"error_empty_api_key" = "Please enter the API key for the current AI service";
-"error_empty_model" = "Please select a model for the current AI service";
+"error_invalid_config" = "Ошибка системы. Неверная конфигурация AI";
+"error_request_failed" = "Запрос не выполнен. Попробуйте другую модель или проверьте соединение";
+"error_empty_api_key" = "Введите API-ключ";
+"error_empty_model" = "Выберите модель AI";
 
 // common
-"alert_ok" = "OK";
-"sum" = "Total";
-"clear_all" = "Clear All";
-"cancel" = "Cancel";
-"confirm" = "Confirm";
-"delete" = "Delete";
-"stop" = "Stop";
-"save" = "Save";
+"alert_ok" = "ОК";
+"sum" = "Всего";
+"clear_all" = "Очистить всё";
+"cancel" = "Отмена";
+"confirm" = "Подтвердить";
+"delete" = "Удалить";
+"stop" = "Остановить";
+"save" = "Сохранить";
 
 // pro
-"premium_owned" = "You already own the Pro version";
-"premium_processing" = "Processing...";
-"premium_unlock" = "Unlock Pro";
-"premium_restore" = "Restore Purchase";
-"premium_features" = "Premium Features";
-"premium_feature_unlimited_usage" = "Unlimited translations and summaries";
-"premium_feature_unlimited_vocabulary" = "Unlimited use of wordbook and favorites";
-"premium_feature_custom_model" = "Unlock more AI models like GPT4, Gemini, Claude...";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"premium_owned" = "У вас уже есть премиум-версия. Спасибо за поддержку!";
+"premium_processing" = "Обработка...";
+"premium_unlock" = "Открыть премиум";
+"premium_restore" = "Восстановить покупку";
+"premium_features" = "Функции премиум";
+"premium_feature_unlimited_usage" = "Безлимитное количество переводов и резюме";
+"premium_feature_unlimited_vocabulary" = "Неограниченное использование словаря и избранного";
+"premium_feature_custom_model" = "Открывает доступ к GPT-4, Gemini, Claude, DeepSeek и другим моделям";
+"terms_of_use" = "Условия использования";
+"privacy_policy" = "Политика конфиденциальности";
 
 // Purchase Manager
-"purchase_load_product_failed" = "Failed to load product information";
-"purchase_pending" = "Purchase is processing, please check later";
-"purchase_not_found" = "No purchase record found";
-"upgrade_to_premium" = "Usage limit reached. Please upgrade to Pro.";
+"purchase_load_product_failed" = "Не удалось загрузить информацию о продукте";
+"purchase_pending" = "Покупка обрабатывается, пожалуйста, подождите";
+"purchase_not_found" = "Запись о покупке не найдена";
+"upgrade_to_premium" = "Достигнут лимит использования. Обновитесь до премиум-версии";
 
 // history
-"clear_all_history_message" = "Are you sure you want to clear all history?";
+"clear_all_history_message" = "Вы уверены, что хотите очистить всю историю?";
