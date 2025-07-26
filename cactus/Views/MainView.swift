@@ -37,7 +37,7 @@ struct MainView: View {
     // 默认尺寸
     private let minInputTextHeight: CGFloat = 100
     private let minResultTextHeight: CGFloat = 100
-    private let maxInputTextHeight: CGFloat = 200
+    private let maxInputTextHeight: CGFloat = 180
     private let maxResultTextHeight: CGFloat = 660
     private let minTextWidth: CGFloat = 690
     
@@ -324,6 +324,25 @@ struct MainView: View {
     }
     
     // 保留 calculateTextHeight 方法，用于计算结果区域的高度
+    // 在 MainView 结构体中添加新的计算属性
+    private var dynamicMaxResultHeight: CGFloat {
+        guard let screen = NSScreen.main else {
+            return maxResultTextHeight // 回退到固定值
+        }
+        
+        // 获取可用屏幕高度（减去菜单栏和dock栏）
+        let availableHeight = screen.visibleFrame.height
+        
+        // 计算窗口其他部分的高度（输入框、按钮栏、边距等）
+        let otherComponentsHeight: CGFloat = inputTextHeight + 60 + 40 // 输入框 + 按钮栏 + 边距
+        
+        // 为结果区域保留80%的可用空间，但至少保证最小高度
+        let maxAllowedHeight = max(availableHeight * 0.8 - otherComponentsHeight, minResultTextHeight)
+        
+        return min(maxAllowedHeight, 800) // 设置一个合理的上限
+    }
+    
+    // 修改 calculateTextHeight 方法
     private func calculateTextHeight(text: String, width: CGFloat) -> CGFloat {
         let font = NSFont.systemFont(ofSize: 15)
         // 应用行间距到属性字符串
@@ -350,8 +369,8 @@ struct MainView: View {
         // 添加 TextEditor 的垂直内边距 (padding * 2) 和一些额外空间
         let totalHeight = height + 20 + 10 // 加上垂直 padding 和额外空间
         
-        // 设置最小和最大高度限制
-        return min(max(totalHeight, minResultTextHeight), maxResultTextHeight)
+        // 使用动态最大高度限制
+        return min(max(totalHeight, minResultTextHeight), dynamicMaxResultHeight)
     }
     
     func fillText(_ newText: String) {
