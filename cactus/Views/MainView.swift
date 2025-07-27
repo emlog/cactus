@@ -37,7 +37,7 @@ struct MainView: View {
     // 默认尺寸
     private let minInputTextHeight: CGFloat = 100
     private let minResultTextHeight: CGFloat = 100
-    private let maxInputTextHeight: CGFloat = 180
+    private let maxInputTextHeight: CGFloat = 160
     private let maxResultTextHeight: CGFloat = 660
     private let minTextWidth: CGFloat = 690
     

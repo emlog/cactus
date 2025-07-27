@@ -186,7 +186,13 @@ class WindowManager: NSObject, NSWindowDelegate {
         if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {
             window.setFrameOrigin(pinnedOrigin)
         } else {
+            // 先居中窗口
             window.center()
+            
+            // 获取当前窗口位置并向上移动150个像素点
+            var currentFrame = window.frame
+            currentFrame.origin.y += 150
+            window.setFrame(currentFrame, display: true)
         }
         
         window.makeKeyAndOrderFront(nil)
