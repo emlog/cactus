@@ -13,6 +13,7 @@
 俄语：Кактус ИИ Ассистент
 意大利语：Assistente AI Cactus
 泰语：ผู้ช่วย AI กระบองเพชร
+越南语：Cactus AI Assistant
 
 ## 副标题：
 
@@ -30,6 +31,7 @@ Translate,Summarize,OCR
 俄语：Перевод, Резюме, OCR
 意大利语：Traduzione, Riepilogo, OCR
 泰语：แปลภาษา, สรุป, OCR
+越南语：Dịch, Tóm tắt, OCR
 
 
 ## 关键词
@@ -48,6 +50,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 俄语：Перевести, Резюмировать, Словарь, ИИ-ассистент, Продуктивность, OCR
 意大利语：Tradurre, Riassumere, Dizionario, Assistente IA, Produttività, OCR
 泰语：แปลภาษา, สรุป, พจนานุกรม, ผู้ช่วย AI, ประสิทธิภาพ, OCR
+越南语：Dịch, Tóm tắt, Từ điển, Trợ lý AI, Hiệu suất, OCR
 
 ### 简体中文 🇨🇳
 
@@ -243,6 +246,21 @@ Informativa sulla privacy: https://cactusai.cc/privacy-policy-en
 
 ข้อกำหนดในการใช้: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 นโยบายความเป็นส่วนตัว: https://cactusai.cc/privacy-policy-en
+
+## 越南语 🇻🇳
+
+Trợ lý văn bản thông minh hỗ trợ dịch thuật, tóm tắt nội dung, tra từ điển và dịch ảnh chụp màn hình (OCR)
+
+Tính năng chính:
+- Dịch nhanh: Chọn văn bản, nhấn phím tắt (mặc định ⌥ + X) để dịch ngay lập tức
+- Tóm tắt thông minh: Trích xuất các ý chính để dễ hiểu nội dung
+- Tra từ điển: Giải thích nghĩa từ, nguồn gốc và ví dụ sử dụng
+- Dịch ảnh chụp màn hình (OCR): Hỗ trợ nhận dạng văn bản từ ảnh chụp màn hình để nâng cao hiệu suất xử lý
+
+------
+
+Điều khoản sử dụng: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Chính sách quyền riêng tư: https://cactusai.cc/privacy-policy-en
 
 
 
