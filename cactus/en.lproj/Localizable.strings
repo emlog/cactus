@@ -19,7 +19,7 @@
 // setting
 "startup" = "Open at Login";
 "shortcut_openmain" = "Shortcut to Open Main Window";
-"shortcut_openmain_description" = "Open the main window and fill the selected text into the input box";
+"shortcut_openmain_description" = "Open Main Window, copy selected text to input field, and execute send message action";
 "shortcut_translate" = "Translate Shortcut";
 "shortcut_translate_description" = "Select text and press the shortcut to translate.";
 "shortcut_summary" = "Summarize Shortcut";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Are you sure you want to clear all history?";
+
+// 英语

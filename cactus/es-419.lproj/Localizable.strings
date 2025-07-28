@@ -19,7 +19,7 @@
 // setting
 "startup" = "Iniciar al encender";
 "shortcut_openmain" = "Atajo: Abrir ventana";
-"shortcut_openmain_description" = "Abre la ventana e inserta el texto seleccionado";
+"shortcut_openmain_description" = "Abrir ventana, copiar texto seleccionado al campo de entrada y ejecutar acción de enviar mensaje";
 "shortcut_translate" = "Atajo: Traducir";
 "shortcut_translate_description" = "Traduce rápidamente el texto seleccionado";
 "shortcut_summary" = "Atajo: Resumen";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "¿Seguro que deseas borrar todo el historial?";
+
+// 西班牙语

@@ -19,7 +19,7 @@
 // setting
 "startup" = "시작 시 자동 실행";
 "shortcut_openmain" = "메인 창 열기 단축키";
-"shortcut_openmain_description" = "메인 창을 열고 선택한 텍스트를 입력란에 자동으로 채웁니다";
+"shortcut_openmain_description" = "창을 열고 선택한 텍스트를 입력란에 복사한 후 메시지 보내기 실행";
 "shortcut_translate" = "번역 단축키";
 "shortcut_translate_description" = "텍스트를 선택하고 단축키로 빠르게 번역";
 "shortcut_summary" = "요약 단축키";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "모든 기록을 삭제하시겠습니까?";
+
+// 韩语

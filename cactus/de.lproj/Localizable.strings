@@ -19,7 +19,7 @@
 // setting
 "startup" = "Beim Start öffnen";
 "shortcut_openmain" = "Tastenkürzel: Fenster öffnen";
-"shortcut_openmain_description" = "Fenster öffnen und markierten Text einfügen";
+"shortcut_openmain_description" = "Fenster öffnen, ausgewählten Text in das Eingabefeld kopieren und Nachricht senden";
 "shortcut_translate" = "Tastenkürzel: Übersetzen";
 "shortcut_translate_description" = "Markierten Text schnell übersetzen";
 "shortcut_summary" = "Tastenkürzel: Zusammenfassung";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Möchten Sie wirklich den gesamten Verlauf löschen?";
+
+// 德语

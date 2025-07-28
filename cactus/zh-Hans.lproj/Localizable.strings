@@ -19,7 +19,7 @@
 // setting
 "startup" = "开机自动启动";
 "shortcut_openmain" = "打开窗口快捷键";
-"shortcut_openmain_description" = "打开窗口，并将选中的文字填充到输入框内";
+"shortcut_openmain_description" = "打开窗口，并将选中的文字复制到输入框，执行发送消息操作";
 "shortcut_translate" = "选中翻译快捷键";
 "shortcut_translate_description" = "选中文字内容，按下快捷键快速翻译";
 "shortcut_summary" = "总结摘要快捷键";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "确定要清空所有历史记录吗？";
+
+// 简体中文

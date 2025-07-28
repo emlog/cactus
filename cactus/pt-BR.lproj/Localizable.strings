@@ -19,7 +19,7 @@
 // setting
 "startup" = "Iniciar ao ligar o sistema";
 "shortcut_openmain" = "Atalho para Abrir Janela";
-"shortcut_openmain_description" = "Abre a janela e preenche o texto selecionado no campo de entrada";
+"shortcut_openmain_description" = "Abrir janela, copiar texto selecionado para o campo de entrada e executar ação de enviar mensagem";
 "shortcut_translate" = "Atalho para Traduzir Seleção";
 "shortcut_translate_description" = "Seleciona o texto e pressiona o atalho para traduzir rapidamente";
 "shortcut_summary" = "Atalho para Resumo";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Tem certeza de que deseja apagar todo o histórico?";
+
+// 葡萄牙语

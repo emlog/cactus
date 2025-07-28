@@ -19,7 +19,7 @@
 // setting
 "startup" = "Lancer au démarrage";
 "shortcut_openmain" = "Raccourci : Ouvrir la fenêtre";
-"shortcut_openmain_description" = "Ouvre la fenêtre et insère le texte sélectionné";
+"shortcut_openmain_description" = "Ouvrir la fenêtre, copier le texte sélectionné dans le champ de saisie et exécuter l'envoi du message";
 "shortcut_translate" = "Raccourci : Traduire";
 "shortcut_translate_description" = "Traduire rapidement le texte sélectionné";
 "shortcut_summary" = "Raccourci : Résumé";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Voulez-vous vraiment effacer tout l’historique ?";
+
+// 法语

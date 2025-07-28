@@ -1,64 +1,64 @@
 // Status Bar Menu
-"openmain" = "Open Window";
-"translate" = "Translate Selected Text";
-"summary" = "Summarize Selected Text";
-"dictionary" = "Dictionary Lookup";
-"ocr_translate" = "Screenshot Translate";
-"vocabulary" = "Wordbook";
-"favorites" = "Favorites";
-"history" = "History";
-"setting" = "Preferences";
-"quit" = "Quit";
+"openmain" = "Mở Cửa Sổ";
+"translate" = "Dịch Văn Bản Đã Chọn";
+"summary" = "Tóm Tắt Văn Bản Đã Chọn";
+"dictionary" = "Tra Từ Điển";
+"ocr_translate" = "Dịch Ảnh Chụp Màn Hình";
+"vocabulary" = "Sổ Từ Vựng";
+"favorites" = "Yêu Thích";
+"history" = "Lịch Sử";
+"setting" = "Tùy Chọn";
+"quit" = "Thoát";
 
 // pane
-"general" = "General";
-"service" = "AI Service";
-"premium" = "Pro";
-"about" = "About";
+"general" = "Tổng Quát";
+"service" = "Dịch Vụ AI";
+"premium" = "Phiên Bản Pro";
+"about" = "Giới Thiệu";
 
 // setting
-"startup" = "Open at Login";
-"shortcut_openmain" = "Shortcut to Open Main Window";
-"shortcut_openmain_description" = "Open the main window and fill the selected text into the input box";
-"shortcut_translate" = "Translate Shortcut";
-"shortcut_translate_description" = "Select text and press the shortcut to translate.";
-"shortcut_summary" = "Summarize Shortcut";
-"shortcut_summary_description" = "Select text and press the shortcut to summarize.";
-"shortcut_dict" = "Dictionary Shortcut Key";
-"shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
-"shortcut_ocr_translate" = "Screenshot Translate Shortcut";
-"shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
-"default_main_function" = "Default Action";
-"default_main_function_description" = "The default Action triggered in main window when pressing Return key";
+"startup" = "Khởi Động Cùng Hệ Thống";
+"shortcut_openmain" = "Phím Tắt Mở Cửa Sổ Chính";
+"shortcut_openmain_description" = "Mở cửa sổ chính, sao chép văn bản đã chọn vào ô nhập và thực hiện gửi tin nhắn";
+"shortcut_translate" = "Phím Tắt Dịch";
+"shortcut_translate_description" = "Chọn văn bản và nhấn phím tắt để dịch";
+"shortcut_summary" = "Phím Tắt Tóm Tắt";
+"shortcut_summary_description" = "Chọn văn bản và nhấn phím tắt để tóm tắt";
+"shortcut_dict" = "Phím Tắt Tra Từ Điển";
+"shortcut_dict_description" = "Chọn từ và nhấn phím tắt để tra cứu";
+"shortcut_ocr_translate" = "Phím Tắt Dịch Ảnh Chụp Màn Hình";
+"shortcut_ocr_translate_description" = "Chụp vùng văn bản trên màn hình, tự động nhận dạng OCR và dịch";
+"default_main_function" = "Hành Động Mặc Định";
+"default_main_function_description" = "Hành động mặc định được kích hoạt trong cửa sổ chính khi nhấn phím Return";
 
 // Language setting
-"preferred_language" = "Preferred Language";
-"common_foreign_language" = "Primary Foreign Language";
-"preferred_language_description" = "Translate foreign text into this language (usually native)";
-"common_foreign_language_description" = "Translate common text into this language (your first foreign language)";
-"language_zh_hans" = "Simplified Chinese";
-"language_zh_hant" = "Traditional Chinese";
-"language_ja" = "Japanese";
-"language_ko" = "Korean";
-"language_en" = "English";
-"language_fr" = "French";
-"language_de" = "German";
-"language_es" = "Spanish";
-"language_id" = "Indonesian";
-"language_pt" = "Portuguese";
+"preferred_language" = "Ngôn Ngữ Ưa Thích";
+"common_foreign_language" = "Ngoại Ngữ Chính";
+"preferred_language_description" = "Dịch văn bản nước ngoài sang ngôn ngữ này (thường là tiếng mẹ đẻ)";
+"common_foreign_language_description" = "Dịch văn bản thông thường sang ngôn ngữ này (ngoại ngữ đầu tiên của bạn)";
+"language_zh_hans" = "Tiếng Trung Giản Thể";
+"language_zh_hant" = "Tiếng Trung Phồn Thể";
+"language_ja" = "Tiếng Nhật";
+"language_ko" = "Tiếng Hàn";
+"language_en" = "Tiếng Anh";
+"language_fr" = "Tiếng Pháp";
+"language_de" = "Tiếng Đức";
+"language_es" = "Tiếng Tây Ban Nha";
+"language_id" = "Tiếng Indonesia";
+"language_pt" = "Tiếng Bồ Đào Nha";
 "language_ru" = "Tiếng Nga";
 "language_it" = "Tiếng Ý";
 "language_th" = "Tiếng Thái";
 "language_vi" = "Tiếng Việt";
 
 // ai setting
-"select_service" = "Select AI Service";
-"enter_api_key" = "Please Enter API KEY";
+"select_service" = "Chọn Dịch Vụ AI";
+"enter_api_key" = "Vui Lòng Nhập API KEY";
 "api_key" = "API KEY";
-"model" = "Model";
+"model" = "Mô Hình";
 "model_zhipu_glm4" = "Zhipu-GLM-4-9B";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3-8B (Recommended)";
+"model_qwen3" = "OpenRouter-Qwen3-8B (Khuyến Nghị)";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "Siliconflow";
 "model_google_gemini" = "Google Gemini";
@@ -67,88 +67,90 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
-"prompt" = "Prompt";
-"prompt_title" = "Title";
-"prompt_custom_system" = "Custom System Prompt";
+"prompt" = "Lời Nhắc";
+"prompt_title" = "Tiêu Đề";
+"prompt_custom_system" = "Lời Nhắc Hệ Thống Tùy Chỉnh";
 
 // ai config
-"openai_config" = "OpenAI Setting";
-"siliconflow_config" = "Siliconflow Setting";
-"google_gemini_config" = "Google Gemini Setting";
-"claude_config" = "Anthropic Claude Setting";
-"deepseek_config" = "Deepseek Setting";
-"volcengine_config" = "Volcengine Setting";
-"zhipu_config" = "Zhipu Setting";
-"openrouter_config" = "OpenRouter Setting";
+"openai_config" = "Cài Đặt OpenAI";
+"siliconflow_config" = "Cài Đặt Siliconflow";
+"google_gemini_config" = "Cài Đặt Google Gemini";
+"claude_config" = "Cài Đặt Anthropic Claude";
+"deepseek_config" = "Cài Đặt Deepseek";
+"volcengine_config" = "Cài Đặt Volcengine";
+"zhipu_config" = "Cài Đặt Zhipu";
+"openrouter_config" = "Cài Đặt OpenRouter";
 
 // main
-"pop_text_empty" = "No text available to copy.";
-"pop_translate_text_empty" = "Please enter text to translate.";
-"pop_summary_text_empty" = "Please enter text to summarize.";
-"pop_dict_text_empty" = "Please enter a single word to look up";
-"pop_chat_text_empty" = "Enter your question.";
-"pop_copy_success" = "Copied";
-"pop_already_cleared" = "Text cleared.";
-"pop_favorite_added" = "Added to Favorites.";
-"pop_select_model_first" = "Please select an AI model in Preferences first.";
-"help_translate" = "Translate Text";
-"help_summary" = "Summarize Text";
-"help_dict" = "Dictionary Lookup";
-"help_chat" = "Send message";
-"help_clear" = "Clear";
-"help_favorite" = "Favorite";
-"help_speak" = "Speak";
-"help_copy" = "Copy";
-"help_pin" = "Pin Window";
-"help_unpin" = "Unpin Window";
-"help_clear" = "Clear Text";
+"pop_text_empty" = "Không có văn bản để sao chép";
+"pop_translate_text_empty" = "Vui lòng nhập văn bản để dịch";
+"pop_summary_text_empty" = "Vui lòng nhập văn bản để tóm tắt";
+"pop_dict_text_empty" = "Vui lòng nhập một từ để tra cứu";
+"pop_chat_text_empty" = "Nhập câu hỏi của bạn";
+"pop_copy_success" = "Đã Sao Chép";
+"pop_already_cleared" = "Đã Xóa Văn Bản";
+"pop_favorite_added" = "Đã Thêm Vào Yêu Thích";
+"pop_select_model_first" = "Vui lòng chọn mô hình AI trong Tùy Chọn trước";
+"help_translate" = "Dịch Văn Bản";
+"help_summary" = "Tóm Tắt Văn Bản";
+"help_dict" = "Tra Từ Điển";
+"help_chat" = "Gửi Tin Nhắn";
+"help_clear" = "Xóa";
+"help_favorite" = "Yêu Thích";
+"help_speak" = "Đọc";
+"help_copy" = "Sao Chép";
+"help_pin" = "Ghim Cửa Sổ";
+"help_unpin" = "Bỏ Ghim Cửa Sổ";
+"help_clear" = "Xóa Văn Bản";
 
 // alert
-"accessibility_permission_message" = "Accessibility permission is required. Please enable it in System Settings to translate selected text.";
-"app_in_menubar_info" = "The app is running and the 🌵 icon appears in the menu bar";
-"open_settings" = "Open System Settings";
-"cancel" = "Cancel";
+"accessibility_permission_message" = "Cần quyền truy cập hỗ trợ. Vui lòng bật trong Cài Đặt Hệ Thống để dịch văn bản đã chọn";
+"app_in_menubar_info" = "Ứng dụng đang chạy và biểu tượng 🌵 xuất hiện trong thanh menu";
+"open_settings" = "Mở Cài Đặt Hệ Thống";
+"cancel" = "Hủy";
 
 // about
-"apptitle" = "Cactus AI Assistant";
-"version" = "Version";
-"report_issue" = "Report Issue";
-"contact" = "Contact Us";
-"rate_app" = "Rate This App";
+"apptitle" = "Trợ Lý AI Cactus";
+"version" = "Phiên Bản";
+"report_issue" = "Báo Cáo Lỗi";
+"contact" = "Liên Hệ";
+"rate_app" = "Đánh Giá Ứng Dụng";
 
 // ai error
-"error_invalid_config" = "System error, AI service configuration error";
-"error_request_failed" = "Request failed, switch to another AI model or check the network.";
-"error_empty_api_key" = "Please enter the API key for the current AI service";
-"error_empty_model" = "Please select a model for the current AI service";
+"error_invalid_config" = "Lỗi hệ thống, cấu hình dịch vụ AI bị lỗi";
+"error_request_failed" = "Yêu cầu thất bại, hãy chuyển sang mô hình AI khác hoặc kiểm tra mạng";
+"error_empty_api_key" = "Vui lòng nhập API key cho dịch vụ AI hiện tại";
+"error_empty_model" = "Vui lòng chọn mô hình cho dịch vụ AI hiện tại";
 
 // common
 "alert_ok" = "OK";
-"sum" = "Total";
-"clear_all" = "Clear All";
-"cancel" = "Cancel";
-"confirm" = "Confirm";
-"delete" = "Delete";
-"stop" = "Stop";
-"save" = "Save";
+"sum" = "Tổng Cộng";
+"clear_all" = "Xóa Tất Cả";
+"cancel" = "Hủy";
+"confirm" = "Xác Nhận";
+"delete" = "Xóa";
+"stop" = "Dừng";
+"save" = "Lưu";
 
 // pro
-"premium_owned" = "You already own the Pro version";
-"premium_processing" = "Processing...";
-"premium_unlock" = "Unlock Pro";
-"premium_restore" = "Restore Purchase";
-"premium_features" = "Premium Features";
-"premium_feature_unlimited_usage" = "Unlimited translations and summaries";
-"premium_feature_unlimited_vocabulary" = "Unlimited use of wordbook and favorites";
-"premium_feature_custom_model" = "Unlock more AI models like GPT4, Gemini, Claude...";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"premium_owned" = "Bạn đã sở hữu phiên bản Pro";
+"premium_processing" = "Đang Xử Lý...";
+"premium_unlock" = "Mở Khóa Pro";
+"premium_restore" = "Khôi Phục Mua Hàng";
+"premium_features" = "Tính Năng Premium";
+"premium_feature_unlimited_usage" = "Dịch và tóm tắt không giới hạn";
+"premium_feature_unlimited_vocabulary" = "Sử dụng sổ từ vựng và yêu thích không giới hạn";
+"premium_feature_custom_model" = "Mở khóa thêm các mô hình AI như GPT4, Gemini, Claude...";
+"terms_of_use" = "Điều Khoản Sử Dụng";
+"privacy_policy" = "Chính Sách Bảo Mật";
 
 // Purchase Manager
-"purchase_load_product_failed" = "Failed to load product information";
-"purchase_pending" = "Purchase is processing, please check later";
-"purchase_not_found" = "No purchase record found";
-"upgrade_to_premium" = "Usage limit reached. Please upgrade to Pro.";
+"purchase_load_product_failed" = "Không thể tải thông tin sản phẩm";
+"purchase_pending" = "Giao dịch mua hàng đang được xử lý, vui lòng kiểm tra lại sau";
+"purchase_not_found" = "Không tìm thấy bản ghi mua hàng";
+"upgrade_to_premium" = "Đã đạt giới hạn sử dụng. Vui lòng nâng cấp lên Pro";
 
 // history
-"clear_all_history_message" = "Are you sure you want to clear all history?";
+"clear_all_history_message" = "Bạn có chắc chắn muốn xóa tất cả lịch sử không?";
+
+// 越南语

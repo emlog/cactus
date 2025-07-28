@@ -19,7 +19,7 @@
 // setting
 "startup" = "เริ่มอัตโนมัติเมื่อเปิดเครื่อง";
 "shortcut_openmain" = "คีย์ลัดเปิดหน้าต่าง";
-"shortcut_openmain_description" = "เปิดหน้าต่างและเติมข้อความที่เลือกลงในช่องป้อนข้อมูล";
+"shortcut_openmain_description" = "เปิดหน้าต่าง คัดลอกข้อความที่เลือกไปยังช่องป้อนข้อมูล และดำเนินการส่งข้อความ";
 "shortcut_translate" = "คีย์ลัดแปลข้อความ";
 "shortcut_translate_description" = "แปลข้อความที่เลือกด้วยคีย์ลัด";
 "shortcut_summary" = "คีย์ลัดสรุปเนื้อหา";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติทั้งหมด?";
+
+// 泰语

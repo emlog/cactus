@@ -19,7 +19,7 @@
 // setting
 "startup" = "起動時に自動起動";
 "shortcut_openmain" = "メインウィンドウを開くショートカット";
-"shortcut_openmain_description" = "メインウィンドウを開き、選択したテキストを入力欄に自動挿入します";
+"shortcut_openmain_description" = "ウィンドウを開き、選択したテキストを入力欄にコピーして、メッセージ送信を実行します";
 "shortcut_translate" = "翻訳ショートカットキー";
 "shortcut_translate_description" = "テキストを選択して、ショートカットキーで素早く翻訳";
 "shortcut_summary" = "要約ショートカットキー";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "すべての履歴を削除しますか？";
+
+// 日语

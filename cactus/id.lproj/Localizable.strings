@@ -19,7 +19,7 @@
 // setting
 "startup" = "Mulai saat startup";
 "shortcut_openmain" = "Pintasan Buka Jendela";
-"shortcut_openmain_description" = "Buka jendela dan isi teks yang dipilih ke dalam kolom input";
+"shortcut_openmain_description" = "Buka jendela, salin teks yang dipilih ke kolom input, dan jalankan aksi kirim pesan";
 "shortcut_translate" = "Pintasan Terjemahan";
 "shortcut_translate_description" = "Pilih teks, lalu tekan pintasan untuk menerjemahkan dengan cepat";
 "shortcut_summary" = "Pintasan Ringkasan";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Apakah Anda yakin ingin menghapus semua riwayat?";
+
+// 印尼语

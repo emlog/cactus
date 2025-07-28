@@ -19,7 +19,7 @@
 // setting
 "startup" = "Запускать при входе в систему";
 "shortcut_openmain" = "Горячая клавиша открытия окна";
-"shortcut_openmain_description" = "Открыть окно и вставить выделенный текст в поле ввода";
+"shortcut_openmain_description" = "Открыть окно, скопировать выделенный текст в поле ввода и выполнить отправку сообщения";
 "shortcut_translate" = "Горячая клавиша перевода";
 "shortcut_translate_description" = "Перевод выделенного текста по нажатию клавиш";
 "shortcut_summary" = "Горячая клавиша резюме";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Вы уверены, что хотите очистить всю историю?";
+
+// 俄语

@@ -19,7 +19,7 @@
 // setting
 "startup" = "Avvia all'accesso";
 "shortcut_openmain" = "Scorciatoia per aprire la finestra";
-"shortcut_openmain_description" = "Apre la finestra e inserisce automaticamente il testo selezionato";
+"shortcut_openmain_description" = "Apri finestra, copia il testo selezionato nel campo di input ed esegui l'azione di invio messaggio";
 "shortcut_translate" = "Scorciatoia per la traduzione";
 "shortcut_translate_description" = "Traduci rapidamente il testo selezionato";
 "shortcut_summary" = "Scorciatoia per il riepilogo";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "Sei sicuro di voler cancellare tutta la cronologia?";
+
+// 意大利语

@@ -19,7 +19,7 @@
 // Setting
 "startup" = "登入時啟動";
 "shortcut_openmain" = "主視窗快捷鍵";
-"shortcut_openmain_description" = "打開主視窗，並將選取文字自動填入輸入框";
+"shortcut_openmain_description" = "開啟主視窗，並將選取的文字複製到輸入框，執行發送訊息操作";
 "shortcut_translate" = "翻譯所選文字快速鍵";
 "shortcut_translate_description" = "選取文字內容，按下快速鍵即可快速翻譯";
 "shortcut_summary" = "製作摘要快速鍵";
@@ -152,3 +152,5 @@
 
 // history
 "clear_all_history_message" = "確定要清空所有歷史記錄嗎？";
+
+// 繁体中文
