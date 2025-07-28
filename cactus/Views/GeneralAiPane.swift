@@ -373,10 +373,25 @@ struct GeneralAiPane: View {
         return preferences.defaultProviders[preferences.selectedProvider]?.availableModels[key] ?? key
     }
     
+    /// 高级版专属提供商列表
+    private var premiumOnlyProviders: Set<String> {
+        return [
+            "zhipu",
+            "siliconflow",
+            "deepseek",
+            "volcengine",
+            "claude",
+            "openai",
+            "google_gemini",
+            "openrouter"
+        ]
+    }
+    
+    /// 提供商选项视图
     private var providerOptions: some View {
         ForEach(preferences.providerKeys, id: \.self) { key in
-            // 高级版可以看到更多模型
-            if (key == "zhipu" || key == "siliconflow" || key == "deepseek" || key == "volcengine" || key == "claude" || key == "openai" || key == "google_gemini" || key == "openrouter") && !isPremiumUser {
+            // 检查是否为高级版专属提供商
+            if premiumOnlyProviders.contains(key) && !isPremiumUser {
                 EmptyView()
             } else {
                 Text(providerDisplayText(for: key)).tag(key)
@@ -384,6 +399,7 @@ struct GeneralAiPane: View {
         }
     }
     
+    /// 获取提供商显示文本
     private func providerDisplayText(for key: String) -> String {
         guard let provider = preferences.defaultProviders[key] else {
             return key
