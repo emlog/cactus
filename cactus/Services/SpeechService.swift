@@ -16,7 +16,7 @@ final class SpeechService: NSObject, AVSpeechSynthesizerDelegate {
     public func speak(_ text: String, speechLanguageCode: String) {
         stopSpeaking()
         guard !text.isEmpty else { return }
-        print("speak lang: " + speechLanguageCode)
+        debugLog(.info, "speak lang: " + speechLanguageCode)
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: speechLanguageCode)
         utterance.rate = 0.5

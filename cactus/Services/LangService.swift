@@ -192,7 +192,7 @@ class LangService {
         let preferredLanguageCode = Locale.preferredLanguages.first ?? "zh-Hans-CN"
         // 获取语言的本地化名称，默认为 "简体中文"
         let preferredLanguageName = Locale.current.localizedString(forLanguageCode: preferredLanguageCode) ?? "简体中文"
-        print("Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
+        debugLog(.info, "Preferred Language Detected: \(preferredLanguageName) (Code: \(preferredLanguageCode))")
         return preferredLanguageName
     }
     
@@ -247,7 +247,7 @@ class LangService {
         let preferredLanguage = PreferencesModel.shared.preferredLanguage
         let textLang = detectLanguageCode(for: text)
         
-        print("prefer lang: \(preferredLanguage)， textLang:  \(textLang)\n")
+        debugLog(.info, "prefer lang: \(preferredLanguage)， textLang:  \(textLang)\n")
         
         let supported = ["zh-Hans", "zh-Hant", "ja", "ko", "en", "fr", "de", "es"]
         if supported.contains(preferredLanguage) {

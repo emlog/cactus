@@ -86,8 +86,8 @@ class AiService: NSObject, URLSessionDataDelegate {
         request.setValue("Bearer \(providerSettings.apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        print("Request URL: \(url)")
-        print("Request Headers: \(request.allHTTPHeaderFields ?? [:])")
+        debugLog(.info, "Request URL: \(url)")
+        debugLog(.info, "Request Headers: \(request.allHTTPHeaderFields ?? [:])")
         
         var messages: [[String: String]] = []
         
@@ -128,7 +128,7 @@ class AiService: NSObject, URLSessionDataDelegate {
         if let httpBody = try? JSONSerialization.data(withJSONObject: body) {
             request.httpBody = httpBody
             if let bodyString = String(data: httpBody, encoding: .utf8) {
-                print("Request Body: \(bodyString)")
+                debugLog(.info, "Request Body: \(bodyString)")
             }
         }
         
@@ -166,7 +166,7 @@ class AiService: NSObject, URLSessionDataDelegate {
      */
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         if let httpResponse = response as? HTTPURLResponse {
-            print("HTTP Status Code: \(httpResponse.statusCode)")
+            debugLog(.info, "HTTP Status Code: \(httpResponse.statusCode)")
             
             // 检查是否为错误状态码
             if httpResponse.statusCode >= 400 {
@@ -287,7 +287,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         DispatchQueue.main.async {
             if let error = error {
-                print("请求错误: \(error.localizedDescription)")
+                debugLog(.error, "请求错误: \(error.localizedDescription)")
                 
                 // 检查是否为手动停止，如果是则不调用错误回调
                 if !self.isManualStop {
@@ -364,7 +364,7 @@ struct SSEParser {
             let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
             return streamResponse.choices.first?.delta.content
         } catch {
-            print("JSON解析错误: \(error.localizedDescription), Raw JSON: \(jsonString)")
+            debugLog(.error, "JSON解析错误: \(error.localizedDescription), Raw JSON: \(jsonString)")
             return nil
         }
     }
