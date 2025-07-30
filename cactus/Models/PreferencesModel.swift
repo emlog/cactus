@@ -126,6 +126,7 @@ class PreferencesModel: ObservableObject {
                 "THUDM/GLM-4-32B-0414": "GLM-4-32B-0414",
                 "THUDM/GLM-4-9B-0414": "GLM-4-9B-0414 (Free)",
                 "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
+                "Qwen/Qwen3-8B": "Qwen3-8B (Free)",
                 "Qwen/Qwen2.5-7B-Instruct": "Qwen2.5-7B-Instruct (Free)",
                 "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
             ]

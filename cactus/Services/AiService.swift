@@ -114,12 +114,16 @@ class AiService: NSObject, URLSessionDataDelegate {
             return
         }
         
-        let body: [String: Any] = [
+        // 创建可变的 body 字典
+        var body: [String: Any] = [
             "model": providerSettings.model,
             "messages": messages,
             "max_tokens": 1000,
             "stream": true
         ]
+        
+        // Add provider-specific parameters
+        addProviderSpecificParameters(providerSettings: providerSettings, to: &body)
         
         if let httpBody = try? JSONSerialization.data(withJSONObject: body) {
             request.httpBody = httpBody
@@ -148,12 +152,12 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     /**
      * URLSession Delegate 方法 1: 处理 HTTP 响应头
-     * 
+     *
      * 用途：
      * - 接收并验证服务器返回的 HTTP 响应状态码
      * - 判断请求是否成功（状态码 < 400 为成功）
      * - 设置全局标志位来标记响应的有效性
-     * 
+     *
      * 工作机制：
      * - 在接收到响应头时首先被调用
      * - 检查 HTTP 状态码，如果 >= 400 则标记为错误响应
@@ -179,13 +183,13 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     /**
      * URLSession Delegate 方法 2: 处理流式数据接收
-     * 
+     *
      * 用途：
      * - 接收并解析 AI 服务返回的流式数据（Server-Sent Events 格式）
      * - 实时处理 JSON 数据块，提取 AI 生成的文本内容
      * - 处理错误响应的解析和显示
      * - 实时更新 UI 界面显示 AI 回复内容
-     * 
+     *
      * 工作机制：
      * - 将接收到的数据追加到缓冲区（buffer）
      * - 按行解析缓冲区数据，查找以 "data:" 开头的 SSE 格式数据
@@ -265,13 +269,13 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     /**
      * URLSession Delegate 方法 3: 处理请求完成
-     * 
+     *
      * 用途：
      * - 处理网络请求的最终完成状态（成功或失败）
      * - 执行清理工作，防止内存泄漏
      * - 调用完成回调通知调用方请求结束
      * - 处理网络错误并提供用户友好的错误信息
-     * 
+     *
      * 工作机制：
      * - 在请求完全结束时被调用（无论成功还是失败）
      * - 检查是否有网络错误，如果有则调用 errorHandler 回调
@@ -315,6 +319,18 @@ class AiService: NSObject, URLSessionDataDelegate {
             buffer.removeAll()
         }
     }
+    
+    // Helper method to add provider-specific request parameters
+    private func addProviderSpecificParameters(providerSettings: ProviderSettings, to body: inout [String: Any]) {
+        switch providerSettings.baseURL {
+        case let url where url.contains("openrouter"):
+            body["reasoning"] = ["enabled": false]
+        case let url where url.contains("siliconflow"):
+            body["enable_thinking"] = false
+        default:
+            break
+        }
+    }
 }
 
 // SSE 数据解析器
@@ -339,7 +355,9 @@ struct SSEParser {
     }
     
     static func extractContentFromJSON(_ jsonString: String) -> String? {
-        print("JSON DATA: \(jsonString.debugDescription)")
+        
+        debugLog(.info, "JSON DATA: \(jsonString.debugDescription)")
+        
         guard let jsonData = jsonString.data(using: .utf8) else { return nil }
         
         do {
