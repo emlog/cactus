@@ -95,7 +95,7 @@ class PreferencesModel: ObservableObject {
             model: "qwen/qwen3-8b:free"
         ),
         "model_cactusai_mix": ProviderSettings(
-            title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_max"),
+            title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_mix"),
             baseURL: "https://api.cactusai.cc/v1/chat/completions",
             apiKey: "sk-xxx",
             model: "internlm/internlm2_5-7b-chat"

@@ -339,6 +339,7 @@ struct SSEParser {
     }
     
     static func extractContentFromJSON(_ jsonString: String) -> String? {
+        print("JSON DATA: \(jsonString.debugDescription)")
         guard let jsonData = jsonString.data(using: .utf8) else { return nil }
         
         do {
