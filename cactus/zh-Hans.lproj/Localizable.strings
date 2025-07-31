@@ -63,6 +63,7 @@
 "model_siliconflow" = "硅基流动";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "火山引擎";
 "model_zhipu" = "智谱";
@@ -76,6 +77,7 @@
 "siliconflow_config" = "硅基流动配置";
 "google_gemini_config" = "Google Gemini 配置";
 "claude_config" = "Anthropic Claude 配置";
+"grok_config" = "Grok 配置";
 "deepseek_config" = "Deepseek 配置";
 "volcengine_config" = "火山引擎配置，请先开通模型";
 "zhipu_config" = "智谱配置";

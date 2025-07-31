@@ -179,6 +179,8 @@ struct GeneralAiPane: View {
             return "diamond.fill"
         case "claude":
             return "staroflife"
+        case "grok":
+            return "xmark"
         case "openrouter":
             return "arrow.triangle.swap"
         default:
@@ -417,6 +419,8 @@ struct GeneralAiPane: View {
             return NSLocalizedString("openai_config", comment: "OpenAI配置")
         case "google_gemini":
             return NSLocalizedString("google_gemini_config", comment: "Google Gemini 配置")
+        case "grok":
+            return NSLocalizedString("grok_config", comment: "Grok 配置")
         case "claude":
             return NSLocalizedString("claude_config", comment: "Claude 配置")
         case "openrouter":
@@ -441,6 +445,8 @@ struct GeneralAiPane: View {
             return $preferences.openaiApiKey
         case "google_gemini":
             return $preferences.googleGeminiApiKey
+        case "grok":
+            return $preferences.grokApiKey
         case "claude":
             return $preferences.claudeApiKey
         case "openrouter":
@@ -465,6 +471,8 @@ struct GeneralAiPane: View {
             return $preferences.selectedOpenAIModel
         case "google_gemini":
             return $preferences.selectedGoogleGeminiModel
+        case "grok":
+            return $preferences.selectedGrokModel
         case "claude":
             return $preferences.selectedClaudeModel
         case "openrouter":
@@ -494,7 +502,8 @@ struct GeneralAiPane: View {
             "claude",
             "openai",
             "google_gemini",
-            "openrouter"
+            "openrouter",
+            "grok"
         ]
     }
     

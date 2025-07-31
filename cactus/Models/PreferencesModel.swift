@@ -195,6 +195,20 @@ class PreferencesModel: ObservableObject {
                 "claude-3-5-sonnet-20241022": "Claude-3.5-Sonnet"
             ]
         ),
+        "grok": ProviderSettings(
+            title: NSLocalizedString("model_grok", comment: "Grok"),
+            baseURL: "https://api.x.ai/v1/chat/completions",
+            apiKey: "",
+            model: "",
+            helpUrl: "https://console.x.ai/",
+            requiresCustomConfig: true,
+            availableModels: [
+                "grok-4-0709": "Grok-4-0709",
+                "grok-3": "Grok-3",
+                "grok-3-fast": "Grok-3-Fast",
+                "grok-3-mini": "Grok-3-Mini"
+            ]
+        ),
         "openrouter": ProviderSettings(
             title: NSLocalizedString("model_openrouter", comment: "OpenRouter"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
@@ -214,12 +228,12 @@ class PreferencesModel: ObservableObject {
                 "google/gemini-2.5-pro": "Gemini-2.5-Pro",
                 "x-ai/grok-3-mini": "Grok-3-Mini",
                 "x-ai/grok-3": "Grok-3",
-                "qwen/qwen2.5-vl-32b-instruct:free": "Qwen-2.5-VL-32B-Instruct-Free",
-                "qwen/qwen3-8b:free": "Qwen-3.8B-Free",
+                "qwen/qwen2.5-vl-32b-instruct:free": "Qwen-2.5-VL-32B-Instruct (Free)",
+                "qwen/qwen3-8b:free": "Qwen-3.8B (Free)",
                 "qwen/qwen-7b-chat": "Qwen-1.5-7B-Chat",
                 "deepseek/deepseek-chat": "DeepSeek-V3",
-                "deepseek/deepseek-chat:free": "DeepSeek-V3-Free",
-                "thudm/glm-4-32b:free": "GLM-4-32B-Free",
+                "deepseek/deepseek-chat:free": "DeepSeek-V3 (Free)",
+                "thudm/glm-4-32b:free": "GLM-4-32B (Free)",
             ]
         )
     ]
@@ -236,6 +250,7 @@ class PreferencesModel: ObservableObject {
         "openai",
         "google_gemini",
         "claude",
+        "grok",
         "openrouter"
     ]
     
@@ -296,6 +311,21 @@ class PreferencesModel: ObservableObject {
         didSet {
             UserDefaults.standard.set(selectedGoogleGeminiModel, forKey: "selectedGoogleGeminiModel")
             updateGoogleGeminiConfig()
+        }
+    }
+    
+    // grok 用户配置
+    @Published var grokApiKey: String {
+        didSet {
+            UserDefaults.standard.set(grokApiKey, forKey: "grokApiKey")
+            updateGrokConfig()
+        }
+    }
+    
+    @Published var selectedGrokModel: String {
+        didSet {
+            UserDefaults.standard.set(selectedGrokModel, forKey: "selectedGrokModel")
+            updateGrokConfig()
         }
     }
     
@@ -396,6 +426,9 @@ class PreferencesModel: ObservableObject {
         
         self.googleGeminiApiKey = UserDefaults.standard.string(forKey: "googleGeminiApiKey") ?? ""
         self.selectedGoogleGeminiModel = UserDefaults.standard.string(forKey: "selectedGoogleGeminiModel") ?? ""
+
+        self.grokApiKey = UserDefaults.standard.string(forKey: "grokApiKey") ?? ""
+        self.selectedGrokModel = UserDefaults.standard.string(forKey: "selectedGrokModel") ?? ""
         
         self.claudeApiKey = UserDefaults.standard.string(forKey: "claudeApiKey") ?? ""
         self.selectedClaudeModel = UserDefaults.standard.string(forKey: "selectedClaudeModel") ?? ""
@@ -425,6 +458,7 @@ class PreferencesModel: ObservableObject {
         updateVolcengineConfig()
         updateZhipuConfig()
         updateOpenrouterConfig()
+        updateGrokConfig()
     }
     
     private func updateZhipuConfig() {
@@ -456,6 +490,14 @@ class PreferencesModel: ObservableObject {
             googleGeminiProvider.apiKey = googleGeminiApiKey
             googleGeminiProvider.model = selectedGoogleGeminiModel
             defaultProviders["google_gemini"] = googleGeminiProvider
+        }
+    }
+    
+    private func updateGrokConfig() {
+        if var grokProvider = defaultProviders["grok"] {
+            grokProvider.apiKey = grokApiKey
+            grokProvider.model = selectedGrokModel
+            defaultProviders["grok"] = grokProvider
         }
     }
     
