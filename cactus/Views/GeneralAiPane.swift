@@ -19,7 +19,7 @@ struct GeneralAiPane: View {
     
     // 计算内容高度
     private var contentHeight: CGFloat {
-        var height: CGFloat = 90 // 基础高度（提供商选择部分）
+        var height: CGFloat = 250 // 增加基础高度以适应新的横向卡片布局
         
         if preferences.currentProviderRequiresConfig && isPremiumUser {
             height += 110 // 配置界面的高度
@@ -40,38 +40,168 @@ struct GeneralAiPane: View {
         ScrollView {
             VStack(spacing: 0) {
                 VStack{
-                    // 选择提供商
-                    SettingRow(
-                        label: NSLocalizedString("select_service", comment: "选择提供商")
-                    ) {
-                        Picker(selection: $preferences.selectedProvider, label: EmptyView()) {
-                            providerOptions
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .frame(width: 300, alignment: .leading)
+                    // AI服务选择区域 - 新的卡片式设计
+                    aiServiceSelectionView
+                    // 通用配置界面 - 适用于需要自定义配置的提供商
+                    if preferences.currentProviderRequiresConfig && isPremiumUser {
+                        providerConfigurationView
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
                 .padding(16)
                 
-                // 通用配置界面 - 适用于需要自定义配置的提供商
-                if preferences.currentProviderRequiresConfig && isPremiumUser {
-                    providerConfigurationView
-                }
-                
                 // 自定义提示词管理界面
                 customPromptsManagementView
             }
         }
-        .frame(width: 800, height: contentHeight)
+        .frame(width: 800, height: 680)
         .sheet(isPresented: $showingAddPrompt) {
             customPromptEditView
         }
         .sheet(item: $editingPrompt) { prompt in
             customPromptEditView
+        }
+    }
+    
+    /// 新的AI服务选择视图 - 横向卡片设计
+    private var aiServiceSelectionView: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            // 标题
+            Text(NSLocalizedString("select_service", comment: "选择提供商"))
+                .font(.headline)
+                .foregroundColor(.primary)
+                .padding(.horizontal, 10)
+            
+            // AI服务卡片网格 - 每行4个
+            LazyVGrid(columns: [
+                GridItem(.flexible(), spacing: 8),
+                GridItem(.flexible(), spacing: 8),
+                GridItem(.flexible(), spacing: 8),
+                GridItem(.flexible(), spacing: 8)
+            ], spacing: 10) {
+                ForEach(preferences.providerKeys, id: \.self) { providerKey in
+                    aiServiceCard(for: providerKey)
+                }
+            }
+            .padding(.horizontal, 10)
+        }
+        .padding(.vertical, 10)
+    }
+    
+    /// AI服务卡片视图 - 横向布局
+    private func aiServiceCard(for providerKey: String) -> some View {
+        let provider = preferences.defaultProviders[providerKey]
+        let isSelected = preferences.selectedProvider == providerKey
+        let isPremiumOnly = premiumOnlyProviders.contains(providerKey)
+        let isAccessible = !isPremiumOnly || isPremiumUser
+        
+        return Button(action: {
+            if isAccessible {
+                preferences.selectedProvider = providerKey
+            }
+        }) {
+            HStack(spacing: 8) {
+                // 服务图标
+                ZStack {
+                    Circle()
+                        .fill(isSelected ?
+                              LinearGradient(colors: [.accentColor, .purple], startPoint: .topLeading, endPoint: .bottomTrailing) :
+                                LinearGradient(colors: [Color.gray.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .frame(width: 28, height: 28)
+                    
+                    Image(systemName: serviceIcon(for: providerKey))
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(isSelected ? .white : .primary)
+                }
+                
+                // 服务名称和状态
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(provider?.title ?? providerKey)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(isAccessible ? .primary : .secondary)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                    
+                    // 高级版标识
+                    if isPremiumOnly {
+                        HStack(spacing: 2) {
+                            Image(systemName: "checkmark.seal")
+                                .font(.system(size: 8))
+                            Text(NSLocalizedString("premium", comment: "高级版"))
+                                .font(.system(size: 8))
+                        }
+                        .foregroundColor(isPremiumUser ? .orange : .gray)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 1)
+                        .background(
+                            Capsule()
+                                .fill(isPremiumUser ? Color.orange.opacity(0.2) : Color.gray.opacity(0.2))
+                        )
+                    }
+                }
+                
+                Spacer(minLength: 0)
+            }
+            .frame(height: 40)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(isSelected ?
+                          Color.accentColor.opacity(0.1) :
+                            Color(NSColor.controlBackgroundColor)
+                         )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(
+                                isSelected ? Color.accentColor : Color.gray.opacity(0.3),
+                                lineWidth: isSelected ? 1.5 : 0.5
+                            )
+                    )
+            )
+            .scaleEffect(isSelected ? 1.02 : 1.0)
+            .shadow(
+                color: isSelected ? Color.accentColor.opacity(0.2) : Color.black.opacity(0.05),
+                radius: isSelected ? 4 : 2,
+                x: 0,
+                y: isSelected ? 2 : 1
+            )
+            .opacity(isAccessible ? 1.0 : 0.6)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .animation(.easeInOut(duration: 0.15), value: isSelected)
+        .disabled(!isAccessible)
+    }
+    
+    /// 根据服务类型返回对应的SF Symbol图标
+    private func serviceIcon(for providerKey: String) -> String {
+        switch providerKey {
+        case "model_zhipu_glm4":
+            return "sparkles"
+        case "openrouter-default":
+            return "arrow.triangle.swap"
+        case "model_cactusai_mix":
+            return "leaf.fill"
+        case "zhipu":
+            return "brain.head.profile"
+        case "siliconflow":
+            return "cpu"
+        case "deepseek":
+            return "magnifyingglass.circle.fill"
+        case "volcengine":
+            return "flame.fill"
+        case "openai":
+            return "circle.grid.3x3.fill"
+        case "google_gemini":
+            return "diamond.fill"
+        case "claude":
+            return "staroflife"
+        case "openrouter":
+            return "arrow.triangle.swap"
+        default:
+            return "cloud.fill"
         }
     }
     
@@ -160,7 +290,7 @@ struct GeneralAiPane: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Color(NSColor.controlBackgroundColor))
+        .background(Color(NSColor.windowBackgroundColor))
         .cornerRadius(8)
     }
     
@@ -285,8 +415,8 @@ struct GeneralAiPane: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
         }
-        .background(Color(NSColor.gridColor))
-        .cornerRadius(12)
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(8)
         .padding(16)
         
     }
