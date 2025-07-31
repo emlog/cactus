@@ -17,25 +17,6 @@ struct GeneralAiPane: View {
         return PurchaseManager.shared.isPremiumUser
     }
     
-    // 计算内容高度
-    private var contentHeight: CGFloat {
-        var height: CGFloat = 250 // 增加基础高度以适应新的横向卡片布局
-        
-        if preferences.currentProviderRequiresConfig && isPremiumUser {
-            height += 110 // 配置界面的高度
-        }
-        
-        // 自定义提示词部分高度 - 根据条目数量动态计算
-        let basePromptSectionHeight: CGFloat = 100 // 标题、按钮等基础高度
-        let promptItemHeight: CGFloat = 60 // 每个提示词条目的高度
-        let promptsHeight = basePromptSectionHeight + CGFloat(preferences.customPrompts.count) * promptItemHeight
-        
-        height += promptsHeight
-        
-        // 限制最大高度为680
-        return min(height, 680)
-    }
-    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
