@@ -158,7 +158,7 @@ class AiService: NSObject, URLSessionDataDelegate {
         var body: [String: Any] = [
             "model": providerSettings.model,
             "messages": messages,
-            "max_tokens": 1000,
+            "max_tokens": 2048,// 限制模型回答时最多生成的 token 数
             "stream": true
         ]
         
