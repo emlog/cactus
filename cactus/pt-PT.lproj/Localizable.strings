@@ -138,8 +138,8 @@
 "premium_unlock" = "Desbloquear Premium";
 "premium_restore" = "Restaurar Compra";
 "premium_features" = "Recursos Premium";
-"premium_feature_unlimited_usage" = "Traduções e resumos ilimitados";
-"premium_feature_unlimited_vocabulary" = "Uso ilimitado do vocabulário e favoritos";
+"premium_feature_unlimited_usage" = "Solicitações ilimitadas (Versão gratuita limitada a 500 solicitações)";
+"premium_feature_unlimited_vocabulary" = "Caderno de vocabulário e favoritos ilimitados";
 "premium_feature_custom_model" = "Acesso a mais modelos de IA: GPT-4, Gemini, Claude, DeepSeek, Doubao e outros";
 "terms_of_use" = "Termos de Uso";
 "privacy_policy" = "Política de Privacidade";

@@ -138,8 +138,8 @@
 "premium_unlock" = "ปลดล็อกเวอร์ชันพรีเมียม";
 "premium_restore" = "กู้คืนการซื้อ";
 "premium_features" = "ฟีเจอร์เวอร์ชันพรีเมียม";
-"premium_feature_unlimited_usage" = "ใช้งานแปลและสรุปได้ไม่จำกัด";
-"premium_feature_unlimited_vocabulary" = "ใช้งานคลังคำศัพท์และรายการโปรดได้ไม่จำกัด";
+"premium_feature_unlimited_usage" = "คำขอไม่จำกัด (เวอร์ชันฟรีจำกัดที่ 500 ครั้ง)";
+"premium_feature_unlimited_vocabulary" = "สมุดคำศัพท์และรายการโปรดไม่จำกัด (เวอร์ชันฟรีจำกัดที่ 50 รายการ)";
 "premium_feature_custom_model" = "ปลดล็อก GPT-4, Gemini, Claude, DeepSeek และโมเดลอื่นๆ";
 "terms_of_use" = "เงื่อนไขการใช้งาน";
 "privacy_policy" = "นโยบายความเป็นส่วนตัว";

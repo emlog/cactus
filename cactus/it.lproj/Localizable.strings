@@ -138,8 +138,8 @@
 "premium_unlock" = "Sblocca Premium";
 "premium_restore" = "Ripristina acquisto";
 "premium_features" = "Funzionalità Premium";
-"premium_feature_unlimited_usage" = "Traduzioni e riepiloghi illimitati";
-"premium_feature_unlimited_vocabulary" = "Uso illimitato del vocabolario e dei preferiti";
+"premium_feature_unlimited_usage" = "Richieste illimitate (Versione gratuita limitata a 500 richieste)";
+"premium_feature_unlimited_vocabulary" = "Rubrica e preferiti illimitati";
 "premium_feature_custom_model" = "Sblocca GPT-4, Gemini, Claude, DeepSeek e altri modelli AI";
 "terms_of_use" = "Termini di utilizzo";
 "privacy_policy" = "Informativa sulla privacy";

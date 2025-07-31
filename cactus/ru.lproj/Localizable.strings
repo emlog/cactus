@@ -138,8 +138,8 @@
 "premium_unlock" = "Открыть премиум";
 "premium_restore" = "Восстановить покупку";
 "premium_features" = "Функции премиум";
-"premium_feature_unlimited_usage" = "Безлимитное количество переводов и резюме";
-"premium_feature_unlimited_vocabulary" = "Неограниченное использование словаря и избранного";
+"premium_feature_unlimited_usage" = "Неограниченные запросы (Бесплатная версия ограничена 500 запросами)";
+"premium_feature_unlimited_vocabulary" = "Неограниченный словарь и избранное";
 "premium_feature_custom_model" = "Открывает доступ к GPT-4, Gemini, Claude, DeepSeek и другим моделям";
 "terms_of_use" = "Условия использования";
 "privacy_policy" = "Политика конфиденциальности";

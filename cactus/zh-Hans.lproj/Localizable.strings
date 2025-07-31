@@ -138,8 +138,8 @@
 "premium_unlock" = "解锁高级版";
 "premium_restore" = "恢复购买";
 "premium_features" = "高级版功能";
-"premium_feature_unlimited_usage" = "无限量的翻译总结次数";
-"premium_feature_unlimited_vocabulary" = "无限制的生词本和收藏夹使用";
+"premium_feature_unlimited_usage" = "无限次请求（免费版限制500次请求）";
+"premium_feature_unlimited_vocabulary" = "无限单词本和收藏（免费版限制50条）";
 "premium_feature_custom_model" = "解锁 GPT4、Gemini、Claude、DeepSeek、豆包等更多AI模型";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私策略";

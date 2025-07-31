@@ -138,8 +138,8 @@
 "premium_unlock" = "Pro 잠금 해제";
 "premium_restore" = "구매 복원";
 "premium_features" = "Pro 기능";
-"premium_feature_unlimited_usage" = "무제한 번역 및 요약 횟수";
-"premium_feature_unlimited_vocabulary" = "단어장과 즐겨찾기 무제한 이용 가능";
+"premium_feature_unlimited_usage" = "무제한 요청 (무료 버전은 500회 제한)";
+"premium_feature_unlimited_vocabulary" = "무제한 단어장 및 즐겨찾기 (무료 버전은 50개 제한)";
 "premium_feature_custom_model" = "GPT4, Gemini, Claude 등 다양한 AI 모델 잠금 해제";
 "terms_of_use" = "이용 약관";
 "privacy_policy" = "개인정보 보호정책";

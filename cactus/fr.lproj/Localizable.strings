@@ -138,8 +138,8 @@
 "premium_unlock" = "Déverrouiller Pro";
 "premium_restore" = "Restaurer l'achat";
 "premium_features" = "Fonctionnalités Pro";
-"premium_feature_unlimited_usage" = "Traductions et résumés illimités";
-"premium_feature_unlimited_vocabulary" = "Utilisation illimitée du vocabulaire et des favoris";
+"premium_feature_unlimited_usage" = "Requêtes illimitées (Version gratuite limitée à 500 requêtes)";
+"premium_feature_unlimited_vocabulary" = "Carnet de vocabulaire et favoris illimités";
 "premium_feature_custom_model" = "Débloquez GPT‑4, Gemini, DeepSeek, etc.";
 "terms_of_use" = "Conditions d’utilisation";
 "privacy_policy" = "Politique de confidentialité";

@@ -138,8 +138,8 @@
 "premium_unlock" = "Pro freischalten";
 "premium_restore" = "Kauf wiederherstellen";
 "premium_features" = "Pro‑Funktionen";
-"premium_feature_unlimited_usage" = "Unbegrenzte Übersetzungen und Zusammenfassungen";
-"premium_feature_unlimited_vocabulary" = "Unbegrenztes Vokabular & Favoriten";
+"premium_feature_unlimited_usage" = "Unbegrenzte Anfragen (Kostenlose Version auf 500 Anfragen beschränkt)";
+"premium_feature_unlimited_vocabulary" = "Unbegrenztes Vokabelheft und Favoriten (Kostenlose Version auf 50 Einträge beschränkt)";
 "premium_feature_custom_model" = "Freischaltung von GPT‑4, Gemini, DeepSeek usw.";
 "terms_of_use" = "Nutzungsbedingungen";
 "privacy_policy" = "Datenschutzrichtlinie";
