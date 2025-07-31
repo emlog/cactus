@@ -58,7 +58,7 @@
 "model" = "Modell";
 "model_zhipu_glm4" = "Zhipu‑GLM‑4‑9B";
 "model_cactusai_mix" = "CactusAI‑Mix";
-"model_qwen3" = "OpenRouter‑Qwen3‑8B (empfohlen)";
+"openrouter-default" = "OpenRouter-GLM-4-32B (empfohlen)";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";

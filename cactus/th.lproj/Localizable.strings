@@ -58,7 +58,7 @@
 "model" = "โมเดล";
 "model_zhipu_glm4" = "Zhipu-GLM-4-9B (แนะนำ)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"model_qwen3" = "OpenRouter-Qwen3-8B";
+"openrouter-default" = "OpenRouter-GLM-4-32B";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";

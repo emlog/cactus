@@ -88,11 +88,11 @@ class PreferencesModel: ObservableObject {
             apiKey: "sk-ugnakenapgoouiubjkshrgfveopwxcrxakcuepjqgixvstye",
             model: "THUDM/glm-4-9b-chat"
         ),
-        "model_qwen3": ProviderSettings(
-            title: NSLocalizedString("model_qwen3", comment: "model_qwen3"),
+        "openrouter-default": ProviderSettings(
+            title: NSLocalizedString("openrouter-default", comment: "openrouter-default"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
             apiKey: "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",
-            model: "qwen/qwen3-8b:free"
+            model: "thudm/glm-4-32b:free"
         ),
         "model_cactusai_mix": ProviderSettings(
             title: NSLocalizedString("model_cactusai_mix", comment: "model_cactusai_mix"),
@@ -227,7 +227,7 @@ class PreferencesModel: ObservableObject {
     // 保持原始顺序的键数组
     public var providerKeys: [String] = [
         "model_zhipu_glm4",
-        "model_qwen3",
+        "openrouter-default",
         "model_cactusai_mix",
         "zhipu",
         "siliconflow",
