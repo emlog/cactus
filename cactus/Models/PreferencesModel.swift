@@ -8,6 +8,15 @@ struct CustomPrompt: Codable, Identifiable {
     var content: String
 }
 
+/// 自定义AI服务数据结构
+struct CustomAIService: Codable, Identifiable {
+    var id = UUID()
+    var name: String
+    var baseURL: String
+    var apiKey: String
+    var model: String
+}
+
 struct ProviderSettings: Codable {
     var title: String
     var baseURL: String
@@ -459,6 +468,9 @@ class PreferencesModel: ObservableObject {
         updateZhipuConfig()
         updateOpenrouterConfig()
         updateGrokConfig()
+        
+        // 加载自定义AI服务
+        updateProviderKeysWithCustomServices()
     }
     
     private func updateZhipuConfig() {
@@ -551,6 +563,20 @@ class PreferencesModel: ObservableObject {
         }
     }
     
+    // 自定义AI服务管理 - 直接在属性声明时初始化
+    @Published var customAIServices: [CustomAIService] = {
+        guard let data = UserDefaults.standard.data(forKey: "customAIServices"),
+              let services = try? JSONDecoder().decode([CustomAIService].self, from: data) else {
+            return []
+        }
+        return services
+    }() {
+        didSet {
+            saveCustomAIServices()
+            updateProviderKeysWithCustomServices()
+        }
+    }
+    
     // MARK: - 自定义提示词管理方法
     
     /// 保存自定义提示词到UserDefaults
@@ -605,5 +631,119 @@ class PreferencesModel: ObservableObject {
     /// 根据名称获取提示词内容
     func getCustomPromptContent(by name: String) -> String? {
         return customPrompts.first { $0.name == name }?.content
+    }
+    
+    // MARK: - 自定义AI服务管理方法
+    
+    /// 保存自定义AI服务到UserDefaults
+    private func saveCustomAIServices() {
+        if let encoded = try? JSONEncoder().encode(customAIServices) {
+            UserDefaults.standard.set(encoded, forKey: "customAIServices")
+        }
+    }
+    
+    /// 从UserDefaults加载自定义AI服务
+    private func loadCustomAIServices() -> [CustomAIService] {
+        guard let data = UserDefaults.standard.data(forKey: "customAIServices"),
+              let services = try? JSONDecoder().decode([CustomAIService].self, from: data) else {
+            return []
+        }
+        return services
+    }
+    
+    /// 添加自定义AI服务
+    func addCustomAIService(name: String, baseURL: String, apiKey: String, model: String) {
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let truncatedName = String(trimmedName.prefix(50)) // 限制名称最大长度为50字符
+        let trimmedBaseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedApiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedModel = model.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let newService = CustomAIService(
+            name: truncatedName,
+            baseURL: trimmedBaseURL,
+            apiKey: trimmedApiKey,
+            model: trimmedModel
+        )
+        customAIServices.append(newService)
+    }
+    
+    /// 更新自定义AI服务
+    func updateCustomAIService(id: UUID, name: String, baseURL: String, apiKey: String, model: String) {
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let truncatedName = String(trimmedName.prefix(50)) // 限制名称最大长度为50字符
+        let trimmedBaseURL = baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedApiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedModel = model.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if let index = customAIServices.firstIndex(where: { $0.id == id }) {
+            customAIServices[index].name = truncatedName
+            customAIServices[index].baseURL = trimmedBaseURL
+            customAIServices[index].apiKey = trimmedApiKey
+            customAIServices[index].model = trimmedModel
+        }
+    }
+    
+    /// 删除自定义AI服务
+    func deleteCustomAIService(id: UUID) {
+        // 检查要删除的服务是否是当前选中的服务
+        if let serviceToDelete = customAIServices.first(where: { $0.id == id }) {
+            let customServiceKey = "custom_\(serviceToDelete.id.uuidString)"
+            if selectedProvider == customServiceKey {
+                // 如果删除的是当前选中的服务，切换到默认服务
+                selectedProvider = "model_zhipu_glm4"
+            }
+        }
+        
+        customAIServices.removeAll { $0.id == id }
+    }
+    
+    /// 更新providerKeys以包含自定义AI服务
+    private func updateProviderKeysWithCustomServices() {
+        // 重置为基础的providerKeys
+        let baseProviderKeys = [
+            "model_zhipu_glm4",
+            "openrouter-default",
+            "model_cactusai_mix",
+            "zhipu",
+            "siliconflow",
+            "deepseek",
+            "volcengine",
+            "openai",
+            "google_gemini",
+            "claude",
+            "grok",
+            "openrouter"
+        ]
+        
+        // 添加自定义服务的keys
+        let customServiceKeys = customAIServices.map { "custom_\($0.id.uuidString)" }
+        providerKeys = baseProviderKeys + customServiceKeys
+        
+        // 更新defaultProviders以包含自定义服务
+        updateDefaultProvidersWithCustomServices()
+    }
+    
+    /// 更新defaultProviders以包含自定义AI服务
+    private func updateDefaultProvidersWithCustomServices() {
+        // 移除旧的自定义服务
+        let keysToRemove = defaultProviders.keys.filter { $0.hasPrefix("custom_") }
+        for key in keysToRemove {
+            defaultProviders.removeValue(forKey: key)
+        }
+        
+        // 添加新的自定义服务
+        for service in customAIServices {
+            let key = "custom_\(service.id.uuidString)"
+            defaultProviders[key] = ProviderSettings(
+                title: service.name,
+                baseURL: service.baseURL,
+                apiKey: service.apiKey,
+                model: service.model,
+                helpUrl: "",
+                requiresCustomConfig: false,
+                availableModels: [:]
+            )
+        }
     }
 }

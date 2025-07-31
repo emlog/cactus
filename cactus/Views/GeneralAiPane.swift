@@ -12,6 +12,14 @@ struct GeneralAiPane: View {
     @State private var newPromptName = ""
     @State private var newPromptContent = ""
     
+    // 自定义AI服务编辑状态
+    @State private var showingAddAIService = false
+    @State private var editingAIService: CustomAIService?
+    @State private var newServiceName = ""
+    @State private var newServiceBaseURL = ""
+    @State private var newServiceApiKey = ""
+    @State private var newServiceModel = ""
+    
     // 检查是否为高级用户
     var isPremiumUser: Bool {
         return PurchaseManager.shared.isPremiumUser
@@ -26,6 +34,10 @@ struct GeneralAiPane: View {
                     // 通用配置界面 - 适用于需要自定义配置的提供商
                     if preferences.currentProviderRequiresConfig && isPremiumUser {
                         providerConfigurationView
+                    }
+                    // 自定义AI服务配置界面
+                    if preferences.selectedProvider.hasPrefix("custom_") && isPremiumUser {
+                        customProviderConfigurationView
                     }
                 }
                 .background(Color(NSColor.gridColor))
@@ -43,16 +55,39 @@ struct GeneralAiPane: View {
         .sheet(item: $editingPrompt) { prompt in
             customPromptEditView
         }
+        .sheet(isPresented: $showingAddAIService) {
+            customAIServiceEditView
+        }
+        .sheet(item: $editingAIService) { service in
+            customAIServiceEditView
+        }
     }
     
     /// 新的AI服务选择视图 - 横向卡片设计
     private var aiServiceSelectionView: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // 标题
-            Text(NSLocalizedString("select_service", comment: "选择提供商"))
-                .font(.headline)
-                .foregroundColor(.primary)
-                .padding(.horizontal, 10)
+            // 标题和添加按钮
+            HStack {
+                Text(NSLocalizedString("select_service", comment: "选择提供商"))
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button(action: {
+                    newServiceName = ""
+                    newServiceBaseURL = ""
+                    newServiceApiKey = ""
+                    newServiceModel = ""
+                    editingAIService = nil
+                    showingAddAIService = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.accentColor)
+                        .font(.system(size: 16))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 10)
             
             // AI服务卡片网格 - 每行4个
             LazyVGrid(columns: [
@@ -156,6 +191,168 @@ struct GeneralAiPane: View {
         .disabled(!isAccessible)
     }
     
+    /// 自定义AI服务配置视图
+    private var customProviderConfigurationView: some View {
+        VStack(spacing: 0) {
+            // 标题和删除按钮
+            HStack {
+                Text(NSLocalizedString("custom_service_config", comment: "自定义服务配置"))
+                    .font(.body)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // 删除按钮
+                Button(action: {
+                    if let customService = getCurrentCustomService() {
+                        preferences.deleteCustomAIService(id: customService.id)
+                    }
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            
+            // 服务名称编辑
+            SettingRow(
+                label: NSLocalizedString("service_name", comment: "服务名称")
+            ) {
+                TextField(NSLocalizedString("enter_service_name", comment: "请输入服务名称"), text: customServiceNameBinding)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
+            
+            // API地址编辑
+            SettingRow(
+                label: NSLocalizedString("api_url", comment: "API地址")
+            ) {
+                TextField("https://api.example.com/v1/chat/completions", text: customServiceBaseURLBinding)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
+            
+            // API密钥编辑
+            SettingRow(
+                label: NSLocalizedString("api_key", comment: "API密钥")
+            ) {
+                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: customServiceApiKeyBinding)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
+            
+            // 模型编辑
+            SettingRow(
+                label: NSLocalizedString("model", comment: "模型")
+            ) {
+                TextField("gpt-3.5-turbo", text: customServiceModelBinding)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+        }
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(8)
+        .padding(16)
+    }
+    
+    /// 获取当前选中的自定义AI服务
+    private func getCurrentCustomService() -> CustomAIService? {
+        guard preferences.selectedProvider.hasPrefix("custom_") else { return nil }
+        let serviceId = String(preferences.selectedProvider.dropFirst(7)) // 移除 "custom_" 前缀
+        guard let uuid = UUID(uuidString: serviceId) else { return nil }
+        return preferences.customAIServices.first { $0.id == uuid }
+    }
+    
+    /// 自定义服务名称绑定
+    private var customServiceNameBinding: Binding<String> {
+        Binding(
+            get: { getCurrentCustomService()?.name ?? "" },
+            set: { newValue in
+                if let customService = getCurrentCustomService() {
+                    preferences.updateCustomAIService(
+                        id: customService.id,
+                        name: newValue,
+                        baseURL: customService.baseURL,
+                        apiKey: customService.apiKey,
+                        model: customService.model
+                    )
+                }
+            }
+        )
+    }
+    
+    /// 自定义服务API地址绑定
+    private var customServiceBaseURLBinding: Binding<String> {
+        Binding(
+            get: { getCurrentCustomService()?.baseURL ?? "" },
+            set: { newValue in
+                if let customService = getCurrentCustomService() {
+                    preferences.updateCustomAIService(
+                        id: customService.id,
+                        name: customService.name,
+                        baseURL: newValue,
+                        apiKey: customService.apiKey,
+                        model: customService.model
+                    )
+                }
+            }
+        )
+    }
+    
+    /// 自定义服务API密钥绑定
+    private var customServiceApiKeyBinding: Binding<String> {
+        Binding(
+            get: { getCurrentCustomService()?.apiKey ?? "" },
+            set: { newValue in
+                if let customService = getCurrentCustomService() {
+                    preferences.updateCustomAIService(
+                        id: customService.id,
+                        name: customService.name,
+                        baseURL: customService.baseURL,
+                        apiKey: newValue,
+                        model: customService.model
+                    )
+                }
+            }
+        )
+    }
+    
+    /// 自定义服务模型绑定
+    private var customServiceModelBinding: Binding<String> {
+        Binding(
+            get: { getCurrentCustomService()?.model ?? "" },
+            set: { newValue in
+                if let customService = getCurrentCustomService() {
+                    preferences.updateCustomAIService(
+                        id: customService.id,
+                        name: customService.name,
+                        baseURL: customService.baseURL,
+                        apiKey: customService.apiKey,
+                        model: newValue
+                    )
+                }
+            }
+        )
+    }
+    
     /// 根据服务类型返回对应的SF Symbol图标
     private func serviceIcon(for providerKey: String) -> String {
         switch providerKey {
@@ -184,6 +381,10 @@ struct GeneralAiPane: View {
         case "openrouter":
             return "arrow.triangle.swap"
         default:
+            // 自定义AI服务使用自定义图标
+            if providerKey.hasPrefix("custom_") {
+                return "gear.circle.fill"
+            }
             return "cloud.fill"
         }
     }
@@ -525,5 +726,126 @@ struct GeneralAiPane: View {
             return key
         }
         return provider.title
+    }
+    
+    /// 检查自定义AI服务保存按钮是否应该启用
+    private var isAIServiceSaveButtonEnabled: Bool {
+        let trimmedName = newServiceName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedBaseURL = newServiceBaseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedApiKey = newServiceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedModel = newServiceModel.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !trimmedName.isEmpty && !trimmedBaseURL.isEmpty && !trimmedApiKey.isEmpty && !trimmedModel.isEmpty
+    }
+    
+    /// 自定义AI服务编辑视图
+    private var customAIServiceEditView: some View {
+        VStack(spacing: 0) {
+            // 标题
+            HStack {
+                Text(editingAIService != nil ? NSLocalizedString("edit_ai_service", comment: "编辑AI服务") : NSLocalizedString("add_ai_service", comment: "添加AI服务"))
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 16)
+            
+            // 服务名称设置
+            SettingRow(
+                label: NSLocalizedString("service_name", comment: "服务名称")
+            ) {
+                TextField(NSLocalizedString("enter_service_name", comment: "请输入服务名称"), text: $newServiceName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 20)
+            
+            // API URL设置
+            SettingRow(
+                label: NSLocalizedString("api_url", comment: "API地址")
+            ) {
+                TextField("https://api.example.com/v1/chat/completions", text: $newServiceBaseURL)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 20)
+            
+            // API密钥设置
+            SettingRow(
+                label: NSLocalizedString("api_key", comment: "API密钥")
+            ) {
+                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $newServiceApiKey)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 20)
+            
+            // 模型设置
+            SettingRow(
+                label: NSLocalizedString("model", comment: "模型")
+            ) {
+                TextField("gpt-3.5-turbo", text: $newServiceModel)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Spacer()
+            
+            // 按钮区域
+            HStack(spacing: 12) {
+                Button(NSLocalizedString("cancel", comment: "取消")) {
+                    showingAddAIService = false
+                    editingAIService = nil
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                Button(NSLocalizedString("save", comment: "保存")) {
+                    let trimmedName = newServiceName.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedBaseURL = newServiceBaseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedApiKey = newServiceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedModel = newServiceModel.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    if let editingAIService = editingAIService {
+                        preferences.updateCustomAIService(
+                            id: editingAIService.id,
+                            name: trimmedName,
+                            baseURL: trimmedBaseURL,
+                            apiKey: trimmedApiKey,
+                            model: trimmedModel
+                        )
+                        self.editingAIService = nil
+                    } else {
+                        preferences.addCustomAIService(
+                            name: trimmedName,
+                            baseURL: trimmedBaseURL,
+                            apiKey: trimmedApiKey,
+                            model: trimmedModel
+                        )
+                        showingAddAIService = false
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(!isAIServiceSaveButtonEnabled)
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
+        }
+        .frame(width: 500, height: 420)
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(12)
     }
 }

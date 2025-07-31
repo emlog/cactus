@@ -80,6 +80,13 @@
 "volcengine_config" = "Volcengine Setting";
 "zhipu_config" = "Zhipu Setting";
 "openrouter_config" = "OpenRouter Setting";
+"custom_service_config" = "Custom Service Configuration";
+"service_name" = "Service Name";
+"api_url" = "API URL";
+"enter_service_name" = "Enter service name";
+"enter_api_key" = "Enter API key";
+"add_ai_service" = "Add AI Service";
+"edit_ai_service" = "Edit AI Service";
 
 // main
 "pop_text_empty" = "No text available to copy.";
