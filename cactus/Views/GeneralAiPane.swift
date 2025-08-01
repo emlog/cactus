@@ -389,7 +389,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("api_key", comment: "密钥")
             ) {
-                SecureField("", text: $newServiceApiKey)
+                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $newServiceApiKey)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
