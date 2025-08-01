@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F20BC9822DFC13A900BBA581 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = F20BC9812DFC13A900BBA581 /* MarkdownUI */; };
+		F20E8F3D2E3C96300085D838 /* PROMPT.md in Resources */ = {isa = PBXBuildFile; fileRef = F20E8F3C2E3C962B0085D838 /* PROMPT.md */; };
 		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
 		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
 		F2400C112DE729D000264BAD /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2400C0F2DE729D000264BAD /* CoreDataModel.xcdatamodeld */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F20E8F3C2E3C962B0085D838 /* PROMPT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PROMPT.md; sourceTree = "<group>"; };
 		F2400C102DE729D000264BAD /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		F2881EA02DF57C0800A8901A /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
 		F292ABA82D6575070089583E /* Cactus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cactus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +71,7 @@
 		F292AB9F2D6575070089583E = {
 			isa = PBXGroup;
 			children = (
+				F20E8F3C2E3C962B0085D838 /* PROMPT.md */,
 				F2400C0F2DE729D000264BAD /* CoreDataModel.xcdatamodeld */,
 				F292ABAA2D6575070089583E /* cactus */,
 				F2FCA65A2DC05CE20007539A /* README.md */,
@@ -192,6 +195,7 @@
 				F2881EA12DF57C0800A8901A /* DEV.md in Resources */,
 				F2FCA65C2DC05CE20007539A /* README.md in Resources */,
 				F2FCA65D2DC05CE20007539A /* TEST.md in Resources */,
+				F20E8F3D2E3C96300085D838 /* PROMPT.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
