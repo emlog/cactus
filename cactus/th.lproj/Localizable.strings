@@ -69,7 +69,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "คำสั่ง (Prompt)";
-"title" = "ชื่อ";
 "prompt_custom_system" = "คำสั่งระบบแบบกำหนดเอง";
 
 // ai config
@@ -124,6 +123,7 @@
 "error_empty_model" = "กรุณาเลือกโมเดล AI ที่ต้องการใช้";
 
 // common
+"title" = "ชื่อ";
 "alert_ok" = "ตกลง";
 "sum" = "รวมทั้งหมด";
 "clear_all" = "ล้างทั้งหมด";

@@ -68,7 +68,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
-"title" = "Nama";
 "prompt_custom_system" = "Prompt Sistem Khusus";
 
 // ai config
@@ -123,6 +122,7 @@
 "error_empty_model" = "Pilih model untuk layanan AI ini";
 
 // common
+"title" = "Nama";
 "alert_ok" = "OK";
 "sum" = "Jumlah";
 "clear_all" = "Bersihkan Semua";

@@ -68,7 +68,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "プロンプト";
-"title" = "名前";
 "prompt_custom_system" = "カスタムシステムプロンプト";
 
 // ai config
@@ -123,6 +122,7 @@
 "error_empty_model" = "現在のAIサービスに使用するモデルを選択してください";
 
 // common
+"title" = "名前";
 "alert_ok" = "OK";
 "sum" = "合計";
 "clear_all" = "すべてをクリア";

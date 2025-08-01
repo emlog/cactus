@@ -68,7 +68,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Подсказка";
-"title" = "Название";
 "prompt_custom_system" = "Собственная системная подсказка";
 
 // ai config
@@ -123,6 +122,7 @@
 "error_empty_model" = "Выберите модель AI";
 
 // common
+"title" = "Название";
 "alert_ok" = "ОК";
 "sum" = "Всего";
 "clear_all" = "Очистить всё";

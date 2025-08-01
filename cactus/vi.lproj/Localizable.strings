@@ -69,7 +69,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Lời Nhắc";
-"title" = "Tiêu Đề";
 "prompt_custom_system" = "Lời Nhắc Hệ Thống Tùy Chỉnh";
 
 // ai config
@@ -124,6 +123,7 @@
 "error_empty_model" = "Vui lòng chọn mô hình cho dịch vụ AI hiện tại";
 
 // common
+"title" = "Tiêu Đề";
 "alert_ok" = "OK";
 "sum" = "Tổng Cộng";
 "clear_all" = "Xóa Tất Cả";

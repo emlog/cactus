@@ -69,7 +69,6 @@
 "model_zhipu" = "智谱";
 "model_openrouter" = "OpenRouter";
 "prompt" = "提示詞";
-"title" = "名稱";
 "prompt_custom_system" = "自訂系統提示詞";
 
 // ai config
@@ -124,6 +123,7 @@
 "error_empty_model" = "請為目前 AI 服務選擇模型";
 
 // common
+"title" = "名稱";
 "alert_ok" = "好";
 "sum" = "總計";
 "clear_all" = "清空全部";
