@@ -370,6 +370,8 @@ class AiService: NSObject, URLSessionDataDelegate {
             body["reasoning"] = ["enabled": false]
         case let url where url.contains("siliconflow"):
             body["enable_thinking"] = false
+        case let url where url.contains("bigmodel"):
+            body["thinking"] = ["type": "disabled"]
         default:
             break
         }

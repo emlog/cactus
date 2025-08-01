@@ -117,6 +117,9 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
+                "glm-4.5": "GLM-4.5",
+                "glm-4.5-airx": "GLM-4.5-AIRX",
+                "glm-4.5-flash": "GLM-4.5-Flash (Free)",
                 "glm-4-flash-250414": "GLM-4-Flash-250414 (Free)",
                 "glm-4-flash": "GLM-4-Flash (Free)",
                 "glm-4v-flash": "GLM-4v-Flash",
