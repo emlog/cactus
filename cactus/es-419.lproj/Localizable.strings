@@ -68,7 +68,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
-"prompt_title" = "Título";
 "prompt_custom_system" = "Prompt del sistema personalizado";
 
 // ai config
@@ -123,6 +122,7 @@
 "error_empty_model" = "Selecciona un modelo para este servicio";
 
 // common
+"title" = "Título";
 "alert_ok" = "Aceptar";
 "sum" = "Total";
 "clear_all" = "Borrar todo";
@@ -154,3 +154,4 @@
 "clear_all_history_message" = "¿Seguro que deseas borrar todo el historial?";
 
 // 西班牙语
+

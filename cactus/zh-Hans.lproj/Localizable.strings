@@ -69,8 +69,9 @@
 "model_zhipu" = "智谱";
 "model_openrouter" = "OpenRouter";
 "prompt" = "提示词";
-"prompt_title" = "名称";
+"title" = "名称";
 "prompt_custom_system" = "自定义系统提示词";
+"add_ai_service" = "添加AI服务";
 
 // ai config
 "openai_config" = "OpenAI配置";
@@ -82,13 +83,7 @@
 "volcengine_config" = "火山引擎配置，请先开通模型";
 "zhipu_config" = "智谱配置";
 "openrouter_config" = "OpenRouter 配置";
-"custom_service_config" = "自定义服务配置";
-"service_name" = "服务名称";
-"api_url" = "API地址";
-"enter_service_name" = "请输入服务名称";
-"enter_api_key" = "请输入API密钥";
-"add_ai_service" = "添加AI服务";
-"edit_ai_service" = "编辑AI服务";
+"custom_service_config" = "自定义AI服务配置";
 
 // main
 "pop_text_empty" = "没有可复制的内容";

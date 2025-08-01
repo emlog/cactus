@@ -68,7 +68,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "プロンプト";
-"prompt_title" = "名前";
+"title" = "名前";
 "prompt_custom_system" = "カスタムシステムプロンプト";
 
 // ai config

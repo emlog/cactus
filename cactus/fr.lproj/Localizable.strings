@@ -68,7 +68,6 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Invite";
-"prompt_title" = "Titre";
 "prompt_custom_system" = "Invite système personnalisée";
 
 // ai config
@@ -123,6 +122,7 @@
 "error_empty_model" = "Veuillez sélectionner un modèle pour ce service";
 
 // common
+"title" = "Titre";
 "alert_ok" = "OK";
 "sum" = "Total";
 "clear_all" = "Tout effacer";

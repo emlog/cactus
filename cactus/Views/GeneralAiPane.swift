@@ -63,7 +63,7 @@ struct GeneralAiPane: View {
         }
     }
     
-    /// 新的AI服务选择视图 - 横向卡片设计
+    // AI服务列表视图
     private var aiServiceSelectionView: some View {
         VStack(alignment: .leading, spacing: 16) {
             // 标题和添加按钮
@@ -105,7 +105,7 @@ struct GeneralAiPane: View {
         .padding(.vertical, 10)
     }
     
-    /// AI服务卡片视图 - 横向布局
+    // AI服务卡片视图
     private func aiServiceCard(for providerKey: String) -> some View {
         let provider = preferences.defaultProviders[providerKey]
         let isSelected = preferences.selectedProvider == providerKey
@@ -191,7 +191,7 @@ struct GeneralAiPane: View {
         .disabled(!isAccessible)
     }
     
-    /// 自定义AI服务配置视图
+    // 自定义AI服务配置视图
     private var customProviderConfigurationView: some View {
         VStack(spacing: 0) {
             // 标题和删除按钮
@@ -217,9 +217,9 @@ struct GeneralAiPane: View {
             
             // 服务名称编辑
             SettingRow(
-                label: NSLocalizedString("service_name", comment: "服务名称")
+                label: NSLocalizedString("title", comment: "名称")
             ) {
-                TextField(NSLocalizedString("enter_service_name", comment: "请输入服务名称"), text: customServiceNameBinding)
+                TextField("", text: customServiceNameBinding)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -231,9 +231,9 @@ struct GeneralAiPane: View {
             
             // API地址编辑
             SettingRow(
-                label: NSLocalizedString("api_url", comment: "API地址")
+                label: "API URL"
             ) {
-                TextField("https://api.example.com/v1/chat/completions", text: customServiceBaseURLBinding)
+                TextField("https://a.com/v1/chat/completions", text: customServiceBaseURLBinding)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -271,6 +271,339 @@ struct GeneralAiPane: View {
         .background(Color(NSColor.windowBackgroundColor))
         .cornerRadius(8)
         .padding(16)
+    }
+
+    // 通用的提供商配置视图
+    private var providerConfigurationView: some View {
+        VStack(spacing: 0) {
+            // 配置标题和帮助按钮
+            HStack {
+                Text(providerConfigTitle)
+                    .font(.body)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button(action: {
+                    if let helpUrl = preferences.defaultProviders[preferences.selectedProvider]?.helpUrl,
+                       let url = URL(string: helpUrl) {
+                        NSWorkspace.shared.open(url)
+                    }
+                }) {
+                    Image(systemName: "questionmark.circle")
+                        .foregroundColor(.accentColor)
+                        .font(.system(size: 14))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            
+            // API密钥设置
+            SettingRow(
+                label: NSLocalizedString("api_key", comment: "密钥")
+            ) {
+                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: apiKeyBinding)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 10)
+            
+            // 模型选择
+            SettingRow(
+                label: NSLocalizedString("model", comment: "模型")
+            ) {
+                Picker(selection: modelBinding, label: EmptyView()) {
+                    ForEach(availableModelKeys, id: \.self) { key in
+                        Text(availableModelDisplayName(for: key)).tag(key)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .frame(width: 300, alignment: .leading)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+        }
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(8)
+        .padding(16)
+        
+    }
+
+    /// 提供商选项视图
+    private var providerOptions: some View {
+        ForEach(preferences.providerKeys, id: \.self) { key in
+            // 检查是否为高级版专属提供商
+            if premiumOnlyProviders.contains(key) && !isPremiumUser {
+                EmptyView()
+            } else {
+                Text(providerDisplayText(for: key)).tag(key)
+            }
+        }
+    }
+    
+    /// 自定义AI服务添加视图
+    private var customAIServiceEditView: some View {
+        VStack(spacing: 0) {
+            // 标题
+            HStack {
+                Text(editingAIService != nil ? NSLocalizedString("edit_ai_service", comment: "编辑AI服务") : NSLocalizedString("add_ai_service", comment: "添加AI服务"))
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 16)
+            
+            // 服务名称设置
+            SettingRow(
+                label: NSLocalizedString("title", comment: "名称")
+            ) {
+                TextField("", text: $newServiceName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 20)
+            
+            // API URL设置
+            SettingRow(
+                label: "API URL"
+            ) {
+                TextField("https://a.com/v1/chat/completions", text: $newServiceBaseURL)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 20)
+            
+            // API密钥设置
+            SettingRow(
+                label: NSLocalizedString("api_key", comment: "密钥")
+            ) {
+                SecureField("", text: $newServiceApiKey)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Divider()
+                .padding(.horizontal, 20)
+            
+            // 模型设置
+            SettingRow(
+                label: NSLocalizedString("model", comment: "模型")
+            ) {
+                TextField("gpt-4.1-2025-04-14", text: $newServiceModel)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 300)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            
+            Spacer()
+            
+            // 按钮区域
+            HStack(spacing: 12) {
+                Button(NSLocalizedString("cancel", comment: "取消")) {
+                    showingAddAIService = false
+                    editingAIService = nil
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                Button(NSLocalizedString("save", comment: "保存")) {
+                    let trimmedName = newServiceName.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedBaseURL = newServiceBaseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedApiKey = newServiceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedModel = newServiceModel.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    if let editingAIService = editingAIService {
+                        preferences.updateCustomAIService(
+                            id: editingAIService.id,
+                            name: trimmedName,
+                            baseURL: trimmedBaseURL,
+                            apiKey: trimmedApiKey,
+                            model: trimmedModel
+                        )
+                        self.editingAIService = nil
+                    } else {
+                        preferences.addCustomAIService(
+                            name: trimmedName,
+                            baseURL: trimmedBaseURL,
+                            apiKey: trimmedApiKey,
+                            model: trimmedModel
+                        )
+                        showingAddAIService = false
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(!isAIServiceSaveButtonEnabled)
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
+        }
+        .frame(width: 500, height: 280)
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(12)
+    }
+
+    // 自定义提示词管理视图
+    private var customPromptsManagementView: some View {
+        VStack(spacing: 0) {
+            // 标题和添加按钮
+            HStack {
+                Text(NSLocalizedString("prompt_custom_system", comment: "自定义系统提示词"))
+                    .font(.body)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button(action: {
+                    newPromptName = ""
+                    newPromptContent = ""
+                    editingPrompt = nil
+                    showingAddPrompt = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.accentColor)
+                        .font(.system(size: 16))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
+            
+            // 提示词列表
+            if preferences.customPrompts.isEmpty {
+                EmptyView()
+            } else {
+                LazyVStack(spacing: 8) {
+                    ForEach(preferences.customPrompts) { prompt in
+                        customPromptRow(prompt: prompt)
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+            }
+        }
+        .background(Color(NSColor.gridColor))
+        .cornerRadius(12)
+        .padding(16)
+    }
+    
+    /// 自定义提示词行视图
+    private func customPromptRow(prompt: CustomPrompt) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(prompt.name)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.primary)
+                
+                Text(prompt.content)
+                    .font(.system(size: 12))
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 8) {
+                // 编辑按钮
+                Button(action: {
+                    newPromptName = prompt.name
+                    newPromptContent = prompt.content
+                    editingPrompt = prompt
+                }) {
+                    Image(systemName: "square.and.pencil")
+                        .foregroundColor(.accentColor)
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                // 删除按钮
+                Button(action: {
+                    preferences.deleteCustomPrompt(id: prompt.id)
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(8)
+    }
+
+    /// 自定义提示词编辑视图
+    private var customPromptEditView: some View {
+        VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(NSLocalizedString("title", comment: "名称"))
+                    .font(.system(size: 14, weight: .medium))
+                
+                TextField("", text: $newPromptName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text(NSLocalizedString("prompt", comment: "提示词"))
+                    .font(.system(size: 14, weight: .medium))
+                
+                TextEditor(text: $newPromptContent)
+                    .padding(5)
+                    .frame(height: 120)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+            }
+            
+            HStack(spacing: 12) {
+                Button(NSLocalizedString("cancel", comment: "取消")) {
+                    showingAddPrompt = false
+                    editingPrompt = nil
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                Button(NSLocalizedString("save", comment: "保存")) {
+                    // 过滤空白字符并限制名称长度
+                    let trimmedName = newPromptName.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let truncatedName = String(trimmedName.prefix(100)) // 限制名称最大长度为100字符
+                    let trimmedContent = newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    if let editingPrompt = editingPrompt {
+                        preferences.updateCustomPrompt(
+                            id: editingPrompt.id,
+                            name: truncatedName,
+                            content: trimmedContent
+                        )
+                        self.editingPrompt = nil
+                    } else {
+                        preferences.addCustomPrompt(
+                            name: truncatedName,
+                            content: trimmedContent
+                        )
+                        showingAddPrompt = false
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(!isSaveButtonEnabled)
+            }
+            .padding(.bottom)
+        }
+        .padding()
+        .frame(width: 400, height: 280)
     }
     
     /// 获取当前选中的自定义AI服务
@@ -389,220 +722,11 @@ struct GeneralAiPane: View {
         }
     }
     
-    // 自定义提示词管理视图
-    private var customPromptsManagementView: some View {
-        VStack(spacing: 0) {
-            // 标题和添加按钮
-            HStack {
-                Text(NSLocalizedString("prompt_custom_system", comment: "自定义系统提示词"))
-                    .font(.body)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Button(action: {
-                    newPromptName = ""
-                    newPromptContent = ""
-                    editingPrompt = nil
-                    showingAddPrompt = true
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.accentColor)
-                        .font(.system(size: 16))
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 10)
-            
-            // 提示词列表
-            if preferences.customPrompts.isEmpty {
-                EmptyView()
-            } else {
-                LazyVStack(spacing: 8) {
-                    ForEach(preferences.customPrompts) { prompt in
-                        customPromptRow(prompt: prompt)
-                    }
-                }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-            }
-        }
-        .background(Color(NSColor.gridColor))
-        .cornerRadius(12)
-        .padding(16)
-    }
-    
-    /// 自定义提示词行视图
-    private func customPromptRow(prompt: CustomPrompt) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(prompt.name)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(.primary)
-                
-                Text(prompt.content)
-                    .font(.system(size: 12))
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-            }
-            
-            Spacer()
-            
-            HStack(spacing: 8) {
-                // 编辑按钮
-                Button(action: {
-                    newPromptName = prompt.name
-                    newPromptContent = prompt.content
-                    editingPrompt = prompt
-                }) {
-                    Image(systemName: "square.and.pencil")
-                        .foregroundColor(.accentColor)
-                        .font(.system(size: 12))
-                }
-                .buttonStyle(PlainButtonStyle())
-                
-                // 删除按钮
-                Button(action: {
-                    preferences.deleteCustomPrompt(id: prompt.id)
-                }) {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                        .font(.system(size: 12))
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(Color(NSColor.windowBackgroundColor))
-        .cornerRadius(8)
-    }
-    
     // 添加计算属性来检查保存按钮是否应该启用
     private var isSaveButtonEnabled: Bool {
         let trimmedName = newPromptName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedContent = newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines)
         return !trimmedName.isEmpty && !trimmedContent.isEmpty
-    }
-    
-    /// 自定义提示词编辑视图
-    private var customPromptEditView: some View {
-        VStack(spacing: 16) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(NSLocalizedString("prompt_title", comment: "名称"))
-                    .font(.system(size: 14, weight: .medium))
-                
-                TextField("", text: $newPromptName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text(NSLocalizedString("prompt", comment: "提示词"))
-                    .font(.system(size: 14, weight: .medium))
-                
-                TextEditor(text: $newPromptContent)
-                    .padding(5)
-                    .frame(height: 120)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                    )
-            }
-            
-            HStack(spacing: 12) {
-                Button(NSLocalizedString("cancel", comment: "取消")) {
-                    showingAddPrompt = false
-                    editingPrompt = nil
-                }
-                .buttonStyle(PlainButtonStyle())
-                
-                Button(NSLocalizedString("save", comment: "保存")) {
-                    // 过滤空白字符并限制名称长度
-                    let trimmedName = newPromptName.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let truncatedName = String(trimmedName.prefix(100)) // 限制名称最大长度为100字符
-                    let trimmedContent = newPromptContent.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    if let editingPrompt = editingPrompt {
-                        preferences.updateCustomPrompt(
-                            id: editingPrompt.id,
-                            name: truncatedName,
-                            content: trimmedContent
-                        )
-                        self.editingPrompt = nil
-                    } else {
-                        preferences.addCustomPrompt(
-                            name: truncatedName,
-                            content: trimmedContent
-                        )
-                        showingAddPrompt = false
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(!isSaveButtonEnabled)
-            }
-            .padding(.bottom)
-        }
-        .padding()
-        .frame(width: 400, height: 280)
-    }
-    
-    // 通用的提供商配置视图
-    private var providerConfigurationView: some View {
-        VStack(spacing: 0) {
-            // 配置标题和帮助按钮
-            HStack {
-                Text(providerConfigTitle)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Button(action: {
-                    if let helpUrl = preferences.defaultProviders[preferences.selectedProvider]?.helpUrl,
-                       let url = URL(string: helpUrl) {
-                        NSWorkspace.shared.open(url)
-                    }
-                }) {
-                    Image(systemName: "questionmark.circle")
-                        .foregroundColor(.accentColor)
-                        .font(.system(size: 14))
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            
-            // API密钥设置
-            SettingRow(
-                label: NSLocalizedString("api_key", comment: "密钥")
-            ) {
-                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: apiKeyBinding)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 8)
-            
-            Divider()
-                .padding(.horizontal, 10)
-            
-            // 模型选择
-            SettingRow(
-                label: NSLocalizedString("model", comment: "模型")
-            ) {
-                Picker(selection: modelBinding, label: EmptyView()) {
-                    ForEach(availableModelKeys, id: \.self) { key in
-                        Text(availableModelDisplayName(for: key)).tag(key)
-                    }
-                }
-                .pickerStyle(MenuPickerStyle())
-                .frame(width: 300, alignment: .leading)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 8)
-        }
-        .background(Color(NSColor.windowBackgroundColor))
-        .cornerRadius(8)
-        .padding(16)
-        
     }
     
     // 计算属性：配置标题
@@ -708,18 +832,6 @@ struct GeneralAiPane: View {
         ]
     }
     
-    /// 提供商选项视图
-    private var providerOptions: some View {
-        ForEach(preferences.providerKeys, id: \.self) { key in
-            // 检查是否为高级版专属提供商
-            if premiumOnlyProviders.contains(key) && !isPremiumUser {
-                EmptyView()
-            } else {
-                Text(providerDisplayText(for: key)).tag(key)
-            }
-        }
-    }
-    
     /// 获取提供商显示文本
     private func providerDisplayText(for key: String) -> String {
         guard let provider = preferences.defaultProviders[key] else {
@@ -735,117 +847,5 @@ struct GeneralAiPane: View {
         let trimmedApiKey = newServiceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedModel = newServiceModel.trimmingCharacters(in: .whitespacesAndNewlines)
         return !trimmedName.isEmpty && !trimmedBaseURL.isEmpty && !trimmedApiKey.isEmpty && !trimmedModel.isEmpty
-    }
-    
-    /// 自定义AI服务编辑视图
-    private var customAIServiceEditView: some View {
-        VStack(spacing: 0) {
-            // 标题
-            HStack {
-                Text(editingAIService != nil ? NSLocalizedString("edit_ai_service", comment: "编辑AI服务") : NSLocalizedString("add_ai_service", comment: "添加AI服务"))
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 16)
-            
-            // 服务名称设置
-            SettingRow(
-                label: NSLocalizedString("service_name", comment: "服务名称")
-            ) {
-                TextField(NSLocalizedString("enter_service_name", comment: "请输入服务名称"), text: $newServiceName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
-            
-            Divider()
-                .padding(.horizontal, 20)
-            
-            // API URL设置
-            SettingRow(
-                label: NSLocalizedString("api_url", comment: "API地址")
-            ) {
-                TextField("https://api.example.com/v1/chat/completions", text: $newServiceBaseURL)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
-            
-            Divider()
-                .padding(.horizontal, 20)
-            
-            // API密钥设置
-            SettingRow(
-                label: NSLocalizedString("api_key", comment: "API密钥")
-            ) {
-                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $newServiceApiKey)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
-            
-            Divider()
-                .padding(.horizontal, 20)
-            
-            // 模型设置
-            SettingRow(
-                label: NSLocalizedString("model", comment: "模型")
-            ) {
-                TextField("gpt-3.5-turbo", text: $newServiceModel)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
-            
-            Spacer()
-            
-            // 按钮区域
-            HStack(spacing: 12) {
-                Button(NSLocalizedString("cancel", comment: "取消")) {
-                    showingAddAIService = false
-                    editingAIService = nil
-                }
-                .buttonStyle(PlainButtonStyle())
-                
-                Button(NSLocalizedString("save", comment: "保存")) {
-                    let trimmedName = newServiceName.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let trimmedBaseURL = newServiceBaseURL.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let trimmedApiKey = newServiceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let trimmedModel = newServiceModel.trimmingCharacters(in: .whitespacesAndNewlines)
-                    
-                    if let editingAIService = editingAIService {
-                        preferences.updateCustomAIService(
-                            id: editingAIService.id,
-                            name: trimmedName,
-                            baseURL: trimmedBaseURL,
-                            apiKey: trimmedApiKey,
-                            model: trimmedModel
-                        )
-                        self.editingAIService = nil
-                    } else {
-                        preferences.addCustomAIService(
-                            name: trimmedName,
-                            baseURL: trimmedBaseURL,
-                            apiKey: trimmedApiKey,
-                            model: trimmedModel
-                        )
-                        showingAddAIService = false
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(!isAIServiceSaveButtonEnabled)
-            }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
-        }
-        .frame(width: 500, height: 420)
-        .background(Color(NSColor.windowBackgroundColor))
-        .cornerRadius(12)
     }
 }
