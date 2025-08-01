@@ -144,7 +144,7 @@
 "premium_features" = "Pro機能";
 "premium_feature_unlimited_usage" = "無制限リクエスト（無料版は500回まで）";
 "premium_feature_unlimited_vocabulary" = "無制限単語帳とお気に入り（無料版は50件まで）";
-"premium_feature_custom_model" = "GPT4、Gemini、Claude などの AI モデルをアンロック";
+"premium_feature_custom_model" = "GPT-4、Gemini、Claude、Grok などのサポートを有効にする";
 "terms_of_use" = "利用規約";
 "privacy_policy" = "プライバシーポリシー";
 

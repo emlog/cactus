@@ -144,7 +144,7 @@
 "premium_features" = "進階功能";
 "premium_feature_unlimited_usage" = "無限次請求（免費版限制500次請求）";
 "premium_feature_unlimited_vocabulary" = "無限單字本和收藏（免費版限制50條）";
-"premium_feature_custom_model" = "解鎖 GPT4、Gemini、Claude 等AI模型";
+"premium_feature_custom_model" = "啟用對 GPT-4、Gemini、Claude、Grok 等的支援";
 "terms_of_use" = "使用條款";
 "privacy_policy" = "隱私政策";
 

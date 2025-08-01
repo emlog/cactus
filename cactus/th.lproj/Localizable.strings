@@ -144,7 +144,7 @@
 "premium_features" = "ฟีเจอร์เวอร์ชันพรีเมียม";
 "premium_feature_unlimited_usage" = "คำขอไม่จำกัด (เวอร์ชันฟรีจำกัดที่ 500 ครั้ง)";
 "premium_feature_unlimited_vocabulary" = "สมุดคำศัพท์และรายการโปรดไม่จำกัด (เวอร์ชันฟรีจำกัดที่ 50 รายการ)";
-"premium_feature_custom_model" = "ปลดล็อก GPT-4, Gemini, Claude, DeepSeek และโมเดลอื่นๆ";
+"premium_feature_custom_model" = "เปิดใช้งานการสนับสนุน GPT-4, Gemini, Claude, Grok และอื่นๆ";
 "terms_of_use" = "เงื่อนไขการใช้งาน";
 "privacy_policy" = "นโยบายความเป็นส่วนตัว";
 

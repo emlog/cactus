@@ -144,7 +144,7 @@
 "premium_features" = "Premium Features";
 "premium_feature_unlimited_usage" = "Unlimited requests (Free version limited to 500 requests)";
 "premium_feature_unlimited_vocabulary" = "Unlimited wordbook and favorites (Free version limited to 50 items)";
-"premium_feature_custom_model" = "Unlock more AI models like GPT4, Gemini, Claude...";
+"premium_feature_custom_model" = "Enable support for GPT-4, Gemini, Claude, Grok, and more";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
 

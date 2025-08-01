@@ -144,7 +144,7 @@
 "premium_features" = "Функции премиум";
 "premium_feature_unlimited_usage" = "Неограниченные запросы (Бесплатная версия ограничена 500 запросами)";
 "premium_feature_unlimited_vocabulary" = "Неограниченный словарь и избранное";
-"premium_feature_custom_model" = "Открывает доступ к GPT-4, Gemini, Claude, DeepSeek и другим моделям";
+"premium_feature_custom_model" = "Включить поддержку GPT-4, Gemini, Claude, Grok и других";
 "terms_of_use" = "Условия использования";
 "privacy_policy" = "Политика конфиденциальности";
 

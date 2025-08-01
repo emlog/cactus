@@ -144,7 +144,7 @@
 "premium_features" = "Pro‑Funktionen";
 "premium_feature_unlimited_usage" = "Unbegrenzte Anfragen (Kostenlose Version auf 500 Anfragen beschränkt)";
 "premium_feature_unlimited_vocabulary" = "Unbegrenztes Vokabelheft und Favoriten (Kostenlose Version auf 50 Einträge beschränkt)";
-"premium_feature_custom_model" = "Freischaltung von GPT‑4, Gemini, DeepSeek usw.";
+"premium_feature_custom_model" = "Unterstützung für GPT-4, Gemini, Claude, Grok und mehr aktivieren";
 "terms_of_use" = "Nutzungsbedingungen";
 "privacy_policy" = "Datenschutzrichtlinie";
 
