@@ -701,7 +701,7 @@ struct GeneralAiPane: View {
         case "siliconflow":
             return "cpu"
         case "deepseek":
-            return "magnifyingglass.circle.fill"
+            return "fish"
         case "volcengine":
             return "flame.fill"
         case "openai":
@@ -717,7 +717,7 @@ struct GeneralAiPane: View {
         default:
             // 自定义AI服务使用自定义图标
             if providerKey.hasPrefix("custom_") {
-                return "gear.circle.fill"
+                return "bolt"
             }
             return "cloud.fill"
         }
