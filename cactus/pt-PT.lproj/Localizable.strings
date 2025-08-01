@@ -13,7 +13,7 @@
 // pane
 "general" = "Geral";
 "service" = "Serviço de IA";
-"premium" = "Versão Premium";
+"premium" = "Pro";
 "about" = "Sobre";
 
 // setting
@@ -63,22 +63,26 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "VolcEngine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
 "prompt_custom_system" = "Prompt de sistema personalizado";
+"add_ai_service" = "Adicionar serviço de IA";
 
 // ai config
 "openai_config" = "Configuração OpenAI";
 "siliconflow_config" = "Configuração SiliconFlow";
 "google_gemini_config" = "Configuração Google Gemini";
 "claude_config" = "Configuração Anthropic Claude";
+"grok_config" = "Configuração Grok";
 "deepseek_config" = "Configuração DeepSeek";
 "volcengine_config" = "Configuração VolcEngine (ativação necessária)";
 "zhipu_config" = "Configuração Zhipu";
 "openrouter_config" = "Configuração OpenRouter";
+"custom_service_config" = "Configuração do serviço de IA personalizado";
 
 // main
 "pop_text_empty" = "Sem conteúdo para copiar";

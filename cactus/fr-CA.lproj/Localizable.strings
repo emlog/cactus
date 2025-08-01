@@ -63,22 +63,26 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Invite";
 "prompt_custom_system" = "Invite système personnalisée";
+"add_ai_service" = "Ajouter un service IA";
 
 // ai config
 "openai_config" = "Configuration OpenAI";
 "siliconflow_config" = "Configuration SiliconFlow";
 "google_gemini_config" = "Configuration Google Gemini";
 "claude_config" = "Configuration Claude";
+"grok_config" = "Configuration Grok";
 "deepseek_config" = "Configuration DeepSeek";
 "volcengine_config" = "Configuration Volcengine (activation requise)";
 "zhipu_config" = "Configuration Zhipu";
 "openrouter_config" = "Configuration OpenRouter";
+"custom_service_config" = "Configuration du service IA personnalisé";
 
 // main
 "pop_text_empty" = "Aucun texte à copier";

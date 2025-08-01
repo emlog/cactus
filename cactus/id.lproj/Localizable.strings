@@ -13,7 +13,7 @@
 // pane
 "general" = "Umum";
 "service" = "Layanan AI";
-"premium" = "Premium";
+"premium" = "Pro";
 "about" = "Tentang";
 
 // setting
@@ -63,22 +63,26 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "VolcEngine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
 "prompt_custom_system" = "Prompt Sistem Khusus";
+"add_ai_service" = "Tambah layanan AI";
 
 // ai config
 "openai_config" = "Konfigurasi OpenAI";
 "siliconflow_config" = "Konfigurasi SiliconFlow";
 "google_gemini_config" = "Konfigurasi Google Gemini";
 "claude_config" = "Konfigurasi Anthropic Claude";
+"grok_config" = "Konfigurasi Grok";
 "deepseek_config" = "Konfigurasi DeepSeek";
 "volcengine_config" = "Konfigurasi VolcEngine (aktifkan model terlebih dahulu)";
 "zhipu_config" = "Konfigurasi Zhipu";
 "openrouter_config" = "Konfigurasi OpenRouter";
+"custom_service_config" = "Konfigurasi layanan AI kustom";
 
 // main
 "pop_text_empty" = "Tidak ada konten untuk disalin";

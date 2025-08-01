@@ -63,29 +63,26 @@
 "model_siliconflow" = "Siliconflow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
 "prompt_custom_system" = "Custom System Prompt";
+"add_ai_service" = "Add AI Service";
 
 // ai config
 "openai_config" = "OpenAI Setting";
 "siliconflow_config" = "Siliconflow Setting";
 "google_gemini_config" = "Google Gemini Setting";
 "claude_config" = "Anthropic Claude Setting";
+"grok_config" = "Grok Setting";
 "deepseek_config" = "Deepseek Setting";
 "volcengine_config" = "Volcengine Setting";
 "zhipu_config" = "Zhipu Setting";
 "openrouter_config" = "OpenRouter Setting";
 "custom_service_config" = "Custom Service Configuration";
-"service_name" = "Service Name";
-"api_url" = "API URL";
-"enter_service_name" = "Enter service name";
-"enter_api_key" = "Enter API key";
-"add_ai_service" = "Add AI Service";
-"edit_ai_service" = "Edit AI Service";
 
 // main
 "pop_text_empty" = "No text available to copy.";

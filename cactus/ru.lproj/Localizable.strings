@@ -13,7 +13,7 @@
 // pane
 "general" = "Общие";
 "service" = "Служба AI";
-"premium" = "Премиум";
+"premium" = "Pro";
 "about" = "О приложении";
 
 // setting
@@ -63,22 +63,26 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "VolcEngine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Подсказка";
 "prompt_custom_system" = "Собственная системная подсказка";
+"add_ai_service" = "Добавить AI-сервис";
 
 // ai config
 "openai_config" = "Настройки OpenAI";
 "siliconflow_config" = "Настройки SiliconFlow";
 "google_gemini_config" = "Настройки Google Gemini";
 "claude_config" = "Настройки Claude";
+"grok_config" = "Настройки Grok";
 "deepseek_config" = "Настройки DeepSeek";
 "volcengine_config" = "Настройки VolcEngine";
 "zhipu_config" = "Настройки Zhipu";
 "openrouter_config" = "Настройки OpenRouter";
+"custom_service_config" = "Настройки пользовательского AI-сервиса";
 
 // main
 "pop_text_empty" = "Нет текста для копирования";

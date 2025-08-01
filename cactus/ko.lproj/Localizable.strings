@@ -63,22 +63,26 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "프롬프트";
 "prompt_custom_system" = "사용자 지정 시스템 프롬프트";
+"add_ai_service" = "AI 서비스 추가";
 
 // ai config
 "openai_config" = "OpenAI 설정";
 "siliconflow_config" = "SiliconFlow 설정";
 "google_gemini_config" = "Google Gemini 설정";
 "claude_config" = "Anthropic Claude 설정";
+"grok_config" = "Grok 설정";
 "deepseek_config" = "Deepseek 설정";
 "volcengine_config" = "Volcengine 설정";
 "zhipu_config" = "Zhipu 설정";
 "openrouter_config" = "OpenRouter 설정";
+"custom_service_config" = "사용자 지정 AI 서비스 설정";
 
 // main
 "pop_text_empty" = "복사할 수 있는 내용이 없습니다";

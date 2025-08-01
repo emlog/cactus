@@ -13,7 +13,7 @@
 // pane
 "general" = "ทั่วไป";
 "service" = "บริการ AI";
-"premium" = "พรีเมียม";
+"premium" = "Pro";
 "about" = "เกี่ยวกับ";
 
 // setting
@@ -70,16 +70,19 @@
 "model_openrouter" = "OpenRouter";
 "prompt" = "คำสั่ง (Prompt)";
 "prompt_custom_system" = "คำสั่งระบบแบบกำหนดเอง";
+"add_ai_service" = "เพิ่มบริการ AI";
 
 // ai config
 "openai_config" = "การตั้งค่า OpenAI";
 "siliconflow_config" = "การตั้งค่า SiliconFlow";
 "google_gemini_config" = "การตั้งค่า Google Gemini";
 "claude_config" = "การตั้งค่า Claude";
+"grok_config" = "การตั้งค่า Grok";
 "deepseek_config" = "การตั้งค่า DeepSeek";
 "volcengine_config" = "การตั้งค่า VolcEngine";
 "zhipu_config" = "การตั้งค่า Zhipu";
 "openrouter_config" = "การตั้งค่า OpenRouter";
+"custom_service_config" = "การตั้งค่าบริการ AI แบบกำหนดเอง";
 
 // main
 "pop_text_empty" = "ไม่มีเนื้อหาให้คัดลอก";

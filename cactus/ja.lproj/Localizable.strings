@@ -63,22 +63,26 @@
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
 "model_claude" = "Anthropic Claude";
+"model_grok" = "Grok";
 "model_deepseek" = "DeepSeek";
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "プロンプト";
 "prompt_custom_system" = "カスタムシステムプロンプト";
+"add_ai_service" = "AIサービスを追加";
 
 // ai config
 "openai_config" = "OpenAI設定";
 "siliconflow_config" = "SiliconFlow設定";
 "google_gemini_config" = "Google Gemini 設定";
 "claude_config" = "Anthropic Claude 設定";
+"grok_config" = "Grok 設定";
 "deepseek_config" = "Deepseek 設定";
 "volcengine_config" = "Volcengine 設定";
 "zhipu_config" = "Zhipu 設定";
 "openrouter_config" = "OpenRouter 設定";
+"custom_service_config" = "カスタムAIサービス設定";
 
 // main
 "pop_text_empty" = "コピーできる内容がありません";

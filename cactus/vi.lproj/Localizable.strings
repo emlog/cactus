@@ -70,16 +70,19 @@
 "model_openrouter" = "OpenRouter";
 "prompt" = "Lời Nhắc";
 "prompt_custom_system" = "Lời Nhắc Hệ Thống Tùy Chỉnh";
+"add_ai_service" = "Thêm dịch vụ AI";
 
 // ai config
 "openai_config" = "Cài Đặt OpenAI";
 "siliconflow_config" = "Cài Đặt Siliconflow";
 "google_gemini_config" = "Cài Đặt Google Gemini";
 "claude_config" = "Cài Đặt Anthropic Claude";
+"grok_config" = "Cài Đặt Grok";
 "deepseek_config" = "Cài Đặt Deepseek";
 "volcengine_config" = "Cài Đặt Volcengine";
 "zhipu_config" = "Cài Đặt Zhipu";
 "openrouter_config" = "Cài Đặt OpenRouter";
+"custom_service_config" = "Cài đặt dịch vụ AI tùy chỉnh";
 
 // main
 "pop_text_empty" = "Không có văn bản để sao chép";
