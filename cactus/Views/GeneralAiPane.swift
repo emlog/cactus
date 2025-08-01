@@ -72,20 +72,21 @@ struct GeneralAiPane: View {
                     .font(.headline)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Button(action: {
-                    newServiceName = ""
-                    newServiceBaseURL = ""
-                    newServiceApiKey = ""
-                    newServiceModel = ""
-                    editingAIService = nil
-                    showingAddAIService = true
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.accentColor)
-                        .font(.system(size: 16))
+                if isPremiumUser {
+                    Button(action: {
+                        newServiceName = ""
+                        newServiceBaseURL = ""
+                        newServiceApiKey = ""
+                        newServiceModel = ""
+                        editingAIService = nil
+                        showingAddAIService = true
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.accentColor)
+                            .font(.system(size: 16))
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
-                .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal, 10)
             
@@ -272,7 +273,7 @@ struct GeneralAiPane: View {
         .cornerRadius(8)
         .padding(16)
     }
-
+    
     // 通用的提供商配置视图
     private var providerConfigurationView: some View {
         VStack(spacing: 0) {
@@ -331,7 +332,7 @@ struct GeneralAiPane: View {
         .padding(16)
         
     }
-
+    
     /// 提供商选项视图
     private var providerOptions: some View {
         ForEach(preferences.providerKeys, id: \.self) { key in
@@ -455,7 +456,7 @@ struct GeneralAiPane: View {
         .background(Color(NSColor.windowBackgroundColor))
         .cornerRadius(12)
     }
-
+    
     // 自定义提示词管理视图
     private var customPromptsManagementView: some View {
         VStack(spacing: 0) {
@@ -544,7 +545,7 @@ struct GeneralAiPane: View {
         .background(Color(NSColor.windowBackgroundColor))
         .cornerRadius(8)
     }
-
+    
     /// 自定义提示词编辑视图
     private var customPromptEditView: some View {
         VStack(spacing: 16) {

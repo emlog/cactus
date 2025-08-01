@@ -435,7 +435,7 @@ class PreferencesModel: ObservableObject {
         
         self.googleGeminiApiKey = UserDefaults.standard.string(forKey: "googleGeminiApiKey") ?? ""
         self.selectedGoogleGeminiModel = UserDefaults.standard.string(forKey: "selectedGoogleGeminiModel") ?? ""
-
+        
         self.grokApiKey = UserDefaults.standard.string(forKey: "grokApiKey") ?? ""
         self.selectedGrokModel = UserDefaults.standard.string(forKey: "selectedGrokModel") ?? ""
         
