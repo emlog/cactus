@@ -691,13 +691,13 @@ struct GeneralAiPane: View {
     private func serviceIcon(for providerKey: String) -> String {
         switch providerKey {
         case "model_zhipu_glm4":
-            return "sparkles"
+            return "star.hexagon"
         case "openrouter-default":
             return "arrow.triangle.swap"
         case "model_cactusai_mix":
             return "leaf.fill"
         case "zhipu":
-            return "brain.head.profile"
+            return "star.hexagon"
         case "siliconflow":
             return "cpu"
         case "deepseek":
