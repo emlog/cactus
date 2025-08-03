@@ -56,9 +56,9 @@
 "enter_api_key" = "กรุณาใส่รหัส API";
 "api_key" = "API Key";
 "model" = "โมเดล";
-"model_zhipu_glm4" = "Zhipu-GLM-4-9B (แนะนำ)";
+"model_zhipu_glm4" = "Zhipu-GLM4 (แนะนำ)";
 "model_cactusai_mix" = "CactusAI-Mix";
-"openrouter-default" = "OpenRouter-GLM-4-32B";
+"openrouter-default" = "OpenRouter-GLM4";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";

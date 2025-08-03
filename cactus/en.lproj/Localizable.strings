@@ -56,9 +56,9 @@
 "enter_api_key" = "Please Enter API KEY";
 "api_key" = "API KEY";
 "model" = "Model";
-"model_zhipu_glm4" = "Zhipu-GLM-4-9B";
+"model_zhipu_glm4" = "Zhipu-GLM4";
 "model_cactusai_mix" = "CactusAI-Mix";
-"openrouter-default" = "OpenRouter-GLM-4-32B (Recommended)";
+"openrouter-default" = "OpenRouter-GLM4";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "Siliconflow";
 "model_google_gemini" = "Google Gemini";

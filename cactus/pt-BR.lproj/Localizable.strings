@@ -56,9 +56,9 @@
 "enter_api_key" = "Insira a Chave da API";
 "api_key" = "Chave da API";
 "model" = "Modelo";
-"model_zhipu_glm4" = "Zhipu-GLM-4-9B (Recomendado)";
+"model_zhipu_glm4" = "Zhipu-GLM4";
 "model_cactusai_mix" = "CactusAI-Mix";
-"openrouter-default" = "OpenRouter-GLM-4-32B";
+"openrouter-default" = "OpenRouter-GLM4";
 "model_openai" = "OpenAI";
 "model_siliconflow" = "SiliconFlow";
 "model_google_gemini" = "Google Gemini";
