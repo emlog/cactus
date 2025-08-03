@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 struct ModelSelectionMenuView: View {
     @ObservedObject var preferences = PreferencesModel.shared
@@ -89,7 +90,7 @@ struct ModelSelectionMenuView: View {
                 return "NA"
             }
             // 从availableModels中获取友好名称，如果没有找到则使用原始model名称
-            return provider.availableModels[provider.model] ?? provider.model
+            return provider.availableModels.first { $0.key == provider.model }?.displayName ?? provider.model
         }
         return provider.title
     }

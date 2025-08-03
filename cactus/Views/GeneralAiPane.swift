@@ -810,12 +810,12 @@ struct GeneralAiPane: View {
     
     // 计算属性：可用模型键列表
     private var availableModelKeys: [String] {
-        return Array(preferences.defaultProviders[preferences.selectedProvider]?.availableModels.keys.sorted() ?? [])
+        return preferences.defaultProviders[preferences.selectedProvider]?.availableModels.map { $0.key } ?? []
     }
     
     // 获取模型显示名称
     private func availableModelDisplayName(for key: String) -> String {
-        return preferences.defaultProviders[preferences.selectedProvider]?.availableModels[key] ?? key
+        return preferences.defaultProviders[preferences.selectedProvider]?.availableModels.first { $0.key == key }?.displayName ?? key
     }
     
     /// 高级版专属提供商列表

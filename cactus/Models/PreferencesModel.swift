@@ -17,6 +17,19 @@ struct CustomAIService: Codable, Identifiable {
     var model: String
 }
 
+/// 模型选项数据结构
+struct ModelOption: Codable, Identifiable {
+    var id = UUID()
+    var key: String
+    var displayName: String
+    
+    init(key: String, displayName: String) {
+        self.id = UUID()
+        self.key = key
+        self.displayName = displayName
+    }
+}
+
 struct ProviderSettings: Codable {
     var title: String
     var baseURL: String
@@ -24,7 +37,7 @@ struct ProviderSettings: Codable {
     var model: String
     var helpUrl: String = ""
     var requiresCustomConfig: Bool = false // 标识是否需要用户自定义配置
-    var availableModels: [String: String] = [:]
+    var availableModels: [ModelOption] = []
 }
 
 class PreferencesModel: ObservableObject {
@@ -117,14 +130,14 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
-                "glm-4.5": "GLM-4.5",
-                "glm-4.5-airx": "GLM-4.5-AIRX",
-                "glm-4.5-flash": "GLM-4.5-Flash (Free)",
-                "glm-4-flash-250414": "GLM-4-Flash-250414 (Free)",
-                "glm-4-flash": "GLM-4-Flash (Free)",
-                "glm-4v-flash": "GLM-4v-Flash",
-                "glm-4-plus": "GLM-4-Plus",
-                "glm-4v-plus": "GLM-4v-Plus"
+                ModelOption(key: "glm-4.5", displayName: "GLM-4.5"),
+                ModelOption(key: "glm-4.5-airx", displayName: "GLM-4.5-AIRX"),
+                ModelOption(key: "glm-4.5-flash", displayName: "GLM-4.5-Flash (Free)"),
+                ModelOption(key: "glm-4-flash-250414", displayName: "GLM-4-Flash-250414 (Free)"),
+                ModelOption(key: "glm-4-flash", displayName: "GLM-4-Flash (Free)"),
+                ModelOption(key: "glm-4v-flash", displayName: "GLM-4v-Flash"),
+                ModelOption(key: "glm-4-plus", displayName: "GLM-4-Plus"),
+                ModelOption(key: "glm-4v-plus", displayName: "GLM-4v-Plus")
             ]
         ),
         "siliconflow": ProviderSettings(
@@ -135,12 +148,12 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://cloud.siliconflow.cn/account/ak",
             requiresCustomConfig: true,
             availableModels: [
-                "THUDM/GLM-4-32B-0414": "GLM-4-32B-0414",
-                "THUDM/GLM-4-9B-0414": "GLM-4-9B-0414 (Free)",
-                "deepseek-ai/DeepSeek-V3": "DeepSeek-V3",
-                "Qwen/Qwen3-8B": "Qwen3-8B (Free)",
-                "Qwen/Qwen2.5-7B-Instruct": "Qwen2.5-7B-Instruct (Free)",
-                "Qwen/Qwen2.5-VL-32B-Instruct": "Qwen2.5-VL-32B-Instruct"
+                ModelOption(key: "THUDM/GLM-4-32B-0414", displayName: "GLM-4-32B-0414"),
+                ModelOption(key: "THUDM/GLM-4-9B-0414", displayName: "GLM-4-9B-0414 (Free)"),
+                ModelOption(key: "deepseek-ai/DeepSeek-V3", displayName: "DeepSeek-V3"),
+                ModelOption(key: "Qwen/Qwen3-8B", displayName: "Qwen3-8B (Free)"),
+                ModelOption(key: "Qwen/Qwen2.5-7B-Instruct", displayName: "Qwen2.5-7B-Instruct (Free)"),
+                ModelOption(key: "Qwen/Qwen2.5-VL-32B-Instruct", displayName: "Qwen2.5-VL-32B-Instruct")
             ]
         ),
         "deepseek": ProviderSettings(
@@ -151,8 +164,8 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.deepseek.com/api_keys",
             requiresCustomConfig: true,
             availableModels: [
-                "deepseek-chat": "DeepSeek-V3",
-                "deepseek-reasoner": "DeepSeek-R1"
+                ModelOption(key: "deepseek-chat", displayName: "DeepSeek-V3"),
+                ModelOption(key: "deepseek-reasoner", displayName: "DeepSeek-R1")
             ]
         ),
         "volcengine": ProviderSettings(
@@ -163,10 +176,10 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey",
             requiresCustomConfig: true,
             availableModels: [
-                "doubao-seed-1-6-250615": "Doubao-Seed-1.6",
-                "doubao-1-5-pro-32k-250115": "Doubao-1.5-Pro",
-                "doubao-lite-32k-240828": "Doubao-Lite",
-                "deepseek-v3-250324": "DeepSeek-V3"
+                ModelOption(key: "doubao-seed-1-6-250615", displayName: "Doubao-Seed-1.6"),
+                ModelOption(key: "doubao-1-5-pro-32k-250115", displayName: "Doubao-1.5-Pro"),
+                ModelOption(key: "doubao-lite-32k-240828", displayName: "Doubao-Lite"),
+                ModelOption(key: "deepseek-v3-250324", displayName: "DeepSeek-V3")
             ]
         ),
         "openai": ProviderSettings(
@@ -177,9 +190,9 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.openai.com/api-keys",
             requiresCustomConfig: true,
             availableModels: [
-                "gpt-4.1-2025-04-14": "GPT-4.1",
-                "gpt-4.1-mini-2025-04-14": "GPT-4.1 mini",
-                "gpt-4o-mini-2024-07-18": "GPT-4o mini"
+                ModelOption(key: "gpt-4.1-2025-04-14", displayName: "GPT-4.1"),
+                ModelOption(key: "gpt-4.1-mini-2025-04-14", displayName: "GPT-4.1 mini"),
+                ModelOption(key: "gpt-4o-mini-2024-07-18", displayName: "GPT-4o mini")
             ]
         ),
         "google_gemini": ProviderSettings(
@@ -190,8 +203,8 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://aistudio.google.com/app/apikey",
             requiresCustomConfig: true,
             availableModels: [
-                "gemini-2.0-flash": "Gemini-2.0-Flash",
-                "gemini-2.5-pro-preview-06-05": "Gemini-2.5-Pro"
+                ModelOption(key: "gemini-2.0-flash", displayName: "Gemini-2.0-Flash"),
+                ModelOption(key: "gemini-2.5-pro-preview-06-05", displayName: "Gemini-2.5-Pro")
             ]
         ),
         "claude": ProviderSettings(
@@ -202,9 +215,9 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://console.anthropic.com/settings/keys",
             requiresCustomConfig: true,
             availableModels: [
-                "claude-sonnet-4-20250514": "claude-4-Sonnet",
-                "claude-3-7-sonnet-20250219": "Claude-3.7-Sonnet",
-                "claude-3-5-sonnet-20241022": "Claude-3.5-Sonnet"
+                ModelOption(key: "claude-sonnet-4-20250514", displayName: "claude-4-Sonnet"),
+                ModelOption(key: "claude-3-7-sonnet-20250219", displayName: "Claude-3.7-Sonnet"),
+                ModelOption(key: "claude-3-5-sonnet-20241022", displayName: "Claude-3.5-Sonnet")
             ]
         ),
         "grok": ProviderSettings(
@@ -215,10 +228,10 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://console.x.ai/",
             requiresCustomConfig: true,
             availableModels: [
-                "grok-4-0709": "Grok-4-0709",
-                "grok-3": "Grok-3",
-                "grok-3-fast": "Grok-3-Fast",
-                "grok-3-mini": "Grok-3-Mini"
+                ModelOption(key: "grok-4-0709", displayName: "Grok-4-0709"),
+                ModelOption(key: "grok-3", displayName: "Grok-3"),
+                ModelOption(key: "grok-3-fast", displayName: "Grok-3-Fast"),
+                ModelOption(key: "grok-3-mini", displayName: "Grok-3-Mini")
             ]
         ),
         "openrouter": ProviderSettings(
@@ -229,23 +242,23 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://openrouter.ai/keys",
             requiresCustomConfig: true,
             availableModels: [
-                "anthropic/claude-sonnet-4": "Claude-4-Sonnet",
-                "anthropic/claude-3.7-sonnet": "Claude-3.7-Sonnet",
-                "anthropic/claude-3.5-sonnet": "Claude-3.5-Sonnet",
-                "openai/gpt-4.1": "GPT-4.1",
-                "openai/gpt-4.1-mini": "GPT-4.1-Mini",
-                "openai/gpt-4o": "GPT-4o",
-                "openai/gpt-4o-mini": "GPT-4o-Mini",
-                "google/gemini-2.5-flash": "Gemini-2.5-Flash",
-                "google/gemini-2.5-pro": "Gemini-2.5-Pro",
-                "x-ai/grok-3-mini": "Grok-3-Mini",
-                "x-ai/grok-3": "Grok-3",
-                "qwen/qwen2.5-vl-32b-instruct:free": "Qwen-2.5-VL-32B-Instruct (Free)",
-                "qwen/qwen3-8b:free": "Qwen-3.8B (Free)",
-                "qwen/qwen-7b-chat": "Qwen-1.5-7B-Chat",
-                "deepseek/deepseek-chat": "DeepSeek-V3",
-                "deepseek/deepseek-chat:free": "DeepSeek-V3 (Free)",
-                "thudm/glm-4-32b:free": "GLM-4-32B (Free)",
+                ModelOption(key: "anthropic/claude-sonnet-4", displayName: "Claude-4-Sonnet"),
+                ModelOption(key: "anthropic/claude-3.7-sonnet", displayName: "Claude-3.7-Sonnet"),
+                ModelOption(key: "anthropic/claude-3.5-sonnet", displayName: "Claude-3.5-Sonnet"),
+                ModelOption(key: "openai/gpt-4.1", displayName: "GPT-4.1"),
+                ModelOption(key: "openai/gpt-4.1-mini", displayName: "GPT-4.1-Mini"),
+                ModelOption(key: "openai/gpt-4o", displayName: "GPT-4o"),
+                ModelOption(key: "openai/gpt-4o-mini", displayName: "GPT-4o-Mini"),
+                ModelOption(key: "google/gemini-2.5-flash", displayName: "Gemini-2.5-Flash"),
+                ModelOption(key: "google/gemini-2.5-pro", displayName: "Gemini-2.5-Pro"),
+                ModelOption(key: "x-ai/grok-3-mini", displayName: "Grok-3-Mini"),
+                ModelOption(key: "x-ai/grok-3", displayName: "Grok-3"),
+                ModelOption(key: "qwen/qwen2.5-vl-32b-instruct:free", displayName: "Qwen-2.5-VL-32B-Instruct (Free)"),
+                ModelOption(key: "qwen/qwen3-8b:free", displayName: "Qwen-3.8B (Free)"),
+                ModelOption(key: "qwen/qwen-7b-chat", displayName: "Qwen-1.5-7B-Chat"),
+                ModelOption(key: "deepseek/deepseek-chat", displayName: "DeepSeek-V3"),
+                ModelOption(key: "deepseek/deepseek-chat:free", displayName: "DeepSeek-V3 (Free)"),
+                ModelOption(key: "thudm/glm-4-32b:free", displayName: "GLM-4-32B (Free)")
             ]
         )
     ]
@@ -745,7 +758,7 @@ class PreferencesModel: ObservableObject {
                 model: service.model,
                 helpUrl: "",
                 requiresCustomConfig: false,
-                availableModels: [:]
+                availableModels: []
             )
         }
     }
