@@ -69,7 +69,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
-"prompt_custom_system" = "Prompt Sistem Khusus";
+"prompt_custom_system" = "Prompt sistem kustom (untuk fitur pengiriman pesan)";
 "add_ai_service" = "Tambah layanan AI";
 
 // ai config

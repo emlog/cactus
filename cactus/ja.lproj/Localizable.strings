@@ -69,7 +69,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "プロンプト";
-"prompt_custom_system" = "カスタムシステムプロンプト";
+"prompt_custom_system" = "カスタムシステムプロンプト（メッセージ送信機能用）";
 "add_ai_service" = "AIサービスを追加";
 
 // ai config

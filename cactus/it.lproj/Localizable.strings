@@ -69,7 +69,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
-"prompt_custom_system" = "Prompt di sistema personalizzato";
+"prompt_custom_system" = "Prompt di sistema personalizzato (per la funzione di invio messaggi)";
 "add_ai_service" = "Aggiungi servizio AI";
 
 // ai config

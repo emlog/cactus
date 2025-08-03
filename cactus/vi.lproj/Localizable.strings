@@ -69,7 +69,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "Lời Nhắc";
-"prompt_custom_system" = "Lời Nhắc Hệ Thống Tùy Chỉnh";
+"prompt_custom_system" = "Lời nhắc hệ thống tùy chỉnh (dành cho tính năng gửi tin nhắn)";
 "add_ai_service" = "Thêm dịch vụ AI";
 
 // ai config

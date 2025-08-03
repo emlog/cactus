@@ -69,7 +69,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "คำสั่ง (Prompt)";
-"prompt_custom_system" = "คำสั่งระบบแบบกำหนดเอง";
+"prompt_custom_system" = "ข้อความระบบที่กำหนดเอง (สำหรับฟังก์ชันการส่งข้อความ)";
 "add_ai_service" = "เพิ่มบริการ AI";
 
 // ai config

@@ -69,7 +69,7 @@
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
 "prompt" = "프롬프트";
-"prompt_custom_system" = "사용자 지정 시스템 프롬프트";
+"prompt_custom_system" = "사용자 정의 시스템 프롬프트 (메시지 전송 기능용)";
 "add_ai_service" = "AI 서비스 추가";
 
 // ai config
