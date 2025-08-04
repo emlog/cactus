@@ -56,7 +56,7 @@
 "enter_api_key" = "Inserisci la chiave API";
 "api_key" = "Chiave API";
 "model" = "Modello";
-"model_zhipu_glm4" = "Zhipu-GLM4";
+"model_zhipu_glm4" = "Zhipu‑GLM‑4‑9B";
 "model_cactusai_mix" = "CactusAI-Mix";
 "openrouter-default" = "OpenRouter-GLM4";
 "model_openai" = "OpenAI";
