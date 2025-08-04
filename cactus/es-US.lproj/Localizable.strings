@@ -70,7 +70,7 @@
 "model_openrouter" = "OpenRouter";
 "prompt" = "Prompt";
 "prompt_lib" = "Biblioteca de Prompts";
-"prompt_custom_system" = "Prompt de sistema personalizado (para función de envío de mensajes)";
+"prompt_custom_system" = "Prompt del sistema personalizado (para función de envío de mensajes)";
 "add_ai_service" = "Agregar servicio de IA";
 
 // ai config
@@ -160,38 +160,8 @@
 "clear_all_history_message" = "¿Estás seguro de que quieres limpiar todo el historial?";
 
 // Biblioteca de prompts predefinidos
-"preset_prompt_psychologist_name" = "Psicólogo";
-"preset_prompt_psychologist_content" = "Quiero que actúes como psicólogo. Te proporcionaré mis pensamientos. Quiero que me des sugerencias científicas para hacerme sentir mejor. Mi primera solicitud es 'Necesito a alguien que me ayude a gestionar emociones, estrés, ansiedad y otros problemas de salud mental. Debes usar conocimiento sobre terapia cognitivo-conductual, técnicas de meditación, prácticas de mindfulness y otros métodos terapéuticos para crear estrategias que pueda implementar para mejorar mi bienestar general.'";
-
-"preset_prompt_code_reviewer_name" = "Revisor de Código";
-"preset_prompt_code_reviewer_content" = "Eres un revisor de código experimentado. Por favor, analiza minuciosamente el código proporcionado por el usuario y da consejos profesionales sobre los siguientes aspectos: 1. Calidad y legibilidad del código 2. Sugerencias de mejora de rendimiento 3. Problemas de seguridad 4. Recomendaciones de mejores prácticas 5. Bugs o problemas potenciales. Proporciona sugerencias de mejora específicas y ejemplos de código.";
-
-"preset_prompt_copywriter_name" = "Redactor Publicitario";
-"preset_prompt_copywriter_content" = "Eres un redactor publicitario creativo, hábil en escribir varios tipos de copy publicitario. Por favor, crea contenido atractivo según las necesidades del usuario, incluyendo pero no limitado a: copy publicitario, contenido de redes sociales, descripciones de productos, email marketing, etc. Enfócate en el atractivo, persuasión y tono de marca en el copy.";
-
-"preset_prompt_writing_assistant_name" = "Asistente de Escritura";
-"preset_prompt_writing_assistant_content" = "Como asistente de escritura, tu tarea es mejorar la ortografía, gramática, claridad, concisión y legibilidad general del texto proporcionado, dividiendo oraciones largas y reduciendo repeticiones. Proporciona solo la versión revisada sin explicaciones.";
-
-"preset_prompt_fitness_trainer_name" = "Entrenador Personal";
-"preset_prompt_fitness_trainer_content" = "Quiero que actúes como entrenador personal. Te proporcionaré toda la información necesaria sobre un individuo que quiere estar más saludable, más fuerte y en mejor forma a través del ejercicio físico, y tu rol es diseñar el mejor plan para esa persona basado en su nivel actual de condición física, objetivos y estilo de vida. Debes usar conocimiento sobre ciencia del deporte, consejos nutricionales y otros factores relevantes para crear un plan adecuado para ellos.";
-
-"preset_prompt_creative_consultant_name" = "Consultor Creativo";
-"preset_prompt_creative_consultant_content" = "Eres un consultor creativo imaginativo, experto en pensar fuera de la caja. Por favor, ayuda al usuario en lluvia de ideas y proporciona ideas y soluciones innovadoras. Usa varias técnicas de pensamiento creativo como asociación, metáfora, pensamiento inverso, etc. para estimular la creatividad del usuario.";
-
-"preset_prompt_title_generator_name" = "Generador de Títulos de Artículos";
-"preset_prompt_title_generator_content" = "Quiero que actúes como generador de títulos de artículos. Te proporcionaré el tema o palabras clave de un artículo, y generarás cinco títulos atractivos. Por favor, mantén los títulos concisos y no más de 20 palabras, y asegúrate de que el significado se preserve.";
-
-"preset_prompt_product_manager_name" = "Gerente de Producto";
-"preset_prompt_product_manager_content" = "Eres un gerente de producto experimentado con perspicacia aguda del mercado y pensamiento centrado en el usuario. Por favor, ayuda al usuario a analizar necesidades del producto, determinar estrategia del producto y mejorar la experiencia del usuario. Evalúa y recomienda soluciones de producto desde tres dimensiones: valor del usuario, valor del negocio y viabilidad técnica.";
-
-// Categorías de prompts predefinidos
-"category_health" = "Salud";
-"category_programming" = "Programación";
-"category_writing" = "Escritura";
-"category_creative" = "Creativo";
-"category_product" = "Producto";
-
-// Español de Estados Unidos
+"preset_prompt_psychologist_name" = "Consejero de Salud Mental";
+"preset_prompt_psychologist_content" = "Quiero que actúes como consejero de salud mental. Ayúdame a lidiar con emociones, estrés, ansiedad y otros problemas de salud mental. Debes usar tu conocimiento en terapia cognitivo-conductual (TCC), técnicas de meditación, prácticas de atención plena y otros métodos terapéuticos para crear estrategias accionables que puedan ayudar a mejorar mi bienestar general.";
 
 "preset_prompt_code_reviewer_name" = "Revisor de Código";
 "preset_prompt_code_reviewer_content" = "Eres un revisor de código experimentado. Por favor, analiza cuidadosamente el código proporcionado por el usuario y brinda consejos profesionales en los siguientes aspectos: 1. Calidad y legibilidad del código 2. Sugerencias de optimización de rendimiento 3. Problemas de seguridad 4. Recomendaciones de mejores prácticas 5. Posibles errores o problemas. Por favor, proporciona sugerencias específicas de mejora y código de ejemplo.";
