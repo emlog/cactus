@@ -163,10 +163,6 @@ struct PromptLibraryView: View {
             Image(systemName: "doc.text.magnifyingglass")
                 .font(.system(size: 48))
                 .foregroundColor(.secondary)
-            
-            Text("未找到相关提示词")
-                .font(.headline)
-                .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
@@ -313,26 +309,5 @@ struct PromptDetailView: View {
         }
         .frame(width: 500, height: 300)
         .background(Color(NSColor.controlBackgroundColor))
-        .overlay(
-            VStack {
-                if showingSuccessToast {
-                    HStack {
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
-                        Text("已成功添加到自定义提示词")
-                            .font(.system(size: 14, weight: .medium))
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(Color(NSColor.controlBackgroundColor))
-                    .cornerRadius(8)
-                    .shadow(radius: 4)
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                    .animation(.easeInOut(duration: 0.3), value: showingSuccessToast)
-                }
-                Spacer()
-            }
-                .padding(.top, 20)
-        )
     }
 }
