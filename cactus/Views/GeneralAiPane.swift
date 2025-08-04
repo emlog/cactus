@@ -1,6 +1,11 @@
-import KeyboardShortcuts
-import LaunchAtLogin
 import SwiftUI
+import Foundation
+
+// 导入必要的模块和视图
+// PreferencesModel, CustomPrompt, CustomAIService 在 PreferencesModel.swift 中定义
+// PurchaseManager 在 PurchaseManager.swift 中定义
+// PromptLibraryView 在 PromptLibraryView.swift 中定义
+// SettingRow 在 SettingRow.swift 中定义
 
 struct GeneralAiPane: View {
     
@@ -19,6 +24,9 @@ struct GeneralAiPane: View {
     @State private var newServiceBaseURL = ""
     @State private var newServiceApiKey = ""
     @State private var newServiceModel = ""
+    
+    // 提示词库状态
+    @State private var showingPromptLibrary = false
     
     // 检查是否为高级用户
     var isPremiumUser: Bool {
@@ -52,14 +60,19 @@ struct GeneralAiPane: View {
         .sheet(isPresented: $showingAddPrompt) {
             customPromptEditView
         }
-        .sheet(item: $editingPrompt) { prompt in
+        .sheet(item: $editingPrompt) { (prompt: CustomPrompt) in
             customPromptEditView
         }
         .sheet(isPresented: $showingAddAIService) {
             customAIServiceEditView
         }
-        .sheet(item: $editingAIService) { service in
+        .sheet(item: $editingAIService) { (service: CustomAIService) in
             customAIServiceEditView
+        }
+        .sheet(isPresented: $showingPromptLibrary) {
+            PromptLibraryView { (name: String, content: String) in
+                preferences.addCustomPrompt(name: name, content: content)
+            }
         }
     }
     
@@ -460,12 +473,25 @@ struct GeneralAiPane: View {
     // 自定义提示词管理视图
     private var customPromptsManagementView: some View {
         VStack(spacing: 0) {
-            // 标题和添加按钮
+            // 标题和操作按钮
             HStack {
                 Text(NSLocalizedString("prompt_custom_system", comment: "自定义系统提示词"))
                     .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
+                // 提示词库按钮
+                Button(action: {
+                    showingPromptLibrary = true
+                }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "circle.hexagonpath")
+                    }
+                    .font(.system(size: 14))
+                    .foregroundColor(.accentColor)
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                // 添加自定义提示词按钮
                 Button(action: {
                     newPromptName = ""
                     newPromptContent = ""
