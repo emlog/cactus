@@ -68,8 +68,9 @@
 "model_volcengine" = "Volcengine";
 "model_zhipu" = "Zhipu";
 "model_openrouter" = "OpenRouter";
-"prompt" = "Lời Nhắc";
-"prompt_custom_system" = "Lời nhắc hệ thống tùy chỉnh (dành cho tính năng gửi tin nhắn)";
+"prompt" = "Lời nhắc";
+"prompt_lib" = "Thư viện Prompt";
+"prompt_custom_system" = "Lời nhắc hệ thống tùy chỉnh (cho chức năng gửi tin nhắn)";
 "add_ai_service" = "Thêm dịch vụ AI";
 
 // ai config
@@ -126,15 +127,16 @@
 "error_empty_model" = "Vui lòng chọn mô hình cho dịch vụ AI hiện tại";
 
 // common
-"title" = "Tiêu Đề";
+"title" = "Tiêu đề";
 "alert_ok" = "OK";
-"sum" = "Tổng Cộng";
-"clear_all" = "Xóa Tất Cả";
+"sum" = "Tổng";
+"clear_all" = "Xóa tất cả";
 "cancel" = "Hủy";
-"confirm" = "Xác Nhận";
+"confirm" = "Xác nhận";
 "delete" = "Xóa";
 "stop" = "Dừng";
 "save" = "Lưu";
+"add_ok" = "Đã thêm thành công";
 
 // pro
 "premium_owned" = "Bạn đã sở hữu phiên bản Pro";
@@ -157,4 +159,36 @@
 // history
 "clear_all_history_message" = "Bạn có chắc chắn muốn xóa tất cả lịch sử không?";
 
-// 越南语
+// Thư viện prompt được thiết lập sẵn
+"preset_prompt_psychologist_name" = "Nhà tâm lý học";
+"preset_prompt_psychologist_content" = "Tôi muốn bạn đóng vai trò là một nhà tâm lý học. Tôi sẽ cung cấp cho bạn những suy nghĩ của mình. Tôi muốn bạn đưa ra lời khuyên khoa học để giúp tôi cảm thấy tốt hơn. Yêu cầu đầu tiên của tôi là 'Tôi cần ai đó giúp tôi quản lý cảm xúc, căng thẳng, lo lắng và các vấn đề sức khỏe tâm thần khác. Bạn nên sử dụng kiến thức về liệu pháp nhận thức hành vi, kỹ thuật thiền định, thực hành chánh niệm và các phương pháp trị liệu khác để tạo ra các chiến lược mà tôi có thể thực hiện nhằm cải thiện sức khỏe tổng thể của mình.'";
+
+"preset_prompt_code_reviewer_name" = "Người đánh giá mã";
+"preset_prompt_code_reviewer_content" = "Bạn là một người đánh giá mã có kinh nghiệm. Hãy phân tích kỹ lưỡng mã mà người dùng cung cấp và đưa ra lời khuyên chuyên nghiệp về các khía cạnh sau: 1. Chất lượng và khả năng đọc mã 2. Đề xuất cải thiện hiệu suất 3. Vấn đề bảo mật 4. Khuyến nghị thực hành tốt nhất 5. Lỗi hoặc vấn đề tiềm ẩn. Hãy cung cấp các đề xuất cải thiện cụ thể và ví dụ mã.";
+
+"preset_prompt_copywriter_name" = "Nhà viết quảng cáo";
+"preset_prompt_copywriter_content" = "Bạn là một nhà viết quảng cáo sáng tạo, thành thạo trong việc viết nhiều loại bản sao quảng cáo. Hãy tạo ra nội dung hấp dẫn theo yêu cầu của người dùng, bao gồm nhưng không giới hạn: bản sao quảng cáo, nội dung mạng xã hội, mô tả sản phẩm, email marketing, v.v. Tập trung vào sự hấp dẫn, thuyết phục và giọng điệu thương hiệu trong bản sao.";
+
+"preset_prompt_writing_assistant_name" = "Trợ lý viết";
+"preset_prompt_writing_assistant_content" = "Với tư cách là trợ lý viết, nhiệm vụ của bạn là cải thiện chính tả, ngữ pháp, sự rõ ràng, súc tích và khả năng đọc tổng thể của văn bản được cung cấp, đồng thời chia nhỏ các câu dài và giảm sự lặp lại. Hãy chỉ cung cấp phiên bản đã sửa mà không cần giải thích.";
+
+"preset_prompt_fitness_trainer_name" = "Huấn luyện viên cá nhân";
+"preset_prompt_fitness_trainer_content" = "Tôi muốn bạn đóng vai trò là một huấn luyện viên cá nhân. Tôi sẽ cung cấp cho bạn tất cả thông tin cần thiết về một cá nhân muốn trở nên khỏe mạnh hơn, mạnh mẽ hơn và có thể lực tốt hơn thông qua tập thể dục, và vai trò của bạn là đưa ra kế hoạch tốt nhất cho người đó dựa trên mức độ thể lực hiện tại, mục tiêu và thói quen sinh hoạt của họ. Bạn nên sử dụng kiến thức về khoa học thể thao, lời khuyên dinh dưỡng và các yếu tố liên quan khác để tạo ra một kế hoạch phù hợp với họ.";
+
+"preset_prompt_creative_consultant_name" = "Cố vấn sáng tạo";
+"preset_prompt_creative_consultant_content" = "Bạn là một cố vấn sáng tạo giàu trí tưởng tượng, giỏi trong việc tư duy ngoài khuôn khổ. Hãy giúp người dùng động não và cung cấp các ý tưởng và giải pháp sáng tạo. Sử dụng các kỹ thuật tư duy sáng tạo khác nhau như liên kết, ẩn dụ, tư duy ngược, v.v. để kích thích sự sáng tạo của người dùng.";
+
+"preset_prompt_title_generator_name" = "Trình tạo tiêu đề bài viết";
+"preset_prompt_title_generator_content" = "Tôi muốn bạn đóng vai trò là một trình tạo tiêu đề bài viết. Tôi sẽ cung cấp cho bạn chủ đề hoặc từ khóa của một bài viết, và bạn sẽ đưa ra năm tiêu đề hấp dẫn. Hãy giữ tiêu đề súc tích và không quá 20 từ, đồng thời đảm bảo ý nghĩa được bảo toàn.";
+
+"preset_prompt_product_manager_name" = "Quản lý sản phẩm";
+"preset_prompt_product_manager_content" = "Bạn là một quản lý sản phẩm có kinh nghiệm với hiểu biết sâu sắc về thị trường và tư duy lấy người dùng làm trung tâm. Hãy giúp người dùng phân tích nhu cầu sản phẩm, xác định chiến lược sản phẩm và cải thiện trải nghiệm người dùng. Đánh giá và đề xuất các giải pháp sản phẩm từ ba khía cạnh: giá trị người dùng, giá trị kinh doanh và tính khả thi kỹ thuật.";
+
+// Danh mục prompt được thiết lập sẵn
+"category_health" = "Sức khỏe";
+"category_programming" = "Lập trình";
+"category_writing" = "Viết lách";
+"category_creative" = "Sáng tạo";
+"category_product" = "Sản phẩm";
+
+// Tiếng Việt
