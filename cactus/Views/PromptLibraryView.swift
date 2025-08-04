@@ -90,7 +90,6 @@ struct PromptLibraryView: View {
         .overlay(
             // 成功提示吐司
             VStack {
-                Spacer()
                 if showingSuccessToast {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
@@ -103,11 +102,12 @@ struct PromptLibraryView: View {
                     .background(Color(NSColor.controlBackgroundColor))
                     .cornerRadius(8)
                     .shadow(radius: 4)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.move(edge: .top).combined(with: .opacity))
                     .animation(.easeInOut(duration: 0.3), value: showingSuccessToast)
                 }
+                Spacer()
             }
-                .padding(.bottom, 20)
+                .padding(.top, 20)
         )
         .sheet(item: $selectedPrompt) { prompt in
             PromptDetailView(prompt: prompt, onAddPrompt: onAddPrompt)
@@ -315,7 +315,6 @@ struct PromptDetailView: View {
         .background(Color(NSColor.controlBackgroundColor))
         .overlay(
             VStack {
-                Spacer()
                 if showingSuccessToast {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
@@ -328,11 +327,12 @@ struct PromptDetailView: View {
                     .background(Color(NSColor.controlBackgroundColor))
                     .cornerRadius(8)
                     .shadow(radius: 4)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.move(edge: .top).combined(with: .opacity))
                     .animation(.easeInOut(duration: 0.3), value: showingSuccessToast)
                 }
+                Spacer()
             }
-                .padding(.bottom, 20)
+                .padding(.top, 20)
         )
     }
 }
