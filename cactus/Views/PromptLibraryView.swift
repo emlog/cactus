@@ -24,52 +24,52 @@ struct PromptLibraryView: View {
     /// 预设提示词库
     private let presetPrompts: [PresetPrompt] = [
         PresetPrompt(
-            name: "心理健康顾问",
-            content: "我希望你充当一位心理健康顾问。帮助我管理情绪、压力、焦虑以及其他心理健康问题。你应当运用你对认知行为疗法（CBT）、冥想技巧、正念练习以及其他治疗方法的了解，来制定可实施的策略，帮助我提升整体幸福感。",
+            name: NSLocalizedString("preset_prompt_psychologist_name", comment: "心理健康顾问"),
+            content: NSLocalizedString("preset_prompt_psychologist_content", comment: "心理健康顾问提示词内容"),
             icon: "heart",
-            category: "健康"
+            category: NSLocalizedString("category_health", comment: "健康")
         ),
         PresetPrompt(
-            name: "代码审查员",
-            content: "你是一位经验丰富的代码审查员。请仔细分析用户提供的代码，从以下几个方面给出专业建议：1. 代码质量和可读性 2. 性能优化建议 3. 安全性问题 4. 最佳实践建议 5. 潜在的bug或问题。请提供具体的改进建议和示例代码。",
+            name: NSLocalizedString("preset_prompt_code_reviewer_name", comment: "代码审查员"),
+            content: NSLocalizedString("preset_prompt_code_reviewer_content", comment: "代码审查员提示词内容"),
             icon: "doc.text.magnifyingglass",
-            category: "编程"
+            category: NSLocalizedString("category_programming", comment: "编程")
         ),
         PresetPrompt(
-            name: "文案创作师",
-            content: "你是一位富有创意的文案创作师，擅长各种类型的文案写作。请根据用户的需求创作吸引人的文案，包括但不限于：广告文案、社交媒体内容、产品描述、邮件营销文案等。注重文案的吸引力、说服力和品牌调性。",
+            name: NSLocalizedString("preset_prompt_copywriter_name", comment: "文案创作师"),
+            content: NSLocalizedString("preset_prompt_copywriter_content", comment: "文案创作师提示词内容"),
             icon: "pencil.and.outline",
-            category: "写作"
+            category: NSLocalizedString("category_writing", comment: "写作")
         ),
         PresetPrompt(
-            name: "写作助手",
-            content: "作为写作助手，你的任务是改进所提供文本的拼写、语法、清晰度、简洁性和整体可读性，同时拆分冗长的句子、减少重复。请仅提供修改后的版本，不附加任何解释",
+            name: NSLocalizedString("preset_prompt_writing_assistant_name", comment: "写作助手"),
+            content: NSLocalizedString("preset_prompt_writing_assistant_content", comment: "写作助手提示词内容"),
             icon: "graduationcap",
-            category: "写作"
+            category: NSLocalizedString("category_writing", comment: "写作")
         ),
         PresetPrompt(
-            name: "健身教练",
-            content: "我希望你扮演一位私人健身教练的角色。我会向你提供一个希望通过身体训练变得更健康、更强壮、更有活力的人的所有相关信息。你的任务是根据此人的当前体能水平、目标和生活习惯，为其制定最合适的训练计划。你应运用你在运动科学、营养建议以及其他相关领域的知识，为这个人量身定制一套适合的计划。",
+            name: NSLocalizedString("preset_prompt_fitness_trainer_name", comment: "健身教练"),
+            content: NSLocalizedString("preset_prompt_fitness_trainer_content", comment: "健身教练提示词内容"),
             icon: "dumbbell",
-            category: "健康"
+            category: NSLocalizedString("category_health", comment: "健康")
         ),
         PresetPrompt(
-            name: "创意顾问",
-            content: "你是一位富有想象力的创意顾问，擅长跳出常规思维框架。请帮助用户进行头脑风暴，提供创新的想法和解决方案。运用各种创意思维技巧，如联想、类比、逆向思维等，激发用户的创造力。",
+            name: NSLocalizedString("preset_prompt_creative_consultant_name", comment: "创意顾问"),
+            content: NSLocalizedString("preset_prompt_creative_consultant_content", comment: "创意顾问提示词内容"),
             icon: "lightbulb",
-            category: "创意"
+            category: NSLocalizedString("category_creative", comment: "创意")
         ),
         PresetPrompt(
-            name: "文章标题生成",
-            content: "我希望你扮演一位文章标题生成器。我将向你提供一篇文章内容、主题或关键词，你的任务是生成五个吸引人的标题。请保持标题简洁，不超过20个字，并确保不改变原意。",
+            name: NSLocalizedString("preset_prompt_title_generator_name", comment: "文章标题生成"),
+            content: NSLocalizedString("preset_prompt_title_generator_content", comment: "文章标题生成提示词内容"),
             icon: "text.bubble",
-            category: "写作"
+            category: NSLocalizedString("category_writing", comment: "写作")
         ),
         PresetPrompt(
-            name: "产品经理",
-            content: "你是一位经验丰富的产品经理，具备敏锐的市场洞察力和用户思维。请帮助用户分析产品需求、制定产品策略、优化用户体验。从用户价值、商业价值和技术可行性三个维度来评估和建议产品方案。",
+            name: NSLocalizedString("preset_prompt_product_manager_name", comment: "产品经理"),
+            content: NSLocalizedString("preset_prompt_product_manager_content", comment: "产品经理提示词内容"),
             icon: "cube.box",
-            category: "产品"
+            category: NSLocalizedString("category_product", comment: "产品")
         )
     ]
     
