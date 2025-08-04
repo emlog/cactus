@@ -94,7 +94,7 @@ struct PromptLibraryView: View {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        Text("已成功添加到自定义提示词")
+                        Text(NSLocalizedString("add_ok", comment: "添加成功"))
                             .font(.system(size: 14, weight: .medium))
                     }
                     .padding(.horizontal, 16)
@@ -117,7 +117,7 @@ struct PromptLibraryView: View {
     /// 标题栏视图
     private var headerView: some View {
         HStack {
-            Text("提示词库")
+            Text(NSLocalizedString("prompt_lib", comment: "提示词库"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
