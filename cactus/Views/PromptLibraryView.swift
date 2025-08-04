@@ -85,7 +85,7 @@ struct PromptLibraryView: View {
             // 提示词列表
             promptListView
         }
-        .frame(width: 700, height: 700)
+        .frame(width: 700, height: 520)
         .background(Color(NSColor.windowBackgroundColor))
         .overlay(
             // 成功提示吐司
@@ -198,20 +198,6 @@ struct PromptLibraryView: View {
                 }
                 
                 Spacer()
-            }
-            
-            // 内容预览（截断显示）
-            Text(prompt.content)
-                .font(.system(size: 12))
-                .foregroundColor(.secondary)
-                .lineLimit(2)
-                .multilineTextAlignment(.leading)
-            
-            Spacer()
-            
-            // 操作按钮
-            HStack(spacing: 6) {
-                Spacer()
                 
                 Button(action: {
                     self.addToCustomPrompts(prompt)
@@ -222,6 +208,13 @@ struct PromptLibraryView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
             }
+            
+            // 内容预览（截断显示）
+            Text(prompt.content)
+                .font(.system(size: 12))
+                .foregroundColor(.secondary)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
         }
         .padding(12)
         .background(Color(NSColor.controlBackgroundColor))
@@ -230,7 +223,7 @@ struct PromptLibraryView: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
         )
-        .frame(height: 120)
+        .frame(height: 100)
         .onTapGesture {
             selectedPrompt = prompt
             showingPromptDetail = true
