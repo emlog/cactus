@@ -247,7 +247,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: "API URL"
             ) {
-                TextField("https://a.com/v1/chat/completions", text: customServiceBaseURLBinding)
+                TextField("https://api.x.ai/v1/chat/completions", text: customServiceBaseURLBinding)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -275,7 +275,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("model", comment: "模型")
             ) {
-                TextField("gpt-3.5-turbo", text: customServiceModelBinding)
+                TextField("grok-4-0709", text: customServiceModelBinding)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -389,7 +389,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: "API URL"
             ) {
-                TextField("https://a.com/v1/chat/completions", text: $newServiceBaseURL)
+                TextField("https://api.x.ai/v1/chat/completions", text: $newServiceBaseURL)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -417,7 +417,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("model", comment: "模型")
             ) {
-                TextField("gpt-4.1-2025-04-14", text: $newServiceModel)
+                TextField("grok-4-0709", text: $newServiceModel)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -588,12 +588,15 @@ struct GeneralAiPane: View {
                     .font(.system(size: 14, weight: .medium))
                 
                 TextEditor(text: $newPromptContent)
-                    .padding(5)
+                    .padding(12)
                     .frame(height: 120)
+                    .background(Color(NSColor.textBackgroundColor))
+                    .cornerRadius(8)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(NSColor.separatorColor), lineWidth: 1)
                     )
+                    .scrollContentBackground(.hidden)
             }
             
             HStack(spacing: 12) {
@@ -631,6 +634,8 @@ struct GeneralAiPane: View {
         }
         .padding()
         .frame(width: 400, height: 280)
+        .background(Color(NSColor.windowBackgroundColor))
+        .cornerRadius(12)
     }
     
     /// 获取当前选中的自定义AI服务
