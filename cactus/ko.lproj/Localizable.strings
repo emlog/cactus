@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "스크린샷 번역 단축키";
 "shortcut_ocr_translate_description" = "화면의 문자 영역을 캡처하고 자동으로 OCR 및 번역합니다";
 "default_main_function" = "기본 동작";
-"default_main_function_description" = "메인 창에서 Return 키를 눌렀을 때 실행되는 기본 동작";
+"default_main_function_description" = "메인 창에서 Return 키를 눌렀을 때 실행되는 기본 작업";
 
 // Language setting
 "preferred_language" = "자주 사용하는 언어";

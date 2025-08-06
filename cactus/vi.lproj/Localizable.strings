@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Phím Tắt Dịch Ảnh Chụp Màn Hình";
 "shortcut_ocr_translate_description" = "Chụp vùng văn bản trên màn hình, tự động nhận dạng OCR và dịch";
 "default_main_function" = "Hành Động Mặc Định";
-"default_main_function_description" = "Hành động mặc định được kích hoạt trong cửa sổ chính khi nhấn phím Return";
+"default_main_function_description" = "Hành động mặc định được thực hiện khi nhấn phím Return trong cửa sổ chính";
 
 // Language setting
 "preferred_language" = "Ngôn Ngữ Ưa Thích";

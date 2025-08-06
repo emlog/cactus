@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Pintasan Terjemahan OCR";
 "shortcut_ocr_translate_description" = "Tangkap bagian teks di layar, lalu terjemahkan secara otomatis";
 "default_main_function" = "Tindakan Default";
-"default_main_function_description" = "Tindakan yang dijalankan saat menekan Return di jendela utama";
+"default_main_function_description" = "Tindakan default yang dijalankan saat menekan tombol Return di jendela utama";
 
 // Language setting
 "preferred_language" = "Bahasa Utama";

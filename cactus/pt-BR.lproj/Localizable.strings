@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Atalho para Tradução de Captura";
 "shortcut_ocr_translate_description" = "Seleciona uma área da tela para OCR e tradução automática";
 "default_main_function" = "Ação Padrão";
-"default_main_function_description" = "Ação executada ao pressionar Enter na janela principal";
+"default_main_function_description" = "Ação padrão executada ao pressionar a tecla Return na janela principal";
 
 // Language setting
 "preferred_language" = "Idioma Preferido";

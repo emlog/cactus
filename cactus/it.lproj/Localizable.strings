@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Scorciatoia OCR";
 "shortcut_ocr_translate_description" = "Cattura una porzione dello schermo, riconosce il testo e lo traduce";
 "default_main_function" = "Azione predefinita";
-"default_main_function_description" = "Azione eseguita premendo Invio nella finestra principale";
+"default_main_function_description" = "Azione predefinita eseguita premendo il tasto Return nella finestra principale";
 
 // Language setting
 "preferred_language" = "Lingua preferita";

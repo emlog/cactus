@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "截圖翻譯快捷鍵";
 "shortcut_ocr_translate_description" = "截取畫面上的文字區域，自動進行 OCR 辨識並翻譯。";
 "default_main_function" = "預設動作";
-"default_main_function_description" = "在主視窗按下Return鍵時觸發的預設動作";
+"default_main_function_description" = "在主視窗按下 Return 鍵時觸發的預設操作";
 
 // Language setting
 "preferred_language" = "常用語言";

@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Горячая клавиша OCR перевода";
 "shortcut_ocr_translate_description" = "Выделите область экрана, распознаем текст и переведем его";
 "default_main_function" = "Операция по умолчанию";
-"default_main_function_description" = "Действие по умолчанию при нажатии Return в главном окне";
+"default_main_function_description" = "Действие по умолчанию, выполняемое при нажатии клавиши Return в главном окне";
 
 // Language setting
 "preferred_language" = "Предпочтительный язык";

@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "คีย์ลัดแปลจากหน้าจอ";
 "shortcut_ocr_translate_description" = "เลือกบริเวณหน้าจอเพื่อ OCR และแปลข้อความอัตโนมัติ";
 "default_main_function" = "การดำเนินการเริ่มต้น";
-"default_main_function_description" = "การดำเนินการเมื่อกด Return บนหน้าต่างหลัก";
+"default_main_function_description" = "การดำเนินการเริ่มต้นที่เกิดขึ้นเมื่อกดปุ่ม Return ในหน้าต่างหลัก";
 
 // Language setting
 "preferred_language" = "ภาษาหลักที่ต้องการ";

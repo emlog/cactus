@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Screenshot Translate Shortcut";
 "shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
 "default_main_function" = "Default Action";
-"default_main_function_description" = "The default Action triggered in main window when pressing Return key";
+"default_main_function_description" = "Default action triggered when pressing Return in the main window";
 
 // Language setting
 "preferred_language" = "Preferred Language";

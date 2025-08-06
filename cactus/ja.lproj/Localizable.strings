@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "スクリーン翻訳ショートカット";
 "shortcut_ocr_translate_description" = "画面の文字領域をキャプチャし、自動でOCRと翻訳を行います。";
 "default_main_function" = "デフォルト操作";
-"default_main_function_description" = "メインウィンドウでReturnキーを押した時に実行されるデフォルト操作";
+"default_main_function_description" = "メインウィンドウで Return キーを押した時に実行されるデフォルト操作";
 
 // Language setting
 "preferred_language" = "よく使う言語";

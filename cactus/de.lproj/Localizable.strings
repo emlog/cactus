@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Tastenkürzel: Screenshot‑Übersetzen";
 "shortcut_ocr_translate_description" = "Bildschirmbereich erfassen, OCR und Übersetzung";
 "default_main_function" = "Standardaktion";
-"default_main_function_description" = "Die Standardaktion, die im Hauptfenster durch Drücken der Return-Taste ausgelöst wird";
+"default_main_function_description" = "Standardaktion, die beim Drücken der Return-Taste im Hauptfenster ausgelöst wird";
 
 // Language setting
 "preferred_language" = "Bevorzugte Sprache";

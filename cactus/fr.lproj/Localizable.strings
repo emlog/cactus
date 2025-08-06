@@ -29,7 +29,7 @@
 "shortcut_ocr_translate" = "Raccourci : Traduire une capture";
 "shortcut_ocr_translate_description" = "Capturer une zone de l'écran, faire l’OCR et traduire";
 "default_main_function" = "Action par défaut";
-"default_main_function_description" = "L'action par défaut déclenchée dans la fenêtre principale en appuyant sur la touche Retour";
+"default_main_function_description" = "Action par défaut déclenchée en appuyant sur la touche Retour dans la fenêtre principale";
 
 // Language setting
 "preferred_language" = "Langue préférée";
