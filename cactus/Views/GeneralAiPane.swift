@@ -358,7 +358,7 @@ struct GeneralAiPane: View {
         }
     }
     
-    /// 自定义AI服务添加视图
+    /// 自定义AI服务添加弹窗
     private var customAIServiceEditView: some View {
         VStack(spacing: 0) {
             // 标题
@@ -572,7 +572,7 @@ struct GeneralAiPane: View {
         .cornerRadius(8)
     }
     
-    /// 自定义提示词编辑视图
+    /// 自定义提示词添加、编辑弹窗
     private var customPromptEditView: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 8) {
