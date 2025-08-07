@@ -9,7 +9,7 @@ struct ModelSelectionMenuView: View {
             Menu(NSLocalizedString("service", comment: "AI服务")) {
                 ForEach(preferences.providerKeys, id: \.self) { key in
                     if let provider = preferences.defaultProviders[key] {
-                        if (provider.model.isEmpty || provider.apiKey.isEmpty) {
+                        if provider.model.isEmpty || provider.apiKey.isEmpty {
                             // noting
                         } else {
                             Button(action: {
@@ -73,6 +73,15 @@ struct ModelSelectionMenuView: View {
                             }
                         }
                     }
+                }
+            }
+            Divider()
+            Button(action: {
+                // 通过通知机制请求打开偏好设置窗口
+                NotificationCenter.default.post(name: NSNotification.Name("OpenPreferences"), object: nil)
+            }) {
+                HStack {
+                    Text(NSLocalizedString("more_settings", comment: "更多设置"))
                 }
             }
         } label: {

@@ -30,6 +30,7 @@
 "shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
 "default_main_function" = "Default Action";
 "default_main_function_description" = "Default action triggered when pressing Return in the main window";
+"more_settings" = "More Settings";
 
 // Language setting
 "preferred_language" = "Preferred Language";

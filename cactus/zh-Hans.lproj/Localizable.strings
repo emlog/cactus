@@ -30,6 +30,7 @@
 "shortcut_ocr_translate_description" = "截取屏幕上的文字区域，自动OCR识别并翻译";
 "default_main_function" = "默认操作";
 "default_main_function_description" = "在主窗口按下回车键时触发的默认操作";
+"more_settings" = "更多设置";
 
 // Language setting
 "preferred_language" = "常用语言";

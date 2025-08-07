@@ -1,6 +1,5 @@
 import AppKit
 import SwiftUI
-import KeyboardShortcuts
 import Settings
 import Foundation
 import ApplicationServices
@@ -93,6 +92,14 @@ class WindowManager: NSObject, NSWindowDelegate {
             object: nil
         )
         
+        // 添加通知监听器来响应打开偏好设置的请求
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(openPreferencesFromNotification),
+            name: NSNotification.Name("OpenPreferences"),
+            object: nil
+        )
+        
         setupTopBarButton()
     }
     
@@ -152,6 +159,11 @@ class WindowManager: NSObject, NSWindowDelegate {
         } else {
             mainWindow?.setContentSize(contentSize)
         }
+    }
+    
+    /// 响应通知打开偏好设置窗口
+    @objc private func openPreferencesFromNotification() {
+        openPreferences()
     }
     
     func openMain(action: ActionType = .translate) {
