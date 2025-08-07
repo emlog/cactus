@@ -17,6 +17,7 @@
 "about" = "Sobre";
 
 // setting
+"more_settings" = "Mais configurações";
 "startup" = "Iniciar ao ligar o sistema";
 "shortcut_openmain" = "Atalho para Abrir Janela";
 "shortcut_openmain_description" = "Abrir janela, copiar texto selecionado para o campo de entrada e executar ação de enviar mensagem";
@@ -29,7 +30,7 @@
 "shortcut_ocr_translate" = "Atalho para Tradução de Captura";
 "shortcut_ocr_translate_description" = "Seleciona uma área da tela para OCR e tradução automática";
 "default_main_function" = "Ação Padrão";
-"default_main_function_description" = "Ação predefinida executada ao pressionar a tecla Return na janela principal";
+"default_main_function_description" = "Ação padrão executada ao pressionar a tecla Return na janela principal";
 
 // Language setting
 "preferred_language" = "Idioma Preferido";

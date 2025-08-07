@@ -17,6 +17,7 @@
 "about" = "À propos";
 
 // setting
+"more_settings" = "Plus de réglages";
 "startup" = "Lancer au démarrage";
 "shortcut_openmain" = "Raccourci : Ouvrir la fenêtre";
 "shortcut_openmain_description" = "Ouvrir la fenêtre, copier le texte sélectionné dans le champ de saisie et exécuter l'envoi du message";

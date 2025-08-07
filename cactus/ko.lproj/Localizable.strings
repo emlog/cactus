@@ -17,6 +17,7 @@
 "about" = "앱 정보";
 
 // setting
+"more_settings" = "추가 설정";
 "startup" = "시작 시 자동 실행";
 "shortcut_openmain" = "메인 창 열기 단축키";
 "shortcut_openmain_description" = "창을 열고 선택한 텍스트를 입력란에 복사한 후 메시지 보내기 실행";

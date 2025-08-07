@@ -1,5 +1,4 @@
 # Xcode
-.DS_Store
 xcuserdata/
 *.xcscmblueprint
 *.xccheckout
@@ -20,3 +19,13 @@ DerivedData/
 *.dSYM
 cactus.app
 cactus.dmg
+
+# IDE
+.project
+.settings
+.buildpath
+.cache
+.idea
+.DS_Store
+.trae
+.cursor

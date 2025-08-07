@@ -16,7 +16,8 @@
 "premium" = "高級版";
 "about" = "關於";
 
-// Setting
+// setting
+"more_settings" = "更多設定";
 "startup" = "登入時啟動";
 "shortcut_openmain" = "主視窗快捷鍵";
 "shortcut_openmain_description" = "開啟主視窗，並將選取的文字複製到輸入框，執行發送訊息操作";

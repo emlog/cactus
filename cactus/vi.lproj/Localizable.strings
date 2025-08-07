@@ -17,6 +17,7 @@
 "about" = "Giới Thiệu";
 
 // setting
+"more_settings" = "Cài đặt khác";
 "startup" = "Khởi Động Cùng Hệ Thống";
 "shortcut_openmain" = "Phím Tắt Mở Cửa Sổ Chính";
 "shortcut_openmain_description" = "Mở cửa sổ chính, sao chép văn bản đã chọn vào ô nhập và thực hiện gửi tin nhắn";

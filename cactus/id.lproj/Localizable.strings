@@ -17,7 +17,8 @@
 "about" = "Tentang";
 
 // setting
-"startup" = "Mulai saat startup";
+"more_settings" = "Pengaturan lainnya";
+"startup" = "Mulai saat login";
 "shortcut_openmain" = "Pintasan Buka Jendela";
 "shortcut_openmain_description" = "Buka jendela, salin teks yang dipilih ke kolom input, dan jalankan aksi kirim pesan";
 "shortcut_translate" = "Pintasan Terjemahan";

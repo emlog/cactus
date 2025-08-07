@@ -17,6 +17,7 @@
 "about" = "About";
 
 // setting
+"more_settings" = "More Settings";
 "startup" = "Open at Login";
 "shortcut_openmain" = "Shortcut to Open Main Window";
 "shortcut_openmain_description" = "Open Main Window, copy selected text to input field, and execute send message action";
@@ -30,7 +31,6 @@
 "shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
 "default_main_function" = "Default Action";
 "default_main_function_description" = "Default action triggered when pressing Return in the main window";
-"more_settings" = "More Settings";
 
 // Language setting
 "preferred_language" = "Preferred Language";

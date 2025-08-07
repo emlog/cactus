@@ -17,6 +17,7 @@
 "about" = "Über";
 
 // setting
+"more_settings" = "Weitere Einstellungen";
 "startup" = "Beim Start öffnen";
 "shortcut_openmain" = "Tastenkürzel: Fenster öffnen";
 "shortcut_openmain_description" = "Fenster öffnen, ausgewählten Text in das Eingabefeld kopieren und Nachricht senden";

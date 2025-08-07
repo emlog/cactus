@@ -17,6 +17,7 @@
 "about" = "Informazioni";
 
 // setting
+"more_settings" = "Altre impostazioni";
 "startup" = "Avvia all'accesso";
 "shortcut_openmain" = "Scorciatoia per aprire la finestra";
 "shortcut_openmain_description" = "Apri finestra, copia il testo selezionato nel campo di input ed esegui l'azione di invio messaggio";

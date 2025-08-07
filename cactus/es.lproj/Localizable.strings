@@ -17,6 +17,7 @@
 "about" = "Acerca de";
 
 // setting
+"more_settings" = "Más ajustes";
 "startup" = "Iniciar al encender";
 "shortcut_openmain" = "Atajo: Abrir ventana";
 "shortcut_openmain_description" = "Abrir ventana, copiar texto seleccionado al campo de entrada y ejecutar acción de enviar mensaje";

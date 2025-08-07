@@ -17,6 +17,7 @@
 "about" = "アプリ情報";
 
 // setting
+"more_settings" = "その他の設定";
 "startup" = "起動時に自動起動";
 "shortcut_openmain" = "メインウィンドウを開くショートカット";
 "shortcut_openmain_description" = "ウィンドウを開き、選択したテキストを入力欄にコピーして、メッセージ送信を実行します";
