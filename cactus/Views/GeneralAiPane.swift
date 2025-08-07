@@ -588,7 +588,7 @@ struct GeneralAiPane: View {
                     .font(.system(size: 14, weight: .medium))
                 
                 TextEditor(text: $newPromptContent)
-                    .padding(12)
+                    .padding(8)
                     .frame(height: 120)
                     .background(Color(NSColor.textBackgroundColor))
                     .cornerRadius(8)
