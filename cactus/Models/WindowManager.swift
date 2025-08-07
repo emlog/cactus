@@ -26,7 +26,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
     }
     
-    // 权限请求窗口
+    // 首次启动：权限请求窗口
     private func showAccessibilityWindow() {
         if accessibilityWindow == nil {
             accessibilityWindow = NSWindow(
@@ -103,6 +103,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         setupTopBarButton()
     }
     
+    // 初始化顶部栏按钮
     private func setupTopBarButton() {
         // 添加左侧按钮到标题栏
         let leftTitlebarAccessoryViewController = NSTitlebarAccessoryViewController()
@@ -303,6 +304,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)  // 确保应用获得焦点
     }
     
+    // 创建设置窗口控制器
     private func createSettingsWindowController() {
         let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
         let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
@@ -495,6 +497,18 @@ class WindowManager: NSObject, NSWindowDelegate {
             request.recognitionLanguages = ["de", "en"]
         case "es":
             request.recognitionLanguages = ["es", "en"]
+        case "id":
+            request.recognitionLanguages = ["id", "en"]
+        case "pt-PT":
+            request.recognitionLanguages = ["pt-PT", "en"]
+        case "ru":
+            request.recognitionLanguages = ["ru", "en"]
+        case "it":
+            request.recognitionLanguages = ["it", "en"]
+        case "th":
+            request.recognitionLanguages = ["th", "en"]
+        case "vi":
+            request.recognitionLanguages = ["vi", "en"]
         default:
             request.recognitionLanguages = ["zh-Hans", "en"]
         }
@@ -515,6 +529,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
     }
     
+    // 获取剪贴板内容
     private func getClipboardContent(action: ActionType, completion: @escaping (Bool) -> Void) {
         // 保存当前剪贴板内容
         let pasteboard = NSPasteboard.general
@@ -572,6 +587,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
     }
     
+    // 模拟复制操作
     private func simulateCopy() {
         // 模拟 Command+C 复制操作
         let source = CGEventSource(stateID: .combinedSessionState)
