@@ -61,7 +61,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainScreenshotAction),
                 keyEquivalent: ""
             )
-            screenshotMenuItem.image = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
+            screenshotMenuItem.image = NSImage(systemSymbolName: "camera.metering.center.weighted.average", accessibilityDescription: nil)
             screenshotMenuItem.setShortcut(for: PreferencesModel.aiShortcutScreenshotTranslate)
             screenshotMenuItem.target = self
             menu.addItem(screenshotMenuItem)
