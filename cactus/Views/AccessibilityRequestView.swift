@@ -10,7 +10,7 @@ struct AccessibilityRequestView: View {
 
             VStack(alignment: .leading, spacing: 15) {
                 HStack {
-                    Image(systemName: "macwindow.and.cursorarrow.rtl")
+                    Image(systemName: "menubar.rectangle")
                         .font(.title2)
                         .foregroundColor(.accentColor)
                     Text(NSLocalizedString("app_in_menubar_info", comment: "应用已经启动，在状态栏中显示🌵图标"))
