@@ -25,11 +25,7 @@ class StatusBarManager: NSObject {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem?.button {
-            if let image = NSImage(named: "StatusIcon") {
-                image.isTemplate = true  // 设置为模板图标，使其变为单色
-                image.size = NSSize(width: 18, height: 18)
-                button.image = image
-            }
+            button.image = IconManager.shared.getStatusBarIcon()
             
             let menu = NSMenu()
             
@@ -39,7 +35,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainAction),
                 keyEquivalent: ""
             )
-            mainMenuItem.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
+            mainMenuItem.image = IconManager.shared.getMainWindowIcon()
             mainMenuItem.setShortcut(for: PreferencesModel.aiShortcutMain)
             mainMenuItem.target = self
             menu.addItem(mainMenuItem)
@@ -50,7 +46,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainTranslateAction),
                 keyEquivalent: "" // 初始值设为空，由 setShortcut 管理
             )
-            translateMenuItem.image = NSImage(systemSymbolName: "translate", accessibilityDescription: nil)
+            translateMenuItem.image = IconManager.shared.getTranslateIcon()
             translateMenuItem.setShortcut(for: PreferencesModel.aiShortcut) // 使用 setShortcut(for:) 来设置快捷键并自动更新
             translateMenuItem.target = self
             menu.addItem(translateMenuItem)
@@ -61,7 +57,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainScreenshotAction),
                 keyEquivalent: ""
             )
-            screenshotMenuItem.image = NSImage(systemSymbolName: "camera.metering.center.weighted.average", accessibilityDescription: nil)
+            screenshotMenuItem.image = IconManager.shared.getScreenshotIcon()
             screenshotMenuItem.setShortcut(for: PreferencesModel.aiShortcutScreenshotTranslate)
             screenshotMenuItem.target = self
             menu.addItem(screenshotMenuItem)
@@ -72,7 +68,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainSummaryAction),
                 keyEquivalent: ""
             )
-            summaryMenuItem.image = NSImage(systemSymbolName: "list.bullet.rectangle", accessibilityDescription: nil)
+            summaryMenuItem.image = IconManager.shared.getSummaryIcon()
             summaryMenuItem.setShortcut(for: PreferencesModel.aiShortcutSummary)
             summaryMenuItem.target = self
             menu.addItem(summaryMenuItem)
@@ -83,7 +79,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openMainDictionaryAction),
                 keyEquivalent: ""
             )
-            dictionaryMenuItem.image = NSImage(systemSymbolName: "book", accessibilityDescription: nil)
+            dictionaryMenuItem.image = IconManager.shared.getDictionaryIcon()
             dictionaryMenuItem.setShortcut(for: PreferencesModel.aiShortcutDictionary)
             dictionaryMenuItem.target = self
             menu.addItem(dictionaryMenuItem)
@@ -96,7 +92,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openVocabulary),
                 keyEquivalent: ""
             )
-            vocabularyMenuItem.image = NSImage(systemSymbolName: "book.pages", accessibilityDescription: nil)
+            vocabularyMenuItem.image = IconManager.shared.getVocabularyIcon()
             vocabularyMenuItem.target = self
             menu.addItem(vocabularyMenuItem)
             
@@ -106,7 +102,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openFavorites),
                 keyEquivalent: ""
             )
-            favoritesMenuItem.image = NSImage(systemSymbolName: "heart", accessibilityDescription: nil)
+            favoritesMenuItem.image = IconManager.shared.getFavoritesIcon()
             favoritesMenuItem.target = self
             menu.addItem(favoritesMenuItem)
             
@@ -116,7 +112,7 @@ class StatusBarManager: NSObject {
                 action: #selector(openHistory),
                 keyEquivalent: ""
             )
-            historyMenuItem.image = NSImage(systemSymbolName: "clock", accessibilityDescription: nil)
+            historyMenuItem.image = IconManager.shared.getHistoryIcon()
             historyMenuItem.target = self
             menu.addItem(historyMenuItem)
             
