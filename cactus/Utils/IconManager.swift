@@ -33,18 +33,24 @@ class IconManager {
     }
     
     /// 获取翻译图标
+    /// 如果macOS版本低于14.4，使用替代图标
     func getTranslateIcon() -> NSImage? {
-        return NSImage(systemSymbolName: "character.textbox", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
+        // 检查macOS版本是否支持translate图标（macOS 14.4+）
+        if #available(macOS 14.4, *) {
+            return NSImage(systemSymbolName: "translate", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
+        } else {
+            return NSImage(systemSymbolName: "character.textbox", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
+        }
     }
     
     /// 获取截图翻译图标
     func getScreenshotIcon() -> NSImage? {
-        return NSImage(systemSymbolName: "camera.metering.center.weighted.average", accessibilityDescription: NSLocalizedString("ocr_translate", comment: "截图翻译"))
+        return NSImage(systemSymbolName: "camera.metering.multispot", accessibilityDescription: NSLocalizedString("ocr_translate", comment: "截图翻译"))
     }
     
     /// 获取总结摘要图标
     func getSummaryIcon() -> NSImage? {
-        return NSImage(systemSymbolName: "list.bullet.rectangle", accessibilityDescription: NSLocalizedString("summary", comment: "总结摘要"))
+        return NSImage(systemSymbolName: "list.dash.header.rectangle", accessibilityDescription: NSLocalizedString("summary", comment: "总结摘要"))
     }
     
     /// 获取字典查询图标

@@ -149,7 +149,7 @@ struct MainView: View {
                             translateText()
                         }
                     }) {
-                        Image(systemName: contentModel.isTranslating ? "stop.fill" : "character.textbox")
+                        Image(systemName: contentModel.isTranslating ? "stop.fill" : "translate")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
@@ -164,7 +164,7 @@ struct MainView: View {
                             summaryText()
                         }
                     }) {
-                        Image(systemName: contentModel.isSummarizing ? "stop.fill" : "list.bullet.rectangle")
+                        Image(systemName: contentModel.isSummarizing ? "stop.fill" : "list.dash.header.rectangle")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
