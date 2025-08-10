@@ -33,14 +33,8 @@ class IconManager {
     }
     
     /// 获取翻译图标
-    /// 如果macOS版本低于14.4，使用替代图标
     func getTranslateIcon() -> NSImage? {
-        // 检查macOS版本是否支持translate图标（macOS 14.4+）
-        if #available(macOS 14.4, *) {
-            return NSImage(systemSymbolName: "translate", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
-        } else {
-            return NSImage(systemSymbolName: "globe", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
-        }
+        return NSImage(systemSymbolName: "character.textbox", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
     }
     
     /// 获取截图翻译图标

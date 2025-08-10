@@ -149,7 +149,7 @@ struct MainView: View {
                             translateText()
                         }
                     }) {
-                        Image(systemName: contentModel.isTranslating ? "stop.fill" : "translate")
+                        Image(systemName: contentModel.isTranslating ? "stop.fill" : "character.textbox")
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(HoverButtonStyle(horizontalPadding: 6, verticalPadding: 4))
