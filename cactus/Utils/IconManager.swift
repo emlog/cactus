@@ -98,22 +98,4 @@ class IconManager {
     func getAboutSettingsIcon() -> NSImage? {
         return NSImage(systemSymbolName: "info.circle", accessibilityDescription: NSLocalizedString("about", comment: "关于"))
     }
-    
-    // MARK: - 通用图标获取方法
-    
-    /// 根据系统符号名称获取图标
-    /// - Parameters:
-    ///   - symbolName: 系统符号名称
-    ///   - accessibilityDescription: 无障碍描述
-    /// - Returns: 对应的NSImage图标
-    func getSystemIcon(symbolName: String, accessibilityDescription: String? = nil) -> NSImage? {
-        return NSImage(systemSymbolName: symbolName, accessibilityDescription: accessibilityDescription)
-    }
-    
-    /// 根据资源名称获取图标
-    /// - Parameter imageName: 图片资源名称
-    /// - Returns: 对应的NSImage图标
-    func getNamedIcon(_ imageName: String) -> NSImage? {
-        return NSImage(named: imageName)
-    }
 }
