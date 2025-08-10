@@ -716,13 +716,13 @@ struct GeneralAiPane: View {
     private func serviceIcon(for providerKey: String) -> String {
         switch providerKey {
         case "model_zhipu_glm4":
-            return "star.hexagon"
+            return "diamond.circle.fill"
         case "openrouter-default":
-            return "arrow.triangle.swap"
+            return "arrow.left.arrow.right"
         case "model_cactusai_mix":
             return "leaf.fill"
         case "zhipu":
-            return "star.hexagon"
+            return "diamond.circle.fill"
         case "siliconflow":
             return "cpu"
         case "deepseek":
@@ -732,19 +732,15 @@ struct GeneralAiPane: View {
         case "openai":
             return "circle.grid.3x3.fill"
         case "google_gemini":
-            return "diamond.fill"
+            return "g.circle"
         case "claude":
-            return "staroflife"
+            return "asterisk.circle.fill"
         case "grok":
             return "xmark"
         case "openrouter":
-            return "arrow.triangle.swap"
+            return "arrow.left.arrow.right"
         default:
-            // 自定义AI服务使用自定义图标
-            if providerKey.hasPrefix("custom_") {
-                return "bolt"
-            }
-            return "cloud.fill"
+            return "bolt.fill"
         }
     }
     
