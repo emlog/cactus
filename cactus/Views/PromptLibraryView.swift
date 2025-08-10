@@ -32,7 +32,7 @@ struct PromptLibraryView: View {
         PresetPrompt(
             name: NSLocalizedString("preset_prompt_code_reviewer_name", comment: "代码审查员"),
             content: NSLocalizedString("preset_prompt_code_reviewer_content", comment: "代码审查员提示词内容"),
-            icon: "doc.text.magnifyingglass",
+            icon: "text.magnifyingglass",
             category: NSLocalizedString("category_programming", comment: "编程")
         ),
         PresetPrompt(
