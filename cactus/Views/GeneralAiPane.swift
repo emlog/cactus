@@ -1,12 +1,6 @@
 import SwiftUI
 import Foundation
 
-// 导入必要的模块和视图
-// PreferencesModel, CustomPrompt, CustomAIService 在 PreferencesModel.swift 中定义
-// PurchaseManager 在 PurchaseManager.swift 中定义
-// PromptLibraryView 在 PromptLibraryView.swift 中定义
-// SettingRow 在 SettingRow.swift 中定义
-
 struct GeneralAiPane: View {
     
     @ObservedObject private var preferences = PreferencesModel.shared
@@ -94,7 +88,7 @@ struct GeneralAiPane: View {
                         editingAIService = nil
                         showingAddAIService = true
                     }) {
-                        Image(systemName: "plus.circle.fill")
+                        Image(systemName: "plus.circle")
                             .foregroundColor(.accentColor)
                             .font(.system(size: 16))
                     }
@@ -498,7 +492,7 @@ struct GeneralAiPane: View {
                     editingPrompt = nil
                     showingAddPrompt = true
                 }) {
-                    Image(systemName: "plus.circle.fill")
+                    Image(systemName: "plus.circle")
                         .foregroundColor(.accentColor)
                         .font(.system(size: 16))
                 }
