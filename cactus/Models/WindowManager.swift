@@ -306,14 +306,14 @@ class WindowManager: NSObject, NSWindowDelegate {
     
     // 创建设置窗口控制器
     private func createSettingsWindowController() {
-        let generalIcon = NSImage(systemSymbolName: "gear", accessibilityDescription: "General Settings") ?? NSImage()
-        let aiIcon = NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: "Storage Settings") ?? NSImage()
-        let premiumIcon = NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: "Premium Settings") ?? NSImage()
-        let aboutIcon = NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About Settings") ?? NSImage()
+        let generalIcon = IconManager.shared.getGeneralSettingsIcon() ?? NSImage()
+        let aiIcon = IconManager.shared.getAiSettingsIcon() ?? NSImage()
+        let premiumIcon = IconManager.shared.getPremiumSettingsIcon() ?? NSImage()
+        let aboutIcon = IconManager.shared.getAboutSettingsIcon() ?? NSImage()
         // 添加数据管理相关的图标
-        let vocabularyIcon = NSImage(systemSymbolName: "book.pages", accessibilityDescription: "Vocabulary") ?? NSImage()
-        let favoritesIcon = NSImage(systemSymbolName: "heart", accessibilityDescription: "Favorites") ?? NSImage()
-        let historyIcon = NSImage(systemSymbolName: "clock", accessibilityDescription: "History") ?? NSImage()
+        let vocabularyIcon = IconManager.shared.getVocabularyIcon() ?? NSImage()
+        let favoritesIcon = IconManager.shared.getFavoritesIcon() ?? NSImage()
+        let historyIcon = IconManager.shared.getHistoryIcon() ?? NSImage()
         
         settingsWindowController = SettingsWindowController(
             panes: [

@@ -77,6 +77,28 @@ class IconManager {
         return NSImage(systemSymbolName: "clock", accessibilityDescription: NSLocalizedString("history", comment: "历史记录"))
     }
     
+    // MARK: - 设置窗口图标
+    
+    /// 获取通用设置图标
+    func getGeneralSettingsIcon() -> NSImage? {
+        return NSImage(systemSymbolName: "gear", accessibilityDescription: NSLocalizedString("general", comment: "通用"))
+    }
+    
+    /// 获取AI服务设置图标
+    func getAiSettingsIcon() -> NSImage? {
+        return NSImage(systemSymbolName: "lanyardcard", accessibilityDescription: NSLocalizedString("service", comment: "服务"))
+    }
+    
+    /// 获取高级版设置图标
+    func getPremiumSettingsIcon() -> NSImage? {
+        return NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: NSLocalizedString("premium", comment: "高级版"))
+    }
+    
+    /// 获取关于设置图标
+    func getAboutSettingsIcon() -> NSImage? {
+        return NSImage(systemSymbolName: "info.circle", accessibilityDescription: NSLocalizedString("about", comment: "关于"))
+    }
+    
     // MARK: - 通用图标获取方法
     
     /// 根据系统符号名称获取图标
