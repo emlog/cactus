@@ -33,14 +33,8 @@ class IconManager {
     }
     
     /// 获取翻译图标
-    /// 如果macOS版本低于14.4，使用替代图标
     func getTranslateIcon() -> NSImage? {
-        // 检查macOS版本是否支持translate图标（macOS 14.4+）
-        if #available(macOS 14.4, *) {
-            return NSImage(systemSymbolName: "translate", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
-        } else {
             return NSImage(systemSymbolName: "character.textbox", accessibilityDescription: NSLocalizedString("translate", comment: "选中翻译"))
-        }
     }
     
     /// 获取截图翻译图标
@@ -60,11 +54,7 @@ class IconManager {
     
     /// 获取生词本图标
     func getVocabularyIcon() -> NSImage? {
-        if #available(macOS 14.0, *) {
-            return NSImage(systemSymbolName: "book.pages", accessibilityDescription: NSLocalizedString("vocabulary", comment: "生词本"))
-        } else {
-            return NSImage(systemSymbolName: "text.book.closed.fill", accessibilityDescription: NSLocalizedString("vocabulary", comment: "生词本"))
-        }
+        return NSImage(systemSymbolName: "text.book.closed", accessibilityDescription: NSLocalizedString("vocabulary", comment: "生词本"))
     }
     
     /// 获取收藏夹图标
