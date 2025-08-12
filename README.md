@@ -1,13 +1,13 @@
 ## 仙人掌AI助手
 
 简体中文：仙人掌AI助手
-繁体中文：仙人掌AI助手
+繁体中文：仙人掌AI助手 - 翻譯&總結&字典&截圖翻譯
+日语：サボテンAIアシスタント - 翻訳＆要約＆辞書＆OCR
+韩语：선인장 AI 어시스턴트 - 번역&요약&사전&OCR
 英语：Cactus AI Assistant
 德语：Kaktus-KI-Assistent
 法语：Assistant IA Cactus
 西班牙语：Asistente IA Cactus
-日语：サボテンAIアシスタント
-韩语：선인장 AI 어시스턴트
 葡萄牙语：Assistente de IA Cacto
 印尼语：Asisten AI Kaktus
 俄语：Кактус ИИ Ассистент
