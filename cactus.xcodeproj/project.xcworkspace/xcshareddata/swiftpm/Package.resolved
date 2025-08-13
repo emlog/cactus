@@ -1,15 +1,6 @@
 {
-  "originHash" : "1ac6b087a999b4ca099b0046654b6b896b6aca9bf0365df17356db93785b25e0",
+  "originHash" : "7c2cd49a178a733ed353a5e16c1dfb249f16ededbca4aeb5eaf7c7de653e54d2",
   "pins" : [
-    {
-      "identity" : "alerttoast",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/elai950/AlertToast",
-      "state" : {
-        "revision" : "b39252eacd159904afd7d718bba0afabb87f2f2f",
-        "version" : "1.3.9"
-      }
-    },
     {
       "identity" : "keyboardshortcuts",
       "kind" : "remoteSourceControl",

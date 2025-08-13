@@ -10,7 +10,6 @@
 		F20BC9822DFC13A900BBA581 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = F20BC9812DFC13A900BBA581 /* MarkdownUI */; };
 		F20E8F3D2E3C96300085D838 /* PROMPT.md in Resources */ = {isa = PBXBuildFile; fileRef = F20E8F3C2E3C962B0085D838 /* PROMPT.md */; };
 		F21844C52D75DD6D0060A838 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = F21844C42D75DD6D0060A838 /* Settings */; };
-		F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = F21B8B942D74320E00A2B3DF /* AlertToast */; };
 		F2400C112DE729D000264BAD /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2400C0F2DE729D000264BAD /* CoreDataModel.xcdatamodeld */; };
 		F2881EA12DF57C0800A8901A /* DEV.md in Resources */ = {isa = PBXBuildFile; fileRef = F2881EA02DF57C0800A8901A /* DEV.md */; };
 		F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */; };
@@ -61,7 +60,6 @@
 				F2BCD9AC2DE9726B00C0AC97 /* StoreKit.framework in Frameworks */,
 				F20BC9822DFC13A900BBA581 /* MarkdownUI in Frameworks */,
 				F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */,
-				F21B8B952D74320E00A2B3DF /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +116,6 @@
 			);
 			name = cactus;
 			packageProductDependencies = (
-				F21B8B942D74320E00A2B3DF /* AlertToast */,
 				F21844C42D75DD6D0060A838 /* Settings */,
 				F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */,
 				F2B99DEF2D76F31E00BF5BA3 /* LaunchAtLogin */,
@@ -171,7 +168,6 @@
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */,
 				F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */,
 				F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				F2B99DEE2D76F31E00BF5BA3 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
@@ -447,14 +443,6 @@
 				minimumVersion = 3.1.1;
 			};
 		};
-		F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/elai950/AlertToast";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.9;
-			};
-		};
 		F2B99D992D760ED500BF5BA3 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -483,11 +471,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F21844C32D75DD6D0060A838 /* XCRemoteSwiftPackageReference "Settings" */;
 			productName = Settings;
-		};
-		F21B8B942D74320E00A2B3DF /* AlertToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F21B8B932D74320E00A2B3DF /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
 		};
 		F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;

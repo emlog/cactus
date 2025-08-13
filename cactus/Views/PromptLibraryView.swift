@@ -88,26 +88,32 @@ struct PromptLibraryView: View {
         .frame(width: 700, height: 520)
         .background(Color(NSColor.windowBackgroundColor))
         .overlay(
-            // 成功提示吐司
             VStack {
                 if showingSuccessToast {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                            .foregroundColor(.white)
                         Text(NSLocalizedString("add_ok", comment: "添加成功"))
-                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.white)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(Color(NSColor.controlBackgroundColor))
-                    .cornerRadius(8)
-                    .shadow(radius: 4)
-                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.accentColor)
+                            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    )
+                    .transition(
+                        .asymmetric(
+                            insertion: .move(edge: .top).combined(with: .opacity),
+                            removal: .move(edge: .top).combined(with: .opacity)
+                        )
+                    )
                     .animation(.easeInOut(duration: 0.3), value: showingSuccessToast)
                 }
                 Spacer()
             }
-                .padding(.top, 20)
+            .padding(.top, 20)
         )
         .sheet(item: $selectedPrompt) { prompt in
             PromptDetailView(prompt: prompt, onAddPrompt: onAddPrompt)
@@ -241,10 +247,8 @@ struct PromptLibraryView: View {
         withAnimation(.easeInOut(duration: 0.3)) {
             showingSuccessToast = true
         }
-        
-        // 2秒后隐藏提示
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.easeOut(duration: 0.3)) {
                 showingSuccessToast = false
             }
         }
@@ -309,5 +313,53 @@ struct PromptDetailView: View {
         }
         .frame(width: 500, height: 300)
         .background(Color(NSColor.controlBackgroundColor))
+        .overlay(
+            VStack {
+                if showingSuccessToast {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.white)
+                        Text(NSLocalizedString("add_ok", comment: "添加成功"))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.accentColor)
+                            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    )
+                    .transition(
+                        .asymmetric(
+                            insertion: .move(edge: .top).combined(with: .opacity),
+                            removal: .move(edge: .top).combined(with: .opacity)
+                        )
+                    )
+                    .animation(.easeInOut(duration: 0.3), value: showingSuccessToast)
+                }
+                Spacer()
+            }
+            .padding(.top, 20)
+        )
+    }
+    
+    /// 添加到自定义提示词并显示成功提示
+    private func addToCustomPrompts() {
+        onAddPrompt?(prompt.name, prompt.content)
+        
+        // 显示成功提示
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showingSuccessToast = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation(.easeOut(duration: 0.3)) {
+                showingSuccessToast = false
+            }
+        }
+        
+        // 延迟关闭详情页
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            dismiss()
+        }
     }
 }

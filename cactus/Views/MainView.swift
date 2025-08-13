@@ -1,7 +1,5 @@
-import AlertToast
 import SwiftUI
-import AVFoundation
-import KeyboardShortcuts
+import Foundation
 import MarkdownUI
 
 // Define loading type enum
@@ -23,10 +21,8 @@ struct MainView: View {
     // 对话历史状态
     @State private var chatHistory: [[String: String]] = []
     
-    // 吐司提示
-    @State private var showCompleteToast = false
-    @State private var showErrorToast = false
-    @State private var toastMessage = ""
+    // 吐司提示管理器
+    @StateObject private var toastManager = ToastManager()
     
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
@@ -303,12 +299,7 @@ struct MainView: View {
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
         .frame(minWidth: minTextWidth)
-        .toast(isPresenting: $showCompleteToast) {
-            AlertToast(displayMode: .hud, type: .systemImage("checkmark.circle", .green), title: toastMessage)
-        }
-        .toast(isPresenting: $showErrorToast) {
-            AlertToast(displayMode: .hud, type: .systemImage("xmark.circle", .red), title: toastMessage)
-        }
+        .toast(toastManager)
         .onAppear {
             // 监听窗口关闭通知
             NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil, queue: .main) { _ in
@@ -411,15 +402,13 @@ struct MainView: View {
     // 复制输入
     func copyWriting() {
         if contentModel.text.isEmpty {
-            toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_text_empty", comment: "没有可复制的内容"))
         } else {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(contentModel.text, forType: .string)
             // 恢复成功提示
-            toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
-            showCompleteToast = true
+            toastManager.showSuccess(NSLocalizedString("pop_copy_success", comment: "复制成功"))
             
             // 触发成功动画
             withAnimation {
@@ -441,8 +430,7 @@ struct MainView: View {
             pasteboard.clearContents()
             pasteboard.setString(promptText, forType: .string)
             // 恢复成功提示
-            toastMessage = NSLocalizedString("pop_copy_success", comment: "复制成功")
-            showCompleteToast = true
+            toastManager.showSuccess(NSLocalizedString("pop_copy_success", comment: "复制成功"))
             
             // 触发成功动画
             withAnimation {
@@ -455,8 +443,7 @@ struct MainView: View {
                 }
             }
         } else {
-            toastMessage = NSLocalizedString("pop_text_empty", comment: "没有可复制的内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_text_empty", comment: "没有可复制的内容"))
         }
     }
     
@@ -464,8 +451,7 @@ struct MainView: View {
     func translateText() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容"))
             return
         }
         
@@ -493,8 +479,7 @@ struct MainView: View {
     func summaryText() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容"))
             return
         }
         let systemMessage = Prompt.getSystemMessageForSummary()
@@ -506,13 +491,11 @@ struct MainView: View {
         let systemMessage: String
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容"))
             return
         }
         if Lang.isSentence(inputText) == true {
-            toastMessage = NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容"))
             return
         }
         if Lang.isTextInPreferredLanguage(inputText) {
@@ -527,8 +510,7 @@ struct MainView: View {
     func chatText() {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         if inputText.isEmpty {
-            toastMessage = NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容"))
             return
         }
         
@@ -573,8 +555,7 @@ struct MainView: View {
         let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
         let resultText = contentModel.resultText ?? ""
         guard !inputText.isEmpty else {
-            toastMessage = "favorite content is empty"
-            showErrorToast = true
+            toastManager.showError("favorite content is empty")
             return
         }
         
@@ -583,8 +564,7 @@ struct MainView: View {
             outputContent: resultText
         )
         
-        toastMessage = NSLocalizedString("pop_favorite_added", comment: "已添加到收藏夹")
-        showCompleteToast = true
+        toastManager.showSuccess(NSLocalizedString("pop_favorite_added", comment: "已添加到收藏夹"))
         
         // 触发收藏成功动画
         withAnimation {
@@ -601,8 +581,7 @@ struct MainView: View {
     // 发起AI请求
     private func performAIAction(systemMessage: String, actionType: AIActionType = .basic, loadingType: LoadingType) {
         guard (preferences.defaultProviders[preferences.selectedProvider]?.title) != nil else {
-            toastMessage = NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型")
-            showErrorToast = true
+            toastManager.showError(NSLocalizedString("pop_select_model_first", comment: "请先在设置中选择 AI 模型"))
             return
         }
         
@@ -689,8 +668,7 @@ struct MainView: View {
     }
     
     private func handleAIError(errorMessage: String, loadingType: LoadingType) {
-        self.toastMessage = errorMessage
-        self.showErrorToast = true
+        self.toastManager.showError(errorMessage)
         contentModel.resultText = errorMessage
         contentModel.isProcessing = false
         setLoadingState(loadingType, isLoading: false)
