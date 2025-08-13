@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "กรุณากรอกเนื้อหาข้อความ";
 "pop_copy_success" = "คัดลอกเรียบร้อยแล้ว";
 "pop_already_cleared" = "ล้างเนื้อหาแล้ว";
-"pop_favorite_added" = "เพิ่มในรายการโปรดแล้ว";
+"pop_favorite_added" = "เพิ่มสำเร็จแล้ว";
 "pop_select_model_first" = "กรุณาเลือกโมเดล AI ในการตั้งค่า";
 "help_translate" = "แปลข้อความ";
 "help_summary" = "สรุปเนื้อหา";

@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "请输入消息内容";
 "pop_copy_success" = "复制成功";
 "pop_already_cleared" = "已清空内容";
-"pop_favorite_added" = "已添加到收藏夹";
+"pop_favorite_added" = "收藏成功";
 "pop_select_model_first" = "请在偏好设置中选择AI模型";
 "help_translate" = "翻译文本";
 "help_summary" = "总结摘要";

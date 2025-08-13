@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "Inserisci il contenuto del messaggio";
 "pop_copy_success" = "Copiato con successo";
 "pop_already_cleared" = "Contenuto già cancellato";
-"pop_favorite_added" = "Aggiunto ai preferiti";
+"pop_favorite_added" = "Aggiunto con successo";
 "pop_select_model_first" = "Seleziona un modello AI nelle preferenze";
 "help_translate" = "Traduci testo";
 "help_summary" = "Riepilogo";

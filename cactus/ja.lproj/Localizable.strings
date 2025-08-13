@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "メッセージ内容を入力してください";
 "pop_copy_success" = "コピーしました";
 "pop_already_cleared" = "内容はすでにクリアされています";
-"pop_favorite_added" = "お気に入りに追加しました";
+"pop_favorite_added" = "追加に成功しました";
 "pop_select_model_first" = "環境設定でAIモデルを選択してください";
 "help_translate" = "テキスト翻訳";
 "help_summary" = "要約";

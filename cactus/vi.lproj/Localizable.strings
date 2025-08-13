@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "Vui lòng nhập nội dung tin nhắn";
 "pop_copy_success" = "Đã Sao Chép";
 "pop_already_cleared" = "Đã Xóa Văn Bản";
-"pop_favorite_added" = "Đã Thêm Vào Yêu Thích";
+"pop_favorite_added" = "Đã Thêm Thành Công";
 "pop_select_model_first" = "Vui lòng chọn mô hình AI trong Tùy Chọn trước";
 "help_translate" = "Dịch Văn Bản";
 "help_summary" = "Tóm Tắt Văn Bản";

@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "Введите содержимое сообщения";
 "pop_copy_success" = "Скопировано";
 "pop_already_cleared" = "Содержимое очищено";
-"pop_favorite_added" = "Добавлено в избранное";
+"pop_favorite_added" = "Успешно добавлено";
 "pop_select_model_first" = "Пожалуйста, выберите модель AI в настройках";
 "help_translate" = "Перевести текст";
 "help_summary" = "Сводка";

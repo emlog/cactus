@@ -94,7 +94,7 @@
 "pop_chat_text_empty" = "Please enter message content";
 "pop_copy_success" = "Copied";
 "pop_already_cleared" = "Text cleared.";
-"pop_favorite_added" = "Added to Favorites.";
+"pop_favorite_added" = "Favorited Successfully";
 "pop_select_model_first" = "Please select an AI model in Preferences first.";
 "help_translate" = "Translate Text";
 "help_summary" = "Summarize Text";
