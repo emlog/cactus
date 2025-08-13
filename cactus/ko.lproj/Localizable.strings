@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "단어를 선택한 후 단축키로 검색";
 "shortcut_ocr_translate" = "스크린샷 번역 단축키";
 "shortcut_ocr_translate_description" = "화면의 문자 영역을 캡처하고 자동으로 OCR 및 번역합니다";
+"shortcut_reset" = "재설정 단축키";
+"shortcut_reset_description" = "입력 및 출력 창 내용을 빠르게 재설정";
+"shortcut_copy_output" = "출력 복사 단축키";
+"shortcut_copy_output_description" = "출력 내용을 클립보드에 빠르게 복사";
 "default_main_function" = "기본 동작";
 "default_main_function_description" = "메인 창에서 Return 키를 눌렀을 때 실행되는 기본 작업";
 

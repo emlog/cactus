@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Seleciona uma palavra e pressiona o atalho para consultar";
 "shortcut_ocr_translate" = "Atalho para Tradução de Captura";
 "shortcut_ocr_translate_description" = "Seleciona uma área da tela para OCR e tradução automática";
+"shortcut_reset" = "Atalho para Redefinir";
+"shortcut_reset_description" = "Limpa rapidamente o conteúdo das janelas de entrada e saída";
+"shortcut_copy_output" = "Atalho para Copiar Saída";
+"shortcut_copy_output_description" = "Copia rapidamente o conteúdo da saída para a área de transferência";
 "default_main_function" = "Ação Padrão";
 "default_main_function_description" = "Ação padrão executada ao pressionar a tecla Return na janela principal";
 

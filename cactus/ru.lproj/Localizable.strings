@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Поиск значения выделенного слова";
 "shortcut_ocr_translate" = "Горячая клавиша OCR перевода";
 "shortcut_ocr_translate_description" = "Выделите область экрана, распознаем текст и переведем его";
+"shortcut_reset" = "Горячая клавиша сброса";
+"shortcut_reset_description" = "Быстро очистить содержимое окон ввода и вывода";
+"shortcut_copy_output" = "Горячая клавиша копирования вывода";
+"shortcut_copy_output_description" = "Быстро скопировать содержимое вывода в буфер обмена";
 "default_main_function" = "Операция по умолчанию";
 "default_main_function_description" = "Действие по умолчанию, выполняемое при нажатии клавиши Return в главном окне";
 

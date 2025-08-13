@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Chọn từ và nhấn phím tắt để tra cứu";
 "shortcut_ocr_translate" = "Phím Tắt Dịch Ảnh Chụp Màn Hình";
 "shortcut_ocr_translate_description" = "Chụp vùng văn bản trên màn hình, tự động nhận dạng OCR và dịch";
+"shortcut_reset" = "Phím Tắt Đặt Lại";
+"shortcut_reset_description" = "Nhanh chóng xóa nội dung trong cửa sổ nhập và xuất";
+"shortcut_copy_output" = "Phím Tắt Sao Chép Kết Quả";
+"shortcut_copy_output_description" = "Nhanh chóng sao chép nội dung kết quả vào clipboard";
 "default_main_function" = "Hành Động Mặc Định";
 "default_main_function_description" = "Hành động mặc định được thực hiện khi nhấn phím Return trong cửa sổ chính";
 

@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Markiertes Wort schnell nachschlagen";
 "shortcut_ocr_translate" = "Tastenkürzel: Screenshot‑Übersetzen";
 "shortcut_ocr_translate_description" = "Bildschirmbereich erfassen, OCR und Übersetzung";
+"shortcut_reset" = "Tastenkürzel: Zurücksetzen";
+"shortcut_reset_description" = "Eingabe- und Ausgabefenster schnell zurücksetzen";
+"shortcut_copy_output" = "Tastenkürzel: Ausgabe kopieren";
+"shortcut_copy_output_description" = "Ausgabeinhalt schnell in die Zwischenablage kopieren";
 "default_main_function" = "Standardaktion";
 "default_main_function_description" = "Standardaktion, die beim Drücken der Return-Taste im Hauptfenster ausgelöst wird";
 

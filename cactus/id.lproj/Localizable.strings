@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Pilih kata, lalu tekan pintasan untuk mencari arti";
 "shortcut_ocr_translate" = "Pintasan Terjemahan OCR";
 "shortcut_ocr_translate_description" = "Tangkap bagian teks di layar, lalu terjemahkan secara otomatis";
+"shortcut_reset" = "Pintasan Reset";
+"shortcut_reset_description" = "Hapus konten jendela input dan output dengan cepat";
+"shortcut_copy_output" = "Pintasan Salin Output";
+"shortcut_copy_output_description" = "Salin konten output ke clipboard dengan cepat";
 "default_main_function" = "Tindakan Default";
 "default_main_function_description" = "Tindakan default yang dijalankan saat menekan tombol Return di jendela utama";
 

@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "選取詞後按快捷鍵查詢";
 "shortcut_ocr_translate" = "截圖翻譯快捷鍵";
 "shortcut_ocr_translate_description" = "截取畫面上的文字區域，自動進行 OCR 辨識並翻譯。";
+"shortcut_reset" = "重設快捷鍵";
+"shortcut_reset_description" = "快速清除輸入和輸出視窗的內容";
+"shortcut_copy_output" = "複製輸出快捷鍵";
+"shortcut_copy_output_description" = "快速將輸出內容複製到剪貼簿";
 "default_main_function" = "預設動作";
 "default_main_function_description" = "在主視窗按下 Return 鍵時觸發的預設操作";
 

@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Cerca rapidamente la parola selezionata";
 "shortcut_ocr_translate" = "Scorciatoia OCR";
 "shortcut_ocr_translate_description" = "Cattura una porzione dello schermo, riconosce il testo e lo traduce";
+"shortcut_reset" = "Scorciatoia per ripristinare";
+"shortcut_reset_description" = "Ripristina rapidamente il contenuto delle finestre di input e output";
+"shortcut_copy_output" = "Scorciatoia per copiare l'output";
+"shortcut_copy_output_description" = "Copia rapidamente il contenuto dell'output negli appunti";
 "default_main_function" = "Azione predefinita";
 "default_main_function_description" = "Azione predefinita eseguita premendo il tasto Return nella finestra principale";
 

@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "ค้นหาความหมายของคำที่เลือก";
 "shortcut_ocr_translate" = "คีย์ลัดแปลจากหน้าจอ";
 "shortcut_ocr_translate_description" = "เลือกบริเวณหน้าจอเพื่อ OCR และแปลข้อความอัตโนมัติ";
+"shortcut_reset" = "คีย์ลัดรีเซ็ต";
+"shortcut_reset_description" = "ล้างเนื้อหาในหน้าต่างป้อนข้อมูลและแสดงผลอย่างรวดเร็ว";
+"shortcut_copy_output" = "คีย์ลัดคัดลอกผลลัพธ์";
+"shortcut_copy_output_description" = "คัดลอกเนื้อหาผลลัพธ์ไปยังคลิปบอร์ดอย่างรวดเร็ว";
 "default_main_function" = "การดำเนินการเริ่มต้น";
 "default_main_function_description" = "การดำเนินการเริ่มต้นที่เกิดขึ้นเมื่อกดปุ่ม Return ในหน้าต่างหลัก";
 

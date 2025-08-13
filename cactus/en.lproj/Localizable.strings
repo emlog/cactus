@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Select Word and Press Shortcut Key to Search";
 "shortcut_ocr_translate" = "Screenshot Translate Shortcut";
 "shortcut_ocr_translate_description" = "Capture a text area on the screen, then OCR and translate it automatically.";
+"shortcut_reset" = "Reset Shortcut";
+"shortcut_reset_description" = "Quickly reset input and output window content";
+"shortcut_copy_output" = "Copy Output Shortcut";
+"shortcut_copy_output_description" = "Quickly copy output content to clipboard";
 "default_main_function" = "Default Action";
 "default_main_function_description" = "Default action triggered when pressing Return in the main window";
 

@@ -28,7 +28,11 @@
 "shortcut_dict" = "Raccourci : Dictionnaire";
 "shortcut_dict_description" = "Consulter le mot sélectionné";
 "shortcut_ocr_translate" = "Raccourci : Traduire une capture";
-"shortcut_ocr_translate_description" = "Capturer une zone de l'écran, faire l’OCR et traduire";
+"shortcut_ocr_translate_description" = "Capturer une zone de l'écran, faire l'OCR et traduire";
+"shortcut_reset" = "Raccourci : Réinitialiser";
+"shortcut_reset_description" = "Effacer rapidement le contenu des fenêtres d'entrée et de sortie";
+"shortcut_copy_output" = "Raccourci : Copier la sortie";
+"shortcut_copy_output_description" = "Copier rapidement le contenu de la sortie dans le presse-papiers";
 "default_main_function" = "Action par défaut";
 "default_main_function_description" = "Action par défaut déclenchée en appuyant sur la touche Retour dans la fenêtre principale";
 

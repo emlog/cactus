@@ -29,6 +29,10 @@
 "shortcut_dict_description" = "Consulta la palabra seleccionada";
 "shortcut_ocr_translate" = "Atajo: Traducir captura";
 "shortcut_ocr_translate_description" = "Captura parte de la pantalla, realiza OCR y traduce";
+"shortcut_reset" = "Atajo: Restablecer";
+"shortcut_reset_description" = "Restablecer rápidamente el contenido de las ventanas de entrada y salida";
+"shortcut_copy_output" = "Atajo: Copiar salida";
+"shortcut_copy_output_description" = "Copiar rápidamente el contenido de salida al portapapeles";
 "default_main_function" = "Acción predeterminada";
 "default_main_function_description" = "Acción predeterminada que se activa al presionar la tecla Retorno en la ventana principal";
 
