@@ -306,10 +306,22 @@ struct MainView: View {
                 stopSpeaking()
                 self.chatHistory = []
             }
+            
+            // 监听复制成功通知
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowCopySuccessToast"), object: nil, queue: .main) { _ in
+                self.showCopySuccessToast()
+            }
+            
+            // 监听复制错误通知
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowCopyErrorToast"), object: nil, queue: .main) { _ in
+                self.showCopyErrorToast()
+            }
         }
         .onDisappear {
-            // 移除通知监听，防止内存泄漏
+            // 移除通知观察者
             NotificationCenter.default.removeObserver(self, name: NSWindow.willCloseNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopySuccessToast"), object: nil)
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopyErrorToast"), object: nil)
             stopSpeaking()
         }
     }
@@ -445,6 +457,27 @@ struct MainView: View {
         } else {
             toastManager.showError(NSLocalizedString("pop_text_empty", comment: "没有可复制的内容"))
         }
+    }
+    
+    /// 显示复制成功吐司提示（供WindowManager调用）
+    func showCopySuccessToast() {
+        toastManager.showSuccess(NSLocalizedString("pop_copy_success", comment: "复制成功"))
+        
+        // 触发成功动画
+        withAnimation {
+            showResultCopySuccess = true
+        }
+        // 1.5秒后恢复图标
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                showResultCopySuccess = false
+            }
+        }
+    }
+    
+    /// 显示复制错误吐司提示（供WindowManager调用）
+    func showCopyErrorToast() {
+        toastManager.showError(NSLocalizedString("pop_text_empty", comment: "没有可复制的内容"))
     }
     
     // 翻译

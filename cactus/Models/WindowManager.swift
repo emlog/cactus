@@ -623,6 +623,41 @@ class WindowManager: NSObject, NSWindowDelegate {
         pasteBoard.setString(textToCopy, forType: .string)
     }
     
+    /// 获取主视图的辅助方法
+    private func getMainView() -> MainView? {
+        guard let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
+            return nil
+        }
+        return hostingController.rootView
+    }
+    
+    /// 重置输入和输出窗口内容（快捷键专用）
+    func resetInputOutput() {
+        DispatchQueue.main.async {
+            if let mainView = self.getMainView() {
+                mainView.clearAll()
+            }
+        }
+    }
+    
+    /// 复制输出内容到剪贴板（快捷键专用）
+    func copyOutputToClipboard() {
+        DispatchQueue.main.async {
+            let contentModel = TextContentModel.shared
+            if let promptText = contentModel.resultText, !promptText.isEmpty {
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.setString(promptText, forType: .string)
+                
+                // 通过通知中心通知MainView显示成功吐司提示
+                NotificationCenter.default.post(name: NSNotification.Name("ShowCopySuccessToast"), object: nil)
+            } else {
+                // 通过通知中心通知MainView显示错误吐司提示
+                NotificationCenter.default.post(name: NSNotification.Name("ShowCopyErrorToast"), object: nil)
+            }
+        }
+    }
+    
     // MARK: - Pin Functionality
     @objc private func pinButtonTapped() {
         isMainWindowPinned.toggle()

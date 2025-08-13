@@ -50,6 +50,8 @@ class PreferencesModel: ObservableObject {
     static let aiShortcutMain = KeyboardShortcuts.Name("aiShortcutMain", default: .init(.c, modifiers: [.option]))
     static let aiShortcutDictionary = KeyboardShortcuts.Name("aiShortcutDictionary", default: .init(.z, modifiers: [.option]))
     static let aiShortcutScreenshotTranslate = KeyboardShortcuts.Name("aiShortcutScreenshotTranslate", default: .init(.a, modifiers: [.option]))
+    static let aiShortcutReset = KeyboardShortcuts.Name("aiShortcutReset", default: .init(.delete, modifiers: [.option]))
+    static let aiShortcutCopyOutput = KeyboardShortcuts.Name("aiShortcutCopyOutput", default: .init(.r, modifiers: [.option]))
     
     // 语言选项
     let availableLanguages = [

@@ -71,6 +71,32 @@ struct GeneralSettingsPane: View {
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
+                    
+                    Divider()
+                        .padding(.horizontal, 10)
+                    
+                    // 重置快捷键
+                    SettingRow(
+                        label: NSLocalizedString("shortcut_reset", comment: "重置快捷键"),
+                        description: NSLocalizedString("shortcut_reset_description", comment: "快速重置输入和输出窗口内容")
+                    ) {
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutReset)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    
+                    Divider()
+                        .padding(.horizontal, 10)
+                    
+                    // 复制输出快捷键
+                    SettingRow(
+                        label: NSLocalizedString("shortcut_copy_output", comment: "复制输出快捷键"),
+                        description: NSLocalizedString("shortcut_copy_output_description", comment: "快速复制输出内容到剪贴板")
+                    ) {
+                        KeyboardShortcuts.Recorder(for: PreferencesModel.aiShortcutCopyOutput)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)

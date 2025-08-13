@@ -61,10 +61,34 @@ class ShortcutManager {
                 self?.openMain(action: .screenshotTranslate)
             }
         }
+        
+        // 注册重置快捷键
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutReset) { [weak self] in
+            DispatchQueue.main.async {
+                self?.resetInputOutput()
+            }
+        }
+        
+        // 注册复制输出快捷键
+        KeyboardShortcuts.onKeyDown(for: PreferencesModel.aiShortcutCopyOutput) { [weak self] in
+            DispatchQueue.main.async {
+                self?.copyOutput()
+            }
+        }
     }
     
     // 主窗口 - 保留此方法因为快捷键管理器需要使用
     private func openMain(action: ActionType = .translate) {
         windowManager?.openMain(action: action)
+    }
+    
+    /// 重置输入和输出窗口内容
+    private func resetInputOutput() {
+        windowManager?.resetInputOutput()
+    }
+    
+    /// 复制输出内容到剪贴板
+    private func copyOutput() {
+        windowManager?.copyOutputToClipboard()
     }
 }
