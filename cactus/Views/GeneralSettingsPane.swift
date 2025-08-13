@@ -80,9 +80,6 @@ struct GeneralSettingsPane: View {
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
-                    
-                    Divider()
-                        .padding(.horizontal, 10)
                 }
                 .background(Color(NSColor.gridColor))
                 .cornerRadius(12)
