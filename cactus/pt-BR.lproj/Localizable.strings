@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "Sem conteúdo para copiar";
-"pop_translate_text_empty" = "Insira o texto a ser traduzido";
-"pop_summary_text_empty" = "Insira o texto para resumo";
-"pop_dict_text_empty" = "Insira uma palavra para consulta";
-"pop_chat_text_empty" = "Insira uma pergunta";
+"pop_translate_text_empty" = "Insira o conteúdo a ser traduzido";
+"pop_summary_text_empty" = "Insira o conteúdo para resumir";
+"pop_dict_text_empty" = "Insira a palavra para consultar";
+"pop_chat_text_empty" = "Insira o conteúdo da mensagem";
 "pop_copy_success" = "Copiado com sucesso";
 "pop_already_cleared" = "Conteúdo já limpo";
 "pop_favorite_added" = "Adicionado aos favoritos";

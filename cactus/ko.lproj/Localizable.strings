@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "복사할 수 있는 내용이 없습니다";
-"pop_translate_text_empty" = "번역할 텍스트를 입력하세요";
+"pop_translate_text_empty" = "번역할 내용을 입력하세요";
 "pop_summary_text_empty" = "요약할 내용을 입력하세요";
-"pop_dict_text_empty" = "단어 하나를 입력해 주세요";
-"pop_chat_text_empty" = "질문할 내용을 입력하세요";
+"pop_dict_text_empty" = "검색할 단어를 입력하세요";
+"pop_chat_text_empty" = "메시지 내용을 입력하세요";
 "pop_copy_success" = "복사 완료";
 "pop_already_cleared" = "이미 지워진 내용입니다";
 "pop_favorite_added" = "즐겨찾기에 추가되었습니다";

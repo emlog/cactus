@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "No text available to copy.";
-"pop_translate_text_empty" = "Please enter text to translate.";
-"pop_summary_text_empty" = "Please enter text to summarize.";
-"pop_dict_text_empty" = "Please enter a single word to look up";
-"pop_chat_text_empty" = "Enter your question.";
+"pop_translate_text_empty" = "Please enter content to translate";
+"pop_summary_text_empty" = "Please enter content to summarize";
+"pop_dict_text_empty" = "Please enter a word to look up";
+"pop_chat_text_empty" = "Please enter message content";
 "pop_copy_success" = "Copied";
 "pop_already_cleared" = "Text cleared.";
 "pop_favorite_added" = "Added to Favorites.";

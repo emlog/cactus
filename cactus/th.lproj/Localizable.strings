@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "ไม่มีเนื้อหาให้คัดลอก";
-"pop_translate_text_empty" = "กรุณากรอกข้อความที่ต้องการแปล";
+"pop_translate_text_empty" = "กรุณากรอกเนื้อหาที่ต้องการแปล";
 "pop_summary_text_empty" = "กรุณากรอกเนื้อหาที่ต้องการสรุป";
 "pop_dict_text_empty" = "กรุณากรอกคำศัพท์ที่ต้องการค้นหา";
-"pop_chat_text_empty" = "กรุณากรอกคำถาม";
+"pop_chat_text_empty" = "กรุณากรอกเนื้อหาข้อความ";
 "pop_copy_success" = "คัดลอกเรียบร้อยแล้ว";
 "pop_already_cleared" = "ล้างเนื้อหาแล้ว";
 "pop_favorite_added" = "เพิ่มในรายการโปรดแล้ว";

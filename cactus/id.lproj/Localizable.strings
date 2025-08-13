@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "Tidak ada konten untuk disalin";
-"pop_translate_text_empty" = "Masukkan teks untuk diterjemahkan";
-"pop_summary_text_empty" = "Masukkan teks untuk diringkas";
-"pop_dict_text_empty" = "Masukkan satu kata untuk pencarian kamus";
-"pop_chat_text_empty" = "Masukkan pertanyaan Anda";
+"pop_translate_text_empty" = "Masukkan konten untuk diterjemahkan";
+"pop_summary_text_empty" = "Masukkan konten untuk diringkas";
+"pop_dict_text_empty" = "Masukkan kata untuk dicari";
+"pop_chat_text_empty" = "Masukkan konten pesan";
 "pop_copy_success" = "Disalin berhasil";
 "pop_already_cleared" = "Konten telah dibersihkan";
 "pop_favorite_added" = "Ditambahkan ke Favorit";

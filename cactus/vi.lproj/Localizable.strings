@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "Không có văn bản để sao chép";
-"pop_translate_text_empty" = "Vui lòng nhập văn bản để dịch";
-"pop_summary_text_empty" = "Vui lòng nhập văn bản để tóm tắt";
-"pop_dict_text_empty" = "Vui lòng nhập một từ để tra cứu";
-"pop_chat_text_empty" = "Nhập câu hỏi của bạn";
+"pop_translate_text_empty" = "Vui lòng nhập nội dung để dịch";
+"pop_summary_text_empty" = "Vui lòng nhập nội dung để tóm tắt";
+"pop_dict_text_empty" = "Vui lòng nhập từ để tra cứu";
+"pop_chat_text_empty" = "Vui lòng nhập nội dung tin nhắn";
 "pop_copy_success" = "Đã Sao Chép";
 "pop_already_cleared" = "Đã Xóa Văn Bản";
 "pop_favorite_added" = "Đã Thêm Vào Yêu Thích";

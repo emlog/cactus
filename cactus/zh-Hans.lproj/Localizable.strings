@@ -88,10 +88,10 @@
 
 // main
 "pop_text_empty" = "没有可复制的内容";
-"pop_translate_text_empty" = "请输入要翻译的文字";
+"pop_translate_text_empty" = "请输入要翻译的内容";
 "pop_summary_text_empty" = "请输入要总结的内容";
-"pop_dict_text_empty" = "请输入单个字词查询";
-"pop_chat_text_empty" = "请输入要解答的问题";
+"pop_dict_text_empty" = "请输入要查询的字词";
+"pop_chat_text_empty" = "请输入消息内容";
 "pop_copy_success" = "复制成功";
 "pop_already_cleared" = "已清空内容";
 "pop_favorite_added" = "已添加到收藏夹";
