@@ -547,10 +547,10 @@ struct MainView: View {
             return
         }
         
-        // 检查是否有选中的自定义提示词 - 直接使用 preferences 读取
+        // 检查是否有选中的自定义提示词 - 使用UUID读取
         var systemMessage: String
-        if let selectedPromptName = preferences.selectedCustomPrompt,
-           let customPromptContent = preferences.getCustomPromptContent(by: selectedPromptName) {
+        if let selectedPromptId = preferences.selectedCustomPrompt,
+           let customPromptContent = preferences.getCustomPromptContent(by: selectedPromptId) {
             systemMessage = customPromptContent
         } else {
             systemMessage = Prompt.getSystemMessageForChat()

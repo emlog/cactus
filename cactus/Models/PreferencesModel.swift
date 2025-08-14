@@ -426,11 +426,11 @@ class PreferencesModel: ObservableObject {
         }
     }
     
-    // 选中的自定义提示词
-    @Published var selectedCustomPrompt: String? {
+    // 选中的自定义提示词 - 使用UUID作为唯一标识符
+    @Published var selectedCustomPrompt: UUID? {
         didSet {
             if let selectedCustomPrompt = selectedCustomPrompt {
-                UserDefaults.standard.set(selectedCustomPrompt, forKey: "selectedCustomPrompt")
+                UserDefaults.standard.set(selectedCustomPrompt.uuidString, forKey: "selectedCustomPrompt")
             } else {
                 UserDefaults.standard.removeObject(forKey: "selectedCustomPrompt")
             }
@@ -446,8 +446,12 @@ class PreferencesModel: ObservableObject {
         self.preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? defaultLanguage
         self.commonForeignLanguage = UserDefaults.standard.string(forKey: "commonForeignLanguage") ?? "en"
         
-        // 添加这行来初始化 selectedCustomPrompt
-        self.selectedCustomPrompt = UserDefaults.standard.string(forKey: "selectedCustomPrompt")
+        // 添加这行来初始化 selectedCustomPrompt - 从字符串转换为UUID
+        if let uuidString = UserDefaults.standard.string(forKey: "selectedCustomPrompt") {
+            self.selectedCustomPrompt = UUID(uuidString: uuidString)
+        } else {
+            self.selectedCustomPrompt = nil
+        }
         self.openaiApiKey = UserDefaults.standard.string(forKey: "openaiApiKey") ?? ""
         self.selectedOpenAIModel = UserDefaults.standard.string(forKey: "selectedOpenAIModel") ?? ""
         
@@ -639,9 +643,8 @@ class PreferencesModel: ObservableObject {
     /// 删除自定义提示词
     func deleteCustomPrompt(id: UUID) {
         // 检查要删除的提示词是否是当前选中的提示词
-        if let selectedPromptName = selectedCustomPrompt,
-           let promptToDelete = customPrompts.first(where: { $0.id == id }),
-           promptToDelete.name == selectedPromptName {
+        if let selectedPromptId = selectedCustomPrompt,
+           selectedPromptId == id {
             // 如果删除的是当前选中的提示词，将selectedCustomPrompt设置为空
             selectedCustomPrompt = nil
         }
@@ -652,6 +655,16 @@ class PreferencesModel: ObservableObject {
     /// 根据名称获取提示词内容
     func getCustomPromptContent(by name: String) -> String? {
         return customPrompts.first { $0.name == name }?.content
+    }
+    
+    /// 根据UUID获取提示词内容
+    func getCustomPromptContent(by id: UUID) -> String? {
+        return customPrompts.first { $0.id == id }?.content
+    }
+    
+    /// 根据UUID获取提示词对象
+    func getCustomPrompt(by id: UUID) -> CustomPrompt? {
+        return customPrompts.first { $0.id == id }
     }
     
     // MARK: - 自定义AI服务管理方法
