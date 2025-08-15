@@ -10,16 +10,35 @@ enum LoadingType {
     case chat
 }
 
+// 对话消息数据结构
+struct ChatMessage: Identifiable {
+    let id = UUID()
+    let content: String
+    let isUser: Bool
+    let timestamp: Date
+    
+    init(content: String, isUser: Bool) {
+        self.content = content
+        self.isUser = isUser
+        self.timestamp = Date()
+    }
+}
+
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var preferences = PreferencesModel.shared
     @ObservedObject private var vocabularyManager = VocabularyManager.shared
+    @ObservedObject private var favoriteManager = FavoriteManager.shared
+    @ObservedObject private var historyManager = HistoryManager.shared
     @State private var Ai = AiService.shared
     @State private var Lang = LangService.shared
     @State private var Prompt = promptService.shared
     
-    // 对话历史状态
+    // 对话历史状态（用于API调用）
     @State private var chatHistory: [[String: String]] = []
+    
+    // 对话消息流（用于UI显示）
+    @State private var chatMessages: [ChatMessage] = []
     
     // 吐司提示管理器
     @StateObject private var toastManager = ToastManager()
@@ -58,6 +77,215 @@ struct MainView: View {
     // 将计算属性移到这里（MainView结构体的顶层）
     private var customPromptButtonView: some View {
         CustomPromptButton(selectedPrompt: $preferences.selectedCustomPrompt)
+    }
+    
+    // MARK: - 视图组件
+    
+    /// 对话流视图组件
+    private var chatFlowView: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 12) {
+                    // 正常顺序显示消息，最新消息在底部
+                    ForEach(chatMessages) { message in
+                        ChatMessageView(message: message)
+                            .id(message.id)
+                    }
+                    
+                    // 显示正在输入的AI回复（如果有）
+                    if contentModel.isChatting, let resultText = contentModel.resultText, !resultText.isEmpty {
+                        ChatMessageView(message: ChatMessage(content: resultText, isUser: false))
+                            .id("typing-ai-message")
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 10)
+            }
+            .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight)
+            .background(Color(.textBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color(.separatorColor), lineWidth: 1)
+            )
+            .onChange(of: chatMessages.count) { _ in
+                scrollToBottom(proxy: proxy)
+                updateChatFlowHeight()
+            }
+            // 监听AI回复内容变化，实现实时滚动
+            .onChange(of: contentModel.resultText) { _ in
+                if contentModel.isChatting {
+                    scrollToBottom(proxy: proxy)
+                    updateChatFlowHeight()
+                }
+            }
+        }
+    }
+    
+    // 滚动到底部的辅助方法
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        if contentModel.isChatting {
+            // AI正在回复时，滚动到正在输入的消息
+            withAnimation(.easeOut(duration: 0.2)) {
+                proxy.scrollTo("typing-ai-message", anchor: .bottom)
+            }
+        } else if let lastMessage = chatMessages.last {
+            // 正常情况下滚动到最后一条消息
+            withAnimation(.easeOut(duration: 0.3)) {
+                proxy.scrollTo(lastMessage.id, anchor: .bottom)
+            }
+        }
+    }
+    
+    // 更新聊天流高度的辅助方法
+    private func updateChatFlowHeight() {
+        let totalHeight = calculateChatFlowHeight()
+        resultTextHeight = min(max(totalHeight, minResultTextHeight), 600)
+        NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+    }
+    
+    /// 单个聊天消息视图组件
+    private struct ChatMessageView: View {
+        let message: ChatMessage
+        
+        var body: some View {
+            HStack(alignment: .top, spacing: 0) {
+                if message.isUser {
+                    // 用户消息：右对齐
+                    Spacer()
+                    
+                    VStack(alignment: .trailing, spacing: 4) {
+                        // 发送者标识
+                        Text("用户")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        // 消息内容
+                        Text(message.content)
+                            .textSelection(.enabled)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Color.blue.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        
+                        // 时间戳
+                        Text(formatTimestamp(message.timestamp))
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    // 用户头像
+                    Image(systemName: "person.circle.fill")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 16))
+                        .frame(width: 20, height: 20)
+                        .padding(.leading, 8)
+                } else {
+                    // AI消息：左对齐
+                    // AI图标
+                    Image(systemName: "brain.head.profile")
+                        .foregroundColor(.green)
+                        .font(.system(size: 16))
+                        .frame(width: 20, height: 20)
+                        .padding(.trailing, 8)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        // 发送者标识
+                        Text("AI助手")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        // 消息内容
+                        Markdown(message.content)
+                            .markdownTheme(.cactusMD)
+                            .textSelection(.enabled)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Color.green.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        
+                        // 时间戳
+                        Text(formatTimestamp(message.timestamp))
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                }
+            }
+            .padding(.vertical, 4)
+        }
+        
+        /// 格式化时间戳
+        private func formatTimestamp(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            return formatter.string(from: date)
+        }
+    }
+    
+    /// 传统结果显示视图（用于翻译、总结、词典等功能）
+    private func traditionalResultView(resultText: String) -> some View {
+        ZStack(alignment: .bottomTrailing) {
+            ScrollView {
+                Markdown(resultText)
+                    .markdownTheme(.cactusMD)
+                    .textSelection(.enabled)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 10)
+                    .padding(.bottom, 30) // 增加底部内边距，为按钮留出空间
+            }
+            .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight, alignment: .leading)
+            .background(Color(.textBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color(.separatorColor), lineWidth: 1)
+            )
+            .onChange(of: contentModel.resultText, perform: { value in
+                // 动态调整结果文本高度
+                if let text = value, !text.isEmpty {
+                    // 计算文本高度并设置
+                    resultTextHeight = calculateTextHeight(text: text, width: minTextWidth)
+                } else {
+                    resultTextHeight = minResultTextHeight // 如果结果为空，重置为最小高度
+                }
+                // 通知窗口调整大小
+                NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
+            })
+            
+            HStack(spacing: 8) {
+                Button(action: {
+                    speakText(contentModel.resultText ?? "")
+                }) {
+                    Image(systemName: "speaker.wave.2")
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(isSpeakingResult ? .red : .secondary)
+                }
+                .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                .help(NSLocalizedString("help_speak", comment: "朗读"))
+                .disabled(contentModel.resultText?.isEmpty ?? true)
+                
+                Button(action: {
+                    copyResp()// 复制输出
+                }) {
+                    Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
+                }
+                .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                .help(NSLocalizedString("help_copy", comment: "复制"))
+                .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
+                .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
+            }
+            .padding(.horizontal, 15)
+            .padding(.vertical, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Color(.controlBackgroundColor).opacity(0.9))
+            )
+        }
+        .transition(.opacity.combined(with: .scale)) // ZStack自身的过渡动画保持不变
     }
     
     var body: some View {
@@ -232,68 +460,13 @@ struct MainView: View {
             }
             
             Section() {
-                // 当 resultText 不为 nil 且 不为空 或 窗口已展开时，显示结果区域
-                if let resultText = contentModel.resultText, !resultText.isEmpty || isResultViewExpanded {
-                    ZStack(alignment: .bottomTrailing) {
-                        ScrollView {
-                            Markdown(resultText)
-                                .markdownTheme(.cactusMD)
-                                .textSelection(.enabled)
-                                .padding(.horizontal, 12)
-                                .padding(.top, 10)
-                                .padding(.bottom, 30) // 增加底部内边距，为按钮留出空间
-                        }
-                        .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight, alignment: .leading)
-                        .background(Color(.textBackgroundColor))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(.separatorColor), lineWidth: 1)
-                        )
-                        .onChange(of: contentModel.resultText, perform: { value in
-                            // 当结果文本变化时，计算新的高度
-                            if let text = value, !text.isEmpty {
-                                // 使用 calculateTextHeight 计算结果区域高度
-                                resultTextHeight = calculateTextHeight(text: text, width: minTextWidth)
-                            } else {
-                                resultTextHeight = minResultTextHeight // 如果结果为空，重置为最小高度
-                            }
-                            // 通知窗口调整大小
-                            NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-                        })
-                        
-                        HStack(spacing: 8) {
-                            Button(action: {
-                                speakText(contentModel.resultText ?? "")
-                            }) {
-                                Image(systemName: "speaker.wave.2")
-                                    .frame(width: 15, height: 15)
-                                    .foregroundColor(isSpeakingResult ? .red : .secondary)
-                            }
-                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                            .help(NSLocalizedString("help_speak", comment: "朗读"))
-                            .disabled(contentModel.resultText?.isEmpty ?? true)
-                            
-                            Button(action: {
-                                copyResp()// 复制输出
-                            }) {
-                                Image(systemName: showResultCopySuccess ? "checkmark" : "square.on.square")
-                                    .frame(width: 15, height: 15)
-                                    .foregroundColor(showResultCopySuccess ? .green : .secondary) // 成功时绿色
-                            }
-                            .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
-                            .help(NSLocalizedString("help_copy", comment: "复制"))
-                            .animation(.easeInOut, value: showResultCopySuccess) // 添加动画效果
-                            .disabled(contentModel.resultText?.isEmpty ?? true) // 结果为空时禁用
-                        }
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color(.controlBackgroundColor).opacity(0.9))
-                        )
-                    }
-                    .transition(.opacity.combined(with: .scale)) // ZStack自身的过渡动画保持不变
+                // 对话流显示区域 - 仅在聊天模式下显示
+                if !chatMessages.isEmpty {
+                    chatFlowView
+                }
+                // 其他功能的结果显示区域（翻译、总结、词典）
+                else if let resultText = contentModel.resultText, !resultText.isEmpty || isResultViewExpanded {
+                    traditionalResultView(resultText: resultText)
                 }
             }
         }
@@ -305,6 +478,7 @@ struct MainView: View {
             NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil, queue: .main) { _ in
                 stopSpeaking()
                 self.chatHistory = []
+                self.chatMessages = [] // 清空对话消息流
             }
             
             // 监听复制成功通知
@@ -324,6 +498,22 @@ struct MainView: View {
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopyErrorToast"), object: nil)
             stopSpeaking()
         }
+    }
+    
+    // MARK: - 辅助函数
+    
+    /// 计算对话流高度
+    private func calculateChatFlowHeight() -> CGFloat {
+        let messageCount = chatMessages.count
+        if messageCount == 0 {
+            return minResultTextHeight
+        }
+        
+        // 估算每条消息的平均高度（包括头像、内容、时间戳和间距）
+        let averageMessageHeight: CGFloat = 80
+        let totalHeight = CGFloat(messageCount) * averageMessageHeight + 40 // 40为上下padding
+        
+        return min(max(totalHeight, minResultTextHeight), 600) // 限制最大高度为600
     }
     
     // 保留 calculateTextHeight 方法，用于计算结果区域的高度
@@ -399,6 +589,8 @@ struct MainView: View {
             self.contentModel.resultText = nil
             // 清空对话历史
             self.chatHistory = []
+            // 清空对话消息流
+            self.chatMessages = []
             // 重置输入和输出区域的高度为默认值
             self.inputTextHeight = minInputTextHeight
             self.resultTextHeight = minResultTextHeight
@@ -482,11 +674,14 @@ struct MainView: View {
     
     // 翻译
     func translateText() {
-        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        let inputText = contentModel.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if inputText.isEmpty {
             toastManager.showError(NSLocalizedString("pop_translate_text_empty", comment: "请先输入内容"))
             return
         }
+        
+        // 清空对话历史和消息流（非聊天功能）
+        clearChatHistory()
         
         let systemMessage: String
         
@@ -510,11 +705,15 @@ struct MainView: View {
     
     // 总结
     func summaryText() {
-        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        let inputText = contentModel.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if inputText.isEmpty {
             toastManager.showError(NSLocalizedString("pop_summary_text_empty", comment: "请先输入内容"))
             return
         }
+        
+        // 清空对话历史和消息流（非聊天功能）
+        clearChatHistory()
+        
         let systemMessage = Prompt.getSystemMessageForSummary()
         performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .summary)
     }
@@ -522,7 +721,7 @@ struct MainView: View {
     // 字典（主要查询母语词语）
     func dictionaryText() {
         let systemMessage: String
-        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        let inputText = contentModel.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if inputText.isEmpty {
             toastManager.showError(NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容"))
             return
@@ -531,6 +730,10 @@ struct MainView: View {
             toastManager.showError(NSLocalizedString("pop_dict_text_empty", comment: "请先输入内容"))
             return
         }
+        
+        // 清空对话历史和消息流（非聊天功能）
+        clearChatHistory()
+        
         if Lang.isTextInPreferredLanguage(inputText) {
             systemMessage = Prompt.getSystemMessageForDict() // 查母语字典
         } else {
@@ -541,7 +744,7 @@ struct MainView: View {
     
     // 对话
     func chatText() {
-        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        let inputText = contentModel.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if inputText.isEmpty {
             toastManager.showError(NSLocalizedString("pop_chat_text_empty", comment: "请先输入内容"))
             return
@@ -559,8 +762,16 @@ struct MainView: View {
         // 添加当前用户输入到历史
         chatHistory.append(["role": "user", "content": inputText])
         
+        // 添加用户消息到对话流中
+        let userMessage = ChatMessage(content: inputText, isUser: true)
+        chatMessages.append(userMessage)
+        
         // 保存当前输入文本用于历史记录
         let currentInput = contentModel.text
+        
+        // 清空输入框
+        contentModel.text = ""
+        
         performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: chatHistory, originalInput: currentInput), loadingType: .chat)
     }
     
@@ -585,7 +796,7 @@ struct MainView: View {
     
     // 添加收藏
     func addToFavorites() {
-        let inputText = contentModel.text.trimmingCharacters(in: .whitespaces)
+        let inputText = contentModel.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let resultText = contentModel.resultText ?? ""
         guard !inputText.isEmpty else {
             toastManager.showError("favorite content is empty")
@@ -697,6 +908,10 @@ struct MainView: View {
                 outputContent: resultText
             )
             self.chatHistory.append(["role": "assistant", "content": resultText])
+            
+            // 添加AI回复到对话流中
+            let aiMessage = ChatMessage(content: resultText, isUser: false)
+            chatMessages.append(aiMessage)
         }
     }
     
@@ -735,5 +950,11 @@ struct MainView: View {
             self.contentModel.isDictionaryLookup = false
             self.contentModel.isChatting = false
         }
+    }
+    
+    // 清空对话历史和消息流的辅助方法
+    private func clearChatHistory() {
+        chatHistory = []
+        chatMessages = []
     }
 }
