@@ -74,6 +74,9 @@ struct ChatFlowView: View {
     // MARK: - 观察对象
     @ObservedObject private var contentModel = TextContentModel.shared
     
+    // MARK: - 配置属性
+    let maxHeight: CGFloat
+    
     // MARK: - 常量
     private let minResultTextHeight: CGFloat = 100
     
@@ -84,12 +87,15 @@ struct ChatFlowView: View {
     /// - Parameters:
     ///   - chatMessages: 聊天消息数组的绑定
     ///   - resultTextHeight: 结果文本高度的绑定
+    ///   - maxHeight: 最大高度限制
     ///   - onHeightUpdate: 高度更新时的回调闭包
     init(chatMessages: Binding<[ChatMessage]>,
          resultTextHeight: Binding<CGFloat>,
+         maxHeight: CGFloat = 600,
          onHeightUpdate: @escaping () -> Void) {
         self._chatMessages = chatMessages
         self._resultTextHeight = resultTextHeight
+        self.maxHeight = maxHeight
         self.onHeightUpdate = onHeightUpdate
     }
     
@@ -123,12 +129,22 @@ struct ChatFlowView: View {
                 scrollToBottom(proxy: proxy)
                 updateChatFlowHeight()
             }
-            // 监听AI回复内容变化，实现实时滚动
+            // 监听AI回复内容变化，实现实时滚动和高度调整
             .onChange(of: contentModel.resultText) { _ in
                 if contentModel.isChatting {
                     scrollToBottom(proxy: proxy)
                     updateChatFlowHeight()
                 }
+            }
+            // 监听聊天状态变化，确保在聊天开始和结束时调整高度
+            .onChange(of: contentModel.isChatting) { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    updateChatFlowHeight()
+                }
+            }
+            // 在视图出现时立即调整高度
+            .onAppear {
+                updateChatFlowHeight()
             }
         }
     }
@@ -161,15 +177,59 @@ struct ChatFlowView: View {
     /// 计算聊天流高度
     /// - Returns: 计算得出的高度值
     private func calculateChatFlowHeight() -> CGFloat {
-        let messageCount = chatMessages.count
-        if messageCount == 0 {
-            return minResultTextHeight
+        var totalHeight: CGFloat = 40 // 上下padding
+        
+        // 计算已有消息的高度
+        for message in chatMessages {
+            let messageHeight = calculateMessageHeight(content: message.content, isUser: message.isUser)
+            totalHeight += messageHeight + 16 // 16为消息间距(spacing: 12 + padding: 4)
         }
         
-        // 估算每条消息的平均高度（包括头像、内容、时间戳和间距）
-        let averageMessageHeight: CGFloat = 80
-        let totalHeight = CGFloat(messageCount) * averageMessageHeight + 40 // 40为上下padding
+        // 如果AI正在回复，计算当前回复内容的高度
+        if contentModel.isChatting, let resultText = contentModel.resultText, !resultText.isEmpty {
+            let typingMessageHeight = calculateMessageHeight(content: resultText, isUser: false)
+            totalHeight += typingMessageHeight + 16
+        }
         
-        return min(max(totalHeight, minResultTextHeight), 600) // 限制最大高度为600
+        // 确保至少有最小高度，并限制最大高度
+        return min(max(totalHeight, minResultTextHeight), maxHeight)
+    }
+    
+    /// 计算单条消息的高度
+    /// - Parameters:
+    ///   - content: 消息内容
+    ///   - isUser: 是否为用户消息
+    /// - Returns: 消息高度
+    private func calculateMessageHeight(content: String, isUser: Bool) -> CGFloat {
+        let font = NSFont.systemFont(ofSize: 15)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .paragraphStyle: paragraphStyle
+        ]
+        
+        // 计算可用宽度（考虑消息气泡的padding和边距）
+        let availableWidth: CGFloat = 600 - 24 - 24 // 总宽度 - 水平padding - 消息内边距
+        
+        let textStorage = NSTextStorage(string: content, attributes: attributes)
+        let textContainer = NSTextContainer(containerSize: NSSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude))
+        textContainer.lineFragmentPadding = 0
+        
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        layoutManager.ensureLayout(for: textContainer)
+        let textHeight = layoutManager.usedRect(for: textContainer).height
+        
+        // 添加消息气泡的内边距和基础高度
+        let messageHeight = textHeight + 16 + 8 // 16为垂直padding，8为额外空间
+        
+        // 为AI消息添加图标高度（如果需要）
+        let minMessageHeight: CGFloat = isUser ? 40 : 48 // AI消息需要更多空间放图标
+        
+        return max(messageHeight, minMessageHeight)
     }
 }

@@ -70,6 +70,7 @@ struct MainView: View {
         ChatFlowView(
             chatMessages: $chatMessages,
             resultTextHeight: $resultTextHeight,
+            maxHeight: dynamicMaxResultHeight,
             onHeightUpdate: {
                 NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
             }
