@@ -65,8 +65,6 @@ struct MainView: View {
         CustomPromptButton(selectedPrompt: $preferences.selectedCustomPrompt)
     }
     
-    // MARK: - 视图组件
-    
     /// 对话流视图组件
     private var chatFlowView: some View {
         ChatFlowView(
@@ -77,8 +75,6 @@ struct MainView: View {
             }
         )
     }
-    
-    
     
     /// 传统结果显示视图（用于翻译、总结、词典等功能）
     private func traditionalResultView(resultText: String) -> some View {
