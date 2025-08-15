@@ -10,20 +10,6 @@ enum LoadingType {
     case chat
 }
 
-// 对话消息数据结构
-struct ChatMessage: Identifiable {
-    let id = UUID()
-    let content: String
-    let isUser: Bool
-    let timestamp: Date
-    
-    init(content: String, isUser: Bool) {
-        self.content = content
-        self.isUser = isUser
-        self.timestamp = Date()
-    }
-}
-
 struct MainView: View {
     @ObservedObject private var contentModel = TextContentModel.shared
     @ObservedObject var preferences = PreferencesModel.shared
@@ -144,85 +130,7 @@ struct MainView: View {
         NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
     }
     
-    /// 单个聊天消息视图组件
-    private struct ChatMessageView: View {
-        let message: ChatMessage
-        
-        var body: some View {
-            HStack(alignment: .top, spacing: 0) {
-                if message.isUser {
-                    // 用户消息：右对齐
-                    Spacer()
-                    
-                    VStack(alignment: .trailing, spacing: 4) {
-                        // 发送者标识
-                        Text("用户")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        
-                        // 消息内容
-                        Text(message.content)
-                            .textSelection(.enabled)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(Color.blue.opacity(0.1))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                        
-                        // 时间戳
-                        Text(formatTimestamp(message.timestamp))
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    // 用户头像
-                    Image(systemName: "person.circle.fill")
-                        .foregroundColor(.blue)
-                        .font(.system(size: 16))
-                        .frame(width: 20, height: 20)
-                        .padding(.leading, 8)
-                } else {
-                    // AI消息：左对齐
-                    // AI图标
-                    Image(systemName: "brain.head.profile")
-                        .foregroundColor(.green)
-                        .font(.system(size: 16))
-                        .frame(width: 20, height: 20)
-                        .padding(.trailing, 8)
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        // 发送者标识
-                        Text("AI助手")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        
-                        // 消息内容
-                        Markdown(message.content)
-                            .markdownTheme(.cactusMD)
-                            .textSelection(.enabled)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(Color.green.opacity(0.1))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                        
-                        // 时间戳
-                        Text(formatTimestamp(message.timestamp))
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    Spacer()
-                }
-            }
-            .padding(.vertical, 4)
-        }
-        
-        /// 格式化时间戳
-        private func formatTimestamp(_ date: Date) -> String {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            return formatter.string(from: date)
-        }
-    }
+
     
     /// 传统结果显示视图（用于翻译、总结、词典等功能）
     private func traditionalResultView(resultText: String) -> some View {
