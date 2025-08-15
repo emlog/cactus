@@ -54,7 +54,7 @@ struct ChatMessageView: View {
                         .textSelection(.enabled)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                        .background(Color.green.opacity(0.1))
+                        .background(Color.accentColor.opacity(0.1))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 Spacer()
