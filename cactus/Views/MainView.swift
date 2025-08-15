@@ -69,68 +69,16 @@ struct MainView: View {
     
     /// 对话流视图组件
     private var chatFlowView: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 12) {
-                    // 正常顺序显示消息，最新消息在底部
-                    ForEach(chatMessages) { message in
-                        ChatMessageView(message: message)
-                            .id(message.id)
-                    }
-                    
-                    // 显示正在输入的AI回复（如果有）
-                    if contentModel.isChatting, let resultText = contentModel.resultText, !resultText.isEmpty {
-                        ChatMessageView(message: ChatMessage(content: resultText, isUser: false))
-                            .id("typing-ai-message")
-                    }
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
+        ChatFlowView(
+            chatMessages: $chatMessages,
+            resultTextHeight: $resultTextHeight,
+            onHeightUpdate: {
+                NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
             }
-            .frame(maxWidth: .infinity, minHeight: minResultTextHeight, maxHeight: resultTextHeight)
-            .background(Color(.textBackgroundColor))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color(.separatorColor), lineWidth: 1)
-            )
-            .onChange(of: chatMessages.count) { _ in
-                scrollToBottom(proxy: proxy)
-                updateChatFlowHeight()
-            }
-            // 监听AI回复内容变化，实现实时滚动
-            .onChange(of: contentModel.resultText) { _ in
-                if contentModel.isChatting {
-                    scrollToBottom(proxy: proxy)
-                    updateChatFlowHeight()
-                }
-            }
-        }
+        )
     }
     
-    // 滚动到底部的辅助方法
-    private func scrollToBottom(proxy: ScrollViewProxy) {
-        if contentModel.isChatting {
-            // AI正在回复时，滚动到正在输入的消息
-            withAnimation(.easeOut(duration: 0.2)) {
-                proxy.scrollTo("typing-ai-message", anchor: .bottom)
-            }
-        } else if let lastMessage = chatMessages.last {
-            // 正常情况下滚动到最后一条消息
-            withAnimation(.easeOut(duration: 0.3)) {
-                proxy.scrollTo(lastMessage.id, anchor: .bottom)
-            }
-        }
-    }
     
-    // 更新聊天流高度的辅助方法
-    private func updateChatFlowHeight() {
-        let totalHeight = calculateChatFlowHeight()
-        resultTextHeight = min(max(totalHeight, minResultTextHeight), 600)
-        NotificationCenter.default.post(name: NSNotification.Name("AdjustWindowSize"), object: nil)
-    }
-    
-
     
     /// 传统结果显示视图（用于翻译、总结、词典等功能）
     private func traditionalResultView(resultText: String) -> some View {
@@ -410,21 +358,7 @@ struct MainView: View {
     
     // MARK: - 辅助函数
     
-    /// 计算对话流高度
-    private func calculateChatFlowHeight() -> CGFloat {
-        let messageCount = chatMessages.count
-        if messageCount == 0 {
-            return minResultTextHeight
-        }
-        
-        // 估算每条消息的平均高度（包括头像、内容、时间戳和间距）
-        let averageMessageHeight: CGFloat = 80
-        let totalHeight = CGFloat(messageCount) * averageMessageHeight + 40 // 40为上下padding
-        
-        return min(max(totalHeight, minResultTextHeight), 600) // 限制最大高度为600
-    }
-    
-    // 保留 calculateTextHeight 方法，用于计算结果区域的高度
+    /// 动态最大结果高度
     // 在 MainView 结构体中添加新的计算属性
     private var dynamicMaxResultHeight: CGFloat {
         guard let screen = NSScreen.main else {
