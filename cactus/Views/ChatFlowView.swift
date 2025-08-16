@@ -9,24 +9,6 @@ import SwiftUI
 import Foundation
 import MarkdownUI
 
-/// 聊天消息数据模型
-struct ChatMessage: Identifiable {
-    let id = UUID()
-    let content: String
-    let isUser: Bool
-    let timestamp: Date
-    
-    /// 初始化聊天消息
-    /// - Parameters:
-    ///   - content: 消息内容
-    ///   - isUser: 是否为用户消息
-    init(content: String, isUser: Bool) {
-        self.content = content
-        self.isUser = isUser
-        self.timestamp = Date()
-    }
-}
-
 /// 单个聊天消息视图组件
 struct ChatMessageView: View {
     let message: ChatMessage
@@ -203,7 +185,6 @@ struct ChatMessageView: View {
 /// 用于显示聊天消息流，支持实时滚动和动态高度调整
 struct ChatFlowView: View {
     // MARK: - 绑定属性
-    @Binding var chatMessages: [ChatMessage]
     @Binding var resultTextHeight: CGFloat
     
     // MARK: - 观察对象
@@ -220,15 +201,12 @@ struct ChatFlowView: View {
     
     /// 初始化对话流视图
     /// - Parameters:
-    ///   - chatMessages: 聊天消息数组的绑定
     ///   - resultTextHeight: 结果文本高度的绑定
     ///   - maxHeight: 最大高度限制
     ///   - onHeightUpdate: 高度更新时的回调闭包
-    init(chatMessages: Binding<[ChatMessage]>,
-         resultTextHeight: Binding<CGFloat>,
+    init(resultTextHeight: Binding<CGFloat>,
          maxHeight: CGFloat = 600,
          onHeightUpdate: @escaping () -> Void) {
-        self._chatMessages = chatMessages
         self._resultTextHeight = resultTextHeight
         self.maxHeight = maxHeight
         self.onHeightUpdate = onHeightUpdate
@@ -239,7 +217,7 @@ struct ChatFlowView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 12) {
                     // 正常顺序显示消息，最新消息在底部
-                    ForEach(chatMessages) { message in
+                    ForEach(contentModel.chatMessages) { message in
                         ChatMessageView(message: message)
                             .id(message.id)
                     }
@@ -260,7 +238,7 @@ struct ChatFlowView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color(.separatorColor), lineWidth: 1)
             )
-            .onChange(of: chatMessages.count) { _ in
+            .onChange(of: contentModel.chatMessages.count) { _ in
                 scrollToBottom(proxy: proxy)
                 updateChatFlowHeight()
             }
@@ -294,7 +272,7 @@ struct ChatFlowView: View {
             withAnimation(.easeOut(duration: 0.2)) {
                 proxy.scrollTo("typing-ai-message", anchor: .bottom)
             }
-        } else if let lastMessage = chatMessages.last {
+        } else if let lastMessage = contentModel.chatMessages.last {
             // 正常情况下滚动到最后一条消息
             withAnimation(.easeOut(duration: 0.3)) {
                 proxy.scrollTo(lastMessage.id, anchor: .bottom)
@@ -315,7 +293,7 @@ struct ChatFlowView: View {
         var totalHeight: CGFloat = 40 // 上下padding
         
         // 计算已有消息的高度
-        for message in chatMessages {
+        for message in contentModel.chatMessages {
             let messageHeight = calculateMessageHeight(content: message.content, isUser: message.isUser)
             totalHeight += messageHeight + 16 // 16为消息间距(spacing: 12 + padding: 4)
         }

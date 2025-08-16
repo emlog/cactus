@@ -20,11 +20,7 @@ struct MainView: View {
     @State private var Lang = LangService.shared
     @State private var Prompt = promptService.shared
     
-    // 对话历史状态（用于API调用）
-    @State private var chatHistory: [[String: String]] = []
-    
-    // 对话消息流（用于UI显示）
-    @State private var chatMessages: [ChatMessage] = []
+    // 注意：聊天数据管理已移至 TextContentModel 中统一管理
     
     // 吐司提示管理器
     @StateObject private var toastManager = ToastManager()
@@ -68,7 +64,6 @@ struct MainView: View {
     /// 对话流视图组件
     private var chatFlowView: some View {
         ChatFlowView(
-            chatMessages: $chatMessages,
             resultTextHeight: $resultTextHeight,
             maxHeight: dynamicMaxResultHeight,
             onHeightUpdate: {
@@ -178,7 +173,7 @@ struct MainView: View {
                         }
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .help(NSLocalizedString("help_clear", comment: "清空"))
-                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true) && chatMessages.isEmpty)
+                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true) && !contentModel.hasChatData())
                         
                         // 收藏按钮
                         Button(action: {
@@ -321,7 +316,7 @@ struct MainView: View {
             
             Section() {
                 // 对话流显示区域 - 仅在聊天模式下显示
-                if !chatMessages.isEmpty {
+                if contentModel.hasChatData() {
                     chatFlowView
                 }
                 // 其他功能的结果显示区域（翻译、总结、词典）
@@ -427,7 +422,7 @@ struct MainView: View {
     func clearAll() {
         let isInputEmpty = contentModel.text.isEmpty
         let isResultEmpty = contentModel.resultText?.isEmpty ?? true
-        let isChatEmpty = chatMessages.isEmpty
+        let isChatEmpty = !contentModel.hasChatData()
         
         if isInputEmpty && isResultEmpty && isChatEmpty {
             return
@@ -438,9 +433,8 @@ struct MainView: View {
         DispatchQueue.main.async {
             self.contentModel.text = ""
             self.contentModel.resultText = nil
-            // 只有在用户明确点击清空按钮时才清空对话历史和消息流
-            self.chatHistory = []
-            self.chatMessages = []
+            // 使用 TextContentModel 的统一清空方法
+            self.contentModel.clearChatData()
             // 重置输入和输出区域的高度为默认值
             self.inputTextHeight = minInputTextHeight
             self.resultTextHeight = minResultTextHeight
@@ -530,7 +524,7 @@ struct MainView: View {
             return
         }
         
-        clearChatHistory()
+        contentModel.clearChatData()
         
         let systemMessage: String
         
@@ -560,7 +554,7 @@ struct MainView: View {
             return
         }
         
-        clearChatHistory()
+        contentModel.clearChatData()
         
         let systemMessage = Prompt.getSystemMessageForSummary()
         performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .summary)
@@ -579,7 +573,7 @@ struct MainView: View {
             return
         }
         
-        clearChatHistory()
+        contentModel.clearChatData()
         
         if Lang.isTextInPreferredLanguage(inputText) {
             systemMessage = Prompt.getSystemMessageForDict() // 查母语字典
@@ -606,12 +600,8 @@ struct MainView: View {
             systemMessage = Prompt.getSystemMessageForChat()
         }
         
-        // 添加当前用户输入到历史
-        chatHistory.append(["role": "user", "content": inputText])
-        
-        // 添加用户消息到对话流中
-        let userMessage = ChatMessage(content: inputText, isUser: true)
-        chatMessages.append(userMessage)
+        // 使用 TextContentModel 的统一方法添加用户消息
+        contentModel.addUserMessage(inputText)
         
         // 保存当前输入文本用于历史记录
         let currentInput = contentModel.text
@@ -619,7 +609,7 @@ struct MainView: View {
         // 清空输入框
         contentModel.text = ""
         
-        performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: chatHistory, originalInput: currentInput), loadingType: .chat)
+        performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: contentModel.getChatHistory(), originalInput: currentInput), loadingType: .chat)
     }
     
     // 只做一些清理窗口的动作
@@ -749,16 +739,14 @@ struct MainView: View {
             )
             
         case .chat(_, let originalInput):
-            // 保存历史记录 + 更新对话历史
+            // 保存历史记录
             HistoryManager.shared.addHistory(
                 inputContent: originalInput,
                 outputContent: resultText
             )
-            self.chatHistory.append(["role": "assistant", "content": resultText])
             
-            // 添加AI回复到对话流中
-            let aiMessage = ChatMessage(content: resultText, isUser: false)
-            chatMessages.append(aiMessage)
+            // 使用 TextContentModel 的统一方法添加AI回复
+            contentModel.addAIMessage(resultText)
         }
     }
     
@@ -797,11 +785,5 @@ struct MainView: View {
             self.contentModel.isDictionaryLookup = false
             self.contentModel.isChatting = false
         }
-    }
-    
-    // 清空对话历史和消息流的辅助方法
-    private func clearChatHistory() {
-        chatHistory = []
-        chatMessages = []
     }
 }
