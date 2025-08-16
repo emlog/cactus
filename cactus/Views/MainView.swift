@@ -171,7 +171,7 @@ struct MainView: View {
                         }
                         .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
                         .help(NSLocalizedString("help_clear", comment: "清空"))
-                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true))
+                        .disabled(contentModel.text.isEmpty && (contentModel.resultText?.isEmpty ?? true) && chatMessages.isEmpty)
                         
                         // 收藏按钮
                         Button(action: {
@@ -330,8 +330,7 @@ struct MainView: View {
             // 监听窗口关闭通知
             NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil, queue: .main) { _ in
                 stopSpeaking()
-                self.chatHistory = []
-                self.chatMessages = [] // 清空对话消息流
+                // 不再清空聊天历史和消息流，保持对话状态
             }
             
             // 监听复制成功通知
@@ -350,6 +349,10 @@ struct MainView: View {
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopySuccessToast"), object: nil)
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopyErrorToast"), object: nil)
             stopSpeaking()
+        }
+        .onChange(of: preferences.selectedCustomPrompt) { _ in
+            // 切换自定义提示词时不清空聊天记录，保持对话连续性
+            // 用户可以在不同提示词下继续对话
         }
     }
     
@@ -413,11 +416,13 @@ struct MainView: View {
     }
     
     // 清除所有内容
+    /// 清空所有内容，包括输入文本、结果文本和聊天记录
     func clearAll() {
         let isInputEmpty = contentModel.text.isEmpty
         let isResultEmpty = contentModel.resultText?.isEmpty ?? true
+        let isChatEmpty = chatMessages.isEmpty
         
-        if isInputEmpty && isResultEmpty {
+        if isInputEmpty && isResultEmpty && isChatEmpty {
             return
         }
         
@@ -426,9 +431,8 @@ struct MainView: View {
         DispatchQueue.main.async {
             self.contentModel.text = ""
             self.contentModel.resultText = nil
-            // 清空对话历史
+            // 只有在用户明确点击清空按钮时才清空对话历史和消息流
             self.chatHistory = []
-            // 清空对话消息流
             self.chatMessages = []
             // 重置输入和输出区域的高度为默认值
             self.inputTextHeight = minInputTextHeight
@@ -519,7 +523,6 @@ struct MainView: View {
             return
         }
         
-        // 清空对话历史和消息流（非聊天功能）
         clearChatHistory()
         
         let systemMessage: String
@@ -550,7 +553,6 @@ struct MainView: View {
             return
         }
         
-        // 清空对话历史和消息流（非聊天功能）
         clearChatHistory()
         
         let systemMessage = Prompt.getSystemMessageForSummary()
@@ -570,7 +572,6 @@ struct MainView: View {
             return
         }
         
-        // 清空对话历史和消息流（非聊天功能）
         clearChatHistory()
         
         if Lang.isTextInPreferredLanguage(inputText) {
