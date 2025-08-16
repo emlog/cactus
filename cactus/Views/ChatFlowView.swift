@@ -30,6 +30,7 @@ struct ChatMessageView: View {
                     // 消息内容
                     Text(message.content)
                         .textSelection(.enabled)
+                        .font(.body)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
                         .background(Color.accentColor.opacity(0.1))
