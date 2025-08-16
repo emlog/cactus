@@ -159,6 +159,13 @@ struct MainView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color(.separatorColor), lineWidth: 1)
                     )
+                    .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("FillTextToInput"))) { notification in
+                        if let userInfo = notification.userInfo,
+                           let text = userInfo["text"] as? String {
+                            fillText(text)
+                            isInputEditorFocused = true
+                        }
+                    }
                     
                     HStack(spacing: 8) {
                         // 清除按钮

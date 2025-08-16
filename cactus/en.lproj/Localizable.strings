@@ -108,6 +108,7 @@
 "help_favorite" = "Favorite";
 "help_speak" = "Speak";
 "help_copy" = "Copy";
+"help_edit" = "Edit";
 "help_pin" = "Pin Window";
 "help_unpin" = "Unpin Window";
 "help_clear" = "Clear Text";

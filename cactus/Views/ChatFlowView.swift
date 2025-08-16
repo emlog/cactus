@@ -36,6 +36,9 @@ struct ChatMessageView: View {
     @State private var isSpeaking = false
     private let speechService = SpeechService.shared
     
+    // 用户消息复制状态
+    @State private var showUserCopySuccess = false
+    
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             if message.isUser {
@@ -49,6 +52,36 @@ struct ChatMessageView: View {
                         .padding(.vertical, 8)
                         .background(Color.accentColor.opacity(0.1))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    // 用户消息操作按钮
+                    HStack(spacing: 8) {
+                        Spacer()
+                        
+                        // 编辑按钮
+                        Button(action: {
+                            editMessage(message.content)
+                        }) {
+                            Image(systemName: "pencil")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("help_edit", comment: "编辑"))
+                        
+                        // 复制按钮
+                        Button(action: {
+                            copyUserMessage(message.content)
+                        }) {
+                            Image(systemName: showUserCopySuccess ? "checkmark" : "square.on.square")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(showUserCopySuccess ? .green : .secondary)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("help_copy", comment: "复制"))
+                        .animation(.easeInOut, value: showUserCopySuccess)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.top, 4)
                 }
             } else {
                 // AI消息
@@ -133,6 +166,36 @@ struct ChatMessageView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             isSpeaking = false
         }
+    }
+    
+    /// 复制用户消息到剪贴板
+    /// - Parameter text: 要复制的文本内容
+    private func copyUserMessage(_ text: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+        
+        // 触发成功动画
+        withAnimation {
+            showUserCopySuccess = true
+        }
+        // 1.5秒后恢复图标
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                showUserCopySuccess = false
+            }
+        }
+    }
+    
+    /// 编辑用户消息，将内容填充到输入框
+    /// - Parameter text: 要编辑的文本内容
+    private func editMessage(_ text: String) {
+        // 通过通知中心发送编辑消息的通知
+        NotificationCenter.default.post(
+            name: NSNotification.Name("FillTextToInput"),
+            object: nil,
+            userInfo: ["text": text]
+        )
     }
 }
 
