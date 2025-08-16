@@ -31,6 +31,11 @@ struct ChatMessage: Identifiable {
 struct ChatMessageView: View {
     let message: ChatMessage
     
+    // 复制和朗读状态
+    @State private var showCopySuccess = false
+    @State private var isSpeaking = false
+    private let speechService = SpeechService.shared
+    
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             if message.isUser {
@@ -56,11 +61,78 @@ struct ChatMessageView: View {
                         .padding(.vertical, 8)
                         .background(Color.accentColor.opacity(0.1))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    // AI消息操作按钮
+                    HStack(spacing: 8) {
+                        // 复制按钮
+                        Button(action: {
+                            copyToClipboard(message.content)
+                        }) {
+                            Image(systemName: showCopySuccess ? "checkmark" : "square.on.square")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(showCopySuccess ? .green : .secondary)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("help_copy", comment: "复制"))
+                        .animation(.easeInOut, value: showCopySuccess)
+                        
+                        // 朗读按钮
+                        Button(action: {
+                            speakText(message.content)
+                        }) {
+                            Image(systemName: "speaker.wave.2")
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(isSpeaking ? .red : .secondary)
+                        }
+                        .buttonStyle(HoverButtonStyle(horizontalPadding: 2, verticalPadding: 2))
+                        .help(NSLocalizedString("help_speak", comment: "朗读"))
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.top, 4)
                 }
                 Spacer()
             }
         }
         .padding(.vertical, 4)
+    }
+    
+    /// 复制文本到剪贴板
+    /// - Parameter text: 要复制的文本内容
+    private func copyToClipboard(_ text: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+        
+        // 触发成功动画
+        withAnimation {
+            showCopySuccess = true
+        }
+        // 1.5秒后恢复图标
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                showCopySuccess = false
+            }
+        }
+    }
+    
+    /// 朗读文本内容
+    /// - Parameter text: 要朗读的文本内容
+    private func speakText(_ text: String) {
+        guard !text.isEmpty else { return }
+        
+        // 检测语言并转换为语音语言代码
+        let langCode = LangService.shared.detectLanguageCode(for: text)
+        let speechLanguageCode = LangService.shared.convertToSpeechLanguageCode(langCode)
+        
+        isSpeaking = true
+        speechService.speak(text, speechLanguageCode: speechLanguageCode)
+        
+        // 设置朗读完成后的状态重置
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            isSpeaking = false
+        }
     }
 }
 
