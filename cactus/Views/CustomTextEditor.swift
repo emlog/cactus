@@ -49,14 +49,20 @@ struct CustomTextEditor: NSViewRepresentable {
     
     func updateNSView(_ nsView: NSScrollView, context: Context) {
         guard let textView = nsView.documentView as? NSTextView else { return }
+        
+        // 检查是否正在进行输入法组合输入（如中文拼音输入）
+        let hasMarkedText = textView.hasMarkedText()
+        
         // 确保 NSTextView 的内容与 SwiftUI 的状态同步
-        if textView.string != text {
+        // 但在输入法组合输入时避免干扰
+        if textView.string != text && !hasMarkedText {
             let selectedRange = textView.selectedRange // 保存光标位置
             textView.string = text
             textView.setSelectedRange(selectedRange) // 恢复光标位置
             // 当文本内容变化时，重新计算高度
             context.coordinator.calculateAndUpdateHeight(textView: textView)
         }
+        
         // 更新高度约束
         let newHeight = max(minHeight, min(calculatedHeight, maxHeight))
         if nsView.frame.height != newHeight {
@@ -119,12 +125,19 @@ struct CustomTextEditor: NSViewRepresentable {
         // 文本变化时更新 SwiftUI 状态和计算高度
         func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
+            
+            // 检查是否正在进行输入法组合输入
+            // 在输入法组合期间，避免更新SwiftUI状态，防止干扰输入
+            let hasMarkedText = textView.hasMarkedText()
+            
             // 更新 SwiftUI 的 @Binding text
             // 避免在 textStorage 更新时再次设置 text，可能导致循环
-            if parent.text != textView.string {
+            // 在输入法组合输入时暂停同步，避免干扰中文输入
+            if parent.text != textView.string && !hasMarkedText {
                 parent.text = textView.string
             }
-            // 计算并更新高度
+            
+            // 计算并更新高度（这个可以继续进行，不会干扰输入法）
             calculateAndUpdateHeight(textView: textView)
             
             // 确保光标可见（自动滚动到光标位置）

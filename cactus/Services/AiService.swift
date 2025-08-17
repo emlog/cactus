@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 enum AIActionType {
     case basic
@@ -54,6 +55,10 @@ class AiService: NSObject, URLSessionDataDelegate {
         isManualStop = true // 设置手动停止标志
         currentTask?.cancel()
         currentTask = nil
+        
+        // 清理定时器资源
+        updateTimer?.invalidate()
+        updateTimer = nil
         
         DispatchQueue.main.async {
             TextContentModel.shared.shouldStopRequest = false
@@ -287,6 +292,11 @@ class AiService: NSObject, URLSessionDataDelegate {
         }
     }
     
+    // 添加节流机制相关属性
+    private var lastUpdateTime: Date = Date()
+    private var pendingContent: String = ""
+    private var updateTimer: Timer?
+    
     private func processCompleteLines() {
         while let range = buffer.firstRange(of: Data("\n".utf8)) {
             let lineData = buffer.subdata(in: 0..<range.lowerBound)
@@ -299,14 +309,40 @@ class AiService: NSObject, URLSessionDataDelegate {
                 if let content = SSEParser.extractContentFromJSON(jsonString) {
                     fullContent += content
                     
-                    DispatchQueue.main.async {
-                        // 保持换行格式：将\n转换为Markdown硬换行（行末两个空格+换行）
-                        let processedContent = self.fullContent.replacingOccurrences(of: "\n", with: "  \n")
-                        // 移除字符串开头和结尾的空白字符和换行符
-                        TextContentModel.shared.resultText = processedContent.trimmingCharacters(in: .whitespacesAndNewlines)
-                    }
+                    // 使用节流机制更新UI，避免频繁刷新干扰输入框
+                    updateUIWithThrottling()
                 }
             }
+        }
+    }
+    
+    /// 使用节流机制更新UI，减少对输入框的干扰
+    /// 通过限制更新频率，避免在流式输出时影响用户的输入体验
+    private func updateUIWithThrottling() {
+        let now = Date()
+        let timeSinceLastUpdate = now.timeIntervalSince(lastUpdateTime)
+        
+        // 如果距离上次更新超过100毫秒，立即更新
+        if timeSinceLastUpdate > 0.1 {
+            performUIUpdate()
+            lastUpdateTime = now
+        } else {
+            // 否则使用定时器延迟更新，避免过于频繁的UI刷新
+            updateTimer?.invalidate()
+            updateTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] _ in
+                self?.performUIUpdate()
+                self?.lastUpdateTime = Date()
+            }
+        }
+    }
+    
+    /// 执行实际的UI更新
+    private func performUIUpdate() {
+        DispatchQueue.main.async {
+            // 保持换行格式：将\n转换为Markdown硬换行（行末两个空格+换行）
+            let processedContent = self.fullContent.replacingOccurrences(of: "\n", with: "  \n")
+            // 移除字符串开头和结尾的空白字符和换行符
+            TextContentModel.shared.resultText = processedContent.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
     
@@ -328,6 +364,15 @@ class AiService: NSObject, URLSessionDataDelegate {
      * - 确保所有操作在主线程执行，保证 UI 更新的线程安全
      */
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        // 清理定时器并执行最后一次UI更新
+        updateTimer?.invalidate()
+        updateTimer = nil
+        
+        // 确保最后的内容能够显示
+        if !fullContent.isEmpty {
+            performUIUpdate()
+        }
+        
         DispatchQueue.main.async {
             if let error = error {
                 debugLog(.error, "请求错误: \(error.localizedDescription)")
