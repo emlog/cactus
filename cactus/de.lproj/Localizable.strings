@@ -110,6 +110,7 @@
 "help_copy" = "Kopieren";
 "help_pin" = "Fenster anheften";
 "help_unpin" = "Anheften lösen";
+"help_edit" = "Bearbeiten";
 "help_clear" = "Löschen";
 
 // alert

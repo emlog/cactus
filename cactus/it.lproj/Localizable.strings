@@ -110,6 +110,7 @@
 "help_copy" = "Copia";
 "help_pin" = "Fissa finestra";
 "help_unpin" = "Sblocca finestra";
+"help_edit" = "Modifica";
 "help_clear" = "Cancella contenuto";
 
 // alert

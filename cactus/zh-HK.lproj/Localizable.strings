@@ -111,6 +111,7 @@
 "help_pin" = "釘選視窗";
 "help_unpin" = "取消釘選";
 "help_clear" = "清除內容";
+"help_edit" = "編輯";
 
 // alert
 "accessibility_permission_message" = "需要輔助使用權限，請至系統偏好設定中開啟輔助使用功能，以便翻譯選取的文字。";

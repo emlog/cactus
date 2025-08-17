@@ -108,6 +108,7 @@
 "help_favorite" = "즐겨찾기";
 "help_speak" = "읽어주기";
 "help_copy" = "복사";
+"help_edit" = "편집";
 "help_pin" = "창 고정";
 "help_unpin" = "고정 해제";
 "help_clear" = "내용 지우기";

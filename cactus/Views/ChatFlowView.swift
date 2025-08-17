@@ -37,14 +37,14 @@ struct ChatMessageView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                     // 用户消息操作按钮
-                    HStack(spacing: 8) {
+                    HStack(spacing: 5) {
                         Spacer()
                         
                         // 编辑按钮
                         Button(action: {
                             editMessage(message.content)
                         }) {
-                            Image(systemName: "pencil")
+                            Image(systemName: "square.and.pencil")
                                 .frame(width: 15, height: 15)
                                 .foregroundColor(.secondary)
                         }
@@ -63,7 +63,7 @@ struct ChatMessageView: View {
                         .help(NSLocalizedString("help_copy", comment: "复制"))
                         .animation(.easeInOut, value: showUserCopySuccess)
                     }
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 4)
                     .padding(.top, 4)
                 }
             } else {
@@ -79,7 +79,7 @@ struct ChatMessageView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                     // AI消息操作按钮
-                    HStack(spacing: 8) {
+                    HStack(spacing: 5) {
                         // 复制按钮
                         Button(action: {
                             copyToClipboard(message.content)
@@ -105,7 +105,7 @@ struct ChatMessageView: View {
                         
                         Spacer()
                     }
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 4)
                     .padding(.top, 4)
                 }
                 Spacer()

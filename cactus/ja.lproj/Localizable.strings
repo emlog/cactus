@@ -108,6 +108,7 @@
 "help_favorite" = "お気に入り";
 "help_speak" = "読み上げ";
 "help_copy" = "コピー";
+"help_edit" = "編集";
 "help_pin" = "ウィンドウを固定";
 "help_unpin" = "固定を解除";
 "help_clear" = "内容をクリア";

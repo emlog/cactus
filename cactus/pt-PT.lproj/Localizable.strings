@@ -110,6 +110,7 @@
 "help_copy" = "Copiar";
 "help_pin" = "Fixar Janela";
 "help_unpin" = "Desafixar Janela";
+"help_edit" = "Editar";
 "help_clear" = "Limpar Conteúdo";
 
 // alert

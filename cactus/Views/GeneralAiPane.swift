@@ -548,6 +548,7 @@ struct GeneralAiPane: View {
                         .font(.system(size: 12))
                 }
                 .buttonStyle(PlainButtonStyle())
+                .help(NSLocalizedString("help_edit", comment: "编辑"))
                 
                 // 删除按钮
                 Button(action: {
@@ -558,6 +559,7 @@ struct GeneralAiPane: View {
                         .font(.system(size: 12))
                 }
                 .buttonStyle(PlainButtonStyle())
+                .help(NSLocalizedString("delete", comment: "删除"))
             }
         }
         .padding(.horizontal, 12)

@@ -108,6 +108,7 @@
 "help_favorite" = "收藏";
 "help_speak" = "朗讀";
 "help_copy" = "拷貝";
+"help_edit" = "編輯";
 "help_pin" = "釘選視窗";
 "help_unpin" = "取消釘選";
 "help_clear" = "清除內容";

@@ -111,6 +111,7 @@
 "help_pin" = "Ghim Cửa Sổ";
 "help_unpin" = "Bỏ Ghim Cửa Sổ";
 "help_clear" = "Xóa Văn Bản";
+"help_edit" = "Chỉnh Sửa";
 
 // alert
 "accessibility_permission_message" = "Cần quyền truy cập hỗ trợ. Vui lòng bật trong Cài Đặt Hệ Thống để dịch văn bản đã chọn";

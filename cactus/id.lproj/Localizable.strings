@@ -110,6 +110,7 @@
 "help_copy" = "Salin";
 "help_pin" = "Sematkan Jendela";
 "help_unpin" = "Batalkan Sematan";
+"help_edit" = "Edit";
 "help_clear" = "Hapus Konten";
 
 // alert

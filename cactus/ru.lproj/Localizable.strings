@@ -104,6 +104,7 @@
 "help_summary" = "Сводка";
 "help_dict" = "Словарь";
 "help_chat" = "Отправить сообщение";
+"help_edit" = "Редактировать";
 "help_clear" = "Очистить";
 "help_favorite" = "Избранное";
 "help_speak" = "Озвучить";

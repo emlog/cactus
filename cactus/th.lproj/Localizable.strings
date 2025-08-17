@@ -111,6 +111,7 @@
 "help_pin" = "ปักหมุดหน้าต่าง";
 "help_unpin" = "ยกเลิกปักหมุด";
 "help_clear" = "ล้างเนื้อหา";
+"help_edit" = "แก้ไข";
 
 // alert
 "accessibility_permission_message" = "ต้องการสิทธิ์การเข้าถึง กรุณาเปิดสิทธิ์ในการตั้งค่าระบบ";
