@@ -721,8 +721,8 @@ struct GeneralAiPane: View {
             return "diamond.circle.fill"
         case "openrouter-default":
             return "arrow.left.arrow.right"
-        case "model_cactusai_mix":
-            return "leaf.fill"
+        case "model_zhipu_glm4_flash":
+            return "diamond.circle.fill"
         case "zhipu":
             return "diamond.circle.fill"
         case "siliconflow":
