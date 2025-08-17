@@ -739,15 +739,15 @@ class PreferencesModel: ObservableObject {
             "model_zhipu_glm4",
             "model_zhipu_glm4_flash",
             "openrouter-default",
-            "zhipu",
-            "siliconflow",
-            "deepseek",
-            "volcengine",
             "openai",
             "google_gemini",
             "claude",
             "grok",
-            "openrouter"
+            "deepseek",
+            "openrouter",
+            "zhipu",
+            "siliconflow",
+            "volcengine"
         ]
         
         // 添加自定义服务的keys
