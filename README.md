@@ -274,11 +274,6 @@ This is an auxiliary tool. It only appears in the status bar on the upper right 
 Core usage: select a section of text content, then press the shortcut key (default: option+x), a small window will pop up to translate this content, or to summarize this content and other auxiliary operations.
 Thanks for your review work.
 
-## 更新内容
-
-- 修复已知问题，优化用户体验
-- Fix some issues, optimize user experience
-
 ## 支持的语言
 
 德文、日文、法语、简体中文、繁体中文、英语、西班牙文、韩文、葡萄牙文、印尼文、俄语、意大利语、泰语
