@@ -240,22 +240,31 @@ struct ChatFlowView: View {
                     .stroke(Color(.separatorColor), lineWidth: 1)
             )
             .onChange(of: contentModel.chatMessages.count) { _ in
-                scrollToBottom(proxy: proxy)
+                // 当有新消息时（用户发送或AI回复完成），更新高度并滚动到底部一次
                 updateChatFlowHeight()
-            }
-            // 监听AI回复内容变化，实现实时滚动和高度调整
-            .onChange(of: contentModel.resultText) { _ in
-                if contentModel.isChatting {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     scrollToBottom(proxy: proxy)
-                    updateChatFlowHeight()
                 }
             }
-            // 监听聊天状态变化，确保在聊天开始和结束时调整高度
-            .onChange(of: contentModel.isChatting) { _ in
+            // 监听AI聊天状态变化
+            .onChange(of: contentModel.isChatting) { isChatting in
+                if isChatting {
+                    // AI开始回复时，立即滚动到底部一次
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        scrollToBottom(proxy: proxy)
+                    }
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     updateChatFlowHeight()
                 }
             }
+            // 监听AI回复内容变化，但不实时滚动，只更新高度
+            .onChange(of: contentModel.resultText) { _ in
+                if contentModel.isChatting {
+                    updateChatFlowHeight()
+                }
+            }
+
             // 在视图出现时立即调整高度
             .onAppear {
                 updateChatFlowHeight()
@@ -266,16 +275,26 @@ struct ChatFlowView: View {
     // MARK: - 私有方法
     
     /// 滚动到底部的辅助方法
-    /// - Parameter proxy: ScrollViewReader的代理对象
-    private func scrollToBottom(proxy: ScrollViewProxy) {
+    /// - Parameters:
+    ///   - proxy: ScrollViewReader的代理对象
+    ///   - animated: 是否使用动画，默认为true
+    private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool = true) {
         if contentModel.isChatting {
             // AI正在回复时，滚动到正在输入的消息
-            withAnimation(.easeOut(duration: 0.2)) {
+            if animated {
+                withAnimation(.easeOut(duration: 0.2)) {
+                    proxy.scrollTo("typing-ai-message", anchor: .bottom)
+                }
+            } else {
                 proxy.scrollTo("typing-ai-message", anchor: .bottom)
             }
         } else if let lastMessage = contentModel.chatMessages.last {
             // 正常情况下滚动到最后一条消息
-            withAnimation(.easeOut(duration: 0.3)) {
+            if animated {
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo(lastMessage.id, anchor: .bottom)
+                }
+            } else {
                 proxy.scrollTo(lastMessage.id, anchor: .bottom)
             }
         }

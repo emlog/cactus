@@ -8,7 +8,7 @@ struct MiniLoadingView: View {
             .trim(from: 0, to: 0.7)
             .stroke(
                 AngularGradient(
-                    gradient: Gradient(colors: [.primary.opacity(0.2), .primary]),
+                    gradient: Gradient(colors: [.accentColor.opacity(0.2), .accentColor]),
                     center: .center
                 ),
                 style: StrokeStyle(lineWidth: 2, lineCap: .round)
