@@ -75,8 +75,6 @@ struct ChatMessageView: View {
                         .textSelection(.enabled)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                        .background(Color(NSColor.windowBackgroundColor))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                     // AI消息操作按钮
                     HStack(spacing: 5) {
