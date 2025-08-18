@@ -33,7 +33,7 @@ struct ChatMessageView: View {
                         .font(.body)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                        .background(Color.accentColor.opacity(0.1))
+                        .background(Color(NSColor.windowBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                     // 用户消息操作按钮
@@ -75,7 +75,7 @@ struct ChatMessageView: View {
                         .textSelection(.enabled)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                        .background(Color.accentColor.opacity(0.1))
+                        .background(Color(NSColor.windowBackgroundColor))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                     // AI消息操作按钮
