@@ -73,7 +73,7 @@ struct ChatMessageView: View {
                     Markdown(message.content)
                         .markdownTheme(.cactusMD)
                         .textSelection(.enabled)
-                        .padding(.horizontal, 12)
+                        .padding(.horizontal, 8)
                         .padding(.vertical, 8)
                     
                     // AI消息操作按钮
@@ -103,8 +103,8 @@ struct ChatMessageView: View {
                         
                         Spacer()
                     }
-                    .padding(.horizontal, 4)
-                    .padding(.top, 4)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 0)
                 }
                 Spacer()
             }
