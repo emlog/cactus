@@ -8,3 +8,6 @@
 
 - 消息发送支持对话流模式
 - 修复一些问题，优化用户体验
+
+- Message sending now supports conversation flow mode
+- Fixed some issues and optimized user experience
