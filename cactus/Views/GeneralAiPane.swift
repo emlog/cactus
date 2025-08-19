@@ -1,5 +1,6 @@
 import SwiftUI
 import Foundation
+import AppKit
 
 struct GeneralAiPane: View {
     
@@ -18,6 +19,11 @@ struct GeneralAiPane: View {
     @State private var newServiceBaseURL = ""
     @State private var newServiceApiKey = ""
     @State private var newServiceModel = ""
+    
+    // AI服务测试状态
+    @State private var isTestingService = false
+    @State private var testResult: String = ""
+    @State private var showingTestResult = false
     
     // 提示词库状态
     @State private var showingPromptLibrary = false
@@ -67,6 +73,13 @@ struct GeneralAiPane: View {
             PromptLibraryView { (name: String, content: String) in
                 preferences.addCustomPrompt(name: name, content: content)
             }
+        }
+        .alert("", isPresented: $showingTestResult) {
+            Button(NSLocalizedString("confirm", comment: "确定")) {
+                showingTestResult = false
+            }
+        } message: {
+            Text(testResult)
         }
     }
     
@@ -208,6 +221,26 @@ struct GeneralAiPane: View {
                     .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
+                // 测试按钮
+                Button(action: {
+                    testCustomAIService()
+                }) {
+                    HStack(spacing: 4) {
+                        if isTestingService {
+                            ProgressView()
+                                .scaleEffect(0.6)
+                                .frame(width: 12, height: 12)
+                        } else {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 12))
+                        }
+                    }
+                    .foregroundColor(.accentColor)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .disabled(isTestingService)
+                .help(NSLocalizedString("test_connection", comment: "验证连接"))
+                
                 // 删除按钮
                 Button(action: {
                     if let customService = getCurrentCustomService() {
@@ -219,6 +252,7 @@ struct GeneralAiPane: View {
                         .font(.system(size: 12))
                 }
                 .buttonStyle(PlainButtonStyle())
+                .help(NSLocalizedString("delete", comment: "删除"))
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
@@ -284,12 +318,33 @@ struct GeneralAiPane: View {
     // 通用的提供商配置视图
     private var providerConfigurationView: some View {
         VStack(spacing: 0) {
-            // 配置标题和帮助按钮
+            // 配置标题和操作按钮
             HStack {
                 Text(providerConfigTitle)
                     .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
+                // 测试连接按钮
+                Button(action: {
+                    testBuiltInService()
+                }) {
+                    HStack(spacing: 4) {
+                        if isTestingService {
+                            ProgressView()
+                                .scaleEffect(0.6)
+                                .frame(width: 12, height: 12)
+                        } else {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 12))
+                        }
+                    }
+                    .foregroundColor(.accentColor)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .disabled(isTestingService)
+                .help(NSLocalizedString("test_connection", comment: "验证连接"))
+                
+                // 帮助按钮
                 Button(action: {
                     if let helpUrl = preferences.defaultProviders[preferences.selectedProvider]?.helpUrl,
                        let url = URL(string: helpUrl) {
@@ -871,5 +926,153 @@ struct GeneralAiPane: View {
         let trimmedApiKey = newServiceApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedModel = newServiceModel.trimmingCharacters(in: .whitespacesAndNewlines)
         return !trimmedName.isEmpty && !trimmedBaseURL.isEmpty && !trimmedApiKey.isEmpty && !trimmedModel.isEmpty
+    }
+    
+    /// 测试自定义AI服务连接
+    private func testCustomAIService() {
+        guard let customService = getCurrentCustomService() else {
+            testResult = NSLocalizedString("test_failed", comment: "验证失败")
+            showingTestResult = true
+            return
+        }
+        
+        // 验证配置完整性
+        if customService.baseURL.isEmpty || customService.apiKey.isEmpty || customService.model.isEmpty {
+            testResult = NSLocalizedString("test_failed", comment: "验证失败")
+            showingTestResult = true
+            return
+        }
+        
+        isTestingService = true
+        testResult = ""
+        
+        // 临时保存当前配置
+        let originalProvider = preferences.selectedProvider
+        
+        // 临时切换到当前自定义服务进行测试
+        preferences.selectedProvider = "custom_\(customService.id.uuidString)"
+        
+        // 使用AiService进行测试
+        AiService.shared.chat(
+            text: "Hello, this is a connection test.",
+            chatHistory: [[String: String]](),
+            systemMessage: "",
+            completion: {
+                DispatchQueue.main.async {
+                    // 恢复原始配置
+                    self.preferences.selectedProvider = originalProvider
+                    
+                    self.isTestingService = false
+                    self.testResult = NSLocalizedString("test_success", comment: "验证成功")
+                    self.showingTestResult = true
+                }
+            },
+            onError: { _ in
+                DispatchQueue.main.async {
+                    // 恢复原始配置
+                    self.preferences.selectedProvider = originalProvider
+                    
+                    self.isTestingService = false
+                    self.testResult = NSLocalizedString("test_failed", comment: "验证失败")
+                    self.showingTestResult = true
+                }
+            }
+        )
+    }
+    
+    /// 获取指定提供商的API密钥
+    private func getApiKeyForProvider(_ provider: String) -> String {
+        switch provider {
+        case "zhipu":
+            return preferences.zhipuApiKey
+        case "deepseek":
+            return preferences.deepseekApiKey
+        case "volcengine":
+            return preferences.volcengineApiKey
+        case "siliconflow":
+            return preferences.siliconflowApiKey
+        case "openai":
+            return preferences.openaiApiKey
+        case "google_gemini":
+            return preferences.googleGeminiApiKey
+        case "grok":
+            return preferences.grokApiKey
+        case "claude":
+            return preferences.claudeApiKey
+        case "openrouter":
+            return preferences.openrouterApiKey
+        default:
+            return ""
+        }
+    }
+    
+    /// 获取指定提供商的模型
+    private func getModelForProvider(_ provider: String) -> String {
+        switch provider {
+        case "zhipu":
+            return preferences.selectedZhipuModel
+        case "deepseek":
+            return preferences.selectedDeepseekModel
+        case "volcengine":
+            return preferences.selectedVolcengineModel
+        case "siliconflow":
+            return preferences.selectedSiliconflowModel
+        case "openai":
+            return preferences.selectedOpenAIModel
+        case "google_gemini":
+            return preferences.selectedGoogleGeminiModel
+        case "grok":
+            return preferences.selectedGrokModel
+        case "claude":
+            return preferences.selectedClaudeModel
+        case "openrouter":
+            return preferences.selectedOpenrouterModel
+        default:
+            return ""
+        }
+    }
+    
+    /// 测试内置AI服务连接
+    private func testBuiltInService() {
+        let currentProvider = preferences.selectedProvider
+        let apiKey = getApiKeyForProvider(currentProvider)
+        let model = getModelForProvider(currentProvider)
+        
+        // 验证配置完整性
+        if apiKey.isEmpty {
+            testResult = NSLocalizedString("test_failed", comment: "验证失败")
+            showingTestResult = true
+            return
+        }
+        
+        if model.isEmpty {
+            testResult = NSLocalizedString("test_failed", comment: "验证失败")
+            showingTestResult = true
+            return
+        }
+        
+        isTestingService = true
+        testResult = ""
+        
+        // 使用AiService进行测试
+        AiService.shared.chat(
+            text: "Hello, this is a connection test.",
+            chatHistory: [[String: String]](),
+            systemMessage: "",
+            completion: {
+                DispatchQueue.main.async {
+                    self.isTestingService = false
+                    self.testResult = NSLocalizedString("test_success", comment: "验证成功")
+                    self.showingTestResult = true
+                }
+            },
+            onError: { _ in
+                DispatchQueue.main.async {
+                    self.isTestingService = false
+                    self.testResult = NSLocalizedString("test_failed", comment: "验证失败")
+                    self.showingTestResult = true
+                }
+            }
+        )
     }
 }

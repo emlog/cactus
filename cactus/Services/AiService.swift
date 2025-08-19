@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import AppKit
 
 enum AIActionType {
     case basic
@@ -389,11 +390,20 @@ class AiService: NSObject, URLSessionDataDelegate {
                         self.errorHandler?(friendlyErrorMessage)
                     }
                 }
-            }
-            
-            // 只有在非手动停止的情况下才调用完成回调
-            if !self.isManualStop {
-                self.completionHandler?()
+            } else {
+                // 没有网络错误，但需要检查HTTP状态码
+                if !self.hasReceivedValidResponse {
+                    // HTTP状态码不是成功状态（>=400），调用错误回调
+                    if !self.isManualStop {
+                        let errorMessage = NSLocalizedString("error_request_failed", comment: "请求失败")
+                        self.errorHandler?(errorMessage)
+                    }
+                } else {
+                    // HTTP状态码正常且没有网络错误，调用成功回调
+                    if !self.isManualStop {
+                        self.completionHandler?()
+                    }
+                }
             }
             
             // 清除回调引用，防止循环引用
