@@ -8,19 +8,16 @@ struct ModelSelectionMenuView: View {
         Menu {
             Menu(NSLocalizedString("service", comment: "AI服务")) {
                 ForEach(preferences.providerKeys, id: \.self) { key in
-                    if let provider = preferences.defaultProviders[key] {
-                        if provider.model.isEmpty || provider.apiKey.isEmpty {
-                            // noting
-                        } else {
-                            Button(action: {
-                                preferences.selectedProvider = key
-                            }) {
-                                HStack {
-                                    Text(provider.requiresCustomConfig ? "\(provider.title) - \(getModelDisplayName(for: provider))" : provider.title)
-                                    Spacer()
-                                    if preferences.selectedProvider == key {
-                                        Image(systemName: "checkmark")
-                                    }
+                    if let provider = preferences.defaultProviders[key],
+                       !provider.model.isEmpty && !provider.apiKey.isEmpty {
+                        Button(action: {
+                            preferences.selectedProvider = key
+                        }) {
+                            HStack {
+                                Text(provider.requiresCustomConfig ? "\(provider.title) - \(getModelDisplayName(for: provider))" : provider.title)
+                                Spacer()
+                                if preferences.selectedProvider == key {
+                                    Image(systemName: "checkmark")
                                 }
                             }
                         }
@@ -87,6 +84,7 @@ struct ModelSelectionMenuView: View {
         } label: {
             Image(systemName: "ellipsis")
         }
+        .help(NSLocalizedString("setting", comment: "便好设置"))
         .menuIndicator(.hidden) // Hide the menu indicator arrow
         .menuStyle(BorderlessButtonMenuStyle())
         .frame(maxWidth: 20, alignment: .trailing)
