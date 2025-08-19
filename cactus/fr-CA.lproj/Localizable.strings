@@ -30,9 +30,9 @@
 "shortcut_ocr_translate" = "Raccourci : Traduire une capture";
 "shortcut_ocr_translate_description" = "Capturer une zone de l'écran, faire l'OCR et traduire";
 "shortcut_reset" = "Raccourci : Réinitialiser";
-"shortcut_reset_description" = "Effacer rapidement le contenu des fenêtres d'entrée et de sortie";
+"shortcut_reset_description" = "Réinitialiser rapidement le contenu des fenêtres d'entrée et de sortie";
 "shortcut_copy_output" = "Raccourci : Copier la sortie";
-"shortcut_copy_output_description" = "Copier rapidement le contenu de la sortie dans le presse-papiers";
+"shortcut_copy_output_description" = "Copier rapidement le contenu de sortie dans le presse-papiers";
 "default_main_function" = "Action par défaut";
 "default_main_function_description" = "Action par défaut déclenchée en appuyant sur la touche Retour dans la fenêtre principale";
 
@@ -132,6 +132,11 @@
 "error_request_failed" = "Échec de la requête, changez de modèle ou vérifiez la connexion";
 "error_empty_api_key" = "Veuillez saisir la clé API";
 "error_empty_model" = "Veuillez sélectionner un modèle pour ce service";
+
+// ai service test
+"test_connection" = "Tester la connexion";
+"test_success" = "Test réussi";
+"test_failed" = "Test échoué";
 
 // common
 "title" = "Titre";

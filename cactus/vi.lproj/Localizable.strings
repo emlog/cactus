@@ -91,6 +91,11 @@
 "openrouter_config" = "Cài Đặt OpenRouter";
 "custom_service_config" = "Cài đặt dịch vụ AI tùy chỉnh";
 
+// ai service test
+"test_connection" = "Kiểm tra kết nối";
+"test_success" = "Kiểm tra thành công";
+"test_failed" = "Kiểm tra thất bại";
+
 // main
 "pop_text_empty" = "Không có văn bản để sao chép";
 "pop_translate_text_empty" = "Vui lòng nhập nội dung để dịch";

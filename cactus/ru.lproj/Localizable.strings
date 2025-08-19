@@ -133,6 +133,11 @@
 "error_empty_api_key" = "Введите API-ключ";
 "error_empty_model" = "Выберите модель AI";
 
+// ai service test
+"test_connection" = "Тест соединения";
+"test_success" = "Тест успешен";
+"test_failed" = "Тест не пройден";
+
 // common
 "title" = "Название";
 "alert_ok" = "ОК";

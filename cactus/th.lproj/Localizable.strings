@@ -91,6 +91,11 @@
 "openrouter_config" = "การตั้งค่า OpenRouter";
 "custom_service_config" = "การตั้งค่าบริการ AI แบบกำหนดเอง";
 
+// ai service test
+"test_connection" = "ทดสอบการเชื่อมต่อ";
+"test_success" = "ทดสอบสำเร็จ";
+"test_failed" = "ทดสอบล้มเหลว";
+
 // main
 "pop_text_empty" = "ไม่มีเนื้อหาให้คัดลอก";
 "pop_translate_text_empty" = "กรุณากรอกเนื้อหาที่ต้องการแปล";

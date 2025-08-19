@@ -133,6 +133,11 @@
 "error_empty_api_key" = "Masukkan kunci API untuk layanan AI ini";
 "error_empty_model" = "Pilih model untuk layanan AI ini";
 
+// ai service test
+"test_connection" = "Uji koneksi";
+"test_success" = "Tes berhasil";
+"test_failed" = "Tes gagal";
+
 // common
 "title" = "Judul";
 "alert_ok" = "OK";

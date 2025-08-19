@@ -133,6 +133,11 @@
 "error_empty_api_key" = "Veuillez saisir la clé API";
 "error_empty_model" = "Veuillez sélectionner un modèle pour ce service";
 
+// ai service test
+"test_connection" = "Tester la connexion";
+"test_success" = "Test réussi";
+"test_failed" = "Test échoué";
+
 // common
 "title" = "Titre";
 "alert_ok" = "OK";

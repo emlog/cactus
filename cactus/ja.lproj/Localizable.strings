@@ -133,6 +133,11 @@
 "error_empty_api_key" = "現在のAIサービスのAPIキーを入力してください";
 "error_empty_model" = "現在のAIサービスに使用するモデルを選択してください";
 
+// ai service test
+"test_connection" = "接続テスト";
+"test_success" = "テスト成功";
+"test_failed" = "テスト失敗";
+
 // common
 "title" = "名前";
 "alert_ok" = "OK";

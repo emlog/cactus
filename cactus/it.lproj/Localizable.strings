@@ -133,6 +133,11 @@
 "error_empty_api_key" = "Inserisci la chiave API";
 "error_empty_model" = "Seleziona un modello AI";
 
+// ai service test
+"test_connection" = "Testa connessione";
+"test_success" = "Test riuscito";
+"test_failed" = "Test fallito";
+
 // common
 "title" = "Titolo";
 "alert_ok" = "OK";

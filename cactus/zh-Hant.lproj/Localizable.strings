@@ -133,6 +133,11 @@
 "error_empty_api_key" = "請填寫目前 AI 服務的金鑰";
 "error_empty_model" = "請為目前 AI 服務選擇模型";
 
+// ai service test
+"test_connection" = "驗證連接";
+"test_success" = "驗證成功";
+"test_failed" = "驗證失敗";
+
 // common
 "title" = "名稱";
 "alert_ok" = "好";
