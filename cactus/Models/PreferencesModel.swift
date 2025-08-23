@@ -166,8 +166,8 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.deepseek.com/api_keys",
             requiresCustomConfig: true,
             availableModels: [
-                ModelOption(key: "deepseek-chat", displayName: "DeepSeek-V3"),
-                ModelOption(key: "deepseek-reasoner", displayName: "DeepSeek-R1")
+                ModelOption(key: "deepseek-chat", displayName: "DeepSeek-V3.1"),
+                ModelOption(key: "deepseek-reasoner", displayName: "DeepSeek-V3.1 (Thinking)")
             ]
         ),
         "volcengine": ProviderSettings(
