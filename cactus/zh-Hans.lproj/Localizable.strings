@@ -210,12 +210,11 @@
 "tap_to_show_definition" = "点击查看释义";
 "forgot" = "不记得";
 "remembered" = "记得";
-"study_completed" = "学习完成！";
+"study_completed" = "完成";
 "no_words_to_review" = "暂无需要复习的单词";
-"all_words_reviewed" = "所有单词都已按计划复习完成";
 "total_words" = "待复习单词数";
 "total_studied" = "学习总数";
 "accuracy_rate" = "正确率";
-"study_again" = "再次学习";
+"study_again" = "重新开始";
 
 // 简体中文

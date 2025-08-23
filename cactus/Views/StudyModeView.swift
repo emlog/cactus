@@ -33,7 +33,7 @@ struct StudyModeView: View {
     @State private var studyCompleted = false
     @State private var studyStats = StudyStats()
     
-
+    
     
     var body: some View {
         VStack(spacing: 0) {
@@ -195,12 +195,8 @@ struct StudyModeView: View {
                 .font(.system(size: 60))
                 .foregroundColor(.secondary)
             
-            Text("暂无需要复习的单词")
+            Text(NSLocalizedString("no_words_to_review", comment: "暂无单词需要复习"))
                 .font(.title2)
-                .foregroundColor(.secondary)
-            
-            Text("请先添加一些单词到词汇本")
-                .font(.body)
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -212,11 +208,11 @@ struct StudyModeView: View {
         VStack(spacing: 30) {
             // 完成图标
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 80))
+                .font(.system(size: 20))
                 .foregroundColor(.green)
             
             // 完成标题
-            Text("学习完成！")
+            Text(NSLocalizedString("study_completed", comment: "完成"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
@@ -225,30 +221,21 @@ struct StudyModeView: View {
             VStack(spacing: 16) {
                 HStack(spacing: 20) {
                     StatCard(
-                        title: "总单词数",
+                        title: NSLocalizedString("total_words", comment: "总单词数"),
                         value: "\(studyStats.totalWords)",
                         icon: "book",
                         color: .blue
                     )
                     
                     StatCard(
-                        title: "已完成",
+                        title: NSLocalizedString("study_completed", comment: "完成单词数"),
                         value: "\(studyStats.completedCount)",
                         icon: "checkmark.circle",
                         color: .green
                     )
-                }
-                
-                HStack(spacing: 20) {
-                    StatCard(
-                        title: "记住了",
-                        value: "\(studyStats.rememberedCount)",
-                        icon: "brain",
-                        color: .orange
-                    )
                     
                     StatCard(
-                        title: "准确率",
+                        title: NSLocalizedString("accuracy_rate", comment: "准确率"),
                         value: String(format: "%.1f%%", studyStats.accuracy * 100),
                         icon: "target",
                         color: .purple
@@ -256,19 +243,6 @@ struct StudyModeView: View {
                 }
             }
             .padding(.horizontal, 20)
-            
-            // 操作按钮
-            HStack(spacing: 16) {
-                Button("重新开始") {
-                    resetStudySession()
-                }
-                .buttonStyle(.borderedProminent)
-                
-                Button("关闭") {
-                    dismiss()
-                }
-                .buttonStyle(.bordered)
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
