@@ -154,20 +154,6 @@ struct StudyModeView: View {
                     icon: "book",
                     color: .blue
                 )
-                
-                StatCard(
-                    title: NSLocalizedString("remembered", comment: "记得单词数"),
-                    value: "\(studyStats.rememberedCount)",
-                    icon: "checkmark.circle",
-                    color: .green
-                )
-                
-                StatCard(
-                    title: NSLocalizedString("forgot", comment: "不记得单词数"),
-                    value: "\(studyStats.forgottenCount)",
-                    icon: "xmark.circle",
-                    color: .red
-                )
             }
         }
     }
@@ -208,7 +194,7 @@ struct StudyModeView: View {
         VStack(spacing: 30) {
             // 完成图标
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 20))
+                .font(.system(size: 60))
                 .foregroundColor(.green)
             
             // 完成标题
@@ -216,33 +202,6 @@ struct StudyModeView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            
-            // 统计信息卡片
-            VStack(spacing: 16) {
-                HStack(spacing: 20) {
-                    StatCard(
-                        title: NSLocalizedString("total_words", comment: "总单词数"),
-                        value: "\(studyStats.totalWords)",
-                        icon: "book",
-                        color: .blue
-                    )
-                    
-                    StatCard(
-                        title: NSLocalizedString("study_completed", comment: "完成单词数"),
-                        value: "\(studyStats.completedCount)",
-                        icon: "checkmark.circle",
-                        color: .green
-                    )
-                    
-                    StatCard(
-                        title: NSLocalizedString("accuracy_rate", comment: "准确率"),
-                        value: String(format: "%.1f%%", studyStats.accuracy * 100),
-                        icon: "target",
-                        color: .purple
-                    )
-                }
-            }
-            .padding(.horizontal, 20)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)

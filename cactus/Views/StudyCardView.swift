@@ -10,6 +10,7 @@ import SwiftUI
 import CoreData
 import Foundation
 import AVFoundation
+import MarkdownUI
 
 /// 背单词卡片视图
 struct StudyCardView: View {
@@ -95,7 +96,7 @@ struct StudyCardView: View {
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
                 }
-
+                
                 HStack {
                     // 语音播放按钮
                     Button(action: {
@@ -134,27 +135,25 @@ struct StudyCardView: View {
                 // 释义显示区域
                 if showDefinition {
                     ScrollView {
-                        Text(word.definition ?? "")
-                            .font(.body)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.leading)
+                        Markdown(word.definition ?? "")
+                            .markdownTheme(.cactusMD)
                             .textSelection(.enabled)
-                            .padding(.horizontal, 8)
                     }
-                    .frame(maxHeight: 300)
-                    .padding(.horizontal, 4)
-                    .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
                     
                     // 下一个按钮 - 当显示释义时总是显示
                     nextButtonArea
-                        .padding(.top, 20)
+                        .padding(.top, 10)
                 }
             }
-            .frame(minHeight: 200)
+            .frame(minHeight: 260)
             .padding(.horizontal, 20)
             .contentShape(Rectangle())
             
-            Spacer(minLength: 20)
+            Spacer(minLength: 10)
         }
     }
     
@@ -221,17 +220,17 @@ struct StudyCardView: View {
     /// 下一个按钮区域
     private var nextButtonArea: some View {
         Button(action: {
-             withAnimation(.easeInOut(duration: 0.3)) {
-                 cardOffset = CGSize(width: -200, height: 0)
-                 cardRotation = -15
-             }
-             
-             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                 onNextWord()
-                 // 重置卡片状态以显示下一个单词
-                 resetCardState()
-             }
-         }) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                cardOffset = CGSize(width: -200, height: 0)
+                cardRotation = -15
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                onNextWord()
+                // 重置卡片状态以显示下一个单词
+                resetCardState()
+            }
+        }) {
             HStack(spacing: 8) {
                 Image(systemName: "arrow.right.circle")
                     .font(.title3)
@@ -250,7 +249,7 @@ struct StudyCardView: View {
         .transition(.move(edge: .bottom).combined(with: .opacity))
     }
     
-
+    
     
     /// 语音播放功能
     private func speakWord(_ word: String) {

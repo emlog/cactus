@@ -208,9 +208,9 @@
 "start" = "开始";
 "next_word" = "下一个";
 "tap_to_show_definition" = "点击查看释义";
-"forgot" = "不记得";
+"forgot" = "忘记";
 "remembered" = "记得";
-"study_completed" = "完成";
+"study_completed" = "恭喜，完成了今天的复习计划";
 "no_words_to_review" = "暂无需要复习的单词";
 "total_words" = "待复习单词数";
 "total_studied" = "学习总数";
