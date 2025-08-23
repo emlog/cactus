@@ -205,15 +205,15 @@
 
 // 背单词功能
 "study_mode" = "背单词";
-"start_study" = "开始学习";
-"next_word" = "下一个单词";
+"start" = "开始";
+"next_word" = "下一个";
 "tap_to_show_definition" = "点击查看释义";
 "forgot" = "不记得";
 "remembered" = "记得";
 "study_completed" = "学习完成！";
 "no_words_to_review" = "暂无需要复习的单词";
 "all_words_reviewed" = "所有单词都已按计划复习完成";
-"total_words" = "总单词数";
+"total_words" = "待复习单词数";
 "total_studied" = "学习总数";
 "accuracy_rate" = "正确率";
 "study_again" = "再次学习";

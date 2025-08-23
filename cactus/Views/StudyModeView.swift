@@ -93,9 +93,9 @@ struct StudyModeView: View {
                     showCard = true
                 }) {
                     HStack(spacing: 12) {
-                        Image(systemName: "brain.head.profile")
+                        Image(systemName: "play.circle")
                             .font(.title2)
-                        Text("开始学习")
+                        Text(NSLocalizedString("start", comment: "开始学习"))
                             .font(.headline)
                     }
                     .foregroundColor(.white)
@@ -123,7 +123,7 @@ struct StudyModeView: View {
     /// 标题栏视图 - 参考提示词库样式
     private var headerView: some View {
         HStack {
-            Text("背单词")
+            Text(NSLocalizedString("study_mode", comment: "背单词"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -149,21 +149,21 @@ struct StudyModeView: View {
             
             HStack(spacing: 30) {
                 StatCard(
-                    title: "待复习单词数",
+                    title: NSLocalizedString("total_words", comment: "总单词数"),
                     value: "\(studyStats.totalWords)",
                     icon: "book",
                     color: .blue
                 )
                 
                 StatCard(
-                    title: "记得",
+                    title: NSLocalizedString("remembered", comment: "记得单词数"),
                     value: "\(studyStats.rememberedCount)",
                     icon: "checkmark.circle",
                     color: .green
                 )
                 
                 StatCard(
-                    title: "不记得",
+                    title: NSLocalizedString("forgot", comment: "不记得单词数"),
                     value: "\(studyStats.forgottenCount)",
                     icon: "xmark.circle",
                     color: .red
