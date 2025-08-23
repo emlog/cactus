@@ -83,11 +83,9 @@ struct VocabularyView: View {
                             Button(action: {
                                 showStudyMode = true
                             }) {
-                                HStack(spacing: 6) {
-                                    Image(systemName: "brain.head.profile")
-                                        .font(.caption)
-                                    Text(NSLocalizedString("study_mode", comment: "背单词"))
-                                        .font(.caption)
+                                HStack(spacing: 3) {
+                                    Image(systemName: "play.circle")
+                                        .font(.title2)
                                 }
                                 .foregroundColor(Color.accentColor)
                                 .padding(.horizontal, 12)
@@ -97,7 +95,7 @@ struct VocabularyView: View {
                         }
                     }
                 }
-                .background(Color(NSColor.controlBackgroundColor))
+                .background(Color(NSColor.windowBackgroundColor))
             }
             .frame(minWidth: 120, idealWidth: 120, maxWidth: 190)
             

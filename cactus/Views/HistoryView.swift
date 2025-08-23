@@ -99,7 +99,7 @@ struct HistoryView: View {
                         }
                     }
                 }
-                .background(Color(NSColor.controlBackgroundColor))
+                .background(Color(NSColor.windowBackgroundColor))
             }
             .frame(minWidth: 120, idealWidth: 120, maxWidth: 190)
             
