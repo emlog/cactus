@@ -47,7 +47,7 @@ struct StudyModeView: View {
                 studyView
             }
         }
-        .frame(width: 800, height: 600)
+        .frame(width: 600, height: 400)
         .background(Color(NSColor.windowBackgroundColor))
         .overlay(
             // 卡片弹窗
@@ -88,30 +88,6 @@ struct StudyModeView: View {
             
             // 中央开始按钮区域
             VStack(spacing: 20) {
-                // 当前单词预览
-                if currentWordIndex < wordsToReview.count {
-                    VStack(spacing: 12) {
-                        Text("下一个单词")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                        
-                        Text(wordsToReview[currentWordIndex].word ?? "")
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundColor(.primary)
-                    }
-                    .padding(.vertical, 20)
-                    .padding(.horizontal, 30)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(.controlBackgroundColor))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-                            )
-                            .shadow(color: .primary.opacity(0.1), radius: 8, x: 0, y: 4)
-                    )
-                }
-                
                 // 开始学习按钮
                 Button(action: {
                     showCard = true
@@ -124,7 +100,7 @@ struct StudyModeView: View {
                     }
                     .foregroundColor(.white)
                     .padding(.horizontal, 32)
-                    .padding(.vertical, 16)
+                    .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
                             .fill(Color.accentColor)
@@ -141,7 +117,7 @@ struct StudyModeView: View {
             studyProgress
         }
         .padding(.horizontal, 40)
-        .padding(.vertical, 30)
+        .padding(.vertical, 10)
     }
     
     /// 标题栏视图 - 参考提示词库样式
@@ -173,7 +149,7 @@ struct StudyModeView: View {
             
             HStack(spacing: 30) {
                 StatCard(
-                    title: "总单词数",
+                    title: "待复习单词数",
                     value: "\(studyStats.totalWords)",
                     icon: "book",
                     color: .blue
@@ -323,31 +299,30 @@ struct StudyModeView: View {
         }
         studyStats.completedCount += 1
         
-        // 移动到下一个单词
-        currentWordIndex += 1
-        
-        // 检查是否完成所有单词
-        if currentWordIndex >= wordsToReview.count {
-            studyCompleted = true
-            showCard = false
-        } else {
-            // 如果是"记得"按钮，直接显示下一个单词卡片
-            // 如果是"不记得"按钮，关闭当前卡片返回主界面
-            if !remembered {
+        // 如果是"记得"按钮，移动到下一个单词
+        if remembered {
+            // 移动到下一个单词
+            currentWordIndex += 1
+            
+            // 检查是否完成所有单词
+            if currentWordIndex >= wordsToReview.count {
+                studyCompleted = true
                 showCard = false
             } else {
-                // 对于"记得"的情况，保持showCard = true，让卡片继续显示下一个单词
+                // 保持showCard = true，让卡片继续显示下一个单词
                 // 通过改变id来强制重新创建StudyCardView，确保新单词被朗读
                 showCard = true
             }
         }
+        // 如果是"不记得"按钮，不移动到下一个单词，保持当前卡片显示以便查看释义
+        // 用户需要点击"下一个单词"按钮来继续
     }
     
     /// 处理下一个单词按钮点击
     private func handleNextWord() {
         guard currentWordIndex < wordsToReview.count else { return }
         
-        // 移动到下一个单词，但不更新学习状态
+        // 移动到下一个单词
         currentWordIndex += 1
         
         // 检查是否完成所有单词
@@ -400,10 +375,4 @@ struct StatCard: View {
                 .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         )
     }
-}
-
-// MARK: - 预览
-#Preview {
-    StudyModeView()
-        .frame(width: 800, height: 600)
 }

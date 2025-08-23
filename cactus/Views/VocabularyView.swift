@@ -12,6 +12,7 @@ import MarkdownUI
 struct VocabularyView: View {
     @ObservedObject private var vocabularyManager = VocabularyManager.shared
     @State private var selectedWord: WordEntry?
+    @State private var showStudyMode = false
     
     // 添加语音朗读相关状态
     @State private var isSpeakingWord = false
@@ -67,14 +68,34 @@ struct VocabularyView: View {
                     }
                 }
                 
-                // 底部显示总单词数量
-                HStack {
-                    Text(NSLocalizedString("sum", comment: "共计") + "： \(vocabularyManager.wordEntries.count)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                    Spacer()
+                // 底部显示总单词数量和背单词按钮
+                VStack(spacing: 8) {
+                    // 总单词数量
+                    HStack {
+                        Text(NSLocalizedString("sum", comment: "共计") + "： \(vocabularyManager.wordEntries.count)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                        Spacer()
+                        // 背单词按钮
+                        if !vocabularyManager.wordEntries.isEmpty {
+                            Button(action: {
+                                showStudyMode = true
+                            }) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "brain.head.profile")
+                                        .font(.caption)
+                                    Text(NSLocalizedString("study_mode", comment: "背单词"))
+                                        .font(.caption)
+                                }
+                                .foregroundColor(Color.accentColor)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
                 }
                 .background(Color(NSColor.controlBackgroundColor))
             }
@@ -194,8 +215,12 @@ struct VocabularyView: View {
             }
         }
         .onDisappear {
-            // 窗口关闭时停止朗读
+            // 停止语音播放
             stopSpeaking()
+        }
+        .sheet(isPresented: $showStudyMode) {
+            StudyModeView()
+                .frame(minWidth: 600, minHeight: 400)
         }
     }
     

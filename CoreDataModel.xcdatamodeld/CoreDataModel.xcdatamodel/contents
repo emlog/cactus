@@ -14,5 +14,10 @@
         <attribute name="definition" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="word" optional="YES" attributeType="String"/>
+        <attribute name="reviewCount" optional="YES" attributeType="Integer 32" defaultValue="0" usesScalarValueType="YES"/>
+        <attribute name="lastReviewDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="nextReviewDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="easeFactor" optional="YES" attributeType="Float" defaultValue="2.5" usesScalarValueType="YES"/>
+        <attribute name="interval" optional="YES" attributeType="Integer 32" defaultValue="1" usesScalarValueType="YES"/>
     </entity>
 </model>

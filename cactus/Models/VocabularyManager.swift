@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import SwiftUI
 
 class VocabularyManager: ObservableObject {
     static let shared = VocabularyManager()
@@ -78,6 +79,8 @@ class VocabularyManager: ObservableObject {
                 newEntry.word = word
                 newEntry.definition = definition
                 newEntry.timestamp = Date()
+                // 初始化复习参数
+                initializeReviewParameters(for: newEntry)
             }
             
             saveContext()
@@ -100,6 +103,76 @@ class VocabularyManager: ObservableObject {
             wordEntries = try context.fetch(request)
         } catch {
             print("Fetch error: \(error)")
+        }
+    }
+    
+    // MARK: - 艾宾浩斯遗忘曲线相关方法
+    
+    /// 获取需要复习的单词
+    func getWordsForReview() -> [WordEntry] {
+        let request: NSFetchRequest<WordEntry> = WordEntry.fetchRequest()
+        let now = Date()
+        
+        // 获取所有单词，然后筛选需要复习的
+        do {
+            let allWords = try context.fetch(request)
+            return allWords.filter { word in
+                // 如果从未复习过，则需要复习
+                guard let nextReviewDate = word.nextReviewDate else {
+                    return true
+                }
+                // 如果到了复习时间，则需要复习
+                return now >= nextReviewDate
+            }
+        } catch {
+            print("获取复习单词失败: \(error)")
+            return []
+        }
+    }
+    
+    /// 更新单词的复习状态
+    /// - Parameters:
+    ///   - word: 要更新的单词
+    ///   - remembered: 是否记住了（true: 记得, false: 不记得）
+    func updateWordReviewStatus(_ word: WordEntry, remembered: Bool) {
+        let now = Date()
+        word.lastReviewDate = now
+        word.reviewCount += 1
+        
+        if remembered {
+            // 记住了，增加间隔
+            if word.reviewCount == 1 {
+                word.interval = 1
+            } else if word.reviewCount == 2 {
+                word.interval = 6
+            } else {
+                // 使用艾宾浩斯公式：新间隔 = 旧间隔 × 难度系数
+                let newInterval = Int32(Float(word.interval) * word.easeFactor)
+                word.interval = max(newInterval, word.interval + 1)
+            }
+            
+            // 调整难度系数（记住了就稍微增加难度系数）
+            word.easeFactor = max(1.3, word.easeFactor + 0.1)
+        } else {
+            // 没记住，重置间隔并降低难度系数
+            word.interval = 1
+            word.easeFactor = max(1.3, word.easeFactor - 0.2)
+        }
+        
+        // 计算下次复习时间
+        let nextReviewDate = Calendar.current.date(byAdding: .day, value: Int(word.interval), to: now) ?? now
+        word.nextReviewDate = nextReviewDate
+        
+        saveContext()
+    }
+    
+    /// 初始化新单词的复习参数
+    private func initializeReviewParameters(for word: WordEntry) {
+        if word.nextReviewDate == nil {
+            word.reviewCount = 0
+            word.easeFactor = 2.5
+            word.interval = 1
+            word.nextReviewDate = Date() // 新单词立即可以复习
         }
     }
 }
