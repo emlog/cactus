@@ -143,9 +143,16 @@ struct StudyCardView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 10)
                     
-                    // 下一个按钮 - 当显示释义时总是显示
-                    nextButtonArea
-                        .padding(.top, 10)
+                    // 显示释义后的按钮区域
+                    if hasForgotten {
+                        // 如果已点击忘记，显示下一个按钮
+                        nextButtonArea
+                            .padding(.top, 10)
+                    } else {
+                        // 如果是点击显示释义，显示忘记和记得按钮
+                        definitionButtonArea
+                            .padding(.top, 10)
+                    }
                 }
             }
             .frame(minHeight: 260)
@@ -172,6 +179,64 @@ struct StudyCardView: View {
                     Image(systemName: "xmark.circle")
                         .font(.title3)
                     Text(NSLocalizedString("forgot", comment: "不记得"))
+                        .font(.headline)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(Color.red)
+                )
+            }
+            .buttonStyle(PlainButtonStyle())
+            
+            // 记得按钮
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    cardOffset = CGSize(width: 200, height: 0)
+                    cardRotation = 15
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    onRemembered()
+                    // 重置卡片状态以显示下一个单词
+                    resetCardState()
+                }
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle")
+                        .font(.title3)
+                    Text(NSLocalizedString("remembered", comment: "记得"))
+                        .font(.headline)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(Color.green)
+                )
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: cardOffset)
+    }
+    
+    /// 显示释义后的按钮区域（忘记/记得）
+    private var definitionButtonArea: some View {
+        HStack(spacing: 20) {
+            // 忘记按钮
+            Button(action: {
+                onForgotten()
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                    hasForgotten = true
+                }
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "xmark.circle")
+                        .font(.title3)
+                    Text(NSLocalizedString("forgot", comment: "忘记"))
                         .font(.headline)
                 }
                 .foregroundColor(.white)
