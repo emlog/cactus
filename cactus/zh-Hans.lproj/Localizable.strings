@@ -213,7 +213,6 @@
 "study_completed" = "恭喜你，完成了本次复习";
 "no_words_to_review" = "暂无需要复习的单词，系统会根据遗忘曲线算法自动安排复习计划";
 "total_words" = "待复习单词数";
-"total_studied" = "学习总数";
 "random_quiz" = "随机复习";
 
 // 简体中文
