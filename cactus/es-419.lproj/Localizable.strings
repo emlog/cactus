@@ -203,4 +203,16 @@
 "category_creative" = "Creativo";
 "category_product" = "Producto";
 
+// Función de estudio de palabras
+"study_mode" = "Estudio de palabras";
+"start" = "Comenzar";
+"next_word" = "Siguiente palabra";
+"tap_to_show_definition" = "Toca para mostrar definición";
+"forgot" = "Olvidé";
+"remembered" = "Recordé";
+"study_completed" = "¡Felicidades! Has completado esta sesión de repaso";
+"no_words_to_review" = "No hay palabras para repasar actualmente. El sistema programará automáticamente los repasos basándose en el algoritmo de la curva del olvido";
+"total_words" = "Palabras para repasar";
+"random_quiz" = "Repaso aleatorio";
+
 // Español

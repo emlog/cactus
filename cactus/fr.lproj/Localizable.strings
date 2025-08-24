@@ -203,4 +203,16 @@
 "category_creative" = "Créatif";
 "category_product" = "Produit";
 
+// Fonction d'apprentissage de mots
+"study_mode" = "Apprentissage de mots";
+"start" = "Commencer";
+"next_word" = "Mot suivant";
+"tap_to_show_definition" = "Appuyer pour afficher la définition";
+"forgot" = "Oublié";
+"remembered" = "Retenu";
+"study_completed" = "Félicitations ! Vous avez terminé cette session de révision";
+"no_words_to_review" = "Aucun mot à réviser actuellement. Le système planifie automatiquement les révisions basées sur l'algorithme de la courbe d'oubli";
+"total_words" = "Mots à réviser";
+"random_quiz" = "Révision aléatoire";
+
 // Français

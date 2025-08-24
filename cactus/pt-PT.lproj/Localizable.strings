@@ -200,7 +200,19 @@
 "category_health" = "Saúde";
 "category_programming" = "Programação";
 "category_writing" = "Escrita";
-"category_creative" = "Criativo";
+"category_creative" = "Criatividade";
 "category_product" = "Produto";
+
+// Função de estudo de palavras
+"study_mode" = "Estudo de palavras";
+"start" = "Começar";
+"next_word" = "Próxima palavra";
+"tap_to_show_definition" = "Toque para ver a definição";
+"forgot" = "Esqueci";
+"remembered" = "Lembrei";
+"study_completed" = "Parabéns, completou esta sessão de revisão!";
+"no_words_to_review" = "Não há palavras para rever de momento. O sistema agendará automaticamente as revisões de acordo com o algoritmo da curva do esquecimento";
+"total_words" = "Palavras pendentes de revisão";
+"random_quiz" = "Revisão aleatória";
 
 // Português Brasileiro

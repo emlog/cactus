@@ -203,4 +203,16 @@
 "category_creative" = "創意";
 "category_product" = "產品";
 
+// 背單詞功能
+"study_mode" = "背單詞";
+"start" = "開始";
+"next_word" = "下一個";
+"tap_to_show_definition" = "點擊查看釋義";
+"forgot" = "忘記";
+"remembered" = "記得";
+"study_completed" = "恭喜你，完成了本次複習";
+"no_words_to_review" = "暫無需要複習的單詞，系統會根據遺忘曲線算法自動安排複習計劃";
+"total_words" = "待複習單詞數";
+"random_quiz" = "隨機複習";
+
 // 繁体中文

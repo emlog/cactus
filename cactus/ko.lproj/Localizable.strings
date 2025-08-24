@@ -203,4 +203,16 @@
 "category_creative" = "창의적";
 "category_product" = "제품";
 
+// 단어 학습 기능
+"study_mode" = "단어 학습";
+"start" = "시작";
+"next_word" = "다음 단어";
+"tap_to_show_definition" = "탭하여 뜻 보기";
+"forgot" = "모르겠음";
+"remembered" = "기억함";
+"study_completed" = "축하합니다! 이번 복습을 완료했습니다";
+"no_words_to_review" = "현재 복습할 단어가 없습니다. 시스템이 망각 곡선 알고리즘에 따라 자동으로 복습 일정을 안배합니다";
+"total_words" = "복습할 단어 수";
+"random_quiz" = "랜덤 복습";
+
 // 한국어

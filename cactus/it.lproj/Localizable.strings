@@ -203,4 +203,16 @@
 "category_creative" = "Creativo";
 "category_product" = "Prodotto";
 
+// Funzione di studio delle parole
+"study_mode" = "Studio delle parole";
+"start" = "Inizia";
+"next_word" = "Parola successiva";
+"tap_to_show_definition" = "Tocca per mostrare la definizione";
+"forgot" = "Dimenticata";
+"remembered" = "Ricordata";
+"study_completed" = "Congratulazioni! Hai completato questa sessione di ripasso";
+"no_words_to_review" = "Non ci sono parole da ripassare al momento. Il sistema programmerà automaticamente i ripassi basandosi sull'algoritmo della curva dell'oblio";
+"total_words" = "Parole da ripassare";
+"random_quiz" = "Ripasso casuale";
+
 // Italiano

@@ -203,4 +203,16 @@
 "category_creative" = "Kreatif";
 "category_product" = "Produk";
 
+// Fitur belajar kosakata
+"study_mode" = "Belajar kosakata";
+"start" = "Mulai";
+"next_word" = "Kata berikutnya";
+"tap_to_show_definition" = "Ketuk untuk melihat definisi";
+"forgot" = "Lupa";
+"remembered" = "Ingat";
+"study_completed" = "Selamat, Anda telah menyelesaikan sesi ulasan ini!";
+"no_words_to_review" = "Tidak ada kata yang perlu diulang saat ini. Sistem akan secara otomatis menjadwalkan ulasan berdasarkan algoritma kurva lupa";
+"total_words" = "Jumlah kata yang perlu diulang";
+"random_quiz" = "Ulasan acak";
+
 // Bahasa Indonesia

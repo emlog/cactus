@@ -203,4 +203,16 @@
 "category_creative" = "Sáng tạo";
 "category_product" = "Sản phẩm";
 
+// 背单词功能
+"study_mode" = "Học từ vựng";
+"start" = "Bắt đầu";
+"next_word" = "Từ tiếp theo";
+"tap_to_show_definition" = "Nhấn để xem định nghĩa";
+"forgot" = "Quên";
+"remembered" = "Nhớ";
+"study_completed" = "Chúc mừng bạn đã hoàn thành bài ôn tập này";
+"no_words_to_review" = "Hiện tại không có từ nào cần ôn tập, hệ thống sẽ tự động sắp xếp kế hoạch ôn tập theo thuật toán đường cong quên lãng";
+"total_words" = "Số từ cần ôn tập";
+"random_quiz" = "Ôn tập ngẫu nhiên";
+
 // Tiếng Việt

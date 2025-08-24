@@ -203,4 +203,16 @@
 "category_creative" = "クリエイティブ";
 "category_product" = "プロダクト";
 
+// 単語学習機能
+"study_mode" = "単語学習";
+"start" = "開始";
+"next_word" = "次の単語";
+"tap_to_show_definition" = "タップして意味を表示";
+"forgot" = "忘れた";
+"remembered" = "覚えた";
+"study_completed" = "おめでとうございます！今回の復習を完了しました";
+"no_words_to_review" = "現在復習する単語がありません。システムが忘却曲線アルゴリズムに基づいて自動的に復習計画を調整します";
+"total_words" = "復習予定単語数";
+"random_quiz" = "ランダム復習";
+
 // 日本語

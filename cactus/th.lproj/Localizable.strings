@@ -203,4 +203,16 @@
 "category_creative" = "สร้างสรรค์";
 "category_product" = "ผลิตภัณฑ์";
 
+// Word Study Feature
+"study_mode" = "การเรียนคำศัพท์";
+"start" = "เริ่ม";
+"next_word" = "คำถัดไป";
+"tap_to_show_definition" = "แตะเพื่อดูความหมาย";
+"forgot" = "ลืม";
+"remembered" = "จำได้";
+"study_completed" = "ยินดีด้วย คุณทำการทบทวนครั้งนี้เสร็จแล้ว";
+"no_words_to_review" = "ไม่มีคำศัพท์ที่ต้องทบทวน ระบบจะจัดตารางทบทวนอัตโนมัติตามอัลกอริทึมเส้นโค้งการลืม";
+"total_words" = "คำศัพท์ที่ต้องทบทวน";
+"random_quiz" = "ทบทวนแบบสุ่ม";
+
 // ภาษาไทย

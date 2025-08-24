@@ -203,4 +203,16 @@
 "category_creative" = "Kreativ";
 "category_product" = "Produkt";
 
+// Wortlernfunktion
+"study_mode" = "Wörter lernen";
+"start" = "Starten";
+"next_word" = "Nächstes Wort";
+"tap_to_show_definition" = "Tippen, um Definition anzuzeigen";
+"forgot" = "Vergessen";
+"remembered" = "Erinnert";
+"study_completed" = "Herzlichen Glückwunsch! Sie haben diese Wiederholungsrunde abgeschlossen";
+"no_words_to_review" = "Derzeit keine Wörter zu wiederholen. Das System plant automatisch Wiederholungen basierend auf dem Vergessenskurven-Algorithmus";
+"total_words" = "Zu wiederholende Wörter";
+"random_quiz" = "Zufällige Wiederholung";
+
 // Deutsch

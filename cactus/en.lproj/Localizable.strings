@@ -203,4 +203,16 @@
 "category_creative" = "Creative";
 "category_product" = "Product";
 
+// Word study feature
+"study_mode" = "Word Study";
+"start" = "Start";
+"next_word" = "Next Word";
+"tap_to_show_definition" = "Tap to Show Definition";
+"forgot" = "Forgot";
+"remembered" = "Remembered";
+"study_completed" = "Congratulations! You've completed this review session";
+"no_words_to_review" = "No words to review at the moment. The system will automatically schedule review sessions based on the forgetting curve algorithm";
+"total_words" = "Words to Review";
+"random_quiz" = "Random Review";
+
 // English
