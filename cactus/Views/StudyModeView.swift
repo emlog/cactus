@@ -26,6 +26,7 @@ struct StudyModeView: View {
     @State private var studyCompleted = false
     @State private var studyStats = StudyStats()
     @State private var showConfetti = false
+    @State private var isRandomQuiz = false
     
     
     
@@ -170,7 +171,7 @@ struct StudyModeView: View {
     
     /// 无单词需要复习界面
     private var noWordsView: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 30) {
             Image(systemName: "book.closed")
                 .font(.system(size: 60))
                 .foregroundColor(.secondary)
@@ -178,6 +179,32 @@ struct StudyModeView: View {
             Text(NSLocalizedString("no_words_to_review", comment: "暂无单词需要复习"))
                 .font(.body)
                 .foregroundColor(.secondary)
+            
+            // 随机抽查按钮
+            Button(action: {
+                startRandomQuiz()
+            }) {
+                HStack(spacing: 12) {
+                    Image(systemName: "shuffle")
+                        .font(.title2)
+                    Text(NSLocalizedString("random_quiz", comment: "随机抽查"))
+                        .font(.headline)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(
+                            LinearGradient(
+                                colors: [.orange, .red],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                )
+            }
+            .buttonStyle(PlainButtonStyle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
@@ -230,6 +257,7 @@ struct StudyModeView: View {
         studyStats.totalWords = wordsToReview.count
         currentWordIndex = 0
         studyCompleted = false
+        isRandomQuiz = false // 重置随机抽查状态
     }
     
     /// 处理单词学习结果
@@ -281,6 +309,21 @@ struct StudyModeView: View {
     private func resetStudySession() {
         studyStats = StudyStats()
         loadWordsForReview()
+    }
+    
+    /// 开始随机复习
+    /// 从所有单词中随机选择最多20个单词进行复习
+    private func startRandomQuiz() {
+        wordsToReview = vocabularyManager.getRandomWordsForQuiz()
+        studyStats.totalWords = wordsToReview.count
+        currentWordIndex = 0
+        studyCompleted = false
+        isRandomQuiz = true
+        
+        // 如果有单词可以抽查，直接开始学习
+        if !wordsToReview.isEmpty {
+            showCard = true
+        }
     }
 }
 

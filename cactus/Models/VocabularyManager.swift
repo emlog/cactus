@@ -185,6 +185,22 @@ class VocabularyManager: ObservableObject {
         saveContext()
     }
     
+    /// 获取随机单词用于抽查
+    /// 从所有单词中随机选择最多20个单词进行复习
+    /// - Returns: 随机选择的单词数组，最多20个
+    func getRandomWordsForQuiz() -> [WordEntry] {
+        let request: NSFetchRequest<WordEntry> = WordEntry.fetchRequest()
+        
+        do {
+            let allWords = try context.fetch(request)
+            let shuffledWords = allWords.shuffled()
+            return Array(shuffledWords.prefix(20))
+        } catch {
+            print("获取随机单词失败: \(error)")
+            return []
+        }
+    }
+    
     /// 初始化新单词的复习参数
     /// 为新添加的单词设置艾宾浩斯算法的初始参数
     /// 算法初始化：建立单词的记忆追踪基线

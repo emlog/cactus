@@ -319,11 +319,16 @@ struct StudyCardView: View {
     private func speakWord(_ word: String) {
         guard !word.isEmpty else { return }
         
+        // 防止重复播放：如果正在播放，先停止
+        if isSpeaking {
+            speechService.stopSpeaking()
+        }
+        
         isSpeaking = true
         speechService.speak(word, speechLanguageCode: "en-US")
         
         // 设置一个定时器来重置speaking状态
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.isSpeaking = false
         }
     }
@@ -337,9 +342,7 @@ struct StudyCardView: View {
             hasForgotten = false
         }
         
-        // 延迟自动朗读新单词
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            speakWord(word.word ?? "")
-        }
+        // 移除自动朗读，避免重复播放
+        // 新单词的朗读将由onAppear处理
     }
 }
