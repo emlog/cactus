@@ -120,7 +120,6 @@ struct StudyCardView: View {
                         Text(NSLocalizedString("tap_to_show_definition", comment: "点击查看释义"))
                             .font(.subheadline)
                             .foregroundColor(.accentColor)
-                            .underline()
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.top, 8)

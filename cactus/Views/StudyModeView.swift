@@ -9,18 +9,11 @@
 import SwiftUI
 import CoreData
 import Foundation
+import AVFoundation
 
 /// 学习统计数据结构
 struct StudyStats {
     var totalWords: Int = 0
-    var completedCount: Int = 0
-    var rememberedCount: Int = 0
-    var forgottenCount: Int = 0
-    
-    var accuracy: Double {
-        guard completedCount > 0 else { return 0 }
-        return Double(rememberedCount) / Double(completedCount)
-    }
 }
 
 /// 背单词模式视图
@@ -32,6 +25,7 @@ struct StudyModeView: View {
     @State private var showCard = false
     @State private var studyCompleted = false
     @State private var studyStats = StudyStats()
+    @State private var showConfetti = false
     
     
     
@@ -182,7 +176,7 @@ struct StudyModeView: View {
                 .foregroundColor(.secondary)
             
             Text(NSLocalizedString("no_words_to_review", comment: "暂无单词需要复习"))
-                .font(.title2)
+                .font(.body)
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -191,20 +185,41 @@ struct StudyModeView: View {
     
     /// 完成界面
     private var completionView: some View {
-        VStack(spacing: 30) {
-            // 完成图标
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.green)
+        ZStack {
+            VStack(spacing: 30) {
+                // 完成图标
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 80))
+                    .foregroundColor(.green)
+                    .scaleEffect(showConfetti ? 1.2 : 1.0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8), value: showConfetti)
+                
+                // 完成标题 - 彩色渐变
+                Text(NSLocalizedString("study_completed", comment: "完成"))
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.pink, .purple, .blue, .cyan],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .scaleEffect(showConfetti ? 1.1 : 1.0)
+                    .animation(.spring(response: 0.8, dampingFraction: 0.7), value: showConfetti)
+            }
             
-            // 完成标题
-            Text(NSLocalizedString("study_completed", comment: "完成"))
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.primary)
+            // 礼花效果
+            if showConfetti {
+                ConfettiView()
+                    .allowsHitTesting(false)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(20)
+        .onAppear {
+            showConfetti = true
+        }
     }
     
     // MARK: - 私有方法
@@ -224,13 +239,7 @@ struct StudyModeView: View {
         let currentWord = wordsToReview[currentWordIndex]
         vocabularyManager.updateWordReviewStatus(currentWord, remembered: remembered)
         
-        // 更新统计
-        if remembered {
-            studyStats.rememberedCount += 1
-        } else {
-            studyStats.forgottenCount += 1
-        }
-        studyStats.completedCount += 1
+        // 不再需要统计正确率相关数据
         
         // 如果是"记得"按钮，移动到下一个单词
         if remembered {
@@ -308,4 +317,63 @@ struct StatCard: View {
                 .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         )
     }
+}
+
+/// 礼花庆祝效果视图
+struct ConfettiView: View {
+    @State private var confettiPieces: [ConfettiPiece] = []
+    
+    var body: some View {
+        ZStack {
+            ForEach(confettiPieces, id: \.id) { piece in
+                Circle()
+                    .fill(piece.color)
+                    .frame(width: piece.size, height: piece.size)
+                    .position(x: piece.x, y: piece.y)
+                    .opacity(piece.opacity)
+            }
+        }
+        .onAppear {
+            generateConfetti()
+            animateConfetti()
+        }
+    }
+    
+    /// 生成礼花粒子
+    private func generateConfetti() {
+        let colors: [Color] = [.red, .blue, .green, .yellow, .orange, .purple, .pink, .cyan]
+        
+        for _ in 0..<50 {
+            let piece = ConfettiPiece(
+                id: UUID(),
+                x: Double.random(in: 0...600),
+                y: -20,
+                color: colors.randomElement() ?? .blue,
+                size: Double.random(in: 4...12),
+                opacity: 1.0
+            )
+            confettiPieces.append(piece)
+        }
+    }
+    
+    /// 动画礼花粒子
+    private func animateConfetti() {
+        withAnimation(.easeOut(duration: 3.0)) {
+            for i in 0..<confettiPieces.count {
+                confettiPieces[i].y = 450
+                confettiPieces[i].x += Double.random(in: -100...100)
+                confettiPieces[i].opacity = 0.0
+            }
+        }
+    }
+}
+
+/// 礼花粒子数据结构
+struct ConfettiPiece {
+    let id: UUID
+    var x: Double
+    var y: Double
+    let color: Color
+    let size: Double
+    var opacity: Double
 }

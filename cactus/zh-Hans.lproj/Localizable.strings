@@ -210,11 +210,9 @@
 "tap_to_show_definition" = "点击查看释义";
 "forgot" = "忘记";
 "remembered" = "记得";
-"study_completed" = "恭喜，完成了今天的复习计划";
-"no_words_to_review" = "暂无需要复习的单词";
+"study_completed" = "恭喜你，完成了今天的复习计划";
+"no_words_to_review" = "暂无需要复习的单词，系统会根据遗忘曲线算法自动安排复习计划";
 "total_words" = "待复习单词数";
 "total_studied" = "学习总数";
-"accuracy_rate" = "正确率";
-"study_again" = "重新开始";
 
 // 简体中文
