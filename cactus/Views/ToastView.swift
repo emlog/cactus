@@ -74,6 +74,12 @@ class ToastManager: ObservableObject {
     
     private var hideTimer: Timer?
     
+    /// 单例实例，确保在整个应用中只有一个 ToastManager 实例
+    static let shared = ToastManager()
+    
+    /// 私有初始化方法，防止外部创建多个实例
+    private init() {}
+    
     /// 显示成功提示
     /// - Parameter message: 提示消息
     func showSuccess(_ message: String) {

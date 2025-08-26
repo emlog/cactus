@@ -22,8 +22,8 @@ struct MainView: View {
     
     // 注意：聊天数据管理已移至 TextContentModel 中统一管理
     
-    // 吐司提示管理器
-    @StateObject private var toastManager = ToastManager()
+    // 吐司提示管理器 - 使用单例实例避免 StateObject 重复初始化问题
+    @ObservedObject private var toastManager = ToastManager.shared
     
     // 复制成功状态，用于按钮图标动画
     @State private var showInputCopySuccess = false
