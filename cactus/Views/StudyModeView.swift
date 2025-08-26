@@ -28,8 +28,6 @@ struct StudyModeView: View {
     @State private var showConfetti = false
     @State private var isRandomQuiz = false
     
-    
-    
     var body: some View {
         VStack(spacing: 0) {
             headerView
@@ -186,7 +184,7 @@ struct StudyModeView: View {
             }) {
                 HStack(spacing: 12) {
                     Image(systemName: "shuffle")
-                        .font(.title2)
+                        .font(.headline)
                     Text(NSLocalizedString("random_quiz", comment: "随机抽查"))
                         .font(.headline)
                 }
@@ -195,13 +193,7 @@ struct StudyModeView: View {
                 .padding(.vertical, 12)
                 .background(
                     RoundedRectangle(cornerRadius: 25)
-                        .fill(
-                            LinearGradient(
-                                colors: [.orange, .red],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
+                        .fill(Color.accentColor)
                 )
             }
             .buttonStyle(PlainButtonStyle())

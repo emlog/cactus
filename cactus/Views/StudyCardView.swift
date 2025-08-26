@@ -79,7 +79,7 @@ struct StudyCardView: View {
             HStack {
                 Spacer()
                 Button(action: onClose) {
-                    Image(systemName: "xmark.circle.fill")
+                    Image(systemName: "xmark")
                         .font(.title2)
                         .foregroundColor(.secondary)
                 }
@@ -118,7 +118,7 @@ struct StudyCardView: View {
                         }
                     }) {
                         Text(NSLocalizedString("tap_to_show_definition", comment: "点击查看释义"))
-                            .font(.subheadline)
+                            .font(.body)
                             .foregroundColor(.accentColor)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -215,7 +215,7 @@ struct StudyCardView: View {
                 .padding(.vertical, 12)
                 .background(
                     RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.green)
+                        .fill(Color.accentColor)
                 )
             }
             .buttonStyle(PlainButtonStyle())
@@ -296,8 +296,6 @@ struct StudyCardView: View {
             }
         }) {
             HStack(spacing: 8) {
-                Image(systemName: "arrow.right.circle")
-                    .font(.title3)
                 Text(NSLocalizedString("next_word", comment: "下一个"))
                     .font(.headline)
             }
@@ -306,7 +304,7 @@ struct StudyCardView: View {
             .padding(.vertical, 12)
             .background(
                 RoundedRectangle(cornerRadius: 25)
-                    .fill(Color.blue)
+                    .fill(Color.accentColor)
             )
         }
         .buttonStyle(PlainButtonStyle())
