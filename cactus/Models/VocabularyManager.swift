@@ -136,7 +136,7 @@ class VocabularyManager: ObservableObject {
     
     /// 更新单词的复习状态
     /// 实现基于艾宾浩斯遗忘曲线的间隔重复算法（Spaced Repetition System, SRS）
-    /// 算法核心：根据记忆效果动态调整复习间隔和难度系数
+    /// 算法核心：根据记忆效果动态调整复习间隔和熟练度
     /// - Parameters:
     ///   - word: 要更新的单词
     ///   - remembered: 是否记住了（true: 记得, false: 不记得）
@@ -145,36 +145,18 @@ class VocabularyManager: ObservableObject {
         word.lastReviewDate = now
         word.reviewCount += 1
         
+        // 计算新的复习间隔
+        // 新间隔 = 当前间隔 × 熟练度
+        let newInterval = max(1, Int32(Float(word.interval) * word.easeFactor))
+        
         if remembered {
-            // 算法分支1：记住单词时，采用递增间隔策略
-            if word.reviewCount == 1 {
-                // 第一次复习：间隔设为1天
-                // 艾宾浩斯理论：初次学习后24小时内遗忘率最高
-                word.interval = 1
-            } else if word.reviewCount == 2 {
-                // 第二次复习：间隔设为6天
-                // 基于经验值，第二次复习间隔适中，巩固记忆
-                word.interval = 6
-            } else {
-                // 第三次及以后：使用艾宾浩斯公式计算间隔
-                // 公式：新间隔 = 旧间隔 × 难度系数（easeFactor）
-                // 这确保了熟练掌握的单词复习间隔越来越长
-                let newInterval = Int32(Float(word.interval) * word.easeFactor)
-                // 保证间隔至少增加1天，避免间隔停滞
-                word.interval = max(newInterval, word.interval + 1)
-            }
-            
-            // 难度系数调整：记住单词时增加0.1
-            // 范围控制：最小值1.3，确保间隔不会无限增长
-            // 增加难度系数意味着下次间隔会更长
+            // 记住了：增加熟练度，延长复习间隔
             word.easeFactor = max(1.3, word.easeFactor + 0.1)
+            word.interval = newInterval
         } else {
-            // 算法分支2：忘记单词时，采用重置策略
-            // 间隔重置为1天：立即安排复习，强化记忆
-            word.interval = 1
-            // 难度系数降低0.2：下次即使记住，间隔增长也会更慢
-            // 最小值1.3：防止难度系数过低导致复习过于频繁
+            // 忘记了：降低熟练度，重置为短间隔
             word.easeFactor = max(1.3, word.easeFactor - 0.2)
+            word.interval = 1 // 重置为1天后复习
         }
         
         // 计算下次复习时间：当前时间 + 间隔天数
@@ -208,8 +190,9 @@ class VocabularyManager: ObservableObject {
         if word.nextReviewDate == nil {
             // 复习次数初始化为0：表示尚未开始复习循环
             word.reviewCount = 0
-            // 难度系数初始化为2.5：这是SRS算法的标准初始值
+            // 熟练度初始化为2.5：这是SRS算法的标准初始值
             // 2.5意味着如果记住单词，下次间隔会是当前间隔的2.5倍
+            // 熟练度越高，表示对该单词掌握越好，复习间隔会越来越长
             word.easeFactor = 2.5
             // 初始间隔设为1天：新单词需要快速复习以建立初步记忆
             word.interval = 1

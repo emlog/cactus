@@ -10,11 +10,7 @@ import SwiftUI
 import CoreData
 import Foundation
 import AVFoundation
-
-/// 学习统计数据结构
-struct StudyStats {
-    var totalWords: Int = 0
-}
+import MarkdownUI
 
 /// 背单词模式视图
 struct StudyModeView: View {
@@ -24,9 +20,14 @@ struct StudyModeView: View {
     @State private var currentWordIndex = 0
     @State private var showCard = false
     @State private var studyCompleted = false
-    @State private var studyStats = StudyStats()
+
     @State private var showConfetti = false
     @State private var isRandomQuiz = false
+    
+    /// 计算剩余待复习单词数
+    private var remainingWordsCount: Int {
+        return max(0, wordsToReview.count - currentWordIndex)
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -142,8 +143,8 @@ struct StudyModeView: View {
             
             HStack(spacing: 30) {
                 StatCard(
-                    title: NSLocalizedString("total_words", comment: "总单词数"),
-                    value: "\(studyStats.totalWords)",
+                    title: NSLocalizedString("total_words", comment: "待复习单词数"),
+                    value: "\(remainingWordsCount)",
                     icon: "book",
                     color: .blue
                 )
@@ -155,12 +156,12 @@ struct StudyModeView: View {
     private var studyProgress: some View {
         VStack(spacing: 12) {
             // 进度条
-            ProgressView(value: Double(currentWordIndex), total: Double(studyStats.totalWords))
+            ProgressView(value: Double(currentWordIndex), total: Double(wordsToReview.count))
                 .progressViewStyle(LinearProgressViewStyle(tint: .accentColor))
                 .scaleEffect(y: 2)
             
             // 进度文本
-            Text("\(currentWordIndex) / \(studyStats.totalWords)")
+            Text("\(currentWordIndex) / \(wordsToReview.count)")
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -246,7 +247,6 @@ struct StudyModeView: View {
     /// 加载需要复习的单词
     private func loadWordsForReview() {
         wordsToReview = vocabularyManager.getWordsForReview()
-        studyStats.totalWords = wordsToReview.count
         currentWordIndex = 0
         studyCompleted = false
         isRandomQuiz = false // 重置随机抽查状态
@@ -299,7 +299,6 @@ struct StudyModeView: View {
     
     /// 重置学习会话
     private func resetStudySession() {
-        studyStats = StudyStats()
         loadWordsForReview()
     }
     
@@ -307,7 +306,6 @@ struct StudyModeView: View {
     /// 从所有单词中随机选择最多20个单词进行复习
     private func startRandomQuiz() {
         wordsToReview = vocabularyManager.getRandomWordsForQuiz()
-        studyStats.totalWords = wordsToReview.count
         currentWordIndex = 0
         studyCompleted = false
         isRandomQuiz = true
