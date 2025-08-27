@@ -20,7 +20,7 @@ struct StudyModeView: View {
     @State private var currentWordIndex = 0
     @State private var showCard = false
     @State private var studyCompleted = false
-
+    
     @State private var showConfetti = false
     @State private var isRandomQuiz = false
     
