@@ -273,7 +273,7 @@ struct StudyCardView: View {
                 .padding(.vertical, 12)
                 .background(
                     RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.green)
+                        .fill(Color.accentColor)
                 )
             }
             .buttonStyle(PlainButtonStyle())

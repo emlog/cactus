@@ -75,10 +75,10 @@ struct StudyModeView: View {
     /// 学习主界面
     private var studyView: some View {
         VStack(spacing: 30) {
+            Spacer()
+
             // 统计信息
             studyHeader
-            
-            Spacer()
             
             // 中央开始按钮区域
             VStack(spacing: 20) {
@@ -138,7 +138,7 @@ struct StudyModeView: View {
     
     /// 顶部统计信息
     private var studyHeader: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 20) {
             // 移除这里的标题，因为已经在headerView中显示了
             
             HStack(spacing: 30) {
@@ -178,6 +178,8 @@ struct StudyModeView: View {
             Text(NSLocalizedString("no_words_to_review", comment: "暂无单词需要复习"))
                 .font(.body)
                 .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
             
             // 随机抽查按钮
             Button(action: {
@@ -225,6 +227,8 @@ struct StudyModeView: View {
                             endPoint: .trailing
                         )
                     )
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center) // 多行文本居中
                     .scaleEffect(showConfetti ? 1.1 : 1.0)
                     .animation(.spring(response: 0.8, dampingFraction: 0.7), value: showConfetti)
             }
