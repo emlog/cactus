@@ -14,6 +14,7 @@
 意大利语：Assistente AI Cactus
 泰语：ผู้ช่วย AI กระบองเพชร
 越南语：Cactus AI Assistant
+阿拉伯语：Cactus AI Assistant
 
 ## 副标题：
 
@@ -32,6 +33,7 @@ Translate,Summarize,OCR
 意大利语：Traduzione, Riepilogo, OCR
 泰语：แปลภาษา, สรุป, OCR
 越南语：Dịch, Tóm tắt, OCR
+阿拉伯语：ترجمة، تلخيص، OCR
 
 
 ## 关键词
@@ -51,6 +53,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 意大利语：Tradurre, Riassumere, Dizionario, Assistente IA, Produttività, OCR
 泰语：แปลภาษา, สรุป, พจนานุกรม, ผู้ช่วย AI, ประสิทธิภาพ, OCR
 越南语：Dịch, Tóm tắt, Từ điển, Trợ lý AI, Hiệu suất, OCR
+阿拉伯语：ترجمة، تلخيص، قاموس، مساعد ذكي، إنتاجية، OCR
 
 ### 简体中文 🇨🇳
 
@@ -261,4 +264,19 @@ Tính năng chính:
 
 Điều khoản sử dụng: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Chính sách quyền riêng tư: https://cactusai.cc/privacy-policy-en
+
+## 阿拉伯语 🇸🇦
+
+مساعد نصوص ذكي يدعم الترجمة والتلخيص والبحث في القاموس وترجمة لقطات الشاشة بتقنية OCR
+
+الميزات الأساسية:
+- الترجمة السريعة: حدد النص واضغط على اختصار لوحة المفاتيح (افتراضي ⌥ + X) للترجمة الفورية
+- التلخيص الذكي: استخراج النقاط الرئيسية من المحتوى لفهم سهل
+- البحث في القاموس: شرح معاني الكلمات وأصولها وأمثلة الاستخدام
+- ترجمة لقطات الشاشة بـ OCR: يدعم التعرف على النص من لقطات الشاشة لتحسين كفاءة معالجة النصوص
+
+------
+
+شروط الاستخدام: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+سياسة الخصوصية: https://cactusai.cc/privacy-policy-en
 
