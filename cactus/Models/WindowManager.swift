@@ -509,6 +509,8 @@ class WindowManager: NSObject, NSWindowDelegate {
             request.recognitionLanguages = ["th", "en"]
         case "vi":
             request.recognitionLanguages = ["vi", "en"]
+        case "ar":
+            request.recognitionLanguages = ["ar", "en"]
         default:
             request.recognitionLanguages = ["zh-Hans", "en"]
         }

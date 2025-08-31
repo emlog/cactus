@@ -57,6 +57,8 @@ class LangService {
             detectedLanguage = "th"
         case .vietnamese:
             detectedLanguage = "vi"
+        case .arabic:
+            detectedLanguage = "ar"
         default:
             // 对于其他语言，检查原始值是否是我们支持的语言
             let rawValue = dominantLanguage.rawValue
@@ -89,6 +91,8 @@ class LangService {
                 detectedLanguage = "th"
             case "vi":
                 detectedLanguage = "vi"
+            case "ar":
+                detectedLanguage = "ar"
             default:
                 detectedLanguage = "en"  // 不支持的语言返回英语
             }
@@ -237,6 +241,8 @@ class LangService {
             return "th"
         case _ where systemLanguage.hasPrefix("vi"):
             return "vi"
+        case _ where systemLanguage.hasPrefix("ar"):
+            return "ar"
         default:
             return "en"
         }
@@ -294,6 +300,8 @@ class LangService {
             return "th-TH"
         case "vi":
             return "vi-VN"
+        case "ar":
+            return "ar-SA"
         default:
             return "en-US"
         }

@@ -69,9 +69,10 @@ class PreferencesModel: ObservableObject {
         "it": NSLocalizedString("language_it", comment: "意大利语"),
         "th": NSLocalizedString("language_th", comment: "泰语"),
         "vi": NSLocalizedString("language_vi", comment: "越南语"),
+        "ar": NSLocalizedString("language_ar", comment: "阿拉伯语"),
     ]
     
-    let languageKeys = ["zh-Hans", "zh-Hant", "en", "ja", "ko", "fr", "de", "es", "id", "pt-PT", "ru", "it", "th", "vi"]
+    let languageKeys = ["zh-Hans", "zh-Hant", "en", "ja", "ko", "fr", "de", "es", "id", "pt-PT", "ru", "it", "th", "vi", "ar"]
     
     // 常用语言
     @Published var preferredLanguage: String {
