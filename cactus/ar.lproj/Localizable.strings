@@ -55,6 +55,7 @@
 "language_it" = "الإيطالية";
 "language_th" = "التايلاندية";
 "language_vi" = "الفيتنامية";
+"language_ar" = "العربية";
 
 // ai setting
 "select_service" = "اختيار خدمة الذكاء الاصطناعي";

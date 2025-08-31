@@ -55,6 +55,7 @@
 "language_it" = "Italien";
 "language_th" = "Thaï";
 "language_vi" = "Vietnamien";
+"language_ar" = "Arabe";
 
 // ai setting
 "select_service" = "Choisir un service IA";

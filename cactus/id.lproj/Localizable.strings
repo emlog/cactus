@@ -55,6 +55,7 @@
 "language_it" = "Italia";
 "language_th" = "Thailand";
 "language_vi" = "Vietnam";
+"language_ar" = "Arab";
 
 // ai setting
 "select_service" = "Pilih Layanan AI";

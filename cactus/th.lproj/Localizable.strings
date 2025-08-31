@@ -55,6 +55,7 @@
 "language_it" = "ภาษาอิตาลี";
 "language_th" = "ภาษาไทย";
 "language_vi" = "ภาษาเวียดนาม";
+"language_ar" = "ภาษาอาหรับ";
 
 // ai setting
 "select_service" = "เลือกบริการ AI";

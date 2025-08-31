@@ -55,6 +55,7 @@
 "language_it" = "Tiếng Ý";
 "language_th" = "Tiếng Thái";
 "language_vi" = "Tiếng Việt";
+"language_ar" = "Tiếng Ả Rập";
 
 // ai setting
 "select_service" = "Chọn Dịch Vụ AI";
