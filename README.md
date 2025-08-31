@@ -262,18 +262,3 @@ Tính năng chính:
 Điều khoản sử dụng: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Chính sách quyền riêng tư: https://cactusai.cc/privacy-policy-en
 
-
-
-## 写给审核员
-
-这是一款辅助工具，启动后只出现在右上角状态栏中，一个小仙人掌图标🌵
-核心用法：选中一段文本内容，按下快捷键（默认：option+x），弹出小窗口翻译这段内容，也可以对这段内容进行总结等辅助操作。
-感谢您的审核工作。
-
-This is an auxiliary tool. It only appears in the status bar on the upper right corner after startup, a small cactus icon🌵
-Core usage: select a section of text content, then press the shortcut key (default: option+x), a small window will pop up to translate this content, or to summarize this content and other auxiliary operations.
-Thanks for your review work.
-
-## 支持的语言
-
-德文、日文、法语、简体中文、繁体中文、英语、西班牙文、韩文、葡萄牙文、印尼文、俄语、意大利语、泰语
