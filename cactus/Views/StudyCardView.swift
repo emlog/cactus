@@ -139,9 +139,9 @@ struct StudyCardView: View {
                             .textSelection(.enabled)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 10)
-                    .padding(.bottom, 10)
+                    .padding(.horizontal, 10)
+                    .padding(.top, 5)
+                    .padding(.bottom, 5)
                     
                     // 显示释义后的按钮区域
                     if hasForgotten {
@@ -155,7 +155,7 @@ struct StudyCardView: View {
                     }
                 }
             }
-            .frame(minHeight: 260)
+            .frame(minHeight: 300)
             .padding(.horizontal, 20)
             .contentShape(Rectangle())
             
@@ -229,8 +229,16 @@ struct StudyCardView: View {
             // 忘记按钮
             Button(action: {
                 onForgotten()
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                    hasForgotten = true
+                // 当释义已展开时，直接进入下一个单词
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    cardOffset = CGSize(width: -200, height: 0)
+                    cardRotation = -15
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    onNextWord()
+                    // 重置卡片状态以显示下一个单词
+                    resetCardState()
                 }
             }) {
                 HStack(spacing: 8) {
