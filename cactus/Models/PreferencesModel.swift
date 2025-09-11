@@ -117,7 +117,7 @@ class PreferencesModel: ObservableObject {
             title: NSLocalizedString("openrouter-default", comment: "openrouter-default"),
             baseURL: "https://openrouter.ai/api/v1/chat/completions",
             apiKey: "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",
-            model: "thudm/glm-4-32b:free"
+            model: "z-ai/glm-4.5-air:free"
         ),
         "model_zhipu_glm4_flash": ProviderSettings(
             title: NSLocalizedString("model_zhipu_glm4_flash", comment: "model_zhipu_glm4_flash"),
