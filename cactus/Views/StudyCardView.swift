@@ -2,15 +2,13 @@
 //  StudyCardView.swift
 //  cactus
 //
-//  背单词卡片视图
-//  Created by AI Assistant on 2025/2/21.
+//  Created by 许大伟 on 2025/1/15.
 //
 
 import SwiftUI
 import CoreData
 import Foundation
 import AVFoundation
-import MarkdownUI
 
 /// 背单词卡片视图
 struct StudyCardView: View {
@@ -19,6 +17,7 @@ struct StudyCardView: View {
     let onForgotten: () -> Void
     let onClose: () -> Void
     let onNextWord: () -> Void
+    let onDelete: (() -> Void)? // 删除单词的回调函数
     
     @State private var showDefinition = false
     @State private var cardOffset: CGSize = .zero
@@ -134,8 +133,9 @@ struct StudyCardView: View {
                 // 释义显示区域
                 if showDefinition {
                     ScrollView {
-                        Markdown(word.definition ?? "")
-                            .markdownTheme(.cactusMD)
+                        Text(word.definition ?? "")
+                            .font(.body)
+                            .foregroundColor(.primary)
                             .textSelection(.enabled)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -165,60 +165,71 @@ struct StudyCardView: View {
     
     /// 初始按钮区域（记得/不记得）
     private var initialButtonArea: some View {
-        HStack(spacing: 20) {
-            // 不记得按钮
-            Button(action: {
-                // 记录"不记得"状态
-                onForgotten()
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                    showDefinition = true
-                    hasForgotten = true
+        VStack(spacing: 20) {
+            HStack(spacing: 20) {
+                // 不记得按钮
+                Button(action: {
+                    // 记录"不记得"状态
+                    onForgotten()
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                        showDefinition = true
+                        hasForgotten = true
+                    }
+                }) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "xmark.circle")
+                            .font(.title3)
+                        Text(NSLocalizedString("forgot", comment: "不记得"))
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.red)
+                    )
                 }
-            }) {
-                HStack(spacing: 8) {
-                    Image(systemName: "xmark.circle")
-                        .font(.title3)
-                    Text(NSLocalizedString("forgot", comment: "不记得"))
-                        .font(.headline)
+                .buttonStyle(PlainButtonStyle())
+                
+                // 记得按钮
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        cardOffset = CGSize(width: 200, height: 0)
+                        cardRotation = 15
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        onRemembered()
+                        // 重置卡片状态以显示下一个单词
+                        resetCardState()
+                    }
+                }) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.circle")
+                            .font(.title3)
+                        Text(NSLocalizedString("remembered", comment: "记得"))
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.accentColor)
+                    )
                 }
-                .foregroundColor(.white)
-                .padding(.horizontal, 24)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.red)
-                )
+                .buttonStyle(PlainButtonStyle())
+                // 删除按钮覆盖在左下角
             }
-            .buttonStyle(PlainButtonStyle())
-            
-            // 记得按钮
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    cardOffset = CGSize(width: 200, height: 0)
-                    cardRotation = 15
+            HStack {
+                if let onDelete = onDelete {
+                    deleteButtonArea(onDelete: onDelete)
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    onRemembered()
-                    // 重置卡片状态以显示下一个单词
-                    resetCardState()
-                }
-            }) {
-                HStack(spacing: 8) {
-                    Image(systemName: "checkmark.circle")
-                        .font(.title3)
-                    Text(NSLocalizedString("remembered", comment: "记得"))
-                        .font(.headline)
-                }
-                .foregroundColor(.white)
-                .padding(.horizontal, 24)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.accentColor)
-                )
             }
-            .buttonStyle(PlainButtonStyle())
+            .padding(.top, 30)
+            Spacer()
         }
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: cardOffset)
     }
@@ -317,6 +328,39 @@ struct StudyCardView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+    
+    /// 删除按钮区域 - 红色垃圾桶图标
+    /// - Parameter onDelete: 删除回调函数
+    @ViewBuilder
+    private func deleteButtonArea(onDelete: @escaping () -> Void) -> some View {
+        @State var isHovered = false
+        
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                cardOffset = CGSize(width: -200, height: 0)
+                cardRotation = -15
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                onDelete()
+                onNextWord()
+                // 重置卡片状态
+                resetCardState()
+            }
+        }) {
+            Image(systemName: "trash")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.red)
+                .opacity(isHovered ? 1.0 : 0.7)
+                .scaleEffect(isHovered ? 1.1 : 1.0)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isHovered = hovering
+            }
+        }
     }
     
     

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import MarkdownUI
 import Foundation
 import AVFoundation
 import MarkdownUI
@@ -60,6 +61,9 @@ struct StudyModeView: View {
                         },
                         onNextWord: {
                             handleNextWord()
+                        },
+                        onDelete: {
+                            handleWordDeletion()
                         }
                     )
                     .zIndex(1)
@@ -317,6 +321,40 @@ struct StudyModeView: View {
         // 如果有单词可以抽查，直接开始学习
         if !wordsToReview.isEmpty {
             showCard = true
+        }
+    }
+    
+    /// 处理单词删除
+    /// 从生词本中删除当前单词，并更新学习列表
+    private func handleWordDeletion() {
+        guard currentWordIndex < wordsToReview.count else { return }
+        
+        let wordToDelete = wordsToReview[currentWordIndex]
+        
+        // 从生词本中删除单词
+        vocabularyManager.deleteWord(wordToDelete)
+        
+        // 从当前学习列表中移除该单词
+        wordsToReview.remove(at: currentWordIndex)
+        
+        // 关闭卡片
+        showCard = false
+        
+        // 检查是否还有单词需要学习
+        if wordsToReview.isEmpty {
+            // 如果没有单词了，显示完成状态
+            studyCompleted = true
+        } else {
+            // 调整当前索引，确保不超出范围
+            if currentWordIndex >= wordsToReview.count {
+                currentWordIndex = wordsToReview.count - 1
+            }
+            
+            // 如果当前索引有效，可以继续学习
+            if currentWordIndex >= 0 && currentWordIndex < wordsToReview.count {
+                // 可以选择自动显示下一个单词，或者让用户手动开始
+                // 这里选择让用户手动开始，保持一致的用户体验
+            }
         }
     }
 }
