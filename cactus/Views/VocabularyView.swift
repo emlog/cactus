@@ -50,7 +50,7 @@ struct VocabularyView: View {
                                     RoundedRectangle(cornerRadius: 0)
                                         .fill(selectedWord?.objectID == wordEntry.objectID
                                               ? Color.accentColor.opacity(0.2)
-                                              : Color.clear)
+                                              : getProficiencyBackgroundColor(for: wordEntry))
                                 )
                                 .onTapGesture {
                                     selectedWord = wordEntry
@@ -219,6 +219,28 @@ struct VocabularyView: View {
         .sheet(isPresented: $showStudyMode) {
             StudyModeView()
                 .frame(minWidth: 600, minHeight: 400)
+        }
+    }
+    
+    // 根据单词熟练程度获取背景颜色
+    /// 根据easeFactor值返回不同的背景颜色来表示单词的熟练程度
+    /// - Parameter wordEntry: 单词条目
+    /// - Returns: 对应熟练程度的背景颜色
+    private func getProficiencyBackgroundColor(for wordEntry: WordEntry) -> Color {
+        let easeFactor = wordEntry.easeFactor
+        
+        if easeFactor >= 3.0 {
+            // 高熟练度：绿色背景（easeFactor >= 3.0）
+            return Color.green.opacity(0.1)
+        } else if easeFactor >= 2.5 {
+            // 中等熟练度：黄色背景（2.5 <= easeFactor < 3.0）
+            return Color.yellow.opacity(0.1)
+        } else if easeFactor >= 2.0 {
+            // 较低熟练度：橙色背景（2.0 <= easeFactor < 2.5）
+            return Color.orange.opacity(0.1)
+        } else {
+            // 低熟练度：红色背景（easeFactor < 2.0）
+            return Color.red.opacity(0.1)
         }
     }
     
