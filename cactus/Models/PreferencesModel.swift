@@ -264,7 +264,9 @@ class PreferencesModel: ObservableObject {
                 ModelOption(key: "qwen/qwen-7b-chat", displayName: "Qwen-1.5-7B-Chat"),
                 ModelOption(key: "deepseek/deepseek-chat", displayName: "DeepSeek-V3"),
                 ModelOption(key: "deepseek/deepseek-chat:free", displayName: "DeepSeek-V3 (Free)"),
-                ModelOption(key: "thudm/glm-4-32b:free", displayName: "GLM-4-32B (Free)")
+                ModelOption(key: "z-ai/glm-4.5", displayName: "GLM-4.5"),
+                ModelOption(key: "z-ai/glm-4.5-air:free", displayName: "GLM-4.5-Air (Free)"),
+                ModelOption(key: "thudm/glm-4-32b", displayName: "GLM-4-32B")
             ]
         )
     ]
