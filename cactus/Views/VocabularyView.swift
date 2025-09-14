@@ -231,7 +231,7 @@ struct VocabularyView: View {
         
         if easeFactor >= 3.0 {
             // 高熟练度：绿色背景（easeFactor >= 3.0）
-            return Color.green.opacity(0.1)
+            return Color.green.opacity(0.15)
         } else if easeFactor >= 2.5 {
             // 中等熟练度：黄色背景（2.5 <= easeFactor < 3.0）
             return Color.yellow.opacity(0.1)
