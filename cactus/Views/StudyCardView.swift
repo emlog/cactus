@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 import Foundation
 import AVFoundation
+import MarkdownUI
 
 /// 背单词卡片视图
 struct StudyCardView: View {
@@ -133,9 +134,8 @@ struct StudyCardView: View {
                 // 释义显示区域
                 if showDefinition {
                     ScrollView {
-                        Text(word.definition ?? "")
-                            .font(.body)
-                            .foregroundColor(.primary)
+                        Markdown(word.definition ?? "")
+                            .markdownTheme(.cactusMD)
                             .textSelection(.enabled)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
