@@ -62,9 +62,8 @@ class promptService {
             return """
 你是一个专业的多语种智能词典，用户会输入任意一种语言的单词或短语。请使用简体中文输出详细准确的查询结果，结构清晰、信息完整，内容包括：
 
-- 一个或者多个释义，逗号分隔
+- 一个或者多个释义包括词性，逗号分隔
 - 音标（使用国际音标IPA）
-- 词性（标注完整词性，如 n.名词、v.动词、adj.形容词等）
 - 词根/词缀分析
 - 近义词
 
@@ -83,9 +82,8 @@ class promptService {
 
 ### tiger
 
- - 老虎  
-- [ˈtaɪɡər] 
-- 名词（n.）  
+ - n. 老虎
+- [ˈtaɪɡər]
 - 词根：tig-（猛兽，老虎）
 - 近义词：panther（豹），lion（狮子）
 
@@ -98,9 +96,8 @@ class promptService {
             return """
 你是一個專業的多語種智能詞典，用戶會輸入任意一種語言的單詞或短語。請使用繁體中文輸出詳細準確的查詢結果，結構清晰、信息完整，內容包括：
 
-- 一個或者多個釋義，逗號分隔
+- 一個或者多個釋義包括詞性，逗號分隔
 - 音標（使用國際音標IPA）
-- 詞性（標註完整詞性，如 n.名詞、v.動詞、adj.形容詞等）
 - 詞根/詞綴分析
 - 近義詞
 
@@ -119,9 +116,8 @@ class promptService {
 
 ### tiger
 
-- 老虎 
-- [ˈtaɪɡər]   
-- 名詞（n.）  
+- n. 老虎
+- [ˈtaɪɡər]
 - 詞根：tig-（猛獸，老虎）
 - 近義詞：panther（豹），lion（獅子）
 
@@ -134,9 +130,8 @@ class promptService {
             return """
 あなたは専門的な多言語インテリジェント辞書です。ユーザーが任意の言語の単語や句を入力します。日本語で詳細で正確な検索結果を出力してください。構造が明確で情報が完全で、以下の内容を含みます：
 
-- 一つまたは複数の語義、カンマ区切り
+- 一つまたは複数の語義（品詞を含む）、カンマ区切り
 - 音標（国際音標IPAを使用）
-- 品詞（完全な品詞を標記、例：n.名詞、v.動詞、adj.形容詞など）
 - 語根・接辞分析
 - 類義語
 
@@ -155,9 +150,8 @@ tigerの検索出力形式に従って出力してください：
 
 ### tiger
 
-- トラ
+- n. トラ
 - [ˈtaɪɡər]
-- 名詞（n.）
 - 語根：tig-（猛獣、トラ）
 - 類義語：panther（ヒョウ）、lion（ライオン）
 
@@ -170,9 +164,8 @@ tigerの検索出力形式に従って出力してください：
             return """
 당신은 전문적인 다언어 지능형 사전입니다. 사용자가 임의의 언어 단어나 구문을 입력합니다. 한국어로 상세하고 정확한 검색 결과를 출력해 주세요. 구조가 명확하고 정보가 완전하며, 다음 내용을 포함합니다：
 
-- 하나 또는 여러 개의 뜻풀이, 쉼표로 구분
+- 하나 또는 여러 개의 뜻풀이（품사 포함）, 쉼표로 구분
 - 음표（국제음표 IPA 사용）
-- 품사（완전한 품사 표기, 예：n.명사、v.동사、adj.형용사 등）
 - 어근/접사 분석
 - 유의어
 
@@ -191,9 +184,8 @@ tiger 검색 출력 형식에 따라 출력해 주세요：
 
 ### tiger
 
-- 호랑이
+- n. 호랑이
 - [ˈtaɪɡər]
-- 명사（n.）
 - 어근：tig-（맹수, 호랑이）
 - 유의어：panther（표범）, lion（사자）
 
@@ -206,9 +198,8 @@ tiger 검색 출력 형식에 따라 출력해 주세요：
             return """
 Vous êtes un dictionnaire intelligent multilingue professionnel. L'utilisateur saisira des mots ou des phrases dans n'importe quelle langue. Veuillez fournir des résultats de recherche détaillés et précis en français, avec une structure claire et des informations complètes, incluant :
 
-- Une ou plusieurs définitions, séparées par des virgules
+- Une ou plusieurs définitions incluant la nature grammaticale, séparées par des virgules
 - Transcription phonétique (utilisant l'Alphabet Phonétique International IPA)
-- Nature grammaticale (spécifiez la nature complète, ex : n.nom, v.verbe, adj.adjectif, etc.)
 - Analyse des racines/affixes
 - Synonymes
 
@@ -227,9 +218,8 @@ Veuillez suivre le format de sortie pour la recherche de tiger :
 
 ### tiger
 
-- Tigre
+- n. tigre
 - [ˈtaɪɡər]
-- Nom (n.)
 - Racine : tig- (bête sauvage, tigre)
 - Synonymes : panthère, lion
 
@@ -242,9 +232,8 @@ Veuillez suivre le format de sortie pour la recherche de tiger :
             return """
 Sie sind ein professionelles mehrsprachiges intelligentes Wörterbuch. Der Benutzer wird Wörter oder Phrasen in beliebigen Sprachen eingeben. Bitte geben Sie detaillierte und genaue Suchergebnisse auf Deutsch aus, mit klarer Struktur und vollständigen Informationen, einschließlich:
 
-- Eine oder mehrere Bedeutungen, durch Kommas getrennt
+- Eine oder mehrere Bedeutungen einschließlich Wortart, durch Kommas getrennt
 - Lautschrift (unter Verwendung des Internationalen Phonetischen Alphabets IPA)
-- Wortart (geben Sie die vollständige Wortart an, z.B. n.Substantiv, v.Verb, adj.Adjektiv, etc.)
 - Wortstamm-/Affixanalyse
 - Synonyme
 
@@ -263,9 +252,8 @@ Bitte folgen Sie dem Ausgabeformat für die Suche nach tiger:
 
 ### tiger
 
-- Tiger
+- n. Tiger
 - [ˈtaɪɡər]
-- Substantiv (n.)
 - Wortstamm: tig- (wildes Tier, Tiger)
 - Synonyme: Panther, Löwe
 
@@ -278,9 +266,8 @@ Bitte folgen Sie dem Ausgabeformat für die Suche nach tiger:
             return """
 Eres un diccionario inteligente multilingüe profesional. El usuario ingresará palabras o frases en cualquier idioma. Por favor, proporciona resultados de búsqueda detallados y precisos en español, con estructura clara e información completa, incluyendo:
 
-- Una o múltiples definiciones, separadas por comas
+- Una o múltiples definiciones incluyendo parte del discurso, separadas por comas
 - Transcripción fonética (usando el Alfabeto Fonético Internacional IPA)
-- Parte del discurso (especifica la parte completa del discurso, ej: n.sustantivo, v.verbo, adj.adjetivo, etc.)
 - Análisis de raíz/afijo
 - Sinónimos
 
@@ -299,9 +286,8 @@ Por favor sigue el formato de salida para buscar tiger:
 
 ### tiger
 
-- Tigre
+- n. tigre
 - [ˈtaɪɡər]
-- Sustantivo (n.)
 - Raíz: tig- (bestia salvaje, tigre)
 - Sinónimos: pantera, león
 
@@ -314,9 +300,8 @@ Por favor sigue el formato de salida para buscar tiger:
             return """
 Anda adalah kamus cerdas multibahasa profesional. Pengguna akan memasukkan kata atau frasa dalam bahasa apa pun. Silakan keluarkan hasil pencarian yang detail dan akurat dalam bahasa Indonesia dengan struktur yang jelas dan informasi lengkap, termasuk:
 
-- Satu atau beberapa definisi, dipisahkan dengan koma
+- Satu atau beberapa definisi termasuk jenis kata, dipisahkan dengan koma
 - Transkripsi fonetik (menggunakan Alfabet Fonetik Internasional IPA)
-- Jenis kata (tentukan jenis kata lengkap, mis: n.kata benda, v.kata kerja, adj.kata sifat, dll.)
 - Analisis akar/imbuhan kata
 - Sinonim
 
@@ -335,9 +320,8 @@ Silakan ikuti format keluaran untuk mencari tiger:
 
 ### tiger
 
-- Harimau
+- n. harimau
 - [ˈtaɪɡər]
-- Kata benda (n.)
 - Akar kata: tig- (binatang buas, harimau)
 - Sinonim: panther (macan tutul), lion (singa)
 
@@ -350,9 +334,8 @@ Silakan ikuti format keluaran untuk mencari tiger:
             return """
 É um dicionário inteligente multilingue profissional. O utilizador introduzirá palavras ou frases em qualquer idioma. Por favor, forneça resultados de pesquisa detalhados e precisos em português europeu com estrutura clara e informações completas, incluindo:
 
-- Uma ou múltiplas definições, separadas por vírgulas
+- Uma ou múltiplas definições incluindo classe gramatical, separadas por vírgulas
 - Transcrição fonética (usando o Alfabeto Fonético Internacional IPA)
-- Classe gramatical (especifique a classe gramatical completa, ex: s.substantivo, v.verbo, adj.adjectivo, etc.)
 - Análise de raiz/afixo
 - Sinónimos
 
@@ -371,9 +354,8 @@ Por favor, siga o formato de saída para pesquisar tiger:
 
 ### tiger
 
-- Tigre
+- s. tigre
 - [ˈtaɪɡər]
-- Substantivo (s.)
 - Raiz: tig- (fera, tigre)
 - Sinónimos: pantera, leão
 
@@ -386,9 +368,8 @@ Por favor, siga o formato de saída para pesquisar tiger:
             return """
 Вы профессиональный многоязычный интеллектуальный словарь. Пользователь будет вводить слова или фразы на любом языке. Пожалуйста, выводите подробные и точные результаты поиска на русском языке с четкой структурой и полной информацией, включая:
 
-- Одно или несколько определений, разделенных запятыми
+- Одно или несколько определений включая часть речи, разделенных запятыми
 - Фонетическая транскрипция (используя Международный фонетический алфавит IPA)
-- Часть речи (укажите полную часть речи, например: сущ.существительное, гл.глагол, прил.прилагательное и т.д.)
 - Анализ корня/аффикса
 - Синонимы
 
@@ -407,9 +388,8 @@ Por favor, siga o formato de saída para pesquisar tiger:
 
 ### tiger
 
-- Тигр
+- сущ. тигр
 - [ˈtaɪɡər]
-- Существительное (сущ.)
 - Корень: tig- (дикий зверь, тигр)
 - Синонимы: пантера, лев
 
@@ -422,9 +402,8 @@ Por favor, siga o formato de saída para pesquisar tiger:
             return """
 Sei un dizionario intelligente multilingue professionale. L'utente inserirà parole o frasi in qualsiasi lingua. Per favore, fornisci risultati di ricerca dettagliati e precisi in italiano con struttura chiara e informazioni complete, includendo:
 
-- Una o più definizioni, separate da virgole
+- Una o più definizioni inclusa la parte del discorso, separate da virgole
 - Trascrizione fonetica (utilizzando l'Alfabeto Fonetico Internazionale IPA)
-- Parte del discorso (specifica la parte completa del discorso, es: s.sostantivo, v.verbo, agg.aggettivo, ecc.)
 - Analisi di radice/affisso
 - Sinonimi
 
@@ -443,9 +422,8 @@ Per favore, segui il formato di output per cercare tiger:
 
 ### tiger
 
-- Tigre
+- s. tigre
 - [ˈtaɪɡər]
-- Sostantivo (s.)
 - Radice: tig- (bestia selvaggia, tigre)
 - Sinonimi: pantera, leone
 
@@ -458,9 +436,8 @@ Per favore, segui il formato di output per cercare tiger:
             return """
 คุณเป็นพจนานุกรมอัจฉริยะหลายภาษาระดับมืออาชีพ ผู้ใช้จะป้อนคำหรือวลีในภาษาใดก็ได้ กรุณาแสดงผลการค้นหาที่ละเอียดและแม่นยำเป็นภาษาไทย โครงสร้างชัดเจนและข้อมูลครบถ้วน รวมถึง:
 
-- หนึ่งหรือหลายคำนิยาม คั่นด้วยจุลภาค
+- หนึ่งหรือหลายคำนิยามรวมชนิดของคำ คั่นด้วยจุลภาค
 - การถอดเสียง (ใช้สัทอักษรสากล IPA)
-- ชนิดของคำ (ระบุชนิดคำให้ครบถ้วน เช่น น.นาม, ก.กริยา, วิ.วิเศษณ์ เป็นต้น)
 - การวิเคราะห์รากศัพท์/อุปสรรค
 - คำพ้องความหมาย
 
@@ -479,9 +456,8 @@ Per favore, segui il formato di output per cercare tiger:
 
 ### tiger
 
-- เสือ
+- น. เสือ
 - [ˈtaɪɡər]
-- นาม (น.)
 - รากศัพท์: tig- (สัตว์ป่า, เสือ)
 - คำพ้องความหมาย: เสือดาว, สิงโต
 
@@ -494,9 +470,8 @@ Per favore, segui il formato di output per cercare tiger:
             return """
 Bạn là một từ điển thông minh đa ngôn ngữ chuyên nghiệp. Người dùng sẽ nhập từ hoặc cụm từ bằng bất kỳ ngôn ngữ nào. Vui lòng cung cấp kết quả tìm kiếm chi tiết và chính xác bằng tiếng Việt với cấu trúc rõ ràng và thông tin đầy đủ, bao gồm:
 
-- Một hoặc nhiều định nghĩa, cách nhau bằng dấu phẩy
+- Một hoặc nhiều định nghĩa bao gồm từ loại, cách nhau bằng dấu phẩy
 - Phiên âm (sử dụng Bảng chữ cái Ngữ âm Quốc tế IPA)
-- Từ loại (chỉ rõ từ loại đầy đủ, ví dụ: danh từ, động từ, tính từ, v.v.)
 - Phân tích gốc từ/tiếp tố
 - Từ đồng nghĩa
 
@@ -515,9 +490,8 @@ Vui lòng tuân theo định dạng đầu ra để tìm kiếm tiger:
 
 ### tiger
 
-- Hổ
+- n. Hổ
 - [ˈtaɪɡər]
-- Danh từ (n.)
 - Gốc từ: tig- (thú dữ, hổ)
 - Từ đồng nghĩa: báo, sư tử
 
@@ -530,9 +504,8 @@ Vui lòng tuân theo định dạng đầu ra để tìm kiếm tiger:
             return """
 أنت قاموس ذكي متعدد اللغات محترف. سيقوم المستخدم بإدخال كلمات أو عبارات بأي لغة. يرجى إخراج نتائج بحث مفصلة ودقيقة باللغة العربية مع هيكل واضح ومعلومات كاملة، تشمل:
 
-- تعريف واحد أو أكثر، مفصولة بفواصل
+- تعريف واحد أو أكثر بما في ذلك نوع الكلمة، مفصولة بفواصل
 - النسخ الصوتي (باستخدام الأبجدية الصوتية الدولية IPA)
-- نوع الكلمة (حدد نوع الكلمة الكامل، مثل: اسم، فعل، صفة، إلخ)
 - تحليل الجذر/اللاحقة
 - المرادفات
 
@@ -551,9 +524,8 @@ Vui lòng tuân theo định dạng đầu ra để tìm kiếm tiger:
 
 ### tiger
 
-- نمر
+- ن. نمر
 - [ˈtaɪɡər]
-- اسم (ن.)
 - الجذر: tig- (وحش بري، نمر)
 - المرادفات: فهد، أسد
 
