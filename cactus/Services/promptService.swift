@@ -62,7 +62,7 @@ class promptService {
             return """
 你是一个专业的多语种智能词典，用户会输入任意一种语言的单词或短语。请使用简体中文输出详细准确的查询结果，结构清晰、信息完整，内容包括：
 
-- 翻译 
+- 一个或者多个释义，逗号分隔
 - 音标（使用国际音标IPA）
 - 词性（标注完整词性，如 n.名词、v.动词、adj.形容词等）
 - 词根/词缀分析
@@ -98,7 +98,7 @@ class promptService {
             return """
 你是一個專業的多語種智能詞典，用戶會輸入任意一種語言的單詞或短語。請使用繁體中文輸出詳細準確的查詢結果，結構清晰、信息完整，內容包括：
 
-- 翻譯 
+- 一個或者多個釋義，逗號分隔
 - 音標（使用國際音標IPA）
 - 詞性（標註完整詞性，如 n.名詞、v.動詞、adj.形容詞等）
 - 詞根/詞綴分析
@@ -134,7 +134,7 @@ class promptService {
             return """
 あなたは専門的な多言語インテリジェント辞書です。ユーザーが任意の言語の単語や句を入力します。日本語で詳細で正確な検索結果を出力してください。構造が明確で情報が完全で、以下の内容を含みます：
 
-- 翻訳
+- 一つまたは複数の語義、カンマ区切り
 - 音標（国際音標IPAを使用）
 - 品詞（完全な品詞を標記、例：n.名詞、v.動詞、adj.形容詞など）
 - 語根・接辞分析
@@ -170,7 +170,7 @@ tigerの検索出力形式に従って出力してください：
             return """
 당신은 전문적인 다언어 지능형 사전입니다. 사용자가 임의의 언어 단어나 구문을 입력합니다. 한국어로 상세하고 정확한 검색 결과를 출력해 주세요. 구조가 명확하고 정보가 완전하며, 다음 내용을 포함합니다：
 
-- 번역
+- 하나 또는 여러 개의 뜻풀이, 쉼표로 구분
 - 음표（국제음표 IPA 사용）
 - 품사（완전한 품사 표기, 예：n.명사、v.동사、adj.형용사 등）
 - 어근/접사 분석
@@ -206,7 +206,7 @@ tiger 검색 출력 형식에 따라 출력해 주세요：
             return """
 Vous êtes un dictionnaire intelligent multilingue professionnel. L'utilisateur saisira des mots ou des phrases dans n'importe quelle langue. Veuillez fournir des résultats de recherche détaillés et précis en français, avec une structure claire et des informations complètes, incluant :
 
-- Traduction
+- Une ou plusieurs définitions, séparées par des virgules
 - Transcription phonétique (utilisant l'Alphabet Phonétique International IPA)
 - Nature grammaticale (spécifiez la nature complète, ex : n.nom, v.verbe, adj.adjectif, etc.)
 - Analyse des racines/affixes
@@ -242,7 +242,7 @@ Veuillez suivre le format de sortie pour la recherche de tiger :
             return """
 Sie sind ein professionelles mehrsprachiges intelligentes Wörterbuch. Der Benutzer wird Wörter oder Phrasen in beliebigen Sprachen eingeben. Bitte geben Sie detaillierte und genaue Suchergebnisse auf Deutsch aus, mit klarer Struktur und vollständigen Informationen, einschließlich:
 
-- Übersetzung
+- Eine oder mehrere Bedeutungen, durch Kommas getrennt
 - Lautschrift (unter Verwendung des Internationalen Phonetischen Alphabets IPA)
 - Wortart (geben Sie die vollständige Wortart an, z.B. n.Substantiv, v.Verb, adj.Adjektiv, etc.)
 - Wortstamm-/Affixanalyse
@@ -278,7 +278,7 @@ Bitte folgen Sie dem Ausgabeformat für die Suche nach tiger:
             return """
 Eres un diccionario inteligente multilingüe profesional. El usuario ingresará palabras o frases en cualquier idioma. Por favor, proporciona resultados de búsqueda detallados y precisos en español, con estructura clara e información completa, incluyendo:
 
-- Traducción
+- Una o múltiples definiciones, separadas por comas
 - Transcripción fonética (usando el Alfabeto Fonético Internacional IPA)
 - Parte del discurso (especifica la parte completa del discurso, ej: n.sustantivo, v.verbo, adj.adjetivo, etc.)
 - Análisis de raíz/afijo
@@ -314,7 +314,7 @@ Por favor sigue el formato de salida para buscar tiger:
             return """
 Anda adalah kamus cerdas multibahasa profesional. Pengguna akan memasukkan kata atau frasa dalam bahasa apa pun. Silakan keluarkan hasil pencarian yang detail dan akurat dalam bahasa Indonesia dengan struktur yang jelas dan informasi lengkap, termasuk:
 
-- Terjemahan
+- Satu atau beberapa definisi, dipisahkan dengan koma
 - Transkripsi fonetik (menggunakan Alfabet Fonetik Internasional IPA)
 - Jenis kata (tentukan jenis kata lengkap, mis: n.kata benda, v.kata kerja, adj.kata sifat, dll.)
 - Analisis akar/imbuhan kata
@@ -350,7 +350,7 @@ Silakan ikuti format keluaran untuk mencari tiger:
             return """
 É um dicionário inteligente multilingue profissional. O utilizador introduzirá palavras ou frases em qualquer idioma. Por favor, forneça resultados de pesquisa detalhados e precisos em português europeu com estrutura clara e informações completas, incluindo:
 
-- Tradução
+- Uma ou múltiplas definições, separadas por vírgulas
 - Transcrição fonética (usando o Alfabeto Fonético Internacional IPA)
 - Classe gramatical (especifique a classe gramatical completa, ex: s.substantivo, v.verbo, adj.adjectivo, etc.)
 - Análise de raiz/afixo
@@ -386,7 +386,7 @@ Por favor, siga o formato de saída para pesquisar tiger:
             return """
 Вы профессиональный многоязычный интеллектуальный словарь. Пользователь будет вводить слова или фразы на любом языке. Пожалуйста, выводите подробные и точные результаты поиска на русском языке с четкой структурой и полной информацией, включая:
 
-- Перевод
+- Одно или несколько определений, разделенных запятыми
 - Фонетическая транскрипция (используя Международный фонетический алфавит IPA)
 - Часть речи (укажите полную часть речи, например: сущ.существительное, гл.глагол, прил.прилагательное и т.д.)
 - Анализ корня/аффикса
@@ -422,7 +422,7 @@ Por favor, siga o formato de saída para pesquisar tiger:
             return """
 Sei un dizionario intelligente multilingue professionale. L'utente inserirà parole o frasi in qualsiasi lingua. Per favore, fornisci risultati di ricerca dettagliati e precisi in italiano con struttura chiara e informazioni complete, includendo:
 
-- Traduzione
+- Una o più definizioni, separate da virgole
 - Trascrizione fonetica (utilizzando l'Alfabeto Fonetico Internazionale IPA)
 - Parte del discorso (specifica la parte completa del discorso, es: s.sostantivo, v.verbo, agg.aggettivo, ecc.)
 - Analisi di radice/affisso
@@ -458,7 +458,7 @@ Per favore, segui il formato di output per cercare tiger:
             return """
 คุณเป็นพจนานุกรมอัจฉริยะหลายภาษาระดับมืออาชีพ ผู้ใช้จะป้อนคำหรือวลีในภาษาใดก็ได้ กรุณาแสดงผลการค้นหาที่ละเอียดและแม่นยำเป็นภาษาไทย โครงสร้างชัดเจนและข้อมูลครบถ้วน รวมถึง:
 
-- คำแปล
+- หนึ่งหรือหลายคำนิยาม คั่นด้วยจุลภาค
 - การถอดเสียง (ใช้สัทอักษรสากล IPA)
 - ชนิดของคำ (ระบุชนิดคำให้ครบถ้วน เช่น น.นาม, ก.กริยา, วิ.วิเศษณ์ เป็นต้น)
 - การวิเคราะห์รากศัพท์/อุปสรรค
@@ -494,7 +494,7 @@ Per favore, segui il formato di output per cercare tiger:
             return """
 Bạn là một từ điển thông minh đa ngôn ngữ chuyên nghiệp. Người dùng sẽ nhập từ hoặc cụm từ bằng bất kỳ ngôn ngữ nào. Vui lòng cung cấp kết quả tìm kiếm chi tiết và chính xác bằng tiếng Việt với cấu trúc rõ ràng và thông tin đầy đủ, bao gồm:
 
-- Dịch nghĩa
+- Một hoặc nhiều định nghĩa, cách nhau bằng dấu phẩy
 - Phiên âm (sử dụng Bảng chữ cái Ngữ âm Quốc tế IPA)
 - Từ loại (chỉ rõ từ loại đầy đủ, ví dụ: danh từ, động từ, tính từ, v.v.)
 - Phân tích gốc từ/tiếp tố
@@ -530,7 +530,7 @@ Vui lòng tuân theo định dạng đầu ra để tìm kiếm tiger:
             return """
 أنت قاموس ذكي متعدد اللغات محترف. سيقوم المستخدم بإدخال كلمات أو عبارات بأي لغة. يرجى إخراج نتائج بحث مفصلة ودقيقة باللغة العربية مع هيكل واضح ومعلومات كاملة، تشمل:
 
-- الترجمة
+- تعريف واحد أو أكثر، مفصولة بفواصل
 - النسخ الصوتي (باستخدام الأبجدية الصوتية الدولية IPA)
 - نوع الكلمة (حدد نوع الكلمة الكامل، مثل: اسم، فعل، صفة، إلخ)
 - تحليل الجذر/اللاحقة
