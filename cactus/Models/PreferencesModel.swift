@@ -198,6 +198,7 @@ class PreferencesModel: ObservableObject {
                 ModelOption(key: "gpt-5-nano-2025-08-07", displayName: "GPT-5-nano"),
                 ModelOption(key: "gpt-4.1-2025-04-14", displayName: "GPT-4.1"),
                 ModelOption(key: "gpt-4.1-mini-2025-04-14", displayName: "GPT-4.1-mini"),
+                ModelOption(key: "gpt-4o-2024-11-20", displayName: "GPT-4o"),
                 ModelOption(key: "gpt-4o-mini-2024-07-18", displayName: "GPT-4o-mini")
             ]
         ),
