@@ -158,16 +158,16 @@
 				es,
 				id,
 				"pt-BR",
-				"pt-PT",
-				"zh-HK",
-				"es-419",
-				"fr-CA",
-				"es-US",
 				ru,
 				th,
 				it,
 				vi,
 				ar,
+				"pt-PT",
+				"zh-HK",
+				"fr-CA",
+				"es-419",
+				"es-US",
 			);
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;
@@ -369,7 +369,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 1.3.9;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dawei-snow.cactus";
 				PRODUCT_NAME = Cactus;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -406,7 +406,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 1.3.9;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dawei-snow.cactus";
 				PRODUCT_NAME = Cactus;
 				SWIFT_EMIT_LOC_STRINGS = YES;
