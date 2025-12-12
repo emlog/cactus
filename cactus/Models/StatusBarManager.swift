@@ -192,7 +192,7 @@ class StatusBarManager: NSObject {
     }
     
     @objc private func openContact() {
-        if let url = URL(string: "https://cactusai.cc/about") {
+        if let url = URL(string: "https://ai.feishu.cn/wiki/RGv3wMAV0ienPhkBPtBcv507nYc") {
             NSWorkspace.shared.open(url)
         }
     }

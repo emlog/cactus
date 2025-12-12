@@ -133,6 +133,7 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
+                ModelOption(key: "glm-4.6", displayName: "GLM-4.6"),
                 ModelOption(key: "glm-4.5", displayName: "GLM-4.5"),
                 ModelOption(key: "glm-4.5-airx", displayName: "GLM-4.5-AIRX"),
                 ModelOption(key: "glm-4.5-flash", displayName: "GLM-4.5-Flash (Free)"),
@@ -151,6 +152,7 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://cloud.siliconflow.cn/account/ak",
             requiresCustomConfig: true,
             availableModels: [
+                ModelOption(key: "zai-org/GLM-4.6", displayName: "GLM-4.6"),
                 ModelOption(key: "THUDM/GLM-4-32B-0414", displayName: "GLM-4-32B-0414"),
                 ModelOption(key: "THUDM/GLM-4-9B-0414", displayName: "GLM-4-9B-0414 (Free)"),
                 ModelOption(key: "deepseek-ai/DeepSeek-V3", displayName: "DeepSeek-V3"),
@@ -167,8 +169,8 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.deepseek.com/api_keys",
             requiresCustomConfig: true,
             availableModels: [
-                ModelOption(key: "deepseek-chat", displayName: "DeepSeek-V3.1"),
-                ModelOption(key: "deepseek-reasoner", displayName: "DeepSeek-V3.1 (Thinking)")
+                ModelOption(key: "deepseek-chat", displayName: "DeepSeek-V3.2"),
+                ModelOption(key: "deepseek-reasoner", displayName: "DeepSeek-V3.2 (Thinking)")
             ]
         ),
         "volcengine": ProviderSettings(
@@ -193,6 +195,7 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.openai.com/api-keys",
             requiresCustomConfig: true,
             availableModels: [
+                ModelOption(key: "gpt-5.1-2025-11-13", displayName: "GPT-5.1"),
                 ModelOption(key: "gpt-5-2025-08-07", displayName: "GPT-5"),
                 ModelOption(key: "gpt-5-mini-2025-08-07", displayName: "GPT-5-mini"),
                 ModelOption(key: "gpt-5-nano-2025-08-07", displayName: "GPT-5-nano"),
@@ -210,8 +213,9 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://aistudio.google.com/app/apikey",
             requiresCustomConfig: true,
             availableModels: [
+                ModelOption(key: "gemini-3-pro-preview", displayName: "Gemini-3.0-Pro"),
                 ModelOption(key: "gemini-2.0-flash", displayName: "Gemini-2.0-Flash"),
-                ModelOption(key: "gemini-2.5-pro-preview-06-05", displayName: "Gemini-2.5-Pro")
+                ModelOption(key: "gemini-2.5-pro", displayName: "Gemini-2.5-Pro")
             ]
         ),
         "claude": ProviderSettings(
@@ -222,9 +226,10 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://console.anthropic.com/settings/keys",
             requiresCustomConfig: true,
             availableModels: [
-                ModelOption(key: "claude-sonnet-4-20250514", displayName: "claude-4-Sonnet"),
-                ModelOption(key: "claude-3-7-sonnet-20250219", displayName: "Claude-3.7-Sonnet"),
-                ModelOption(key: "claude-3-5-sonnet-20241022", displayName: "Claude-3.5-Sonnet")
+                ModelOption(key: "claude-sonnet-4-5-20250929", displayName: "claude-4.5"),
+                ModelOption(key: "claude-sonnet-4-20250514", displayName: "claude-4"),
+                ModelOption(key: "claude-3-7-sonnet-20250219", displayName: "Claude-3.7"),
+                ModelOption(key: "claude-3-5-sonnet-20241022", displayName: "Claude-3.5")
             ]
         ),
         "grok": ProviderSettings(

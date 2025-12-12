@@ -68,7 +68,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 ------
 
 使用条款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-隐私策略：https://cactusai.cc/privacy-policy
+隐私策略：https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ### 繁体中文 🇨🇳
 
@@ -83,7 +83,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 ------
 
 使用條款：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-隱私政策：https://cactusai.cc/privacy-policy-en
+隱私政策：https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ### 日语 🇯🇵
 
@@ -98,7 +98,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 ------
 
 利用規約：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-プライバシーポリシー：https://cactusai.cc/privacy-policy-en
+プライバシーポリシー：https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ### 韩语 🇰🇷
 
@@ -113,7 +113,7 @@ Translate,Summarize,Dictionary,AI Assistant,macOS Translate,macOS Summarize,Prod
 ------
 
 이용약관: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-개인정보 처리방침: https://cactusai.cc/privacy-policy-en
+개인정보 처리방침: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ### 英文 🇺🇸
 
@@ -128,7 +128,7 @@ Core Features:
 ------
 
 Terms of Use：https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Privacy Policy：https://cactusai.cc/privacy-policy-en
+Privacy Policy：https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ## 德语 🇩🇪
 
@@ -143,7 +143,7 @@ Hauptfunktionen:
 ------
 
 Nutzungsbedingungen: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Datenschutzrichtlinie: https://cactusai.cc/privacy-policy-en
+Datenschutzrichtlinie: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ## 法语 🇫🇷
 
@@ -158,7 +158,7 @@ Fonctionnalités principales :
 ------
 
 Conditions d’utilisation : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Politique de confidentialité : https://cactusai.cc/privacy-policy-en
+Politique de confidentialité : https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 
 ## 西班牙语 🇪🇸
@@ -174,7 +174,7 @@ Funciones principales:
 ------
 
 Términos de uso: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Política de privacidad: https://cactusai.cc/privacy-policy-en
+Política de privacidad: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ## 葡萄牙语 🇵🇹
 
@@ -187,7 +187,7 @@ Funcionalidades principais:
 - OCR por captura de ecrã: reconhece texto a partir de capturas de ecrã, melhorando a eficiência no tratamento de texto
 
 Termos de Utilização: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Política de Privacidade: https://cactusai.cc/privacy-policy-en
+Política de Privacidade: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ## 印尼语 🇮🇩
 
@@ -200,7 +200,7 @@ Fitur utama:
 - Tangkapan layar OCR: mendukung pengenalan teks dari tangkapan layar untuk efisiensi lebih tinggi
 
 Syarat Penggunaan: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Kebijakan Privasi: https://cactusai.cc/privacy-policy-en
+Kebijakan Privasi: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 
 ## 俄语 🇷🇺
@@ -216,7 +216,7 @@ Kebijakan Privasi: https://cactusai.cc/privacy-policy-en
 ------
 
 Условия использования: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Политика конфиденциальности: https://cactusai.cc/privacy-policy-en
+Политика конфиденциальности: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 
 ## 意大利语 🇮🇹
@@ -232,7 +232,7 @@ Funzionalità principali:
 ------
 
 Termini di utilizzo: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Informativa sulla privacy: https://cactusai.cc/privacy-policy-en
+Informativa sulla privacy: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 
 ## 泰语 🇹🇭
@@ -248,7 +248,7 @@ Informativa sulla privacy: https://cactusai.cc/privacy-policy-en
 ------
 
 ข้อกำหนดในการใช้: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-นโยบายความเป็นส่วนตัว: https://cactusai.cc/privacy-policy-en
+นโยบายความเป็นส่วนตัว: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ## 越南语 🇻🇳
 
@@ -263,7 +263,7 @@ Tính năng chính:
 ------
 
 Điều khoản sử dụng: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Chính sách quyền riêng tư: https://cactusai.cc/privacy-policy-en
+Chính sách quyền riêng tư: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 
 ## 阿拉伯语 🇸🇦
 
@@ -278,5 +278,5 @@ Chính sách quyền riêng tư: https://cactusai.cc/privacy-policy-en
 ------
 
 شروط الاستخدام: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-سياسة الخصوصية: https://cactusai.cc/privacy-policy-en
+سياسة الخصوصية: https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3
 

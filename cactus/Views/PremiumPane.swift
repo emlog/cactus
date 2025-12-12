@@ -151,7 +151,7 @@ struct PremiumPane: View {
                             .font(.caption)
                             .foregroundColor(.blue)
                         
-                        Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://cactusai.cc/privacy-policy")!)
+                        Link(NSLocalizedString("privacy_policy", comment: "Privacy Policy"), destination: URL(string: "https://ai.feishu.cn/wiki/IwtcwmCd3i6pgXkytEncJpk8nl3")!)
                             .font(.caption)
                             .foregroundColor(.blue)
                     }
