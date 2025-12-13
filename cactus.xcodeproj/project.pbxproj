@@ -163,11 +163,6 @@
 				it,
 				vi,
 				ar,
-				"pt-PT",
-				"zh-HK",
-				"fr-CA",
-				"es-419",
-				"es-US",
 			);
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;
