@@ -111,7 +111,7 @@ class PreferencesModel: ObservableObject {
             title: NSLocalizedString("model_zhipu_glm4", comment: "model_zhipuai"),
             baseURL: "https://api.siliconflow.cn/v1/chat/completions",
             apiKey: "sk-ugnakenapgoouiubjkshrgfveopwxcrxakcuepjqgixvstye",
-            model: "THUDM/glm-4-9b-chat"
+            model: "THUDM/GLM-4-9B-0414"
         ),
         "openrouter-default": ProviderSettings(
             title: NSLocalizedString("openrouter-default", comment: "openrouter-default"),
