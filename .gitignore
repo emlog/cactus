@@ -17,8 +17,8 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
-cactus.app
-cactus.dmg
+*.app
+*.dmg
 
 # IDE
 .project
