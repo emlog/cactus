@@ -289,9 +289,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("api_key", comment: "API密钥")
             ) {
-                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: customServiceApiKeyBinding)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
+                SecureInputView(placeholder: NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: customServiceApiKeyBinding)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
@@ -364,9 +362,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("api_key", comment: "密钥")
             ) {
-                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: apiKeyBinding)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
+                SecureInputView(placeholder: NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: apiKeyBinding)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
@@ -452,9 +448,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("api_key", comment: "密钥")
             ) {
-                SecureField(NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $newServiceApiKey)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
+                SecureInputView(placeholder: NSLocalizedString("enter_api_key", comment: "请输入API密钥"), text: $newServiceApiKey)
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 8)
@@ -1074,5 +1068,38 @@ struct GeneralAiPane: View {
                 }
             }
         )
+    }
+}
+
+/// 自定义安全输入框组件，支持显示/隐藏密码
+struct SecureInputView: View {
+    let placeholder: String
+    @Binding var text: String
+    @State private var isVisible = false
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            // 左侧的眼睛图标，仅在有内容时显示
+            if !text.isEmpty {
+                Button(action: {
+                    isVisible.toggle()
+                }) {
+                    Image(systemName: isVisible ? "eye.slash" : "eye")
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            
+            Group {
+                if isVisible {
+                    TextField(placeholder, text: $text)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                } else {
+                    SecureField(placeholder, text: $text)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+            }
+            .frame(width: 300)
+        }
     }
 }
