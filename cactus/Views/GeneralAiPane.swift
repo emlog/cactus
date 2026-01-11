@@ -1084,7 +1084,7 @@ struct SecureInputView: View {
                 Button(action: {
                     isVisible.toggle()
                 }) {
-                    Image(systemName: isVisible ? "eye.slash" : "eye")
+                    Image(systemName: isVisible ? "lock.open" : "lock")
                         .foregroundColor(.secondary)
                 }
                 .buttonStyle(PlainButtonStyle())
