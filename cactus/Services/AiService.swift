@@ -299,56 +299,21 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var updateTimer: Timer?
     
     private func processCompleteLines() {
-        // 将缓冲区中的所有数据转换为字符串
-        guard String(data: buffer, encoding: .utf8) != nil else {
-            return
-        }
-        
-        // 如果缓冲区不为空但转换失败，可能是不完整的 UTF-8 序列，保留 buffer 等待更多数据
-        // 但如果是有效的 UTF-8 字符串，我们就可以处理它
-        
-        // 清空缓冲区，因为我们已经将其转换为字符串处理
-        // 注意：这里假设 buffer 总是以完整的行结束。如果不是，可能会切断最后一行。
-        // 更严谨的做法是找到最后一个换行符，只处理到那里。
-        
-        let processingData = buffer
-        buffer.removeAll()
-        
-        // 查找最后一个换行符的位置
-        if let lastNewlineRange = processingData.range(of: Data("\n".utf8), options: .backwards, in: 0..<processingData.count) {
-            let validDataRange = 0..<lastNewlineRange.upperBound
-            let remainingDataRange = lastNewlineRange.upperBound..<processingData.count
+        while let range = buffer.firstRange(of: Data("\n".utf8)) {
+            let lineData = buffer.subdata(in: 0..<range.lowerBound)
+            buffer.removeSubrange(0..<range.upperBound)
             
-            // 将剩余的不完整行放回 buffer
-            if !remainingDataRange.isEmpty {
-                buffer.append(processingData.subdata(in: remainingDataRange))
-            }
+            // 使用SSE解析器处理数据
+            let jsonStrings = SSEParser.parseSSEData(lineData)
             
-            // 只处理有效的数据范围
-            let validData = processingData.subdata(in: validDataRange)
-            if let validString = String(data: validData, encoding: .utf8) {
-                let lines = validString.components(separatedBy: "\n")
-                
-                for line in lines {
-                    if line.isEmpty { continue }
+            for jsonString in jsonStrings {
+                if let content = SSEParser.extractContentFromJSON(jsonString) {
+                    fullContent += content
                     
-                    // SSE 格式通常是 "data: {json}"
-                    // 我们重新构造 SSEParser 需要的格式，或者直接解析行
-                    // 这里直接复用 SSEParser 的逻辑，但稍作调整以适应行处理
-                    if line.hasPrefix("data: ") {
-                        let dataContent = String(line.dropFirst(6))
-                        if dataContent != "[DONE]" {
-                            if let content = SSEParser.extractContentFromJSON(dataContent) {
-                                fullContent += content
-                                updateUIWithThrottling()
-                            }
-                        }
-                    }
+                    // 使用节流机制更新UI，避免频繁刷新干扰输入框
+                    updateUIWithThrottling()
                 }
             }
-        } else {
-            // 如果没有换行符，说明数据不完整，全部放回 buffer
-            buffer.append(processingData)
         }
     }
     
@@ -362,20 +327,12 @@ class AiService: NSObject, URLSessionDataDelegate {
         if timeSinceLastUpdate > 0.1 {
             performUIUpdate()
             lastUpdateTime = now
-            // 取消可能存在的等待中的更新
-            updateTimer?.invalidate()
-            updateTimer = nil
         } else {
-            // 如果已经有定时器在运行，就不需要再创建了
-            if updateTimer == nil {
-                // 使用 DispatchQueue 代替 Timer，确保在主线程执行，且不受 RunLoop 模式影响
-                let timer = Timer(timeInterval: 0.1, repeats: false) { [weak self] _ in
-                    self?.performUIUpdate()
-                    self?.lastUpdateTime = Date()
-                    self?.updateTimer = nil
-                }
-                RunLoop.main.add(timer, forMode: .common)
-                updateTimer = timer
+            // 否则使用定时器延迟更新，避免过于频繁的UI刷新
+            updateTimer?.invalidate()
+            updateTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] _ in
+                self?.performUIUpdate()
+                self?.lastUpdateTime = Date()
             }
         }
     }

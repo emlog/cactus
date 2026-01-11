@@ -195,9 +195,6 @@ struct ChatFlowView: View {
     // MARK: - 常量
     private let minResultTextHeight: CGFloat = 100
     
-    // MARK: - 缓存
-    @State private var messageHeightCache: [UUID: CGFloat] = [:]
-    
     // MARK: - 回调闭包
     let onHeightUpdate: () -> Void
     
@@ -303,36 +300,30 @@ struct ChatFlowView: View {
     
     /// 更新聊天流高度的辅助方法
     private func updateChatFlowHeight() {
+        let totalHeight = calculateChatFlowHeight()
+        resultTextHeight = min(max(totalHeight, minResultTextHeight), 600)
+        onHeightUpdate()
+    }
+    
+    /// 计算聊天流高度
+    /// - Returns: 计算得出的高度值
+    private func calculateChatFlowHeight() -> CGFloat {
         var totalHeight: CGFloat = 40 // 上下padding
-        var newCache = messageHeightCache // 复制一份当前缓存
-        var cacheUpdated = false
         
         // 计算已有消息的高度
         for message in contentModel.chatMessages {
-            if let cachedHeight = newCache[message.id] {
-                totalHeight += cachedHeight + 16
-            } else {
-                let messageHeight = calculateMessageHeight(content: message.content, isUser: message.isUser)
-                newCache[message.id] = messageHeight
-                totalHeight += messageHeight + 16
-                cacheUpdated = true
-            }
+            let messageHeight = calculateMessageHeight(content: message.content, isUser: message.isUser)
+            totalHeight += messageHeight + 16 // 16为消息间距(spacing: 12 + padding: 4)
         }
         
         // 如果AI正在回复，计算当前回复内容的高度
         if contentModel.isChatting, let resultText = contentModel.resultText, !resultText.isEmpty {
-            // 正在输入的消息不缓存，因为内容一直在变
             let typingMessageHeight = calculateMessageHeight(content: resultText, isUser: false)
             totalHeight += typingMessageHeight + 16
         }
         
-        // 如果缓存有更新，保存回 State
-        if cacheUpdated {
-            messageHeightCache = newCache
-        }
-        
-        resultTextHeight = min(max(totalHeight, minResultTextHeight), maxHeight)
-        onHeightUpdate()
+        // 确保至少有最小高度，并限制最大高度
+        return min(max(totalHeight, minResultTextHeight), maxHeight)
     }
     
     /// 计算单条消息的高度
