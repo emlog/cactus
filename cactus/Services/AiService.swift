@@ -19,6 +19,14 @@ class AiService: NSObject, URLSessionDataDelegate {
     private var currentTask: URLSessionDataTask?
     private var isManualStop = false // 标记是否为手动停止
     
+    // MARK: - 共享URLSession实例,避免每次请求创建新实例导致内存泄漏
+    private lazy var urlSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 300
+        configuration.timeoutIntervalForResource = 300
+        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+    }()
+    
     // MARK: - 请求次数限制相关属性
     private static let FREE_USER_REQUEST_LIMIT = 500
     
@@ -36,6 +44,13 @@ class AiService: NSObject, URLSessionDataDelegate {
     }
     
     static let shared = AiService()
+    
+    /// 析构函数:清理URLSession和Timer资源,防止内存泄漏
+    deinit {
+        urlSession.invalidateAndCancel()
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
     
     private func canMakeRequest() -> Bool {
         if isPremiumUser {
@@ -184,8 +199,8 @@ class AiService: NSObject, URLSessionDataDelegate {
         fullContent = ""
         buffer = Data()
         
-        let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
-        let task = session.dataTask(with: request)
+        // 使用共享URLSession实例,避免每次创建新Session导致内存泄漏
+        let task = urlSession.dataTask(with: request)
         
         // 保存当前任务引用
         self.currentTask = task
@@ -273,6 +288,10 @@ class AiService: NSObject, URLSessionDataDelegate {
     private func handleErrorResponse() {
         guard let errorString = String(data: buffer, encoding: .utf8) else { return }
         
+        // 清理Timer,防止错误场景下的资源泄漏
+        updateTimer?.invalidate()
+        updateTimer = nil
+        
         do {
             if let errorData = errorString.data(using: .utf8),
                let errorJson = try JSONSerialization.jsonObject(with: errorData) as? [String: Any],
@@ -319,18 +338,19 @@ class AiService: NSObject, URLSessionDataDelegate {
     
     /// 使用节流机制更新UI，减少对输入框的干扰
     /// 通过限制更新频率，避免在流式输出时影响用户的输入体验
+    /// 性能优化: 将节流间隔从100ms增加到200ms,降低UI更新频率(从10次/秒降到5次/秒)
     private func updateUIWithThrottling() {
         let now = Date()
         let timeSinceLastUpdate = now.timeIntervalSince(lastUpdateTime)
         
-        // 如果距离上次更新超过100毫秒，立即更新
-        if timeSinceLastUpdate > 0.1 {
+        // 如果距离上次更新超过200毫秒，立即更新
+        if timeSinceLastUpdate > 0.2 {
             performUIUpdate()
             lastUpdateTime = now
         } else {
             // 否则使用定时器延迟更新，避免过于频繁的UI刷新
             updateTimer?.invalidate()
-            updateTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] _ in
+            updateTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] _ in
                 self?.performUIUpdate()
                 self?.lastUpdateTime = Date()
             }
@@ -410,11 +430,17 @@ class AiService: NSObject, URLSessionDataDelegate {
             self.completionHandler = nil
             self.errorHandler = nil
             self.isManualStop = false // 重置标志
-        }
-        
-        // 清空残留数据
-        if !buffer.isEmpty {
-            buffer.removeAll()
+            
+            // MARK: - 清理所有临时数据,防止内存累积
+            // 注意:清理操作必须在所有回调执行完成后进行,避免过早清理导致数据丢失
+            // 清空buffer残留数据
+            if !self.buffer.isEmpty {
+                self.buffer.removeAll()
+            }
+            // 清空fullContent,释放内存
+            self.fullContent = ""
+            // 重置响应状态标志
+            self.hasReceivedValidResponse = false
         }
     }
     

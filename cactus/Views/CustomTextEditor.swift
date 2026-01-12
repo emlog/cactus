@@ -65,7 +65,8 @@ struct CustomTextEditor: NSViewRepresentable {
         
         // 更新高度约束
         let newHeight = max(minHeight, min(calculatedHeight, maxHeight))
-        if nsView.frame.height != newHeight {
+        // 增加阈值检查，防止微小变化导致的无限循环
+        if abs(nsView.frame.height - newHeight) > 1.0 {
             DispatchQueue.main.async { // 确保在主线程更新UI
                 nsView.setFrameSize(NSSize(width: nsView.frame.width, height: newHeight))
                 // 可能需要通知父视图调整布局

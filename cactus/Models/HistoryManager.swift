@@ -46,15 +46,33 @@ class HistoryManager: ObservableObject {
         }
     }
     
+    /// 添加历史记录
+    /// 使用后台context处理保存操作,避免阻塞主线程
+    /// - Parameters:
+    ///   - inputContent: 输入内容
+    ///   - outputContent: 输出内容
     func addHistory(inputContent: String, outputContent: String) {
-        // 直接创建新条目，不检查重复
-        let newEntry = HistoryEntry(context: context)
-        newEntry.inputContent = inputContent
-        newEntry.outputContent = outputContent
-        newEntry.timestamp = Date()
+        // 使用后台context处理保存操作,避免阻塞主线程
+        let backgroundContext = persistentContainer.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
-        saveContext()
-        fetchHistoryEntries()
+        backgroundContext.perform {
+            // 在后台context中创建新条目
+            let newEntry = HistoryEntry(context: backgroundContext)
+            newEntry.inputContent = inputContent
+            newEntry.outputContent = outputContent
+            newEntry.timestamp = Date()
+            
+            do {
+                try backgroundContext.save()
+                // 保存成功后在主线程更新UI
+                DispatchQueue.main.async {
+                    self.fetchHistoryEntries()
+                }
+            } catch {
+                print("Save error: \(error)")
+            }
+        }
     }
     
     func deleteHistory(_ historyEntry: HistoryEntry) {

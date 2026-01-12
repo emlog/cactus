@@ -146,6 +146,13 @@ class WindowManager: NSObject, NSWindowDelegate {
     }
     
     @objc private func adjustWindowSize() {
+        // 取消之前的请求，实现防抖，避免频繁调整窗口大小导致CPU飙升
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performAdjustWindowSize), object: nil)
+        // 延迟0.1秒执行，合并短时间内的多次请求
+        self.perform(#selector(performAdjustWindowSize), with: nil, afterDelay: 0.1)
+    }
+    
+    @objc private func performAdjustWindowSize() {
         guard let hostingController = mainWindow?.contentViewController as? NSHostingController<MainView> else {
             return
         }

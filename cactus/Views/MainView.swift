@@ -56,6 +56,9 @@ struct MainView: View {
     // 添加自定义提示词按钮的引用
     @State private var customPromptButton = CustomPromptButton()
     
+    // MARK: - 通知观察者token管理,防止内存泄漏
+    @State private var notificationTokens: [NSObjectProtocol] = []
+    
     // 将计算属性移到这里（MainView结构体的顶层）
     private var customPromptButtonView: some View {
         CustomPromptButton(selectedPrompt: $preferences.selectedCustomPrompt)
@@ -330,26 +333,50 @@ struct MainView: View {
         .toast(toastManager)
         .onAppear {
             // 监听窗口关闭通知
-            NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: nil, queue: .main) { _ in
+            let closeToken = NotificationCenter.default.addObserver(
+                forName: NSWindow.willCloseNotification,
+                object: nil,
+                queue: .main
+            ) { _ in
                 stopSpeaking()
                 // 不再清空聊天历史和消息流，保持对话状态
             }
+            notificationTokens.append(closeToken)
             
             // 监听复制成功通知
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowCopySuccessToast"), object: nil, queue: .main) { _ in
+            let copySuccessToken = NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowCopySuccessToast"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.showCopySuccessToast()
             }
+            notificationTokens.append(copySuccessToken)
             
             // 监听复制错误通知
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("ShowCopyErrorToast"), object: nil, queue: .main) { _ in
+            let copyErrorToken = NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ShowCopyErrorToast"),
+                object: nil,
+                queue: .main
+            ) { _ in
                 self.showCopyErrorToast()
             }
+            notificationTokens.append(copyErrorToken)
+            
+            // MARK: - 监听应用进入后台,清理内存
+            let resignActiveToken = NotificationCenter.default.addObserver(
+                forName: NSApplication.didResignActiveNotification,
+                object: nil,
+                queue: .main
+            ) { _ in
+                self.cleanupMemory()
+            }
+            notificationTokens.append(resignActiveToken)
         }
         .onDisappear {
-            // 移除通知观察者
-            NotificationCenter.default.removeObserver(self, name: NSWindow.willCloseNotification, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopySuccessToast"), object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ShowCopyErrorToast"), object: nil)
+            // 移除所有通知观察者,防止内存泄漏
+            notificationTokens.forEach { NotificationCenter.default.removeObserver($0) }
+            notificationTokens.removeAll()
             stopSpeaking()
         }
         .onChange(of: preferences.selectedCustomPrompt) { _ in
@@ -784,6 +811,34 @@ struct MainView: View {
             self.contentModel.isSummarizing = false
             self.contentModel.isDictionaryLookup = false
             self.contentModel.isChatting = false
+        }
+    }
+    
+    /// 内存清理方法:应用进入后台时调用,防止内存累积
+    private func cleanupMemory() {
+        // 停止语音播放,释放资源
+        stopSpeaking()
+        
+        // 限制聊天历史长度,防止长对话导致内存过大
+        // 保留最近20条消息(约10轮对话)
+        if contentModel.chatMessages.count > 20 {
+            let recentMessages = Array(contentModel.chatMessages.suffix(20))
+            contentModel.chatMessages = recentMessages
+            
+            // 同步更新API历史
+            let recentHistory = Array(contentModel.chatHistory.suffix(20))
+            contentModel.chatHistory = recentHistory
+        }
+        
+        // 如果没有正在进行的请求,清理结果文本以释放内存
+        if !contentModel.isProcessing {
+            // 注意:不清理resultText,因为用户可能需要查看上次结果
+            // 只清理过长的结果文本(超过10000字符)
+            if let resultText = contentModel.resultText, resultText.count > 10000 {
+                // 保留前5000字符
+                let truncated = String(resultText.prefix(5000)) + "\n\n...(内容已截断)"
+                contentModel.resultText = truncated
+            }
         }
     }
 }

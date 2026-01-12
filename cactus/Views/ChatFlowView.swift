@@ -198,6 +198,10 @@ struct ChatFlowView: View {
     // MARK: - 回调闭包
     let onHeightUpdate: () -> Void
     
+    // MARK: - 性能优化: 节流机制,防止主线程阻塞
+    @State private var lastHeightUpdateTime: Date = Date.distantPast
+    @State private var heightUpdateTimer: Timer?
+    
     /// 初始化对话流视图
     /// - Parameters:
     ///   - resultTextHeight: 结果文本高度的绑定
@@ -251,21 +255,23 @@ struct ChatFlowView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         scrollToBottom(proxy: proxy)
                     }
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    updateChatFlowHeight()
-                }
-            }
-            // 监听AI回复内容变化，但不实时滚动，只更新高度
-            .onChange(of: contentModel.resultText) { _ in
-                if contentModel.isChatting {
-                    updateChatFlowHeight()
+                } else {
+                    // ✅ 性能优化: 仅在AI回复完成后更新一次高度
+                    // 移除流式输出时的频繁高度计算,避免主线程阻塞和CPU 100%占用
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        updateChatFlowHeight()
+                    }
                 }
             }
 
             // 在视图出现时立即调整高度
             .onAppear {
                 updateChatFlowHeight()
+            }
+            .onDisappear {
+                // 清理定时器,防止内存泄漏
+                heightUpdateTimer?.invalidate()
+                heightUpdateTimer = nil
             }
         }
     }
@@ -294,6 +300,27 @@ struct ChatFlowView: View {
                 }
             } else {
                 proxy.scrollTo(lastMessage.id, anchor: .bottom)
+            }
+        }
+    }
+    
+    /// 节流更新聊天流高度
+    /// 使用定时器避免过于频繁的高度计算,防止主线程阻塞
+    /// - Parameter throttleInterval: 节流间隔(秒),默认0.3秒
+    private func updateChatFlowHeightThrottled(throttleInterval: TimeInterval = 0.3) {
+        let now = Date()
+        let timeSinceLastUpdate = now.timeIntervalSince(lastHeightUpdateTime)
+        
+        // 如果距离上次更新超过节流间隔,立即更新
+        if timeSinceLastUpdate > throttleInterval {
+            updateChatFlowHeight()
+            lastHeightUpdateTime = now
+        } else {
+            // 否则使用定时器延迟更新,避免过于频繁
+            heightUpdateTimer?.invalidate()
+            heightUpdateTimer = Timer.scheduledTimer(withTimeInterval: throttleInterval, repeats: false) { [self] _ in
+                updateChatFlowHeight()
+                lastHeightUpdateTime = Date()
             }
         }
     }
