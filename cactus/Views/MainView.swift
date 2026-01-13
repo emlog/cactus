@@ -627,16 +627,17 @@ struct MainView: View {
             systemMessage = Prompt.getSystemMessageForChat()
         }
         
-        // 使用 TextContentModel 的统一方法添加用户消息
-        contentModel.addUserMessage(inputText)
+        // 简化模式：不再支持多轮对话，只展示最近一次输出
+        // 1. 清除旧的聊天数据和结果
+        contentModel.clearChatData()
+        contentModel.resultText = nil
         
-        // 保存当前输入文本用于历史记录
-        let currentInput = contentModel.text
+        // 2. 不再清空输入框
+        // contentModel.text = ""
         
-        // 清空输入框
-        contentModel.text = ""
-        
-        performAIAction(systemMessage: systemMessage, actionType: .chat(chatHistory: contentModel.getChatHistory(), originalInput: currentInput), loadingType: .chat)
+        // 3. 使用 basic 模式发起请求，结果将显示在 traditionalResultView 中
+        // 这样就实现了"只展示最近一次的输出结果"
+        performAIAction(systemMessage: systemMessage, actionType: .basic, loadingType: .chat)
     }
     
     // 只做一些清理窗口的动作

@@ -434,7 +434,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: "API URL"
             ) {
-                TextField("https://api.x.ai/v1/chat/completions", text: $newServiceBaseURL)
+                TextField("https://api.openai.com/v1/chat/completions", text: $newServiceBaseURL)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }
@@ -460,7 +460,7 @@ struct GeneralAiPane: View {
             SettingRow(
                 label: NSLocalizedString("model", comment: "模型")
             ) {
-                TextField("grok-4-0709", text: $newServiceModel)
+                TextField("gpt-4.1", text: $newServiceModel)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 300)
             }

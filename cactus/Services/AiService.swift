@@ -18,6 +18,7 @@ class AiService: NSObject, URLSessionDataDelegate {
     // 添加当前任务引用和手动停止标志
     private var currentTask: URLSessionDataTask?
     private var isManualStop = false // 标记是否为手动停止
+    private var currentProtocol: AIProtocol = .chatCompletion // 当前使用的协议
     
     // MARK: - 共享URLSession实例,避免每次请求创建新实例导致内存泄漏
     private lazy var urlSession: URLSession = {
@@ -110,13 +111,37 @@ class AiService: NSObject, URLSessionDataDelegate {
         }
         
         let Preferences = PreferencesModel.shared
-        guard let providerSettings = Preferences.defaultProviders[Preferences.selectedProvider],
-              let url = URL(string: providerSettings.baseURL) else {
-            // 如果 URL 或配置无效，也应该触发错误回调
+        guard let providerSettings = Preferences.defaultProviders[Preferences.selectedProvider] else {
+            // 如果配置无效，也应该触发错误回调
             let errorMessage = NSLocalizedString("error_invalid_config", comment: "AI 服务配置无效")
             DispatchQueue.main.async {
-                onError?(errorMessage) // 在主线程调用错误回调
-                completion?() // 确保完成回调也被调用
+                onError?(errorMessage)
+                completion?()
+            }
+            return
+        }
+        
+        // 确定协议
+        let selectedModelKey = providerSettings.model
+        let modelOption = providerSettings.availableModels.first { $0.key == selectedModelKey }
+        self.currentProtocol = modelOption?.modelProtocol ?? .chatCompletion
+        
+        // 构建URL
+        var urlString = providerSettings.baseURL
+        if self.currentProtocol == .responses {
+            if urlString.hasSuffix("/chat/completions") {
+                urlString = urlString.replacingOccurrences(of: "/chat/completions", with: "/responses")
+            } else if !urlString.hasSuffix("/responses") {
+                // 简单的URL处理，移除可能的尾部斜杠并添加 /responses
+                urlString = urlString.trimmingCharacters(in: CharacterSet(charactersIn: "/")) + "/responses"
+            }
+        }
+        
+        guard let url = URL(string: urlString) else {
+            let errorMessage = NSLocalizedString("error_invalid_config", comment: "AI 服务配置无效")
+            DispatchQueue.main.async {
+                onError?(errorMessage)
+                completion?()
             }
             return
         }
@@ -150,38 +175,72 @@ class AiService: NSObject, URLSessionDataDelegate {
         debugLog(.info, "Request URL: \(url)")
         debugLog(.info, "Request Headers: \(request.allHTTPHeaderFields ?? [:])")
         
-        var messages: [[String: String]] = []
-        
-        // 如果 systemMessage 存在且不为空，则添加到 messages 数组
-        if let systemContent = systemMessage, !systemContent.isEmpty {
-            messages.append(["role": "system", "content": systemContent])
-        }
-        
-        // 根据 chatHistory 参数判断处理方式
-        if let history = chatHistory, !history.isEmpty {
-            // 有历史对话：添加对话历史，只取最近10次对话
-            let recentHistory = Array(history.suffix(10))
-            messages.append(contentsOf: recentHistory)
-        } else if let userText = text, !userText.isEmpty {
-            // 单次对话：添加用户消息
-            messages.append(["role": "user", "content": userText])
-        } else {
-            // 既没有历史对话也没有新文本，返回错误
-            let errorMessage = NSLocalizedString("error_no_input", comment: "没有输入内容")
-            DispatchQueue.main.async {
-                onError?(errorMessage)
-                completion?()
-            }
-            return
-        }
-        
-        // 创建可变的 body 字典
+        // 创建 body 字典
         var body: [String: Any] = [
             "model": providerSettings.model,
-            "messages": messages,
-            "max_tokens": 4096,// 限制模型回答时最多生成的 token 数
             "stream": true
         ]
+        
+        if self.currentProtocol == .responses {
+            // Responses 协议构建 Body
+            var inputMessages: [[String: String]] = []
+            
+            // 处理 systemMessage -> instructions
+            if let systemContent = systemMessage, !systemContent.isEmpty {
+                body["instructions"] = systemContent
+            }
+            
+            // 处理 input
+            if let history = chatHistory, !history.isEmpty {
+                // 有历史对话：添加对话历史，只取最近10次对话
+                let recentHistory = Array(history.suffix(10))
+                // 过滤掉 system 消息，因为已经放入 instructions (如果 chatHistory 包含 system)
+                // 这里假设 chatHistory 主要是 user/assistant 消息
+                inputMessages.append(contentsOf: recentHistory)
+            } else if let userText = text, !userText.isEmpty {
+                // 单次对话：添加用户消息
+                inputMessages.append(["role": "user", "content": userText])
+            } else {
+                // 错误处理
+                let errorMessage = NSLocalizedString("error_no_input", comment: "没有输入内容")
+                DispatchQueue.main.async {
+                    onError?(errorMessage)
+                    completion?()
+                }
+                return
+            }
+            body["input"] = inputMessages
+            
+        } else {
+            // 默认 Chat Completion 协议
+            var messages: [[String: String]] = []
+            
+            // 如果 systemMessage 存在且不为空，则添加到 messages 数组
+            if let systemContent = systemMessage, !systemContent.isEmpty {
+                messages.append(["role": "system", "content": systemContent])
+            }
+            
+            // 根据 chatHistory 参数判断处理方式
+            if let history = chatHistory, !history.isEmpty {
+                // 有历史对话：添加对话历史，只取最近10次对话
+                let recentHistory = Array(history.suffix(10))
+                messages.append(contentsOf: recentHistory)
+            } else if let userText = text, !userText.isEmpty {
+                // 单次对话：添加用户消息
+                messages.append(["role": "user", "content": userText])
+            } else {
+                // 既没有历史对话也没有新文本，返回错误
+                let errorMessage = NSLocalizedString("error_no_input", comment: "没有输入内容")
+                DispatchQueue.main.async {
+                    onError?(errorMessage)
+                    completion?()
+                }
+                return
+            }
+            
+            body["messages"] = messages
+            body["max_tokens"] = 4096 // 限制模型回答时最多生成的 token 数
+        }
         
         // Add provider-specific parameters
         addProviderSpecificParameters(providerSettings: providerSettings, to: &body)
@@ -326,7 +385,7 @@ class AiService: NSObject, URLSessionDataDelegate {
             let jsonStrings = SSEParser.parseSSEData(lineData)
             
             for jsonString in jsonStrings {
-                if let content = SSEParser.extractContentFromJSON(jsonString) {
+                if let content = SSEParser.extractContentFromJSON(jsonString, aiProtocol: self.currentProtocol) {
                     fullContent += content
                     
                     // 使用节流机制更新UI，避免频繁刷新干扰输入框
@@ -480,17 +539,51 @@ struct SSEParser {
             }
     }
     
-    static func extractContentFromJSON(_ jsonString: String) -> String? {
+    static func extractContentFromJSON(_ jsonString: String, aiProtocol: AIProtocol = .chatCompletion) -> String? {
         
-        debugLog(.info, "JSON DATA: \(jsonString.debugDescription)")
+        // debugLog(.info, "JSON DATA: \(jsonString.debugDescription)")
         
         guard let jsonData = jsonString.data(using: .utf8) else { return nil }
         
         do {
+            if aiProtocol == .responses {
+                // Responses 协议处理
+                if let json = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
+                   let type = json["type"] as? String {
+                    
+                    if type == "response.output_text.delta" {
+                        debugLog(.info, "Responses API JSON: \(jsonString)")
+                        
+                        // 情况 1: delta 直接是字符串
+                        if let text = json["delta"] as? String {
+                            return text
+                        }
+                        
+                        // 情况 2: delta 是对象，包含 value 字段
+                        if let delta = json["delta"] as? [String: Any],
+                           let value = delta["value"] as? String {
+                            return value
+                        }
+                        
+                        // 情况 3: delta 是对象，包含 text 字段
+                        if let delta = json["delta"] as? [String: Any],
+                           let text = delta["text"] as? String {
+                            return text
+                        }
+                    }
+                    return nil
+                }
+                return nil
+            }
+            
+            // 默认 Chat Completion 协议处理
             let streamResponse = try JSONDecoder().decode(StreamResponse.self, from: jsonData)
             return streamResponse.choices.first?.delta.content
         } catch {
-            debugLog(.error, "JSON解析错误: \(error.localizedDescription), Raw JSON: \(jsonString)")
+            // 只有在非 Responses 协议或者明确解析失败时才打印错误，避免 Responses 协议中非 delta 事件（如 created, completed）产生的噪音
+            if aiProtocol != .responses {
+                debugLog(.error, "JSON解析错误: \(error.localizedDescription), Raw JSON: \(jsonString)")
+            }
             return nil
         }
     }

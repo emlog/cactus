@@ -17,16 +17,24 @@ struct CustomAIService: Codable, Identifiable {
     var model: String
 }
 
+/// 模型协议
+enum AIProtocol: String, Codable {
+    case chatCompletion = "chat_completion"
+    case responses = "responses"
+}
+
 /// 模型选项数据结构
 struct ModelOption: Codable, Identifiable {
     var id = UUID()
     var key: String
     var displayName: String
+    var modelProtocol: AIProtocol = .chatCompletion
     
-    init(key: String, displayName: String) {
+    init(key: String, displayName: String, modelProtocol: AIProtocol = .chatCompletion) {
         self.id = UUID()
         self.key = key
         self.displayName = displayName
+        self.modelProtocol = modelProtocol
     }
 }
 
@@ -195,15 +203,15 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.openai.com/api-keys",
             requiresCustomConfig: true,
             availableModels: [
-                ModelOption(key: "gpt-5.2-2025-12-11", displayName: "GPT-5.2"),
-                ModelOption(key: "gpt-5.1-2025-11-13", displayName: "GPT-5.1"),
-                ModelOption(key: "gpt-5-2025-08-07", displayName: "GPT-5"),
-                ModelOption(key: "gpt-5-mini-2025-08-07", displayName: "GPT-5-mini"),
-                ModelOption(key: "gpt-5-nano-2025-08-07", displayName: "GPT-5-nano"),
-                ModelOption(key: "gpt-4.1-2025-04-14", displayName: "GPT-4.1"),
-                ModelOption(key: "gpt-4.1-mini-2025-04-14", displayName: "GPT-4.1-mini"),
-                ModelOption(key: "gpt-4o-2024-11-20", displayName: "GPT-4o"),
-                ModelOption(key: "gpt-4o-mini-2024-07-18", displayName: "GPT-4o-mini")
+                ModelOption(key: "gpt-5.2", displayName: "GPT-5.2", modelProtocol: .responses),
+                ModelOption(key: "gpt-5.1", displayName: "GPT-5.1", modelProtocol: .responses),
+                ModelOption(key: "gpt-5", displayName: "GPT-5", modelProtocol: .responses),
+                ModelOption(key: "gpt-5-mini", displayName: "GPT-5-mini", modelProtocol: .responses),
+                ModelOption(key: "gpt-5-nano", displayName: "GPT-5-nano", modelProtocol: .responses),
+                ModelOption(key: "gpt-4.1", displayName: "GPT-4.1"),
+                ModelOption(key: "gpt-4.1-mini", displayName: "GPT-4.1-mini"),
+                ModelOption(key: "gpt-4o", displayName: "GPT-4o"),
+                ModelOption(key: "gpt-4o-mini", displayName: "GPT-4o-mini")
             ]
         ),
         "google_gemini": ProviderSettings(
