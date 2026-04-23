@@ -28,11 +28,6 @@ struct GeneralAiPane: View {
     // 提示词库状态
     @State private var showingPromptLibrary = false
     
-    // 检查是否为高级用户
-    var isPremiumUser: Bool {
-        return PurchaseManager.shared.isPremiumUser
-    }
-    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -40,11 +35,11 @@ struct GeneralAiPane: View {
                     // AI服务选择区域 - 新的卡片式设计
                     aiServiceSelectionView
                     // 通用配置界面 - 适用于需要自定义配置的提供商
-                    if preferences.currentProviderRequiresConfig && isPremiumUser {
+                    if preferences.currentProviderRequiresConfig {
                         providerConfigurationView
                     }
                     // 自定义AI服务配置界面
-                    if preferences.selectedProvider.hasPrefix("custom_") && isPremiumUser {
+                    if preferences.selectedProvider.hasPrefix("custom_") {
                         customProviderConfigurationView
                     }
                 }
@@ -92,21 +87,20 @@ struct GeneralAiPane: View {
                     .font(.headline)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                if isPremiumUser {
-                    Button(action: {
-                        newServiceName = ""
-                        newServiceBaseURL = ""
-                        newServiceApiKey = ""
-                        newServiceModel = ""
-                        editingAIService = nil
-                        showingAddAIService = true
-                    }) {
-                        Image(systemName: "plus.circle")
-                            .foregroundColor(.accentColor)
-                            .font(.system(size: 16))
-                    }
-                    .buttonStyle(PlainButtonStyle())
+                
+                Button(action: {
+                    newServiceName = ""
+                    newServiceBaseURL = ""
+                    newServiceApiKey = ""
+                    newServiceModel = ""
+                    editingAIService = nil
+                    showingAddAIService = true
+                }) {
+                    Image(systemName: "plus.circle")
+                        .foregroundColor(.accentColor)
+                        .font(.system(size: 16))
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             .padding(.horizontal, 10)
             
@@ -130,13 +124,9 @@ struct GeneralAiPane: View {
     private func aiServiceCard(for providerKey: String) -> some View {
         let provider = preferences.defaultProviders[providerKey]
         let isSelected = preferences.selectedProvider == providerKey
-        let isPremiumOnly = premiumOnlyProviders.contains(providerKey)
-        let isAccessible = !isPremiumOnly || isPremiumUser
         
         return Button(action: {
-            if isAccessible {
-                preferences.selectedProvider = providerKey
-            }
+            preferences.selectedProvider = providerKey
         }) {
             HStack(spacing: 8) {
                 // 服务图标
@@ -157,26 +147,9 @@ struct GeneralAiPane: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(provider?.title ?? providerKey)
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(isAccessible ? .primary : .secondary)
+                        .foregroundColor(.primary)
                         .lineLimit(1)
                         .truncationMode(.tail)
-                    
-                    // 高级版标识
-                    if isPremiumOnly {
-                        HStack(spacing: 2) {
-                            Image(systemName: "checkmark.seal")
-                                .font(.system(size: 8))
-                            Text(NSLocalizedString("premium", comment: "高级版"))
-                                .font(.system(size: 8))
-                        }
-                        .foregroundColor(isPremiumUser ? .orange : .gray)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 1)
-                        .background(
-                            Capsule()
-                                .fill(isPremiumUser ? Color.orange.opacity(0.2) : Color.gray.opacity(0.2))
-                        )
-                    }
                 }
                 
                 Spacer(minLength: 0)
@@ -205,11 +178,11 @@ struct GeneralAiPane: View {
                 x: 0,
                 y: isSelected ? 2 : 1
             )
-            .opacity(isAccessible ? 1.0 : 0.6)
+            .opacity(1.0)
         }
         .buttonStyle(PlainButtonStyle())
         .animation(.easeInOut(duration: 0.15), value: isSelected)
-        .disabled(!isAccessible)
+        .disabled(false)
     }
     
     // 自定义AI服务配置视图
@@ -394,12 +367,7 @@ struct GeneralAiPane: View {
     /// 提供商选项视图
     private var providerOptions: some View {
         ForEach(preferences.providerKeys, id: \.self) { key in
-            // 检查是否为高级版专属提供商
-            if premiumOnlyProviders.contains(key) && !isPremiumUser {
-                EmptyView()
-            } else {
-                Text(providerDisplayText(for: key)).tag(key)
-            }
+            Text(providerDisplayText(for: key)).tag(key)
         }
     }
     
@@ -888,21 +856,6 @@ struct GeneralAiPane: View {
     // 获取模型显示名称
     private func availableModelDisplayName(for key: String) -> String {
         return preferences.defaultProviders[preferences.selectedProvider]?.availableModels.first { $0.key == key }?.displayName ?? key
-    }
-    
-    /// 高级版专属提供商列表
-    private var premiumOnlyProviders: Set<String> {
-        return [
-            "zhipu",
-            "siliconflow",
-            "deepseek",
-            "volcengine",
-            "claude",
-            "openai",
-            "google_gemini",
-            "openrouter",
-            "grok"
-        ]
     }
     
     /// 获取提供商显示文本

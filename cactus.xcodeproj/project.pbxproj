@@ -15,7 +15,6 @@
 		F2A9F8FD2E51E62D00E7DCF4 /* release.md in Resources */ = {isa = PBXBuildFile; fileRef = F2A9F8FC2E51E61F00E7DCF4 /* release.md */; };
 		F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99D9A2D760ED500BF5BA3 /* KeyboardShortcuts */; };
 		F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = F2B99DEF2D76F31E00BF5BA3 /* LaunchAtLogin */; };
-		F2BCD9AC2DE9726B00C0AC97 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2BCD9AB2DE9726B00C0AC97 /* StoreKit.framework */; };
 		F2FCA65C2DC05CE20007539A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F2FCA65A2DC05CE20007539A /* README.md */; };
 		F2FCA65D2DC05CE20007539A /* TEST.md in Resources */ = {isa = PBXBuildFile; fileRef = F2FCA65B2DC05CE20007539A /* TEST.md */; };
 /* End PBXBuildFile section */
@@ -26,7 +25,6 @@
 		F2881EA02DF57C0800A8901A /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
 		F292ABA82D6575070089583E /* Cactus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cactus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A9F8FC2E51E61F00E7DCF4 /* release.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = release.md; sourceTree = "<group>"; };
-		F2BCD9AB2DE9726B00C0AC97 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F2FCA65A2DC05CE20007539A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F2FCA65B2DC05CE20007539A /* TEST.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TEST.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,7 +57,6 @@
 			files = (
 				F21844C52D75DD6D0060A838 /* Settings in Frameworks */,
 				F2B99D9B2D760ED500BF5BA3 /* KeyboardShortcuts in Frameworks */,
-				F2BCD9AC2DE9726B00C0AC97 /* StoreKit.framework in Frameworks */,
 				F20BC9822DFC13A900BBA581 /* MarkdownUI in Frameworks */,
 				F2B99DF02D76F31E00BF5BA3 /* LaunchAtLogin in Frameworks */,
 			);
@@ -78,7 +75,6 @@
 				F2FCA65B2DC05CE20007539A /* TEST.md */,
 				F20E8F3C2E3C962B0085D838 /* PROMPT.md */,
 				F2A9F8FC2E51E61F00E7DCF4 /* release.md */,
-				F2BCD9AA2DE9726B00C0AC97 /* Frameworks */,
 				F292ABA92D6575070089583E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,14 +85,6 @@
 				F292ABA82D6575070089583E /* Cactus.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F2BCD9AA2DE9726B00C0AC97 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F2BCD9AB2DE9726B00C0AC97 /* StoreKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,9 +137,6 @@
 			knownRegions = (
 				"zh-Hans",
 				en,
-				"zh-Hant",
-				ja,
-				ko,
 			);
 			mainGroup = F292AB9F2D6575070089583E;
 			minimizedProjectReferenceProxies = 1;
@@ -331,8 +316,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = cactus/cactus.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1052;
 				DEAD_CODE_STRIPPING = YES;
@@ -356,6 +341,7 @@
 				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dawei-snow.cactus";
 				PRODUCT_NAME = Cactus;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -368,8 +354,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = cactus/cactus.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1052;
 				DEAD_CODE_STRIPPING = YES;
@@ -393,6 +379,7 @@
 				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "dawei-snow.cactus";
 				PRODUCT_NAME = Cactus;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};

@@ -47,8 +47,6 @@ class FavoriteManager: ObservableObject {
     }
     
     func addFavorite(inputContent: String, outputContent: String) {
-        let isPremium = PurchaseManager.shared.isPremiumUser
-        
         // 检查是否已存在相同的输入内容
         let request: NSFetchRequest<FavoriteEntry> = FavoriteEntry.fetchRequest()
         request.predicate = NSPredicate(format: "inputContent == %@", inputContent)
@@ -60,16 +58,6 @@ class FavoriteManager: ObservableObject {
                 existingEntries.first?.outputContent = outputContent
                 existingEntries.first?.timestamp = Date()
             } else {
-                // 检查非高级用户的条目数量限制
-                if !isPremium {
-                    let countRequest: NSFetchRequest<FavoriteEntry> = FavoriteEntry.fetchRequest()
-                    let currentCount = try context.count(for: countRequest)
-                    if currentCount >= 50 {
-                        print("Non-premium users can only save up to 50 favorite entries")
-                        return
-                    }
-                }
-                
                 // 创建新条目
                 let newEntry = FavoriteEntry(context: context)
                 newEntry.inputContent = inputContent

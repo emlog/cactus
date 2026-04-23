@@ -10,7 +10,6 @@ import Settings
 extension Settings.PaneIdentifier {
     static let general = Self("general")
     static let ai = Self("ai")
-    static let premium = Self("premium")
     static let about = Self("about")
     
     // 数据管理相关标识符

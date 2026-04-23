@@ -19,9 +19,6 @@ struct VocabularyView: View {
     private let speechService = SpeechService.shared
     
     // 获取高级用户状态
-    private var isPremiumUser: Bool {
-        PurchaseManager.shared.isPremiumUser
-    }
     
     var body: some View {
         HSplitView {
@@ -103,15 +100,6 @@ struct VocabularyView: View {
             VStack(spacing: 0) {
                 if let selectedWord = selectedWord {
                     VStack(alignment: .leading, spacing: 8) {
-                        if !isPremiumUser && vocabularyManager.wordEntries.count >= 50 {
-                            Text(NSLocalizedString("upgrade_to_premium", comment: "已达到用量上限，请升级高级版"))
-                                .font(.body)
-                                .foregroundColor(.orange)
-                                .padding(.horizontal, 0)
-                                .padding(.vertical, 4)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.bottom, 8)
-                        }
                         
                         ZStack(alignment: .topTrailing) {
                             ZStack(alignment: .bottomTrailing) {

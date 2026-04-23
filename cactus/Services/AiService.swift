@@ -28,22 +28,6 @@ class AiService: NSObject, URLSessionDataDelegate {
         return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
     
-    // MARK: - 请求次数限制相关属性
-    private static let FREE_USER_REQUEST_LIMIT = 500
-    
-    private var currentRequestCount: Int {
-        get {
-            return UserDefaults.standard.integer(forKey: "ai_request_count")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "ai_request_count")
-        }
-    }
-    
-    private var isPremiumUser: Bool {
-        return PurchaseManager.shared.isPremiumUser
-    }
-    
     static let shared = AiService()
     
     /// 析构函数:清理URLSession和Timer资源,防止内存泄漏
@@ -51,20 +35,6 @@ class AiService: NSObject, URLSessionDataDelegate {
         urlSession.invalidateAndCancel()
         updateTimer?.invalidate()
         updateTimer = nil
-    }
-    
-    private func canMakeRequest() -> Bool {
-        if isPremiumUser {
-            return true
-        }
-        
-        return currentRequestCount < Self.FREE_USER_REQUEST_LIMIT
-    }
-    
-    private func incrementRequestCount() {
-        if !isPremiumUser {
-            currentRequestCount += 1
-        }
     }
     
     // 修改停止请求的方法
@@ -99,16 +69,6 @@ class AiService: NSObject, URLSessionDataDelegate {
     func chat(text: String? = nil, chatHistory: [[String: String]]? = nil, systemMessage: String? = nil, completion: (() -> Void)? = nil, onError: ((String) -> Void)? = nil) {
         // 重置手动停止标志
         isManualStop = false
-        
-        // 检查用户是否可以发起请求
-        if !canMakeRequest() {
-            let errorMessage = NSLocalizedString("upgrade_to_premium", comment: "超出限额，请升级高级版")
-            DispatchQueue.main.async {
-                onError?(errorMessage)
-                completion?()
-            }
-            return
-        }
         
         let Preferences = PreferencesModel.shared
         guard let providerSettings = Preferences.defaultProviders[Preferences.selectedProvider] else {
@@ -263,9 +223,6 @@ class AiService: NSObject, URLSessionDataDelegate {
         
         // 保存当前任务引用
         self.currentTask = task
-        
-        // MARK: - 请求成功发起，增加计数
-        incrementRequestCount()
         
         self.completionHandler = completion
         self.errorHandler = onError

@@ -4,15 +4,8 @@ import CoreData
 class HistoryManager: ObservableObject {
     static let shared = HistoryManager()
     
-    lazy var persistentContainer: NSPersistentCloudKitContainer = {
-        let container = NSPersistentCloudKitContainer(name: "CoreDataModel")
-        
-        guard let privateStoreDescription = container.persistentStoreDescriptions.first else {
-            fatalError("###<persistentContainer>: Failed to get a persistent store description.")
-        }
-        
-        privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        privateStoreDescription.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "CoreDataModel")
         
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {

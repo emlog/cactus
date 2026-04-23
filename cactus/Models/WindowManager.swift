@@ -315,7 +315,6 @@ class WindowManager: NSObject, NSWindowDelegate {
     private func createSettingsWindowController() {
         let generalIcon = IconManager.shared.getGeneralSettingsIcon() ?? NSImage()
         let aiIcon = IconManager.shared.getAiSettingsIcon() ?? NSImage()
-        let premiumIcon = IconManager.shared.getPremiumSettingsIcon() ?? NSImage()
         let aboutIcon = IconManager.shared.getAboutSettingsIcon() ?? NSImage()
         // 添加数据管理相关的图标
         let vocabularyIcon = IconManager.shared.getVocabularyIcon() ?? NSImage()
@@ -359,13 +358,6 @@ class WindowManager: NSObject, NSWindowDelegate {
                     toolbarIcon: historyIcon
                 ) {
                     HistoryView()
-                },
-                Settings.Pane(
-                    identifier: Settings.PaneIdentifier.premium,
-                    title: NSLocalizedString("premium", comment: "高级版"),
-                    toolbarIcon: premiumIcon
-                ) {
-                    PremiumPane()
                 },
                 Settings.Pane(
                     identifier: Settings.PaneIdentifier.about,
