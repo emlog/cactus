@@ -2,6 +2,8 @@
 
 [English](./README.en.md)
 
+![Cactus Demo](./screenshots/demo.png)
+
 仙人掌 AI 助手（Cactus）是一款专为 macOS 设计的智能文字处理工具。通过集成先进的 AI 技术，提供一键翻译、内容总结、单词查询及截图 OCR 识别等功能，极大提升您的办公与学习效率。**基于 MIT 协议完全免费且开源。**
 
 ---
