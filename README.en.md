@@ -2,7 +2,7 @@
 
 [简体中文](./README.md)
 
-![Cactus Demo](./screenshots/demo.png)
+![Cactus Demo](./screenshots/demo_v143.png)
 
 Cactus is an intelligent text assistant for macOS designed to streamline your workflow with AI-powered translation, summarization, and OCR capabilities. **Completely free and open source under the MIT License.**
 
