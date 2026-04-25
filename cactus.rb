@@ -1,6 +1,6 @@
 cask "cactus" do
-  version "1.4.1"
-  sha256 :no_check # 后续发布 release 后请更新为实际的 SHA256
+  version "1.4.3"
+  sha256 "601f103cfa2268a1e12dd90d881ccaacd7951df3bce0f13d822195ebd087134b"
 
   url "https://github.com/emlog/cactus/releases/download/v#{version}/Cactus.dmg"
   name "Cactus"

@@ -48,6 +48,41 @@ echo -e "${YELLOW}正在调用 build.sh 生成 DMG...${NC}"
 chmod +x build.sh
 ./build.sh
 
+# 4.1 更新 Homebrew Formula (cactus.rb)
+if [ -f "cactus.rb" ]; then
+    echo -e "${YELLOW}正在更新本地 cactus.rb...${NC}"
+    SHA256=$(shasum -a 256 "Cactus.dmg" | awk '{print $1}')
+    sed -i '' "s/version \".*\"/version \"$VERSION\"/g" cactus.rb
+    sed -i '' "s/sha256 \".*\"/sha256 \"$SHA256\"/g" cactus.rb
+    sed -i '' "s/sha256 :no_check/sha256 \"$SHA256\"/g" cactus.rb
+    echo -e "${GREEN}本地 cactus.rb 更新成功 (SHA256: $SHA256)${NC}"
+
+    # 同步到 Homebrew Tap 仓库
+    echo -e "${YELLOW}正在同步到 Homebrew Tap (emlog/homebrew-cactus)...${NC}"
+    TAP_DIR="homebrew-cactus-tmp"
+    rm -rf "$TAP_DIR"
+    git clone https://github.com/emlog/homebrew-cactus.git "$TAP_DIR"
+    
+    if [ -d "$TAP_DIR" ]; then
+        # 检查是在根目录还是 Casks 目录
+        if [ -d "$TAP_DIR/Casks" ]; then
+            cp cactus.rb "$TAP_DIR/Casks/cactus.rb"
+        else
+            cp cactus.rb "$TAP_DIR/cactus.rb"
+        fi
+        
+        cd "$TAP_DIR"
+        git add .
+        git commit -m "Update cactus to v$VERSION"
+        git push origin main || git push origin master
+        cd ..
+        rm -rf "$TAP_DIR"
+        echo -e "${GREEN}Homebrew Tap 同步完成!${NC}"
+    else
+        echo -e "${RED}错误: 无法克隆 Homebrew Tap 仓库${NC}"
+    fi
+fi
+
 # 5. Git 操作
 echo -e "${YELLOW}正在提交版本更新并打标签...${NC}"
 git add .
