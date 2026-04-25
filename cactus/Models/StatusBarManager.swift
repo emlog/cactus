@@ -138,17 +138,6 @@ class StatusBarManager: NSObject {
             contactMenuItem.target = self
             menu.addItem(contactMenuItem)
             
-            // 给个好评吧
-            let rateMenuItem = NSMenuItem(
-                title: NSLocalizedString("rate_app", comment: "给个好评吧"),
-                action: #selector(rateApp),
-                keyEquivalent: ""
-            )
-            rateMenuItem.target = self
-            menu.addItem(rateMenuItem)
-            
-            menu.addItem(NSMenuItem.separator())
-            
             // 退出
             let quitMenuItem = NSMenuItem(
                 title: NSLocalizedString("quit", comment: "退出"),

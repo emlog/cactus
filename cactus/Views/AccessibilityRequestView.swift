@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 
 struct AccessibilityRequestView: View {
+    var onOpenMainWindow: (() -> Void)? = nil
+    
     var body: some View {
         VStack(spacing: 20) {
             Image(nsImage: NSApp.applicationIconImage)
@@ -27,14 +29,25 @@ struct AccessibilityRequestView: View {
             }
             .padding(.horizontal)
 
-            Button(action: {
-                openAccessibilitySettings()
-            }) {
-                Text("open_settings")
-                    .frame(minWidth: 100)
+            HStack(spacing: 20) {
+                Button(action: {
+                    openAccessibilitySettings()
+                }) {
+                    Text("open_settings")
+                        .frame(minWidth: 100)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                
+                Button(action: {
+                    onOpenMainWindow?()
+                }) {
+                    Text("openmain")
+                        .frame(minWidth: 100)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
             .padding(.top)
         }
         .padding(40)

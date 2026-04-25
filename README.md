@@ -4,17 +4,6 @@
 
 Cactus is an intelligent text assistant for macOS designed to streamline your workflow with AI-powered translation, summarization, and OCR capabilities. **Completely free and open source under the MIT License.**
 
-### ⚠️ Troubleshooting: "Cactus.app is damaged"
-If you see a message saying **"Cactus.app is damaged and can't be opened"** when first running the app, this is a common macOS security warning for unsigned apps. Follow these steps to fix it:
-
-1. Click **Cancel** (do NOT move to Trash).
-2. Open **Terminal.app** (Found in Applications -> Utilities).
-3. Paste and run the following command (enter your Mac password if prompted):
-   ```bash
-   sudo xattr -rd com.apple.quarantine /Applications/Cactus.app
-   ```
-4. Now you can open Cactus normally from your Applications folder.
-
 ---
 
 ### Key Features
@@ -50,3 +39,14 @@ Cactus supports various AI providers including OpenAI, DeepSeek, Claude, Gemini,
 
 ### License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### ⚠️ Troubleshooting: "Cactus.app is damaged"
+If you see a message saying **"Cactus.app is damaged and can't be opened"** when first running the app, this is a common macOS security warning for unsigned apps. Follow these steps to fix it:
+
+1. Click **Cancel** (do NOT move to Trash).
+2. Open **Terminal.app** (Found in Applications -> Utilities).
+3. Paste and run the following command (enter your Mac password if prompted):
+   ```bash
+   sudo xattr -rd com.apple.quarantine /Applications/Cactus.app
+   ```
+4. Now you can open Cactus normally from your Applications folder.

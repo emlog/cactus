@@ -44,7 +44,10 @@ class WindowManager: NSObject, NSWindowDelegate {
             accessibilityWindow?.collectionBehavior = [.canJoinAllSpaces]
             accessibilityWindow?.hidesOnDeactivate = false
             
-            let accessibilityView = AccessibilityRequestView()
+            let accessibilityView = AccessibilityRequestView(onOpenMainWindow: { [weak self] in
+                self?.showMainWindow()
+                self?.accessibilityWindow?.close()
+            })
             let hostingController = NSHostingController(rootView: accessibilityView)
             accessibilityWindow?.contentViewController = hostingController
         }
@@ -200,7 +203,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         }
     }
     
-    private func showMainWindow() {
+    func showMainWindow() {
         guard let window = self.mainWindow else { return }
         
         if self.isMainWindowPinned, let pinnedOrigin = self.pinnedWindowOrigin {

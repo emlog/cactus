@@ -40,11 +40,6 @@ struct AboutPane: View {
                             openContact()
                         }
                         .buttonStyle(.bordered)
-                        
-                        Button(NSLocalizedString("rate_app", comment: "给个好评吧")) {
-                            rateApp()
-                        }
-                        .buttonStyle(.bordered)
                     }
                     .padding(.top, 10)
                 }
@@ -66,14 +61,7 @@ struct AboutPane: View {
     
     // 联系我们
     func openContact() {
-        if let url = URL(string: "https://ai.feishu.cn/wiki/RGv3wMAV0ienPhkBPtBcv507nYc") {
-            NSWorkspace.shared.open(url)
-        }
-    }
-    
-    // 给个好评吧
-    func rateApp() {
-        if let url = URL(string: "macappstore://apps.apple.com/app/id6743790378?action=write-review") {
+        if let url = URL(string: "https://cacai.cc/cacatus") {
             NSWorkspace.shared.open(url)
         }
     }
