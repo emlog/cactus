@@ -41,13 +41,15 @@ Cactus supports various AI providers including OpenAI, DeepSeek, Claude, Gemini,
 ### License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### ⚠️ Troubleshooting: "Cactus.app is damaged"
-If you see a message saying **"Cactus.app is damaged and can't be opened"** when first running the app, this is a common macOS security warning for unsigned apps. Follow these steps to fix it:
+## ❓ FAQ
 
-1. Click **Cancel** (do NOT move to Trash).
-2. Open **Terminal.app** (Found in Applications -> Utilities).
-3. Paste and run the following command (enter your Mac password if prompted):
-   ```bash
-   sudo xattr -rd com.apple.quarantine /Applications/Cactus.app
-   ```
-4. Now you can open Cactus normally from your Applications folder.
+### ⚠️ Warning: "Cactus is damaged and can't be opened. You should move it to the Trash."
+
+Since the application has not yet been signed and notarized with an Apple Developer certificate, macOS's Gatekeeper mechanism may block this application and give a "damaged" or "move to Trash" warning.
+
+**Solution:**
+1. When the prompt appears, first click **"Cancel"** on the pop-up window.
+2. Open macOS **"System Settings"** > **"Privacy & Security"**.
+3. Scroll down to the "Security" section, where there will be an interception record (indicating "Cactus" has been blocked).
+4. Click the **"Open Anyway"** (or **"Allow Anyway"**) button next to it, and enter your Mac login password or authorize via Touch ID in the pop-up security verification.
+5. After authorization is completed, try to open **Cactus** again. An **"Open"** button will appear in the confirmation box. After clicking it, the system will remember your choice and you will not be blocked again.
