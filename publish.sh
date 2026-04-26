@@ -46,15 +46,26 @@ cp -R "$APP_BUNDLE" "./Cactus.app"
 # 4. 调用 build.sh 生成 DMG
 echo -e "${YELLOW}正在调用 build.sh 生成 DMG...${NC}"
 chmod +x build.sh
-./build.sh
+./build.sh "$VERSION"
+
+# 确定 DMG 文件名 (与 build.sh 逻辑保持一致)
+ARCH=$(uname -m)
+LOWER_APP_NAME=$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')
+DMG_NAME="${LOWER_APP_NAME}-${VERSION}-${ARCH}.dmg"
 
 # 4.1 更新 Homebrew Formula (cactus.rb)
 if [ -f "cactus.rb" ]; then
     echo -e "${YELLOW}正在更新本地 cactus.rb...${NC}"
-    SHA256=$(shasum -a 256 "Cactus.dmg" | awk '{print $1}')
+    if [ ! -f "$DMG_NAME" ]; then
+        echo -e "${RED}错误: 找不到生成的 DMG 文件: $DMG_NAME${NC}"
+        exit 1
+    fi
+    SHA256=$(shasum -a 256 "$DMG_NAME" | awk '{print $1}')
     sed -i '' "s/version \".*\"/version \"$VERSION\"/g" cactus.rb
     sed -i '' "s/sha256 \".*\"/sha256 \"$SHA256\"/g" cactus.rb
     sed -i '' "s/sha256 :no_check/sha256 \"$SHA256\"/g" cactus.rb
+    # 更新 URL 中的文件名模式
+    sed -i '' "s/Cactus.dmg/${LOWER_APP_NAME}-#{version}-${ARCH}.dmg/g" cactus.rb
     echo -e "${GREEN}本地 cactus.rb 更新成功 (SHA256: $SHA256)${NC}"
 
     # 同步到 Homebrew Tap 仓库
@@ -96,13 +107,13 @@ git push origin "v$VERSION"
 
 if command -v gh &> /dev/null; then
     echo -e "${YELLOW}检测到 gh CLI，正在创建 GitHub Release 并上传 DMG...${NC}"
-    gh release create "v$VERSION" "./Cactus.dmg" --title "v$VERSION" --notes "Release v$VERSION"
+    gh release create "v$VERSION" "./$DMG_NAME" --title "v$VERSION" --notes "Release v$VERSION"
 else
-    echo -e "${YELLOW}未检测到 gh CLI，请手动上传 Cactus.dmg 到 GitHub Release${NC}"
+    echo -e "${YELLOW}未检测到 gh CLI，请手动上传 $DMG_NAME 到 GitHub Release${NC}"
 fi
 
 echo -e "${GREEN}==================================${NC}"
 echo -e "${GREEN}发布流程完成!${NC}"
 echo -e "${GREEN}版本: $VERSION${NC}"
-echo -e "${GREEN}DMG: ./Cactus.dmg${NC}"
+echo -e "${GREEN}DMG: ./$DMG_NAME${NC}"
 echo -e "${GREEN}==================================${NC}"

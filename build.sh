@@ -12,7 +12,18 @@ NC='\033[0m' # No Color
 # 配置信息
 APP_NAME="Cactus"
 APP_PATH="./Cactus.app"
-DMG_NAME="Cactus.dmg"
+VERSION=$1
+ARCH=$(uname -m)
+
+if [ -z "$VERSION" ]; then
+    DMG_NAME="${APP_NAME}.dmg"
+else
+    # 转换为小写软件名，或者根据需求保持。这里保持原样或按用户示例
+    # 用户示例 xxxx-1.0.0-arm64.dmg，假设 xxxx 是小写 app_name
+    LOWER_APP_NAME=$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')
+    DMG_NAME="${LOWER_APP_NAME}-${VERSION}-${ARCH}.dmg"
+fi
+
 ICON_PATH="./Cactus.app/Contents/Resources/AppIcon.icns"
 
 # 1. 检查应用是否存在
