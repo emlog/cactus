@@ -1,12 +1,8 @@
-<p align="center">
-  <img src="./images/logo.webp" width="128" height="128" alt="Cactus Logo">
-</p>
-
 # Cactus AI Assistant
 
 [简体中文](./README.md)
 
-Cactus is an intelligent text assistant for macOS designed to streamline your workflow with AI-powered translation, summarization, and OCR capabilities. **Completely free and open source under the MIT License.**
+Cactus AI Assistant provides one-click translation, content summarization, word lookup, and screenshot OCR recognition to enhance your work and study efficiency.
 
 ![Demo](./images/demo.png)
 
