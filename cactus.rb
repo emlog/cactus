@@ -1,8 +1,8 @@
 cask "cactus" do
-  version "1.4.3"
-  sha256 "601f103cfa2268a1e12dd90d881ccaacd7951df3bce0f13d822195ebd087134b"
+  version "1.4.4"
+  sha256 "dd5db5ad877f078cd28b040779d6e4086c52d6b1fa276976470208694859776c"
 
-  url "https://github.com/emlog/cactus/releases/download/v#{version}/Cactus.dmg"
+  url "https://github.com/emlog/cactus/releases/download/v#{version}/cactus-#{version}-arm64.dmg"
   name "Cactus"
   desc "Intelligent text assistant | 智能文字助手"
   homepage "https://github.com/emlog/cactus"
