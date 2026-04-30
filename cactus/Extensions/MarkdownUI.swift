@@ -16,8 +16,8 @@ extension Theme {
         }
         .code {
             FontFamilyVariant(.monospaced)
-            ForegroundColor(.purple)
-            BackgroundColor(.purple.opacity(0.25))
+            ForegroundColor(Color(rgba: 0x00a3_41ff))
+            BackgroundColor(Color(rgba: 0x00a3_41ff).opacity(0.15))
         }
         .strong {
             FontWeight(.semibold)
@@ -176,7 +176,7 @@ extension Color {
         light: Color(rgba: 0xf7f7_f9ff), dark: Color(rgba: 0x2526_2aff)
     )
     fileprivate static let link = Color(
-        light: Color(rgba: 0x2c65_cfff), dark: Color(rgba: 0x4c8e_f8ff)
+        light: Color(rgba: 0x00a3_41ff), dark: Color(rgba: 0x00a3_41ff)
     )
     fileprivate static let border = Color(
         light: Color(rgba: 0xe4e4_e8ff), dark: Color(rgba: 0x4244_4eff)

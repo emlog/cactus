@@ -133,7 +133,7 @@ struct GeneralAiPane: View {
                 ZStack {
                     Circle()
                         .fill(isSelected ?
-                              LinearGradient(colors: [.accentColor, .purple], startPoint: .topLeading, endPoint: .bottomTrailing) :
+                              LinearGradient(colors: [.accentColor, .accentColor.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing) :
                                 LinearGradient(colors: [Color.gray.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
                         .frame(width: 28, height: 28)

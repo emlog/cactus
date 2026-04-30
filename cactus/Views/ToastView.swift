@@ -32,7 +32,7 @@ struct ToastView: View {
             case .error:
                 return .red
             case .info:
-                return .blue
+                return .accentColor
             }
         }
     }

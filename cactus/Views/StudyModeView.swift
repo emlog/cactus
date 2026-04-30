@@ -226,7 +226,7 @@ struct StudyModeView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [.pink, .purple, .blue, .cyan],
+                            colors: [.green, .accentColor, .mint, .teal],
                             startPoint: .leading,
                             endPoint: .trailing
                         )
