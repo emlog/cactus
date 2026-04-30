@@ -15,6 +15,7 @@
 "service" = "AI服务";
 "premium" = "高级版";
 "about" = "关于";
+"data_management" = "数据";
 
 // setting
 "more_settings" = "更多设置";
@@ -35,6 +36,16 @@
 "shortcut_copy_output_description" = "快速复制输出内容到剪贴板";
 "default_main_function" = "默认操作";
 "default_main_function_description" = "在主窗口按下回车键时触发的默认操作";
+
+// data management
+"export_data" = "导出数据";
+"import_data" = "导入数据";
+"export_success" = "导出成功";
+"import_success" = "导入成功";
+"import_failed" = "导入失败，文件格式错误";
+"data_backup_description" = "导出所有生词本和收藏夹数据为备份文件，或从备份文件中恢复数据。";
+"confirm_import_title" = "确定要导入数据吗？";
+"confirm_import_message" = "导入将合并现有数据，重复的条目将被更新。";
 
 // Language setting
 "preferred_language" = "常用语言";

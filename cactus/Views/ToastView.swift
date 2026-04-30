@@ -157,6 +157,7 @@ class ToastManager: ObservableObject {
 struct ToastModifier: ViewModifier {
     @ObservedObject var toastManager: ToastManager
     
+    /// 构建带吐司提示的视图层，并确保不拦截底层交互事件
     func body(content: Content) -> some View {
         content
             .overlay(
@@ -170,6 +171,7 @@ struct ToastModifier: ViewModifier {
                     
                     Spacer()
                 }
+                .allowsHitTesting(false)
             )
     }
 }

@@ -11,6 +11,7 @@ extension Settings.PaneIdentifier {
     static let general = Self("general")
     static let ai = Self("ai")
     static let about = Self("about")
+    static let data = Self("data")
     
     // 数据管理相关标识符
     static let vocabulary = Self("vocabulary")

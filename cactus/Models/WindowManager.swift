@@ -319,6 +319,7 @@ class WindowManager: NSObject, NSWindowDelegate {
         let generalIcon = IconManager.shared.getGeneralSettingsIcon() ?? NSImage()
         let aiIcon = IconManager.shared.getAiSettingsIcon() ?? NSImage()
         let aboutIcon = IconManager.shared.getAboutSettingsIcon() ?? NSImage()
+        let dataIcon = IconManager.shared.getDataIcon() ?? NSImage()
         // 添加数据管理相关的图标
         let vocabularyIcon = IconManager.shared.getVocabularyIcon() ?? NSImage()
         let favoritesIcon = IconManager.shared.getFavoritesIcon() ?? NSImage()
@@ -361,6 +362,13 @@ class WindowManager: NSObject, NSWindowDelegate {
                     toolbarIcon: historyIcon
                 ) {
                     HistoryView()
+                },
+                Settings.Pane(
+                    identifier: Settings.PaneIdentifier.data,
+                    title: NSLocalizedString("data_management", comment: "数据"),
+                    toolbarIcon: dataIcon
+                ) {
+                    DataManagementPane()
                 },
                 Settings.Pane(
                     identifier: Settings.PaneIdentifier.about,

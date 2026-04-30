@@ -87,4 +87,52 @@ class FavoriteManager: ObservableObject {
             print("Fetch error: \(error)")
         }
     }
+    
+    /// 获取所有收藏数据用于导出
+    func getAllFavoritesForExport() -> [[String: Any]] {
+        let request: NSFetchRequest<FavoriteEntry> = FavoriteEntry.fetchRequest()
+        do {
+            let entries = try context.fetch(request)
+            return entries.map { entry in
+                var dict: [String: Any] = [:]
+                dict["inputContent"] = entry.inputContent
+                dict["outputContent"] = entry.outputContent
+                dict["timestamp"] = entry.timestamp?.timeIntervalSince1970
+                return dict
+            }
+        } catch {
+            return []
+        }
+    }
+    
+    /// 从导出的数据导入收藏
+    func importFavorites(from data: [[String: Any]]) {
+        for dict in data {
+            guard let inputContent = dict["inputContent"] as? String else { continue }
+            
+            let request: NSFetchRequest<FavoriteEntry> = FavoriteEntry.fetchRequest()
+            request.predicate = NSPredicate(format: "inputContent == %@", inputContent)
+            
+            do {
+                let existingEntries = try context.fetch(request)
+                let entry: FavoriteEntry
+                if let existing = existingEntries.first {
+                    entry = existing
+                } else {
+                    entry = FavoriteEntry(context: context)
+                }
+                
+                entry.inputContent = inputContent
+                entry.outputContent = dict["outputContent"] as? String ?? ""
+                if let ts = dict["timestamp"] as? TimeInterval {
+                    entry.timestamp = Date(timeIntervalSince1970: ts)
+                }
+                
+            } catch {
+                print("Import favorite error: \(error)")
+            }
+        }
+        saveContext()
+        fetchFavoriteEntries()
+    }
 }

@@ -94,6 +94,68 @@ class VocabularyManager: ObservableObject {
         }
     }
     
+    /// 获取所有单词数据用于导出
+    func getAllWordsForExport() -> [[String: Any]] {
+        let request: NSFetchRequest<WordEntry> = WordEntry.fetchRequest()
+        do {
+            let entries = try context.fetch(request)
+            return entries.map { entry in
+                var dict: [String: Any] = [:]
+                dict["word"] = entry.word
+                dict["definition"] = entry.definition
+                dict["timestamp"] = entry.timestamp?.timeIntervalSince1970
+                dict["lastReviewDate"] = entry.lastReviewDate?.timeIntervalSince1970
+                dict["nextReviewDate"] = entry.nextReviewDate?.timeIntervalSince1970
+                dict["reviewCount"] = entry.reviewCount
+                dict["easeFactor"] = entry.easeFactor
+                dict["interval"] = entry.interval
+                return dict
+            }
+        } catch {
+            return []
+        }
+    }
+    
+    /// 从导出的数据导入单词
+    func importWords(from data: [[String: Any]]) {
+        for dict in data {
+            guard let word = dict["word"] as? String else { continue }
+            
+            let request: NSFetchRequest<WordEntry> = WordEntry.fetchRequest()
+            request.predicate = NSPredicate(format: "word == %@", word)
+            
+            do {
+                let existingEntries = try context.fetch(request)
+                let entry: WordEntry
+                if let existing = existingEntries.first {
+                    entry = existing
+                } else {
+                    entry = WordEntry(context: context)
+                }
+                
+                entry.word = word
+                entry.definition = dict["definition"] as? String ?? ""
+                if let ts = dict["timestamp"] as? TimeInterval {
+                    entry.timestamp = Date(timeIntervalSince1970: ts)
+                }
+                if let lr = dict["lastReviewDate"] as? TimeInterval {
+                    entry.lastReviewDate = Date(timeIntervalSince1970: lr)
+                }
+                if let nr = dict["nextReviewDate"] as? TimeInterval {
+                    entry.nextReviewDate = Date(timeIntervalSince1970: nr)
+                }
+                entry.reviewCount = dict["reviewCount"] as? Int32 ?? 0
+                entry.easeFactor = dict["easeFactor"] as? Float ?? 2.5
+                entry.interval = dict["interval"] as? Int32 ?? 1
+                
+            } catch {
+                print("Import word error: \(error)")
+            }
+        }
+        saveContext()
+        fetchWordEntries()
+    }
+    
     // MARK: - 艾宾浩斯遗忘曲线相关方法
     
     /// 获取需要复习的单词

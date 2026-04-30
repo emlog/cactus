@@ -15,6 +15,7 @@
 "service" = "AI Service";
 "premium" = "Pro";
 "about" = "About";
+"data_management" = "Data";
 
 // setting
 "more_settings" = "More Settings";
@@ -35,6 +36,16 @@
 "shortcut_copy_output_description" = "Quickly copy output content to clipboard";
 "default_main_function" = "Default Action";
 "default_main_function_description" = "Default action triggered when pressing Return in the main window";
+
+// data management
+"export_data" = "Export Data";
+"import_data" = "Import Data";
+"export_success" = "Export Successful";
+"import_success" = "Import Successful";
+"import_failed" = "Import Failed, invalid file format";
+"data_backup_description" = "Export all vocabulary and favorites data to a backup file, or restore data from a backup file.";
+"confirm_import_title" = "Are you sure you want to import data?";
+"confirm_import_message" = "Importing will merge existing data, and duplicate entries will be updated.";
 
 // Language setting
 "preferred_language" = "Preferred Language";

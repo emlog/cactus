@@ -84,6 +84,11 @@ class IconManager {
         return NSImage(systemSymbolName: "checkmark.seal", accessibilityDescription: NSLocalizedString("premium", comment: "高级版"))
     }
     
+    /// 获取数据管理设置图标
+    func getDataIcon() -> NSImage? {
+        return NSImage(systemSymbolName: "internaldrive", accessibilityDescription: NSLocalizedString("data_management", comment: "数据管理"))
+    }
+    
     /// 获取关于设置图标
     func getAboutSettingsIcon() -> NSImage? {
         return NSImage(systemSymbolName: "info.circle", accessibilityDescription: NSLocalizedString("about", comment: "关于"))
