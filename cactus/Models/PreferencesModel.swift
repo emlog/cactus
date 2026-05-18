@@ -268,9 +268,6 @@ class PreferencesModel: ObservableObject {
     
     // 保持原始顺序的键数组
     public var providerKeys: [String] = [
-        "model_zhipu_glm4",
-        "model_zhipu_glm4_flash",
-        "openrouter-default",
         "zhipu",
         "siliconflow",
         "deepseek",
@@ -436,7 +433,7 @@ class PreferencesModel: ObservableObject {
     }
     
     init() {
-        self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "model_zhipu_glm4"
+        self.selectedProvider = UserDefaults.standard.string(forKey: "selectedProvider") ?? "openai"
         
         // 使用 LangService 获取系统语言作为默认值
         let defaultLanguage = LangService.shared.getSystemLanguage()
@@ -723,7 +720,7 @@ class PreferencesModel: ObservableObject {
             let customServiceKey = "custom_\(serviceToDelete.id.uuidString)"
             if selectedProvider == customServiceKey {
                 // 如果删除的是当前选中的服务，切换到默认服务
-                selectedProvider = "model_zhipu_glm4"
+                selectedProvider = "openai"
             }
         }
         
@@ -734,9 +731,6 @@ class PreferencesModel: ObservableObject {
     private func updateProviderKeysWithCustomServices() {
         // 重置为基础的providerKeys
         let baseProviderKeys = [
-            "model_zhipu_glm4",
-            "model_zhipu_glm4_flash",
-            "openrouter-default",
             "openai",
             "google_gemini",
             "claude",

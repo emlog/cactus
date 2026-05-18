@@ -734,12 +734,6 @@ struct GeneralAiPane: View {
     /// 根据服务类型返回对应的SF Symbol图标
     private func serviceIcon(for providerKey: String) -> String {
         switch providerKey {
-        case "model_zhipu_glm4":
-            return "diamond.circle.fill"
-        case "openrouter-default":
-            return "arrow.left.arrow.right"
-        case "model_zhipu_glm4_flash":
-            return "diamond.circle.fill"
         case "zhipu":
             return "diamond.circle.fill"
         case "siliconflow":
