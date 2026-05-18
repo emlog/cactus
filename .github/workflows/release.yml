@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          xcodebuild -scheme cactus -configuration Release -derivedDataPath ./build
+          # 假设构建产物在 build/Build/Products/Release/cactus.app
+          # 需要将 app 放入项目根目录以便 build.sh 脚本使用
+          cp -R build/Build/Products/Release/Cactus.app .
+
+      - name: Build DMG
+        run: |
+          chmod +x build.sh
+          ./build.sh ${{ github.ref_name }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            cactus-*-arm64.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
