@@ -24,7 +24,7 @@ else
     DMG_NAME="${LOWER_APP_NAME}-${VERSION}-${ARCH}.dmg"
 fi
 
-ICON_PATH="./Cactus.app/Contents/Resources/AppIcon.icns"
+ICON_PATH="./Cactus.app/Contents/Resources/AppIcon.png"
 
 # 1. 检查应用是否存在
 if [ ! -d "$APP_PATH" ]; then
@@ -34,13 +34,13 @@ fi
 
 # 2. 清理旧的隔离属性并进行本地自签名
 echo -e "${YELLOW}正在清理隔离属性并进行本地自签名 (Ad-hoc)...${NC}"
-sudo xattr -rd com.apple.quarantine "$APP_PATH" 2>/dev/null
+xattr -rd com.apple.quarantine "$APP_PATH" 2>/dev/null
 # 递归赋予权限
 chmod -R +r "$APP_PATH"
 chmod +x "$APP_PATH/Contents/MacOS/$APP_NAME"
 
 # 使用短横线 '-' 进行本地 Ad-hoc 签名，这不需要任何证书
-sudo codesign --force --deep --sign - "$APP_PATH"
+codesign --force --deep --sign - "$APP_PATH"
 
 # 3. 创建DMG文件
 echo -e "${YELLOW}正在创建 DMG 文件...${NC}"
@@ -83,4 +83,4 @@ echo -e "${GREEN}构建完成 (已移除签名/公证环节)${NC}"
 echo -e "${GREEN}DMG 位置: $(pwd)/$DMG_NAME${NC}"
 echo -e "${GREEN}==================================${NC}"
 echo -e "${YELLOW}【重要】由于没有签名，用户安装后如果提示“已损坏”，请告知用户运行以下命令：${NC}"
-echo -e "${RED}sudo xattr -rd com.apple.quarantine /Applications/Cactus.app${NC}"
+echo -e "${RED}xattr -rd com.apple.quarantine /Applications/Cactus.app${NC}"

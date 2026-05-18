@@ -1,5 +1,5 @@
 cask "cactus" do
-  version "1.4.4"
+  version "1.4.5"
   sha256 "dd5db5ad877f078cd28b040779d6e4086c52d6b1fa276976470208694859776c"
 
   url "https://github.com/emlog/cactus/releases/download/v#{version}/cactus-#{version}-arm64.dmg"

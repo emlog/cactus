@@ -27,6 +27,12 @@ echo -e "${YELLOW}准备发布新版本: $VERSION${NC}"
 echo -e "${YELLOW}正在更新版本号到 $VERSION...${NC}"
 sed -i '' "s/MARKETING_VERSION = [0-9.]*;/MARKETING_VERSION = $VERSION;/g" "$PROJECT/project.pbxproj"
 
+# 1.1 自增 Build Number (CURRENT_PROJECT_VERSION)
+CURRENT_BUILD=$(grep -m1 "CURRENT_PROJECT_VERSION = " "$PROJECT/project.pbxproj" | sed 's/.*= //;s/;//')
+NEW_BUILD=$((CURRENT_BUILD + 1))
+sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*;/CURRENT_PROJECT_VERSION = $NEW_BUILD;/g" "$PROJECT/project.pbxproj"
+echo -e "${YELLOW}Build Number: $CURRENT_BUILD → $NEW_BUILD${NC}"
+
 # 2. 构建项目
 echo -e "${YELLOW}正在清理并构建项目...${NC}"
 xcodebuild clean build -project "$PROJECT" -scheme "$SCHEME" -configuration Release -derivedDataPath ./build
