@@ -115,24 +115,6 @@ class PreferencesModel: ObservableObject {
     
     // 内置的AI服务 + OpenAI选项
     public var defaultProviders: [String: ProviderSettings] = [
-        "model_zhipu_glm4": ProviderSettings(
-            title: NSLocalizedString("model_zhipu_glm4", comment: "model_zhipuai"),
-            baseURL: "https://api.siliconflow.cn/v1/chat/completions",
-            apiKey: "sk-ugnakenapgoouiubjkshrgfveopwxcrxakcuepjqgixvstye",
-            model: "THUDM/GLM-4-9B-0414"
-        ),
-        "openrouter-default": ProviderSettings(
-            title: NSLocalizedString("openrouter-default", comment: "openrouter-default"),
-            baseURL: "https://openrouter.ai/api/v1/chat/completions",
-            apiKey: "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",
-            model: "z-ai/glm-4.5-air:free"
-        ),
-        "model_zhipu_glm4_flash": ProviderSettings(
-            title: NSLocalizedString("model_zhipu_glm4_flash", comment: "model_zhipu_glm4_flash"),
-            baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-            apiKey: "b7138f6b57d3407882f915c7a75f21af.WBN4TkuNpLpclqGV",
-            model: "glm-4.5-flash"
-        ),
         "zhipu": ProviderSettings(
             title: NSLocalizedString("model_zhipu", comment: "zhipu"),
             baseURL: "https://open.bigmodel.cn/api/paas/v4/chat/completions",
@@ -141,15 +123,13 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://bigmodel.cn/usercenter/proj-mgmt/apikeys",
             requiresCustomConfig: true,
             availableModels: [
+                ModelOption(key: "glm-5.1", displayName: "GLM-5.1"),
+                ModelOption(key: "glm-4.7", displayName: "GLM-4.7"),
+                ModelOption(key: "glm-4.7-flash", displayName: "GLM-4.7-Flash"),
                 ModelOption(key: "glm-4.6", displayName: "GLM-4.6"),
                 ModelOption(key: "glm-4.5", displayName: "GLM-4.5"),
                 ModelOption(key: "glm-4.5-airx", displayName: "GLM-4.5-AIRX"),
                 ModelOption(key: "glm-4.5-flash", displayName: "GLM-4.5-Flash (Free)"),
-                ModelOption(key: "glm-4-flash-250414", displayName: "GLM-4-Flash-250414 (Free)"),
-                ModelOption(key: "glm-4-flash", displayName: "GLM-4-Flash (Free)"),
-                ModelOption(key: "glm-4v-flash", displayName: "GLM-4v-Flash"),
-                ModelOption(key: "glm-4-plus", displayName: "GLM-4-Plus"),
-                ModelOption(key: "glm-4v-plus", displayName: "GLM-4v-Plus")
             ]
         ),
         "siliconflow": ProviderSettings(
@@ -177,8 +157,8 @@ class PreferencesModel: ObservableObject {
             helpUrl: "https://platform.deepseek.com/api_keys",
             requiresCustomConfig: true,
             availableModels: [
-                ModelOption(key: "deepseek-chat", displayName: "DeepSeek-V3.2"),
-                ModelOption(key: "deepseek-reasoner", displayName: "DeepSeek-V3.2 (Thinking)")
+                ModelOption(key: "deepseek-v4-flash", displayName: "DeepSeek-V4-Flash"),
+                ModelOption(key: "deepseek-v4-pro", displayName: "DeepSeek-V4-Pro"),
             ]
         ),
         "volcengine": ProviderSettings(
